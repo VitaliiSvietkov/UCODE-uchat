@@ -11,7 +11,7 @@ static void on_activate (GtkApplication *app) {
   gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
   gtk_window_set_icon(GTK_WINDOW(window), icon);
   
-  gtk_widget_show (window);
+  gtk_widget_show_all (window);
   
   g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_close), NULL);
   g_object_unref(icon);

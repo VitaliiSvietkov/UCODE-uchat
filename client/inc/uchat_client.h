@@ -7,5 +7,6 @@
 #define WIN_HEIGHT_MIN 480
 
 GdkPixbuf *create_pixbuf(const gchar *filename);
+void tooltip(char *str, void *data);
 
 #endif
