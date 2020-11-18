@@ -8,4 +8,4 @@ install:
 uninstall:
 	@make -C client/ uninstall
 
-retinstall: uninstall install
+reinstall: uninstall install

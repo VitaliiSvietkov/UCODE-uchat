@@ -3,12 +3,14 @@
 static void on_activate (GtkApplication *app) {
   // Create a new window
   GtkWidget *window = gtk_application_window_new (app);
-  // Create a new button
-  GtkWidget *button = gtk_button_new_with_label ("Hello, World!");
-  // When the button is clicked, close the window passed as an argument
-  g_signal_connect_swapped (button, "clicked", G_CALLBACK (gtk_window_close), window);
-  gtk_container_add (GTK_CONTAINER (window), button);
-  gtk_widget_show_all (window);
+  
+  //Configure the window
+  gtk_window_set_title(GTK_WINDOW(window), "UchatApp");
+  gtk_window_set_default_size(GTK_WINDOW(window), WIN_WIDTH_MIN, WIN_HEIGHT_MIN);
+  gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+  gtk_widget_show (window);
+  
+  g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_close), NULL);
 }
 
 int main (int argc, char *argv[]) {
