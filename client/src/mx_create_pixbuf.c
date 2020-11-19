@@ -1,6 +1,6 @@
 #include "../inc/uchat_client.h"
 
-GdkPixbuf *create_pixbuf(const gchar *filename) {
+GdkPixbuf *mx_create_pixbuf(const gchar *filename) {
     GdkPixbuf *pixbuf;
     GError *error = NULL;
     pixbuf = gdk_pixbuf_new_from_file(filename, &error);
