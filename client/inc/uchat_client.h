@@ -21,14 +21,7 @@
 //Colorful theme
 //===================================
 
-//Images
-//===================================
-struct
-{
-    cairo_surface_t *image;
-} t_settings;
-//===================================
-
+void mx_init_window(GtkWidget *window, GdkPixbuf *icon);
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
 void mx_tooltip(char *str, void *data);
 
