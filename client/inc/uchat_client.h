@@ -5,7 +5,7 @@
 #include <sys/ioctl.h>
 #include <stdio.h>
 
-//Window size
+// Window size
 //===================================
 #define WIN_WIDTH_MIN 715
 #define WIN_HEIGHT_MIN 480
@@ -13,12 +13,20 @@
 #define CUR_HEIGHT 480
 //===================================
 
-//Colors
+// Colors
 //===================================
-//Standard ones
+// Standard ones
 #define MX_1F1F1F 0.12
 #define MX_E1E1E1 0.89
-//Colorful theme
+// Colorful theme
+//===================================
+
+// Images
+//===================================
+struct
+{
+    cairo_surface_t *standard;
+} t_settings;
 //===================================
 
 void mx_init_window(GtkWidget *window, GdkPixbuf *icon);
