@@ -49,15 +49,25 @@ struct
 } t_more;
 
 void mx_load_images(void);
-void mx_free_images(void); // Look "mx_load_images.c"
+void mx_free_images(void); // Look in "mx_load_images.c"
 //===================================
 
-void mx_init_window(GtkWidget *window, GdkPixbuf *icon);
+void mx_init_window(GtkWidget **window, GdkPixbuf **icon);
+
 void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWidget **window);
+void mx_configure_left_header(GtkWidget **left_header, GtkWidget **main_area, 
+    GtkWidget **settings, GtkWidget **entry_search);
+void mx_configure_content_selection_area(GtkWidget **content_selection_area, GtkWidget **main_area, 
+    GtkWidget **messages, GtkWidget **contacts, GtkWidget **more);
+
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
 void mx_tooltip(char *str, void *data);
 
+// All draw functions are in "mx_draw_functions.c"
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_settings(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+gboolean mx_draw_event_messages(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+gboolean mx_draw_event_contacts(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+gboolean mx_draw_event_more(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 
 #endif
