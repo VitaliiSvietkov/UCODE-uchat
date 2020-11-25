@@ -58,12 +58,13 @@ void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWi
 void mx_configure_left_header(GtkWidget **left_header, GtkWidget **main_area, GtkWidget **entry_search);
 void mx_configure_content_selection_area(GtkWidget **content_selection_area, GtkWidget **main_area, 
     GtkWidget **messages, GtkWidget **contacts, GtkWidget **settings);
-
+void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **main_area);
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
 void mx_tooltip(char *str, void *data);
 
 // All draw functions are in "mx_draw_functions.c"
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_settings(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_messages(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_contacts(GtkWidget *widget, cairo_t *cr, gpointer user_data);

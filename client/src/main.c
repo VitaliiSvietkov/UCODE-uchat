@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
     GtkWidget *main_area = NULL;
     GtkWidget *left_header = NULL;
     GtkWidget *content_selection_area = NULL;
+    GtkWidget *chat_enter_area = NULL;
 
     GdkPixbuf *icon = NULL;
     GtkWidget *entry_search = NULL;
@@ -42,6 +43,8 @@ int main(int argc, char *argv[]) {
     // Create a selection area
     mx_configure_content_selection_area(&content_selection_area, &main_area, 
         &messages, &contacts, &settings);
+    // Create a chat enter area
+    mx_configure_chat_enter_area(&chat_enter_area, &main_area);
 
     g_signal_connect(window, "configure-event", G_CALLBACK(test), NULL);
 
