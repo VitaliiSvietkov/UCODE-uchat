@@ -7,10 +7,10 @@
 
 // Window size
 //===================================
-#define WIN_WIDTH_MIN 715
-#define WIN_HEIGHT_MIN 480
-#define CUR_WIDTH 715
-#define CUR_HEIGHT 480
+#define WIN_WIDTH_MIN 915
+#define WIN_HEIGHT_MIN 680
+gint CUR_WIDTH;
+gint CUR_HEIGHT;
 //===================================
 
 // Colors
@@ -55,10 +55,9 @@ void mx_free_images(void); // Look in "mx_load_images.c"
 void mx_init_window(GtkWidget **window, GdkPixbuf **icon);
 
 void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWidget **window);
-void mx_configure_left_header(GtkWidget **left_header, GtkWidget **main_area, 
-    GtkWidget **settings, GtkWidget **entry_search);
+void mx_configure_left_header(GtkWidget **left_header, GtkWidget **main_area, GtkWidget **entry_search);
 void mx_configure_content_selection_area(GtkWidget **content_selection_area, GtkWidget **main_area, 
-    GtkWidget **messages, GtkWidget **contacts, GtkWidget **more);
+    GtkWidget **messages, GtkWidget **contacts, GtkWidget **settings);
 
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
 void mx_tooltip(char *str, void *data);
