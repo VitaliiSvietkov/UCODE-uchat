@@ -5,7 +5,7 @@ void mx_configure_content_selection_area(GtkWidget **content_selection_area, Gtk
     *content_selection_area = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_fixed_put(GTK_FIXED(*main_area), *content_selection_area, 0, 48);
     gtk_container_set_border_width(GTK_CONTAINER(*content_selection_area), 8);
-    gtk_widget_set_size_request(GTK_WIDGET(*content_selection_area), CUR_WIDTH / 3 + 50, 24);
+    gtk_widget_set_size_request(GTK_WIDGET(*content_selection_area), CUR_WIDTH / 3 + 50, 40);
 
     gtk_box_pack_start(GTK_BOX(*content_selection_area),
         t_img_event_box.messages_box, TRUE, FALSE, 22);
