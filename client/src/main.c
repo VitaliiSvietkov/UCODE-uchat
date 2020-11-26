@@ -19,16 +19,14 @@ int main(int argc, char *argv[]) {
 
     GdkPixbuf *icon = NULL;
     GtkWidget *entry_search = NULL;
+    GtkWidget *entry_chat = NULL;
 
     // Drawing areas
     GtkWidget *background = NULL;
-    GtkWidget *settings = NULL;
-    GtkWidget *messages = NULL;
-    GtkWidget *contacts = NULL;
-    //GtkWidget *more = NULL;
-    mx_load_images();
   
     gtk_init(&argc, &argv);
+
+    mx_load_images();
   
     // Create a new window
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -41,10 +39,9 @@ int main(int argc, char *argv[]) {
     // Create a header for left area
     mx_configure_left_header(&left_header, &main_area, &entry_search);
     // Create a selection area
-    mx_configure_content_selection_area(&content_selection_area, &main_area, 
-        &messages, &contacts, &settings);
+    mx_configure_content_selection_area(&content_selection_area, &main_area);
     // Create a chat enter area
-    mx_configure_chat_enter_area(&chat_enter_area, &main_area);
+    mx_configure_chat_enter_area(&chat_enter_area, &main_area, &entry_chat);
 
     g_signal_connect(window, "configure-event", G_CALLBACK(test), NULL);
 
@@ -53,6 +50,5 @@ int main(int argc, char *argv[]) {
     gtk_main();
   
     g_object_unref(icon); //in fact, a "free" command
-    mx_free_images();
     return 0;
 }

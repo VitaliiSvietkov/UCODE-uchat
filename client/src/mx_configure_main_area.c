@@ -14,4 +14,7 @@ void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWi
     GtkWidget *label = gtk_label_new("Select a chat to start conversation...");
     gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_CENTER);
     gtk_fixed_put(GTK_FIXED(*main_area), label, CUR_WIDTH - CUR_WIDTH / 2.5, CUR_HEIGHT / 2);
+
+    //gtk_fixed_put(GTK_FIXED(*main_area), more_img, 200, 100);
+    //gtk_image_set_pixel_size(GTK_IMAGE(more_img), 24);
 }

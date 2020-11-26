@@ -23,35 +23,3 @@ gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer 
     if (user_data) {}
     return FALSE;
 }
-
-gboolean mx_draw_event_settings(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-    cairo_set_source_surface(cr, t_settings.standard, 0, 0);
-    cairo_paint(cr);
-    if (widget) {}
-    if (user_data) {}
-    return FALSE;
-}
-
-gboolean mx_draw_event_messages(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-    cairo_set_source_surface(cr, t_messages.standard, 0, 0);
-    cairo_paint(cr);
-    if (widget) {}
-    if (user_data) {}
-    return FALSE;
-}
-
-gboolean mx_draw_event_contacts(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-    cairo_set_source_surface(cr, t_contacts.standard, 0, 0);
-    cairo_paint(cr);
-    if (widget) {}
-    if (user_data) {}
-    return FALSE;
-}
-
-gboolean mx_draw_event_more(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-    cairo_set_source_surface(cr, t_more.standard, 0, 0);
-    cairo_paint(cr);
-    if (widget) {}
-    if (user_data) {}
-    return FALSE;
-}
