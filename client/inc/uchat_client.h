@@ -33,7 +33,6 @@ struct
 struct
 {
     GtkWidget *standard;
-    GtkWidget *hovered;
     GtkWidget *colorful;
 } t_contacts;
 
@@ -42,6 +41,14 @@ struct
     GtkWidget *standard;
     GtkWidget *colorful;
 } t_messages;
+
+// EventBoxes for images
+struct
+{
+    GtkWidget *contacts_box;
+    GtkWidget *settings_box;
+    GtkWidget *messages_box;
+} t_img_event_box;
 
 void mx_load_images(void);
 //===================================
@@ -59,5 +66,13 @@ void mx_tooltip(char *str, void *data);
 // All draw functions are in "mx_draw_functions.c"
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+
+// Event callback functions
+void messages_enter_notify(GtkWidget *widget, gpointer data);
+void messages_leave_notify(GtkWidget *widget, gpointer data);
+void contacts_enter_notify(GtkWidget *widget, gpointer data);
+void contacts_leave_notify(GtkWidget *widget, gpointer data);
+void settings_enter_notify(GtkWidget *widget, gpointer data);
+void settings_leave_notify(GtkWidget *widget, gpointer data);
 
 #endif
