@@ -1,5 +1,17 @@
 #include "../inc/uchat_client.h"
 
+void messages_enter_notify(GtkWidget *widget, gpointer data) {
+    if (data) {}
+    if (widget) {}
+    gtk_image_set_from_file(GTK_IMAGE(t_messages.standard), "client/img/messages-standard-hovered.png");
+}
+
+void messages_leave_notify(GtkWidget *widget, gpointer data) {
+    if (data) {}
+    if (widget) {}
+    gtk_image_set_from_file(GTK_IMAGE(t_messages.standard), "client/img/messages-standard.png");
+}
+
 void contacts_enter_notify(GtkWidget *widget, gpointer data) {
     if (data) {}
     if (widget) {}
@@ -22,16 +34,4 @@ void settings_leave_notify(GtkWidget *widget, gpointer data) {
     if (data) {}
     if (widget) {}
     gtk_image_set_from_file(GTK_IMAGE(t_settings.standard), "client/img/settings-standard.png");
-}
-
-void messages_enter_notify(GtkWidget *widget, gpointer data) {
-    if (data) {}
-    if (widget) {}
-    gtk_image_set_from_file(GTK_IMAGE(t_messages.standard), "client/img/messages-standard-hovered.png");
-}
-
-void messages_leave_notify(GtkWidget *widget, gpointer data) {
-    if (data) {}
-    if (widget) {}
-    gtk_image_set_from_file(GTK_IMAGE(t_messages.standard), "client/img/messages-standard.png");
 }
