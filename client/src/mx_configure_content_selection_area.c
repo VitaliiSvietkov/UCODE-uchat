@@ -1,9 +1,10 @@
 #include "../inc/uchat_client.h"
 
 void mx_configure_content_selection_area(GtkWidget **content_selection_area, GtkWidget **main_area) {
+    // A container which contains section with images and a line just below it
     *content_selection_area = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_fixed_put(GTK_FIXED(*main_area), *content_selection_area, 0, 48);
-    //gtk_container_set_border_width(GTK_CONTAINER(*content_selection_area), 8);
+
     GtkWidget *image_container = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(image_container), L_FIELD_WIDTH, 40);
     gtk_box_pack_start(GTK_BOX(*content_selection_area), image_container, TRUE, FALSE, 0);

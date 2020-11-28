@@ -83,3 +83,20 @@ void settings_click(GtkWidget *widget, gpointer data) {
     gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
 }
 //============================================================
+
+// Add button
+//========================================================
+void add_enter_notify(GtkWidget *widget, gpointer data) {
+    if (data) {}
+    if (widget) {}
+    if (!add_img.active)
+        gtk_image_set_from_file(GTK_IMAGE(add_img.standard), add_img.hovered);
+}
+
+void add_leave_notify(GtkWidget *widget, gpointer data) {
+    if (data) {}
+    if (widget) {}
+    if (!add_img.active)
+        gtk_image_set_from_file(GTK_IMAGE(add_img.standard), add_img.basic);
+}
+//========================================================

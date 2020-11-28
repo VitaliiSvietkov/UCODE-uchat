@@ -38,6 +38,7 @@ typedef struct s_image_button
 t_image_button settings_img;
 t_image_button contacts_img;
 t_image_button messages_img;
+t_image_button add_img;
 
 t_image_button *t_active;
 
@@ -47,6 +48,7 @@ struct
     GtkWidget *contacts_box;
     GtkWidget *settings_box;
     GtkWidget *messages_box;
+    GtkWidget *add_box;
 } t_img_event_box;
 
 void mx_load_images(void);
@@ -82,6 +84,9 @@ void contacts_click(GtkWidget *widget, gpointer data);
 void settings_enter_notify(GtkWidget *widget, gpointer data);
 void settings_leave_notify(GtkWidget *widget, gpointer data);
 void settings_click(GtkWidget *widget, gpointer data);
+
+void add_enter_notify(GtkWidget *widget, gpointer data);
+void add_leave_notify(GtkWidget *widget, gpointer data);
 //============================================================
 
 #endif

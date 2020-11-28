@@ -16,6 +16,11 @@ void mx_load_images(void) {
     contacts_img.hovered = "client/img/contacts-standard-hovered.png";
     contacts_img.standard = gtk_image_new_from_file(contacts_img.basic);
 
+    add_img.active = false;
+    add_img.basic = "client/img/add-standard.png";
+    add_img.hovered = "client/img/add-standard-hovered.png";
+    add_img.standard = gtk_image_new_from_file(add_img.basic);
+
     t_active = &messages_img;
 
     t_img_event_box.messages_box = gtk_event_box_new();
@@ -24,4 +29,7 @@ void mx_load_images(void) {
     gtk_container_add(GTK_CONTAINER(t_img_event_box.contacts_box), contacts_img.standard);
     t_img_event_box.settings_box = gtk_event_box_new();
     gtk_container_add(GTK_CONTAINER(t_img_event_box.settings_box), settings_img.standard);
+    
+    t_img_event_box.add_box = gtk_event_box_new();
+    gtk_container_add(GTK_CONTAINER(t_img_event_box.add_box), add_img.standard);
 }
