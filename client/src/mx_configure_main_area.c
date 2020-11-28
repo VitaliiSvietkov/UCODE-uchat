@@ -10,6 +10,12 @@ void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWi
     gtk_widget_set_size_request(GTK_WIDGET(*background), CUR_WIDTH, CUR_HEIGHT);
     g_signal_connect(G_OBJECT(*background), "draw",
                      G_CALLBACK(mx_draw_event_background), NULL);
+
+    //GtkWidget *gif = gtk_image_new_from_file("client/img/giphy.gif");
+    //gtk_fixed_put(GTK_FIXED(*main_area), gif, 100, 100);
+    GdkPixbufAnimation *anim = gdk_pixbuf_animation_new_from_file("client/img/giphy.gif", NULL);
+    GtkWidget *gif = gtk_image_new_from_animation(anim);
+    gtk_fixed_put(GTK_FIXED(*main_area), gif, 100, 100);
     
     GtkWidget *label = gtk_label_new("Select a chat to start conversation...");
     gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_CENTER);
