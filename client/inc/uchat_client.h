@@ -63,8 +63,11 @@ GdkPixbuf *mx_create_pixbuf(const gchar *filename);
 void mx_tooltip(char *str, void *data);
 
 // All draw functions are in "mx_draw_functions.c"
+//==========================================================================================
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+//==========================================================================================
 
 // Event callback functions (look in "mx_events.c")
 //============================================================

@@ -23,3 +23,13 @@ gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer 
     if (user_data) {}
     return FALSE;
 }
+
+gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
+    cairo_set_source_rgba(cr, MX_E1E1E1, MX_E1E1E1, MX_E1E1E1, 1);
+    cairo_rectangle(cr, 0, 0, L_FIELD_WIDTH, 1);
+    cairo_fill(cr);
+    
+    if (user_data) {}
+    if (widget) {}
+    return FALSE;
+}
