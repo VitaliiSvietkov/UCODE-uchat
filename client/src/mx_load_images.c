@@ -1,19 +1,27 @@
 #include "../inc/uchat_client.h"
 
 void mx_load_images(void) {
-    t_settings.standard = gtk_image_new_from_file("client/img/settings-standard.png");
-    t_messages.standard = gtk_image_new_from_file("client/img/messages-standard.png");
-    t_contacts.standard = gtk_image_new_from_file("client/img/contacts-standard.png");
-    
-    //gtk_image_set_pixel_size(GTK_IMAGE(t_settings.standard), 30);
-    //gtk_image_set_pixel_size(GTK_IMAGE(t_messages.standard), 30);
-    //gtk_image_set_pixel_size(GTK_IMAGE(t_contacts.standard), 30);
+    messages_img.active = true;
+    messages_img.basic = "client/img/messages-standard.png";
+    messages_img.hovered = "client/img/messages-standard-hovered.png";
+    messages_img.standard = gtk_image_new_from_file(messages_img.hovered);
+
+    settings_img.active = false;
+    settings_img.basic = "client/img/settings-standard.png";
+    settings_img.hovered = "client/img/settings-standard-hovered.png";
+    settings_img.standard = gtk_image_new_from_file(settings_img.basic);
+
+    contacts_img.active = false;
+    contacts_img.basic = "client/img/contacts-standard.png";
+    contacts_img.hovered = "client/img/contacts-standard-hovered.png";
+    contacts_img.standard = gtk_image_new_from_file(contacts_img.basic);
+
+    t_active = &messages_img;
 
     t_img_event_box.messages_box = gtk_event_box_new();
-    gtk_widget_set_size_request(GTK_WIDGET(t_img_event_box.messages_box), 40, 30);
-    gtk_container_add(GTK_CONTAINER(t_img_event_box.messages_box), t_messages.standard);
+    gtk_container_add(GTK_CONTAINER(t_img_event_box.messages_box), messages_img.standard);
     t_img_event_box.contacts_box = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(t_img_event_box.contacts_box), t_contacts.standard);
+    gtk_container_add(GTK_CONTAINER(t_img_event_box.contacts_box), contacts_img.standard);
     t_img_event_box.settings_box = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(t_img_event_box.settings_box), t_settings.standard);
+    gtk_container_add(GTK_CONTAINER(t_img_event_box.settings_box), settings_img.standard);
 }

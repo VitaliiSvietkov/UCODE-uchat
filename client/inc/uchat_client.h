@@ -1,46 +1,45 @@
 #ifndef UCHAT_CLIENT
 #define UCHAT_CLIENT
 
+#include <stdbool.h>
 #include <gtk/gtk.h>
 #include <sys/ioctl.h>
 #include <stdio.h>
 
 // Window size
-//===================================
+//=========================
 #define WIN_WIDTH_MIN 915
 #define WIN_HEIGHT_MIN 680
 gint CUR_WIDTH;
 gint CUR_HEIGHT;
-//===================================
+gint L_FIELD_WIDTH;
+//=========================
 
 // Colors
-//===================================
+//=====================
 // Standard ones
 #define MX_1F1F1F 0.12
 #define MX_E1E1E1 0.89
 // Colorful theme
 
-//===================================
+//=====================
 
 // Images
-//===================================
-struct
+//============================
+typedef struct s_image_button
 {
+    bool active;
+    char *basic;
+    char *hovered;
     GtkWidget *standard;
     GtkWidget *colorful;
-} t_settings;
+} t_image_button;
 
-struct
-{
-    GtkWidget *standard;
-    GtkWidget *colorful;
-} t_contacts;
+t_image_button settings_img;
+t_image_button contacts_img;
+t_image_button messages_img;
 
-struct
-{
-    GtkWidget *standard;
-    GtkWidget *colorful;
-} t_messages;
+t_image_button *t_active;
 
 // EventBoxes for images
 struct
@@ -51,7 +50,7 @@ struct
 } t_img_event_box;
 
 void mx_load_images(void);
-//===================================
+//============================
 
 void mx_init_window(GtkWidget **window, GdkPixbuf **icon);
 
@@ -67,12 +66,19 @@ void mx_tooltip(char *str, void *data);
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 
-// Event callback functions
+// Event callback functions (look in "mx_events.c")
+//============================================================
 void messages_enter_notify(GtkWidget *widget, gpointer data);
 void messages_leave_notify(GtkWidget *widget, gpointer data);
+void messages_click(GtkWidget *widget, gpointer data);
+
 void contacts_enter_notify(GtkWidget *widget, gpointer data);
 void contacts_leave_notify(GtkWidget *widget, gpointer data);
+void contacts_click(GtkWidget *widget, gpointer data);
+
 void settings_enter_notify(GtkWidget *widget, gpointer data);
 void settings_leave_notify(GtkWidget *widget, gpointer data);
+void settings_click(GtkWidget *widget, gpointer data);
+//============================================================
 
 #endif

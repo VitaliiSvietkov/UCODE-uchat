@@ -3,6 +3,7 @@
 void mx_init_window(GtkWidget **window, GdkPixbuf **icon) {
     CUR_WIDTH = WIN_WIDTH_MIN;
     CUR_HEIGHT = WIN_HEIGHT_MIN;
+    L_FIELD_WIDTH = CUR_WIDTH / 3 + 50;
     // Configure the window
     gtk_window_set_resizable(GTK_WINDOW(*window), FALSE);
     gtk_widget_set_size_request(*window, WIN_WIDTH_MIN, WIN_HEIGHT_MIN); //sets the min size
