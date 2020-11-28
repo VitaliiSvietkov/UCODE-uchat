@@ -9,13 +9,11 @@ void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **main_
                      G_CALLBACK(mx_draw_event_chat_enter_area), NULL);
     
     gtk_box_pack_start(GTK_BOX(*chat_enter_area), t_img_event_box.add_box, TRUE, FALSE, 0);
-
     g_signal_connect(G_OBJECT(t_img_event_box.add_box), "enter-notify-event",
         G_CALLBACK(add_enter_notify), &add_img);
     g_signal_connect(G_OBJECT(t_img_event_box.add_box), "leave-notify-event",
         G_CALLBACK(add_leave_notify), NULL);
-    /*
-    g_signal_connect(G_OBJECT(t_img_event_box.add_box), "button_press_event",
+    /*g_signal_connect(G_OBJECT(t_img_event_box.add_box), "button_press_event",
         G_CALLBACK(add_click), NULL);*/
 
     *entry_chat = gtk_entry_new();

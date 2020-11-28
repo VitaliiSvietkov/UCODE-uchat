@@ -1,7 +1,7 @@
 #include "../inc/uchat_client.h"
 
 // Messages button
-//============================================================
+//=============================================================
 void messages_enter_notify(GtkWidget *widget, gpointer data) {
     if (data) {}
     if (widget) {}
@@ -26,10 +26,10 @@ void messages_click(GtkWidget *widget, gpointer data) {
     t_active->active = true;
     gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
 }
-//============================================================
+//=============================================================
 
 // Contacts button
-//============================================================
+//=============================================================
 void contacts_enter_notify(GtkWidget *widget, gpointer data) {
     if (data) {}
     if (widget) {}
@@ -54,10 +54,10 @@ void contacts_click(GtkWidget *widget, gpointer data) {
     t_active->active = true;
     gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
 }
-//============================================================
+//=============================================================
 
 // Settings button
-//============================================================
+//=============================================================
 void settings_enter_notify(GtkWidget *widget, gpointer data) {
     if (data) {}
     if (widget) {}
@@ -82,7 +82,7 @@ void settings_click(GtkWidget *widget, gpointer data) {
     t_active->active = true;
     gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
 }
-//============================================================
+//=============================================================
 
 // Add button
 //========================================================
