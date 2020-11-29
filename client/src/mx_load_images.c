@@ -21,6 +21,22 @@ void mx_load_images(void) {
     add_img.hovered = "client/img/add-standard-hovered.png";
     add_img.standard = gtk_image_new_from_file(add_img.basic);
 
+    ban_img.active = false;
+    ban_img.basic = "client/img/ban-standard.png";
+    ban_img.hovered = NULL;
+    ban_img.standard = gtk_image_new_from_file(ban_img.basic);
+    gtk_widget_set_opacity(GTK_WIDGET(ban_img.standard), 0.7);
+
+    tick_img.active = false;
+    tick_img.basic = "client/img/tick-standard.png";
+    tick_img.hovered = "client/img/tick-standard-hovered.png";
+    tick_img.standard = gtk_image_new_from_file(tick_img.basic);
+
+    more_img.active = false;
+    more_img.basic = "client/img/more-standard.png";
+    more_img.hovered = "client/img/more-standard-hovered.png";
+    more_img.standard = gtk_image_new_from_file(more_img.basic);
+
     t_active = &messages_img;
 
     t_img_event_box.messages_box = gtk_event_box_new();
@@ -32,4 +48,12 @@ void mx_load_images(void) {
     
     t_img_event_box.add_box = gtk_event_box_new();
     gtk_container_add(GTK_CONTAINER(t_img_event_box.add_box), add_img.standard);
+    t_img_event_box.ban_box = gtk_event_box_new();
+    mx_tooltip("You cannot send an empty message!", t_img_event_box.ban_box);
+    gtk_container_add(GTK_CONTAINER(t_img_event_box.ban_box), ban_img.standard);
+    t_img_event_box.tick_box = gtk_event_box_new();
+    gtk_container_add(GTK_CONTAINER(t_img_event_box.tick_box), tick_img.standard);
+    t_img_event_box.more_box = gtk_event_box_new();
+    gtk_container_add(GTK_CONTAINER(t_img_event_box.more_box), more_img.standard);
+
 }

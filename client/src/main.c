@@ -26,6 +26,11 @@ int main(int argc, char *argv[]) {
   
     gtk_init(&argc, &argv);
 
+    GtkCssProvider *cssProvider = gtk_css_provider_new();
+    gtk_css_provider_load_from_path(cssProvider, "client/css/uchat.css", NULL);
+    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
+        GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+
     mx_load_images();
   
     // Create a new window
@@ -46,6 +51,7 @@ int main(int argc, char *argv[]) {
     g_signal_connect(window, "configure-event", G_CALLBACK(test), NULL);
 
     gtk_widget_show_all (window);
+    gtk_widget_hide(GTK_WIDGET(t_img_event_box.tick_box));
 
     gtk_main();
   

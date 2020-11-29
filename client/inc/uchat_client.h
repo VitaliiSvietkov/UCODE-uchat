@@ -38,7 +38,11 @@ typedef struct s_image_button
 t_image_button settings_img;
 t_image_button contacts_img;
 t_image_button messages_img;
+
 t_image_button add_img;
+t_image_button ban_img;
+t_image_button tick_img;
+t_image_button more_img;
 
 t_image_button *t_active;
 
@@ -49,6 +53,9 @@ struct
     GtkWidget *settings_box;
     GtkWidget *messages_box;
     GtkWidget *add_box;
+    GtkWidget *ban_box;
+    GtkWidget *tick_box;
+    GtkWidget *more_box;
 } t_img_event_box;
 
 void mx_load_images(void);
@@ -72,21 +79,29 @@ gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr, gpointer user_d
 //==========================================================================================
 
 // Event callback functions (look in "mx_events.c")
-//============================================================
-void messages_enter_notify(GtkWidget *widget, gpointer data);
-void messages_leave_notify(GtkWidget *widget, gpointer data);
-void messages_click(GtkWidget *widget, gpointer data);
+//================================
+void messages_enter_notify(void);
+void messages_leave_notify(void);
+void messages_click(void);
 
-void contacts_enter_notify(GtkWidget *widget, gpointer data);
-void contacts_leave_notify(GtkWidget *widget, gpointer data);
-void contacts_click(GtkWidget *widget, gpointer data);
+void contacts_enter_notify(void);
+void contacts_leave_notify(void);
+void contacts_click(void);
 
-void settings_enter_notify(GtkWidget *widget, gpointer data);
-void settings_leave_notify(GtkWidget *widget, gpointer data);
-void settings_click(GtkWidget *widget, gpointer data);
+void settings_enter_notify(void);
+void settings_leave_notify(void);
+void settings_click(void);
 
-void add_enter_notify(GtkWidget *widget, gpointer data);
-void add_leave_notify(GtkWidget *widget, gpointer data);
-//============================================================
+void add_enter_notify(void);
+void add_leave_notify(void);
+
+void entry_chat_fill_event(GtkWidget *widget, GdkEventKey *event);
+
+void tick_enter_notify(void);
+void tick_leave_notify(void);
+
+void more_enter_notify(void);
+void more_leave_notify(void);
+//================================
 
 #endif
