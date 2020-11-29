@@ -20,6 +20,10 @@ void messages_click(GtkWidget *widget, GdkEventButton *event) {
         t_active = &messages_img;
         t_active->active = true;
         gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
+
+        gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
+        active_leftbar_container = chats_list;
+        gtk_widget_show(GTK_WIDGET(active_leftbar_container));
     }
     if (widget) {}
 }
@@ -70,6 +74,10 @@ void settings_click(GtkWidget *widget, GdkEventButton *event) {
         t_active = &settings_img;
         t_active->active = true;
         gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
+
+        gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
+        active_leftbar_container = settings_menu;
+        gtk_widget_show(GTK_WIDGET(active_leftbar_container));
     }
     if (widget) {}
 }

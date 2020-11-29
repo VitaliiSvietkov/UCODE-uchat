@@ -65,6 +65,10 @@ struct
 void mx_load_images(void);
 //============================
 
+GtkWidget *chats_list;
+GtkWidget *settings_menu;
+GtkWidget *active_leftbar_container;
+
 void mx_init_window(GtkWidget **window, GdkPixbuf **icon);
 
 void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWidget **window);

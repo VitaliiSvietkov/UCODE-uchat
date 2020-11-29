@@ -16,7 +16,8 @@ int main(int argc, char *argv[]) {
     GtkWidget *left_header = NULL;
     GtkWidget *content_selection_area = NULL;
     GtkWidget *chat_enter_area = NULL;
-    GtkWidget *settings_menu = NULL;
+    chats_list = NULL;
+    settings_menu = NULL;
 
     GdkPixbuf *icon = NULL;
     GtkWidget *entry_search = NULL;
@@ -48,6 +49,12 @@ int main(int argc, char *argv[]) {
     mx_configure_content_selection_area(&content_selection_area, &main_area);
     // Create a chat enter area
     mx_configure_chat_enter_area(&chat_enter_area, &main_area, &entry_chat);
+    // Create a chat list area
+    chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_fixed_put(GTK_FIXED(main_area), chats_list, 0, 95);
+    GtkWidget *testlabel = gtk_label_new("TEST");
+    gtk_box_pack_start(GTK_BOX(chats_list), testlabel, FALSE, FALSE, 0);
+    active_leftbar_container = chats_list;
     // Create a settings menu
     mx_configure_settings_menu_area(&settings_menu, &main_area);
 
@@ -55,6 +62,7 @@ int main(int argc, char *argv[]) {
 
     gtk_widget_show_all (window);
     gtk_widget_hide(GTK_WIDGET(t_img_event_box.tick_box));
+    gtk_widget_hide(GTK_WIDGET(settings_menu));
     gtk_widget_set_sensitive(GTK_WIDGET(entry_search), TRUE);
     gtk_widget_set_sensitive(GTK_WIDGET(entry_chat), TRUE);
 
