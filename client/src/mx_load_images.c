@@ -37,6 +37,21 @@ void mx_load_images(void) {
     more_img.hovered = "client/img/more-standard-hovered.png";
     more_img.standard = gtk_image_new_from_file(more_img.basic);
 
+    edit_user_img.active = false;
+    edit_user_img.basic = "client/img/edit-user-standard.png";
+    edit_user_img.hovered = "client/img/edit-user-standard-hovered.png";
+    edit_user_img.standard = gtk_image_new_from_file(edit_user_img.basic);
+
+    chat_settings_img.active = false;
+    chat_settings_img.basic = "client/img/chat-settings-standard.png";
+    chat_settings_img.hovered = "client/img/chat-settings-standard-hovered.png";
+    chat_settings_img.standard = gtk_image_new_from_file(chat_settings_img.basic);
+
+    language_img.active = false;
+    language_img.basic = "client/img/book-standard.png";
+    language_img.hovered = "client/img/book-standard-hovered.png";
+    language_img.standard = gtk_image_new_from_file(language_img.basic);
+
     t_active = &messages_img;
 
     t_img_event_box.messages_box = gtk_event_box_new();
@@ -55,5 +70,4 @@ void mx_load_images(void) {
     gtk_container_add(GTK_CONTAINER(t_img_event_box.tick_box), tick_img.standard);
     t_img_event_box.more_box = gtk_event_box_new();
     gtk_container_add(GTK_CONTAINER(t_img_event_box.more_box), more_img.standard);
-
 }

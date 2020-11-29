@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
     GtkWidget *left_header = NULL;
     GtkWidget *content_selection_area = NULL;
     GtkWidget *chat_enter_area = NULL;
+    GtkWidget *settings_menu = NULL;
 
     GdkPixbuf *icon = NULL;
     GtkWidget *entry_search = NULL;
@@ -47,11 +48,16 @@ int main(int argc, char *argv[]) {
     mx_configure_content_selection_area(&content_selection_area, &main_area);
     // Create a chat enter area
     mx_configure_chat_enter_area(&chat_enter_area, &main_area, &entry_chat);
+    // Create a settings menu
+    mx_configure_settings_menu_area(&settings_menu, &main_area);
 
     g_signal_connect(window, "configure-event", G_CALLBACK(test), NULL);
 
     gtk_widget_show_all (window);
     gtk_widget_hide(GTK_WIDGET(t_img_event_box.tick_box));
+    gtk_widget_set_sensitive(GTK_WIDGET(entry_search), TRUE);
+    gtk_widget_set_sensitive(GTK_WIDGET(entry_chat), TRUE);
+
 
     gtk_main();
   

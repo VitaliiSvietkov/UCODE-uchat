@@ -1,0 +1,65 @@
+#include "../inc/uchat_client.h"
+
+void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main_area) {
+    *settings_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 15);
+    gtk_widget_set_size_request(GTK_WIDGET(*settings_menu), L_FIELD_WIDTH, CUR_HEIGHT - 95);
+    gtk_widget_set_name(GTK_WIDGET(*settings_menu), "settings_menu");
+
+    gtk_fixed_put(GTK_FIXED(*main_area), *settings_menu, 0, 95);
+
+    GtkWidget *edit_user_eventbox = gtk_event_box_new();
+    GtkWidget *edit_user_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(edit_user_box), "edit_user_box");
+    gtk_container_add(GTK_CONTAINER(edit_user_eventbox), edit_user_box);
+    gtk_box_pack_start(GTK_BOX(*settings_menu), edit_user_eventbox, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(edit_user_box), edit_user_img.standard, FALSE, FALSE, 0);
+    GtkWidget *label_edit_user = gtk_label_new("Edit profile");
+    gtk_widget_set_name(GTK_WIDGET(label_edit_user), "label_edit_user");
+    gtk_box_pack_start(GTK_BOX(edit_user_box), label_edit_user, FALSE, FALSE, 50);
+
+    GtkWidget *chat_settings_eventbox = gtk_event_box_new();
+    GtkWidget *chat_settings_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(chat_settings_box), "chat_settings_box");
+    gtk_container_add(GTK_CONTAINER(chat_settings_eventbox), chat_settings_box);
+    gtk_box_pack_start(GTK_BOX(*settings_menu), chat_settings_eventbox, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(chat_settings_box), chat_settings_img.standard, FALSE, FALSE, 0);
+    GtkWidget *label_chat_settings = gtk_label_new("Chat settings");
+    gtk_widget_set_name(GTK_WIDGET(label_chat_settings), "label_chat_settings");
+    gtk_box_pack_start(GTK_BOX(chat_settings_box), label_chat_settings, FALSE, FALSE, 50);
+
+    GtkWidget *language_eventbox = gtk_event_box_new();
+    GtkWidget *language_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(language_box), "language_box");
+    gtk_container_add(GTK_CONTAINER(language_eventbox), language_box);
+    gtk_box_pack_start(GTK_BOX(*settings_menu), language_eventbox, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(language_box), language_img.standard, FALSE, FALSE, 0);
+    GtkWidget *label_language = gtk_label_new("Language");
+    gtk_widget_set_name(GTK_WIDGET(label_language), "label_language");
+    gtk_box_pack_start(GTK_BOX(language_box), label_language, FALSE, FALSE, 50);
+
+
+    GtkWidget *label_impulse = gtk_label_new("Impulse");
+    gtk_widget_set_name(GTK_WIDGET(label_impulse), "label_impulse");
+    GtkWidget *label_version = gtk_label_new("Alpha version");
+    gtk_widget_set_name(GTK_WIDGET(label_version), "label_version");
+    gtk_box_pack_start(GTK_BOX(*settings_menu), label_impulse, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(*settings_menu), label_version, TRUE, TRUE, 0);
+
+    gtk_widget_set_valign(GTK_WIDGET(label_impulse), GTK_ALIGN_END);
+    gtk_widget_set_valign(GTK_WIDGET(label_version), GTK_ALIGN_END);
+
+    g_signal_connect(G_OBJECT(edit_user_eventbox), "enter-notify-event",
+        G_CALLBACK(edit_user_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(edit_user_eventbox), "leave-notify-event",
+        G_CALLBACK(edit_user_leave_notify), NULL);
+
+    g_signal_connect(G_OBJECT(chat_settings_eventbox), "enter-notify-event",
+        G_CALLBACK(chat_settings_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(chat_settings_eventbox), "leave-notify-event",
+        G_CALLBACK(chat_settings_leave_notify), NULL);
+
+    g_signal_connect(G_OBJECT(language_eventbox), "enter-notify-event",
+        G_CALLBACK(language_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(language_eventbox), "leave-notify-event",
+        G_CALLBACK(language_leave_notify), NULL);
+}

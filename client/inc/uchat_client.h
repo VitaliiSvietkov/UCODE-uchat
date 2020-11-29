@@ -44,6 +44,10 @@ t_image_button ban_img;
 t_image_button tick_img;
 t_image_button more_img;
 
+t_image_button edit_user_img;
+t_image_button chat_settings_img;
+t_image_button language_img;
+
 t_image_button *t_active;
 
 // EventBoxes for images
@@ -68,6 +72,7 @@ void mx_configure_left_header(GtkWidget **left_header, GtkWidget **main_area, Gt
 void mx_configure_content_selection_area(GtkWidget **content_selection_area, GtkWidget **main_area);
 void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **main_area,
     GtkWidget **entry_chat);
+void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main_area);
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
 void mx_tooltip(char *str, void *data);
 
@@ -75,33 +80,42 @@ void mx_tooltip(char *str, void *data);
 //==========================================================================================
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
-gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 //==========================================================================================
 
 // Event callback functions (look in "mx_events.c")
 //================================
 void messages_enter_notify(void);
 void messages_leave_notify(void);
-void messages_click(void);
+void messages_click(GtkWidget *widget, GdkEventButton *event);
 
 void contacts_enter_notify(void);
 void contacts_leave_notify(void);
-void contacts_click(void);
+void contacts_click(GtkWidget *widget, GdkEventButton *event);
 
 void settings_enter_notify(void);
 void settings_leave_notify(void);
-void settings_click(void);
+void settings_click(GtkWidget *widget, GdkEventButton *event);
 
 void add_enter_notify(void);
 void add_leave_notify(void);
 
-void entry_chat_fill_event(GtkWidget *widget, GdkEventKey *event);
+void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);
 
 void tick_enter_notify(void);
 void tick_leave_notify(void);
 
 void more_enter_notify(void);
 void more_leave_notify(void);
+
+void edit_user_enter_notify(void);
+void edit_user_leave_notify(void);
+
+void chat_settings_enter_notify(void);
+void chat_settings_leave_notify(void);
+
+void language_enter_notify(void);
+void language_leave_notify(void);
 //================================
 
 #endif

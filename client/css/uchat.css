@@ -18,7 +18,7 @@
     color: #1f1f1f;
     box-shadow: none;
     border-color: #e1e1e1;
-    border-radius: 0px;
+    border-radius: 5px;
     font-size: 16px;
 }
 
@@ -26,4 +26,50 @@
     font-style: italic;
     color: #1f1f1f;
     font-size: 20px;
+}
+
+#settings_menu {
+    padding-top: 15px;
+    color: #e1e1e1;
+    font-size: 16px;
+}
+
+#edit_user_box {
+    padding-left: 50px;
+}
+
+#label_edit_user {
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+#chat_settings_box {
+    padding-left: 50px;
+}
+
+#label_chat_settings {
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+#language_box {
+    padding-left: 56px;
+}
+
+#label_language {
+    font-size: 18px;
+    padding-left: 6px;
+    letter-spacing: 1px;
+}
+
+#label_impulse {
+    margin-top: 300px;
+    font-size: 22px;
+    font-style: italic;
+}
+
+#label_version {
+    font-size: 14px;
+    margin-bottom: 30px;
+    opacity: 0.8;
 }
