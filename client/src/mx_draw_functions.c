@@ -41,8 +41,8 @@ gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr) {
         y = 0,
         width = 70,
         height = 70,
-        aspect = 1.0,     /* aspect ratio */
-        corner_radius = height / 3.0;   /* and corner curvature radius */
+        aspect = 1.0,                       /* aspect ratio */
+        corner_radius = height / 3.0;       /* and corner curvature radius */
     double radius = corner_radius / aspect;
     double degrees = M_PI / 180.0;
 

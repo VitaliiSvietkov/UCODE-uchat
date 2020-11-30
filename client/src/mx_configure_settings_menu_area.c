@@ -7,6 +7,7 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
 
     gtk_fixed_put(GTK_FIXED(*main_area), *settings_menu, 0, 95);
 
+    // Profile info section
     GtkWidget *user_profile_preview_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(user_profile_preview_eventbox), "user_profile_preview_eventbox");
     GtkWidget *user_profile_preview_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -17,13 +18,18 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     GtkWidget *avatar = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 70, 70);
     g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_avatar), NULL);
-    /*
-    GdkPixbuf *avatar_pixbuf = mx_get_pixbuf_with_size("client/img/avatar.jpeg", 70, 70);
-    GtkWidget *avatar = gtk_image_new_from_pixbuf(avatar_pixbuf);
-    g_object_unref(G_OBJECT(avatar_pixbuf));
-    */
     gtk_box_pack_start(GTK_BOX(user_profile_preview_box), avatar, FALSE, FALSE, 0);
+    GtkWidget *user_info_preview = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_box_pack_start(GTK_BOX(user_profile_preview_box), user_info_preview, FALSE, FALSE, 31);
+    GtkWidget *username = gtk_label_new("Vitalii Svietkov");
+    gtk_widget_set_name(GTK_WIDGET(username), "username_preview");
+    GtkWidget *contact_info = gtk_label_new("a1vitalii.sv@gmail.com");
+    gtk_widget_set_name(GTK_WIDGET(contact_info), "contact_info_preview");
+    gtk_box_pack_start(GTK_BOX(user_info_preview), username, FALSE, FALSE, 0);
+    gtk_widget_set_halign(username, GTK_ALIGN_START);
+    gtk_box_pack_start(GTK_BOX(user_info_preview), contact_info, FALSE, FALSE, 0);
 
+    // "Edit profile" section
     GtkWidget *edit_user_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(edit_user_eventbox), "edit_user_eventbox");
     GtkWidget *edit_user_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -35,6 +41,7 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_widget_set_name(GTK_WIDGET(label_edit_user), "label_edit_user");
     gtk_box_pack_start(GTK_BOX(edit_user_box), label_edit_user, FALSE, FALSE, 50);
 
+    // "Chat settings" section
     GtkWidget *chat_settings_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(chat_settings_eventbox), "chat_settings_eventbox");
     GtkWidget *chat_settings_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -46,6 +53,7 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_widget_set_name(GTK_WIDGET(label_chat_settings), "label_chat_settings");
     gtk_box_pack_start(GTK_BOX(chat_settings_box), label_chat_settings, FALSE, FALSE, 50);
 
+    // "Language" section
     GtkWidget *language_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(language_eventbox), "language_eventbox");
     GtkWidget *language_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -57,7 +65,7 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_widget_set_name(GTK_WIDGET(label_language), "label_language");
     gtk_box_pack_start(GTK_BOX(language_box), label_language, FALSE, FALSE, 50);
 
-
+    // Footer section
     GtkWidget *label_impulse = gtk_label_new("Impulse");
     gtk_widget_set_name(GTK_WIDGET(label_impulse), "label_impulse");
     GtkWidget *label_version = gtk_label_new("Alpha version");

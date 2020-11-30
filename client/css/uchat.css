@@ -43,6 +43,21 @@
     padding-bottom: 7.5px;
 }
 
+#contact_info_preview {
+    margin-top: -5px;
+    font-size: 16px;
+    font-style: italic;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+#username_preview {
+    padding-top: 2px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
 #edit_user_box {
     padding-top: 7.5px;
     padding-left: 50px;
