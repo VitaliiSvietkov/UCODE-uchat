@@ -79,6 +79,7 @@ void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **main_
     GtkWidget **entry_chat);
 void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main_area);
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
+GdkPixbuf *mx_get_pixbuf_with_size(char *path, int w, int h);
 void mx_tooltip(char *str, void *data);
 
 // All draw functions are in "mx_draw_functions.c"

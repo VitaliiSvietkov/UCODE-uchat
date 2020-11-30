@@ -13,7 +13,11 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_widget_set_name(GTK_WIDGET(user_profile_preview_box), "user_profile_preview_box");
     gtk_container_add(GTK_CONTAINER(user_profile_preview_eventbox), user_profile_preview_box);
     gtk_box_pack_start(GTK_BOX(*settings_menu), user_profile_preview_eventbox, FALSE, FALSE, 0);
-    //gtk_box_pack_start(GTK_BOX(user_profile_preview_box), avatar, FALSE, FALSE, 0);
+    GdkPixbuf *avatar_pixbuf = mx_get_pixbuf_with_size("client/img/avatar.jpeg", 50, 50);
+    GtkWidget *avatar = gtk_image_new_from_pixbuf(avatar_pixbuf);
+    g_object_unref(G_OBJECT(avatar_pixbuf));
+    gtk_box_pack_start(GTK_BOX(user_profile_preview_box), avatar, FALSE, FALSE, 0);
+
 
     GtkWidget *edit_user_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(edit_user_eventbox), "edit_user_eventbox");
