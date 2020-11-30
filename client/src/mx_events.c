@@ -155,6 +155,14 @@ void edit_user_leave_notify(GtkWidget *widget) {
         gtk_image_set_from_file(GTK_IMAGE(edit_user_img.standard), edit_user_img.basic);
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
+
+void edit_user_click(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        mx_create_edit_user_form();
+        gtk_widget_show_all(GTK_WIDGET(back_blackout));
+    }
+    if (widget) {}
+}
 //==================================
 
 // Change_account icon in settings menu
@@ -201,3 +209,14 @@ void language_leave_notify(GtkWidget *widget) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 //=================================
+
+// Blackout
+//==============================================================
+void blackout_click(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_container_remove(GTK_CONTAINER(main_area), GTK_WIDGET(back_blackout));
+        gtk_widget_destroy(GTK_WIDGET(back_blackout));
+    }
+    if (widget) {}
+}
+//==============================================================

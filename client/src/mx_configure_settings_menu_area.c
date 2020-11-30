@@ -92,7 +92,9 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
         G_CALLBACK(edit_user_enter_notify), NULL);
     g_signal_connect(G_OBJECT(edit_user_eventbox), "leave-notify-event",
         G_CALLBACK(edit_user_leave_notify), NULL);
-    
+    g_signal_connect(G_OBJECT(edit_user_eventbox), "button_press_event",
+        G_CALLBACK(edit_user_click), NULL);    
+
     g_signal_connect(G_OBJECT(change_account_eventbox), "enter-notify-event",
         G_CALLBACK(change_account_enter_notify), NULL);
     g_signal_connect(G_OBJECT(change_account_eventbox), "leave-notify-event",

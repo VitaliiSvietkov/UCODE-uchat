@@ -12,7 +12,7 @@ gboolean test(GtkWidget *widget, GdkEvent *event, gpointer user_data) {
 int main(int argc, char *argv[]) {
     // Containers
     GtkWidget *window = NULL;
-    GtkWidget *main_area = NULL;
+    main_area = NULL;
     GtkWidget *left_header = NULL;
     GtkWidget *content_selection_area = NULL;
     GtkWidget *chat_enter_area = NULL;

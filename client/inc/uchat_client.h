@@ -67,10 +67,15 @@ struct
 void mx_load_images(void);
 //============================
 
+GtkWidget *main_area;
+
 GtkWidget *chats_list;
 GtkWidget *contacts_list;
 GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
+
+GtkWidget *back_blackout;
+GtkWidget *edit_user_form;
 
 //cairo_surface_t *avatar_image;
 
@@ -82,6 +87,7 @@ void mx_configure_content_selection_area(GtkWidget **content_selection_area, Gtk
 void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **main_area,
     GtkWidget **entry_chat);
 void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main_area);
+void mx_create_edit_user_form(void);
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
 GdkPixbuf *mx_get_pixbuf_with_size(char *path, int w, int h);
 void mx_tooltip(char *str, void *data);
@@ -92,6 +98,7 @@ gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_
 gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr);
+gboolean mx_draw_event_blackout(GtkWidget *widget, cairo_t *cr);
 //==========================================================================================
 
 // Event callback functions (look in "mx_events.c")
@@ -121,6 +128,7 @@ void more_leave_notify(void);
 
 void edit_user_enter_notify(GtkWidget *widget);
 void edit_user_leave_notify(GtkWidget *widget);
+void edit_user_click(GtkWidget *widget, GdkEventButton *event);
 
 void change_account_enter_notify(GtkWidget *widget);
 void change_account_leave_notify(GtkWidget *widget);
@@ -130,6 +138,8 @@ void chat_settings_leave_notify(GtkWidget *widget);
 
 void language_enter_notify(GtkWidget *widget);
 void language_leave_notify(GtkWidget *widget);
+
+void blackout_click(GtkWidget *widget, GdkEventButton *event);
 //================================
 
 #endif

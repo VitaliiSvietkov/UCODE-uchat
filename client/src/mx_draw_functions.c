@@ -57,3 +57,11 @@ gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr) {
     if (widget) {}
     return FALSE;
 }
+
+gboolean mx_draw_event_blackout(GtkWidget *widget, cairo_t *cr) {
+    cairo_set_source_rgba(cr, MX_1F1F1F, MX_1F1F1F, MX_1F1F1F, 0.6);
+    cairo_rectangle(cr, 0, 0, CUR_WIDTH, CUR_HEIGHT);
+    cairo_fill(cr);
+    if (widget) {}
+    return FALSE;
+}

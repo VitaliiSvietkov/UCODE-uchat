@@ -15,7 +15,7 @@ void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWi
 
 
     /*
-    GdkPixbufAnimation *anim = gdk_pixbuf_animation_new_from_file("client/img/giphy.gif", NULL);
+    GdkPixbufAnimation *anim = gdk_pixbuf_animation_new_from_file("client/img/standard/giphy.gif", NULL);
     GtkWidget *gif = gtk_image_new_from_animation(anim);
     gtk_fixed_put(GTK_FIXED(*main_area), gif, 100, 100);
     */
