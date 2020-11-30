@@ -49,6 +49,10 @@ void contacts_click(GtkWidget *widget, GdkEventButton *event) {
         t_active = &contacts_img;
         t_active->active = true;
         gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
+
+        gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
+        active_leftbar_container = contacts_list;
+        gtk_widget_show(GTK_WIDGET(active_leftbar_container));
     }
     if (widget) {}
 }
@@ -140,39 +144,45 @@ void more_leave_notify() {
 
 // Edit_user icon in settings menu
 //==================================
-void edit_user_enter_notify() {
+void edit_user_enter_notify(GtkWidget *widget) {
     if (!edit_user_img.active)
         gtk_image_set_from_file(GTK_IMAGE(edit_user_img.standard), edit_user_img.hovered);
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
 }
 
-void edit_user_leave_notify() {
+void edit_user_leave_notify(GtkWidget *widget) {
     if (!edit_user_img.active)
         gtk_image_set_from_file(GTK_IMAGE(edit_user_img.standard), edit_user_img.basic);
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 //==================================
 
 // Chat_settings icon in settings menu
 //======================================
-void chat_settings_enter_notify() {
+void chat_settings_enter_notify(GtkWidget *widget) {
     if (!chat_settings_img.active)
         gtk_image_set_from_file(GTK_IMAGE(chat_settings_img.standard), chat_settings_img.hovered);
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
 }
 
-void chat_settings_leave_notify() {
+void chat_settings_leave_notify(GtkWidget *widget) {
     if (!chat_settings_img.active)
         gtk_image_set_from_file(GTK_IMAGE(chat_settings_img.standard), chat_settings_img.basic);
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 //==================================
 
 // Language icon in settings menu
 //================================
-void language_enter_notify() {
+void language_enter_notify(GtkWidget *widget) {
     if (!language_img.active)
         gtk_image_set_from_file(GTK_IMAGE(language_img.standard), language_img.hovered);
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
 }
 
-void language_leave_notify() {
+void language_leave_notify(GtkWidget *widget) {
     if (!language_img.active)
         gtk_image_set_from_file(GTK_IMAGE(language_img.standard), language_img.basic);
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 //=================================

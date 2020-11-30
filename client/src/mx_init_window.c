@@ -1,6 +1,6 @@
 #include "../inc/uchat_client.h"
 
-void mx_init_window(GtkWidget **window, GdkPixbuf **icon) {
+void mx_init_window(GtkWidget **window) {
     CUR_WIDTH = WIN_WIDTH_MIN;
     CUR_HEIGHT = WIN_HEIGHT_MIN;
     L_FIELD_WIDTH = CUR_WIDTH / 3 + 50;
@@ -10,5 +10,5 @@ void mx_init_window(GtkWidget **window, GdkPixbuf **icon) {
     gtk_window_set_title(GTK_WINDOW(*window), "UchatApp");
     gtk_window_set_default_size(GTK_WINDOW(*window), WIN_WIDTH_MIN, WIN_HEIGHT_MIN); //sets the size the window will be shown
     gtk_window_set_position(GTK_WINDOW(*window), GTK_WIN_POS_CENTER);
-    gtk_window_set_icon(GTK_WINDOW(*window), *icon);
+    g_signal_connect(*window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 }

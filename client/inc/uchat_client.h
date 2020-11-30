@@ -66,10 +66,11 @@ void mx_load_images(void);
 //============================
 
 GtkWidget *chats_list;
+GtkWidget *contacts_list;
 GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
 
-void mx_init_window(GtkWidget **window, GdkPixbuf **icon);
+void mx_init_window(GtkWidget **window);
 
 void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWidget **window);
 void mx_configure_left_header(GtkWidget **left_header, GtkWidget **main_area, GtkWidget **entry_search);
@@ -112,14 +113,14 @@ void tick_leave_notify(void);
 void more_enter_notify(void);
 void more_leave_notify(void);
 
-void edit_user_enter_notify(void);
-void edit_user_leave_notify(void);
+void edit_user_enter_notify(GtkWidget *widget);
+void edit_user_leave_notify(GtkWidget *widget);
 
-void chat_settings_enter_notify(void);
-void chat_settings_leave_notify(void);
+void chat_settings_enter_notify(GtkWidget *widget);
+void chat_settings_leave_notify(GtkWidget *widget);
 
-void language_enter_notify(void);
-void language_leave_notify(void);
+void language_enter_notify(GtkWidget *widget);
+void language_leave_notify(GtkWidget *widget);
 //================================
 
 #endif

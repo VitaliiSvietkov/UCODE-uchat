@@ -19,7 +19,6 @@ int main(int argc, char *argv[]) {
     chats_list = NULL;
     settings_menu = NULL;
 
-    GdkPixbuf *icon = NULL;
     GtkWidget *entry_search = NULL;
     GtkWidget *entry_chat = NULL;
 
@@ -37,38 +36,45 @@ int main(int argc, char *argv[]) {
   
     // Create a new window
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-    mx_init_window(&window, &icon);
-    icon = mx_create_pixbuf("client/img/logo.png");
+    mx_init_window(&window);
 
     // Create a main area where all widgets will be shown
     mx_configure_main_area(&main_area, &background, &window);
+
     // Create a header for left area
     mx_configure_left_header(&left_header, &main_area, &entry_search);
+
     // Create a selection area
     mx_configure_content_selection_area(&content_selection_area, &main_area);
+
     // Create a chat enter area
     mx_configure_chat_enter_area(&chat_enter_area, &main_area, &entry_chat);
+
     // Create a chat list area
     chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_fixed_put(GTK_FIXED(main_area), chats_list, 0, 95);
-    GtkWidget *testlabel = gtk_label_new("TEST");
-    gtk_box_pack_start(GTK_BOX(chats_list), testlabel, FALSE, FALSE, 0);
     active_leftbar_container = chats_list;
+
+    // Create a contacts list area
+    contacts_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_fixed_put(GTK_FIXED(main_area), contacts_list, 0, 95);
+
     // Create a settings menu
     mx_configure_settings_menu_area(&settings_menu, &main_area);
 
     g_signal_connect(window, "configure-event", G_CALLBACK(test), NULL);
 
     gtk_widget_show_all (window);
+    // Hide unneccessary widgets
     gtk_widget_hide(GTK_WIDGET(t_img_event_box.tick_box));
+    gtk_widget_hide(GTK_WIDGET(contacts_list));
     gtk_widget_hide(GTK_WIDGET(settings_menu));
+    // Return sensativity for entries
     gtk_widget_set_sensitive(GTK_WIDGET(entry_search), TRUE);
     gtk_widget_set_sensitive(GTK_WIDGET(entry_chat), TRUE);
 
 
     gtk_main();
   
-    g_object_unref(icon); //in fact, a "free" command
     return 0;
 }

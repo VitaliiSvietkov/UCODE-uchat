@@ -1,13 +1,22 @@
 #include "../inc/uchat_client.h"
 
 void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main_area) {
-    *settings_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 15);
+    *settings_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(*settings_menu), L_FIELD_WIDTH, CUR_HEIGHT - 95);
     gtk_widget_set_name(GTK_WIDGET(*settings_menu), "settings_menu");
 
     gtk_fixed_put(GTK_FIXED(*main_area), *settings_menu, 0, 95);
 
+    GtkWidget *user_profile_preview_eventbox = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(user_profile_preview_eventbox), "user_profile_preview_eventbox");
+    GtkWidget *user_profile_preview_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(user_profile_preview_box), "user_profile_preview_box");
+    gtk_container_add(GTK_CONTAINER(user_profile_preview_eventbox), user_profile_preview_box);
+    gtk_box_pack_start(GTK_BOX(*settings_menu), user_profile_preview_eventbox, FALSE, FALSE, 0);
+    //gtk_box_pack_start(GTK_BOX(user_profile_preview_box), avatar, FALSE, FALSE, 0);
+
     GtkWidget *edit_user_eventbox = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(edit_user_eventbox), "edit_user_eventbox");
     GtkWidget *edit_user_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(edit_user_box), "edit_user_box");
     gtk_container_add(GTK_CONTAINER(edit_user_eventbox), edit_user_box);
@@ -18,6 +27,7 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_box_pack_start(GTK_BOX(edit_user_box), label_edit_user, FALSE, FALSE, 50);
 
     GtkWidget *chat_settings_eventbox = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(chat_settings_eventbox), "chat_settings_eventbox");
     GtkWidget *chat_settings_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(chat_settings_box), "chat_settings_box");
     gtk_container_add(GTK_CONTAINER(chat_settings_eventbox), chat_settings_box);
@@ -28,6 +38,7 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_box_pack_start(GTK_BOX(chat_settings_box), label_chat_settings, FALSE, FALSE, 50);
 
     GtkWidget *language_eventbox = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(language_eventbox), "language_eventbox");
     GtkWidget *language_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(language_box), "language_box");
     gtk_container_add(GTK_CONTAINER(language_eventbox), language_box);
