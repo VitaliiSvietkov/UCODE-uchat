@@ -41,6 +41,18 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_widget_set_name(GTK_WIDGET(label_edit_user), "label_edit_user");
     gtk_box_pack_start(GTK_BOX(edit_user_box), label_edit_user, FALSE, FALSE, 50);
 
+    // "Change account" section
+    GtkWidget *change_account_eventbox = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(change_account_eventbox), "change_account_eventbox");
+    GtkWidget *change_account_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(change_account_box), "change_account_box");
+    gtk_container_add(GTK_CONTAINER(change_account_eventbox), change_account_box);
+    gtk_box_pack_start(GTK_BOX(*settings_menu), change_account_eventbox, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(change_account_box), change_account_img.standard, FALSE, FALSE, 0);
+    GtkWidget *label_change_account = gtk_label_new("Change account");
+    gtk_widget_set_name(GTK_WIDGET(label_change_account), "label_change_account");
+    gtk_box_pack_start(GTK_BOX(change_account_box), label_change_account, FALSE, FALSE, 50);
+
     // "Chat settings" section
     GtkWidget *chat_settings_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(chat_settings_eventbox), "chat_settings_eventbox");
@@ -80,6 +92,11 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
         G_CALLBACK(edit_user_enter_notify), NULL);
     g_signal_connect(G_OBJECT(edit_user_eventbox), "leave-notify-event",
         G_CALLBACK(edit_user_leave_notify), NULL);
+    
+    g_signal_connect(G_OBJECT(change_account_eventbox), "enter-notify-event",
+        G_CALLBACK(change_account_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(change_account_eventbox), "leave-notify-event",
+        G_CALLBACK(change_account_leave_notify), NULL);
 
     g_signal_connect(G_OBJECT(chat_settings_eventbox), "enter-notify-event",
         G_CALLBACK(chat_settings_enter_notify), NULL);

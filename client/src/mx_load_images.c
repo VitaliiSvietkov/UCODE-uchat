@@ -42,6 +42,11 @@ void mx_load_images(void) {
     edit_user_img.hovered = "client/img/edit-user-standard-hovered.png";
     edit_user_img.standard = gtk_image_new_from_file(edit_user_img.basic);
 
+    change_account_img.active = false;
+    change_account_img.basic = "client/img/identification-standard.png";
+    change_account_img.hovered = "client/img/identification-standard-hovered.png";
+    change_account_img.standard = gtk_image_new_from_file(change_account_img.basic);
+
     chat_settings_img.active = false;
     chat_settings_img.basic = "client/img/chat-settings-standard.png";
     chat_settings_img.hovered = "client/img/chat-settings-standard-hovered.png";

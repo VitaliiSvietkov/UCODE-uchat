@@ -64,10 +64,20 @@
     padding-bottom: 7.5px;
 }
 
+#change_account_box {
+    padding-top: 7.5px;
+    padding-left: 50px;
+    padding-bottom: 7.5px;
+}
+
 #label_edit_user {
     font-size: 18px;
     letter-spacing: 1px;
 }
+
+#label_change_account {
+    font-size: 18px;
+    letter-spacing: 1px;}
 
 #chat_settings_box {
     padding-top: 7.5px;
@@ -101,6 +111,14 @@
     border-right: 5px solid #e1e1e1;
 }
 
+#change_account_eventbox {
+    transition: all 0.2s;
+}
+#change_account_eventbox:hover {
+    border-left: 5px solid #e1e1e1;
+    border-right: 5px solid #e1e1e1;
+}
+
 #chat_settings_eventbox {
     transition: all 0.2s;
 }
@@ -121,7 +139,7 @@
 /*        FOOTER         */
 /* ===================== */
 #label_impulse {
-    margin-top: 270px;
+    margin-top: 205px;
     font-size: 22px;
     font-style: italic;
 }

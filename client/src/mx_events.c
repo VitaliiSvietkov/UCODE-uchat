@@ -157,6 +157,21 @@ void edit_user_leave_notify(GtkWidget *widget) {
 }
 //==================================
 
+// Change_account icon in settings menu
+//==================================
+void change_account_enter_notify(GtkWidget *widget) {
+    if (!change_account_img.active)
+        gtk_image_set_from_file(GTK_IMAGE(change_account_img.standard), change_account_img.hovered);
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+}
+
+void change_account_leave_notify(GtkWidget *widget) {
+    if (!change_account_img.active)
+        gtk_image_set_from_file(GTK_IMAGE(change_account_img.standard), change_account_img.basic);
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+}
+//==================================
+
 // Chat_settings icon in settings menu
 //======================================
 void chat_settings_enter_notify(GtkWidget *widget) {

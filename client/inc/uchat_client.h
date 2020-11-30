@@ -46,6 +46,7 @@ t_image_button tick_img;
 t_image_button more_img;
 
 t_image_button edit_user_img;
+t_image_button change_account_img;
 t_image_button chat_settings_img;
 t_image_button language_img;
 
@@ -120,6 +121,9 @@ void more_leave_notify(void);
 
 void edit_user_enter_notify(GtkWidget *widget);
 void edit_user_leave_notify(GtkWidget *widget);
+
+void change_account_enter_notify(GtkWidget *widget);
+void change_account_leave_notify(GtkWidget *widget);
 
 void chat_settings_enter_notify(GtkWidget *widget);
 void chat_settings_leave_notify(GtkWidget *widget);
