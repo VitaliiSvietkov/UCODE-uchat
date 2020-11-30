@@ -5,6 +5,7 @@
 #include <gtk/gtk.h>
 #include <sys/ioctl.h>
 #include <stdio.h>
+#include <math.h>
 
 // Window size
 //=========================
@@ -70,6 +71,8 @@ GtkWidget *contacts_list;
 GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
 
+//cairo_surface_t *avatar_image;
+
 void mx_init_window(GtkWidget **window);
 
 void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWidget **window);
@@ -87,6 +90,7 @@ void mx_tooltip(char *str, void *data);
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
+gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr);
 //==========================================================================================
 
 // Event callback functions (look in "mx_events.c")
