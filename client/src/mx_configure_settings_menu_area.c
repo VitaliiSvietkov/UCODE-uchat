@@ -2,10 +2,10 @@
 
 void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main_area) {
     *settings_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_size_request(GTK_WIDGET(*settings_menu), L_FIELD_WIDTH, CUR_HEIGHT - 95);
+    gtk_widget_set_size_request(GTK_WIDGET(*settings_menu), L_FIELD_WIDTH, CUR_HEIGHT - 105);
     gtk_widget_set_name(GTK_WIDGET(*settings_menu), "settings_menu");
 
-    gtk_fixed_put(GTK_FIXED(*main_area), *settings_menu, 0, 95);
+    gtk_fixed_put(GTK_FIXED(*main_area), *settings_menu, 0, 105);
 
     // Profile info section
     GtkWidget *user_profile_preview_eventbox = gtk_event_box_new();
@@ -36,7 +36,7 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_widget_set_name(GTK_WIDGET(edit_user_box), "edit_user_box");
     gtk_container_add(GTK_CONTAINER(edit_user_eventbox), edit_user_box);
     gtk_box_pack_start(GTK_BOX(*settings_menu), edit_user_eventbox, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(edit_user_box), edit_user_img.standard, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(edit_user_box), edit_user_image.box, FALSE, FALSE, 0);
     GtkWidget *label_edit_user = gtk_label_new("Edit profile");
     gtk_widget_set_name(GTK_WIDGET(label_edit_user), "label_edit_user");
     gtk_box_pack_start(GTK_BOX(edit_user_box), label_edit_user, FALSE, FALSE, 50);
@@ -48,7 +48,7 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_widget_set_name(GTK_WIDGET(change_account_box), "change_account_box");
     gtk_container_add(GTK_CONTAINER(change_account_eventbox), change_account_box);
     gtk_box_pack_start(GTK_BOX(*settings_menu), change_account_eventbox, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(change_account_box), change_account_img.standard, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(change_account_box), change_account_image.box, FALSE, FALSE, 0);
     GtkWidget *label_change_account = gtk_label_new("Change account");
     gtk_widget_set_name(GTK_WIDGET(label_change_account), "label_change_account");
     gtk_box_pack_start(GTK_BOX(change_account_box), label_change_account, FALSE, FALSE, 50);
@@ -60,7 +60,7 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_widget_set_name(GTK_WIDGET(chat_settings_box), "chat_settings_box");
     gtk_container_add(GTK_CONTAINER(chat_settings_eventbox), chat_settings_box);
     gtk_box_pack_start(GTK_BOX(*settings_menu), chat_settings_eventbox, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(chat_settings_box), chat_settings_img.standard, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(chat_settings_box), chat_settings_image.box, FALSE, FALSE, 0);
     GtkWidget *label_chat_settings = gtk_label_new("Chat settings");
     gtk_widget_set_name(GTK_WIDGET(label_chat_settings), "label_chat_settings");
     gtk_box_pack_start(GTK_BOX(chat_settings_box), label_chat_settings, FALSE, FALSE, 50);
@@ -72,7 +72,7 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_widget_set_name(GTK_WIDGET(language_box), "language_box");
     gtk_container_add(GTK_CONTAINER(language_eventbox), language_box);
     gtk_box_pack_start(GTK_BOX(*settings_menu), language_eventbox, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(language_box), language_img.standard, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(language_box), language_image.box, FALSE, FALSE, 0);
     GtkWidget *label_language = gtk_label_new("Language");
     gtk_widget_set_name(GTK_WIDGET(label_language), "label_language");
     gtk_box_pack_start(GTK_BOX(language_box), label_language, FALSE, FALSE, 50);

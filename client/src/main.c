@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 
     gtk_widget_show_all (window);
     // Hide unneccessary widgets
-    gtk_widget_hide(GTK_WIDGET(t_img_event_box.tick_box));
+    gtk_widget_hide(GTK_WIDGET(tick_image.box));
     gtk_widget_hide(GTK_WIDGET(contacts_list));
     gtk_widget_hide(GTK_WIDGET(settings_menu));
     // Return sensativity for entries

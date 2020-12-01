@@ -11,36 +11,36 @@ void mx_configure_content_selection_area(GtkWidget **content_selection_area, Gtk
 
     // A line which is under the images
     GtkWidget *delimiter = gtk_drawing_area_new();
-    gtk_box_pack_start(GTK_BOX(*content_selection_area), delimiter, TRUE, FALSE, 5);
+    gtk_box_pack_start(GTK_BOX(*content_selection_area), delimiter, TRUE, FALSE, 15);
     gtk_widget_set_size_request(GTK_WIDGET(delimiter), L_FIELD_WIDTH, 1);
     g_signal_connect(G_OBJECT(delimiter), "draw",
                      G_CALLBACK(mx_draw_event_delimiter), NULL);
 
     gtk_box_pack_start(GTK_BOX(image_container),
-        t_img_event_box.messages_box, TRUE, FALSE, 30);
+        messages_image.box, TRUE, FALSE, 30);
     gtk_box_pack_start(GTK_BOX(image_container),
-        t_img_event_box.contacts_box, TRUE, FALSE, 30);
+        contacts_image.box, TRUE, FALSE, 30);
     gtk_box_pack_start(GTK_BOX(image_container),
-        t_img_event_box.settings_box, TRUE, FALSE, 30);
+        settings_image.box, TRUE, FALSE, 30);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "enter-notify-event",
+    g_signal_connect(G_OBJECT(messages_image.box), "enter-notify-event",
         G_CALLBACK(messages_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "leave-notify-event",
+    g_signal_connect(G_OBJECT(messages_image.box), "leave-notify-event",
         G_CALLBACK(messages_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "button_press_event",
+    g_signal_connect(G_OBJECT(messages_image.box), "button_press_event",
         G_CALLBACK(messages_click), NULL);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.contacts_box), "enter-notify-event",
+    g_signal_connect(G_OBJECT(contacts_image.box), "enter-notify-event",
         G_CALLBACK(contacts_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.contacts_box), "leave-notify-event",
+    g_signal_connect(G_OBJECT(contacts_image.box), "leave-notify-event",
         G_CALLBACK(contacts_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.contacts_box), "button_press_event",
+    g_signal_connect(G_OBJECT(contacts_image.box), "button_press_event",
         G_CALLBACK(contacts_click), NULL);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "enter-notify-event",
+    g_signal_connect(G_OBJECT(settings_image.box), "enter-notify-event",
         G_CALLBACK(settings_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "leave-notify-event",
+    g_signal_connect(G_OBJECT(settings_image.box), "leave-notify-event",
         G_CALLBACK(settings_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "button_press_event",
+    g_signal_connect(G_OBJECT(settings_image.box), "button_press_event",
         G_CALLBACK(settings_click), NULL);
 }

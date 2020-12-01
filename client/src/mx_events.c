@@ -1,26 +1,45 @@
 #include "../inc/uchat_client.h"
 
-// Messages button
-//=============================================================
-void messages_enter_notify() {
-    if (!messages_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(messages_img.standard), messages_img.hovered);
+void image_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        if (!(data->active)) {
+            gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
+            data->active = true;
+        }
+        else {
+            gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED);
+            data->active = false;
+        }
+    }
+}
+void image_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+}
+void image_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 
-void messages_leave_notify() {
-    if (!messages_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(messages_img.standard), messages_img.basic);
+// Messages button
+//=============================================================
+void messages_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, FALSE);
+}
+
+void messages_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 
 void messages_click(GtkWidget *widget, GdkEventButton *event) {
-    if (messages_img.active) return;
+    if (messages_image.active) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        t_active->active = false;
-        gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->basic);
-        t_active = &messages_img;
-        t_active->active = true;
-        gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
+        if (t_active_image != NULL) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(t_active_image->box), GTK_STATE_FLAG_CHECKED);        
+            t_active_image->active = false;
+        }
+        t_active_image = &messages_image;
+        t_active_image->active = true;
 
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
         gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
         active_leftbar_container = chats_list;
         gtk_widget_show(GTK_WIDGET(active_leftbar_container));
@@ -31,25 +50,25 @@ void messages_click(GtkWidget *widget, GdkEventButton *event) {
 
 // Contacts button
 //=============================================================
-void contacts_enter_notify() {
-    if (!contacts_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(contacts_img.standard), contacts_img.hovered);
+void contacts_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 
-void contacts_leave_notify() {
-    if (!contacts_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(contacts_img.standard), contacts_img.basic);
+void contacts_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 
 void contacts_click(GtkWidget *widget, GdkEventButton *event) {
-    if (contacts_img.active) return;
+    if (contacts_image.active) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        t_active->active = false;
-        gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->basic);
-        t_active = &contacts_img;
-        t_active->active = true;
-        gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
-
+        if (t_active_image != NULL) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(t_active_image->box), GTK_STATE_FLAG_CHECKED);        
+            t_active_image->active = false;
+        }
+        t_active_image = &contacts_image;
+        t_active_image->active = true;
+        
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
         gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
         active_leftbar_container = contacts_list;
         gtk_widget_show(GTK_WIDGET(active_leftbar_container));
@@ -60,25 +79,25 @@ void contacts_click(GtkWidget *widget, GdkEventButton *event) {
 
 // Settings button
 //=============================================================
-void settings_enter_notify() {
-    if (!settings_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(settings_img.standard), settings_img.hovered);
+void settings_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 
-void settings_leave_notify() {
-    if (!settings_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(settings_img.standard), settings_img.basic);
+void settings_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 
 void settings_click(GtkWidget *widget, GdkEventButton *event) {
-    if (settings_img.active) return;
+    if (settings_image.active) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        t_active->active = false;
-        gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->basic);
-        t_active = &settings_img;
-        t_active->active = true;
-        gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
+        if (t_active_image != NULL) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(t_active_image->box), GTK_STATE_FLAG_CHECKED);
+            t_active_image->active = false;
+        }
+        t_active_image = &settings_image;
+        t_active_image->active = true;
 
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
         gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
         active_leftbar_container = settings_menu;
         gtk_widget_show(GTK_WIDGET(active_leftbar_container));
@@ -89,14 +108,12 @@ void settings_click(GtkWidget *widget, GdkEventButton *event) {
 
 // Add button
 //========================================================
-void add_enter_notify() {
-    if (!add_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(add_img.standard), add_img.hovered);
+void add_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 
-void add_leave_notify() {
-    if (!add_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(add_img.standard), add_img.basic);
+void add_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 //========================================================
 
@@ -105,12 +122,12 @@ void add_leave_notify() {
 void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
     int len = strlen(gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget))));
     if (len > 0) {
-        gtk_widget_hide(GTK_WIDGET(t_img_event_box.ban_box));
-        gtk_widget_show(GTK_WIDGET(t_img_event_box.tick_box));
+        gtk_widget_hide(GTK_WIDGET(ban_image.box));
+        gtk_widget_show(GTK_WIDGET(tick_image.box));
     }
     else {
-        gtk_widget_hide(GTK_WIDGET(t_img_event_box.tick_box));
-        gtk_widget_show(GTK_WIDGET(t_img_event_box.ban_box));
+        gtk_widget_hide(GTK_WIDGET(tick_image.box));
+        gtk_widget_show(GTK_WIDGET(ban_image.box));
     }
     if (event) {}
 }
@@ -118,42 +135,31 @@ void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
 
 // Tick button
 //=========================================================
-void tick_enter_notify() {
-    if (!tick_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(tick_img.standard), tick_img.hovered);
-}
 
-void tick_leave_notify() {
-    if (!tick_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(tick_img.standard), tick_img.basic);
-}
 //========================================================
 
 // More button
 //=========================================================
-void more_enter_notify() {
-    if (!more_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(more_img.standard), more_img.hovered);
+void more_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
 }
 
-void more_leave_notify() {
-    if (!more_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(more_img.standard), more_img.basic);
+void more_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 //=========================================================
 
 // Edit_user icon in settings menu
 //==================================
 void edit_user_enter_notify(GtkWidget *widget) {
-    if (!edit_user_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(edit_user_img.standard), edit_user_img.hovered);
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_widget_set_state_flags(GTK_WIDGET(edit_user_image.box), 
+        GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 
 void edit_user_leave_notify(GtkWidget *widget) {
-    if (!edit_user_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(edit_user_img.standard), edit_user_img.basic);
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(edit_user_image.box), GTK_STATE_FLAG_PRELIGHT);
 }
 
 void edit_user_click(GtkWidget *widget, GdkEventButton *event) {
@@ -168,55 +174,76 @@ void edit_user_click(GtkWidget *widget, GdkEventButton *event) {
 // Change_account icon in settings menu
 //==================================
 void change_account_enter_notify(GtkWidget *widget) {
-    if (!change_account_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(change_account_img.standard), change_account_img.hovered);
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_widget_set_state_flags(GTK_WIDGET(change_account_image.box), 
+        GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 
 void change_account_leave_notify(GtkWidget *widget) {
-    if (!change_account_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(change_account_img.standard), change_account_img.basic);
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(change_account_image.box), 
+        GTK_STATE_FLAG_PRELIGHT);
 }
 //==================================
 
 // Chat_settings icon in settings menu
 //======================================
 void chat_settings_enter_notify(GtkWidget *widget) {
-    if (!chat_settings_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(chat_settings_img.standard), chat_settings_img.hovered);
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_widget_set_state_flags(GTK_WIDGET(chat_settings_image.box), 
+        GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 
 void chat_settings_leave_notify(GtkWidget *widget) {
-    if (!chat_settings_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(chat_settings_img.standard), chat_settings_img.basic);
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(chat_settings_image.box), 
+        GTK_STATE_FLAG_PRELIGHT);
 }
 //==================================
 
 // Language icon in settings menu
 //================================
 void language_enter_notify(GtkWidget *widget) {
-    if (!language_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(language_img.standard), language_img.hovered);
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_widget_set_state_flags(GTK_WIDGET(language_image.box), 
+        GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 
 void language_leave_notify(GtkWidget *widget) {
-    if (!language_img.active)
-        gtk_image_set_from_file(GTK_IMAGE(language_img.standard), language_img.basic);
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(language_image.box), 
+        GTK_STATE_FLAG_PRELIGHT);
 }
 //=================================
 
 // Blackout
 //==============================================================
+void blackout_leave_notify_event() {
+    printf("flkdsf\n");
+}
+
 void blackout_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_container_remove(GTK_CONTAINER(main_area), GTK_WIDGET(back_blackout));
         gtk_widget_destroy(GTK_WIDGET(back_blackout));
     }
     if (widget) {}
 }
 //==============================================================
+
+// Close image
+//========================================================
+void close_image_enter_notify_event(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+}
+
+void close_image_leave_notify_event(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+}
+
+void close_image_click_event(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_widget_destroy(GTK_WIDGET(back_blackout));
+    }
+    if (widget) {}
+}
+//========================================================

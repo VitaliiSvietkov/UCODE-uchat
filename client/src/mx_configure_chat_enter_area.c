@@ -16,7 +16,8 @@ void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **main_
         G_CALLBACK(mx_draw_event_chat_enter_area), NULL);
     
 
-    gtk_box_pack_start(GTK_BOX(chat_container), t_img_event_box.add_box, FALSE, FALSE, 8);
+    //gtk_box_pack_start(GTK_BOX(chat_container), t_img_event_box.add_box, FALSE, FALSE, 8);
+    gtk_box_pack_start(GTK_BOX(chat_container), add_image.box, FALSE, FALSE, 8);
 
     *entry_chat = gtk_entry_new();
     gtk_widget_set_sensitive(GTK_WIDGET(*entry_chat), FALSE);
@@ -25,24 +26,24 @@ void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **main_
     gtk_entry_set_placeholder_text(GTK_ENTRY(*entry_chat), "Write a message...");
     g_signal_connect(G_OBJECT(*entry_chat), "changed", G_CALLBACK(entry_chat_fill_event), NULL);
 
-    gtk_box_pack_start(GTK_BOX(chat_container), t_img_event_box.ban_box, FALSE, FALSE, 8);
-    gtk_box_pack_start(GTK_BOX(chat_container), t_img_event_box.tick_box, FALSE, FALSE, 8);
-    gtk_box_pack_start(GTK_BOX(chat_container), t_img_event_box.more_box, FALSE, FALSE, 8);
+    gtk_box_pack_start(GTK_BOX(chat_container), ban_image.box, FALSE, FALSE, 8);
+    gtk_box_pack_start(GTK_BOX(chat_container), tick_image.box, FALSE, FALSE, 8);
+    gtk_box_pack_start(GTK_BOX(chat_container), more_image.box, FALSE, FALSE, 8);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.add_box), "enter-notify-event",
-        G_CALLBACK(add_enter_notify), &add_img);
-    g_signal_connect(G_OBJECT(t_img_event_box.add_box), "leave-notify-event",
+    g_signal_connect(G_OBJECT(add_image.box), "enter-notify-event",
+        G_CALLBACK(add_enter_notify), &add_image);
+    g_signal_connect(G_OBJECT(add_image.box), "leave-notify-event",
         G_CALLBACK(add_leave_notify), NULL);
     /*g_signal_connect(G_OBJECT(t_img_event_box.add_box), "button_press_event",
         G_CALLBACK(add_click), NULL);*/
 
-    g_signal_connect(G_OBJECT(t_img_event_box.tick_box), "enter-notify-event",
-        G_CALLBACK(tick_enter_notify), &tick_img);
-    g_signal_connect(G_OBJECT(t_img_event_box.tick_box), "leave-notify-event",
-        G_CALLBACK(tick_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(tick_image.box), "enter-notify-event",
+        G_CALLBACK(image_enter_notify), &tick_image);
+    g_signal_connect(G_OBJECT(tick_image.box), "leave-notify-event",
+        G_CALLBACK(image_leave_notify), NULL);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.more_box), "enter-notify-event",
-        G_CALLBACK(more_enter_notify), &more_img);
-    g_signal_connect(G_OBJECT(t_img_event_box.more_box), "leave-notify-event",
+    g_signal_connect(G_OBJECT(more_image.box), "enter-notify-event",
+        G_CALLBACK(more_enter_notify), &more_image);
+    g_signal_connect(G_OBJECT(more_image.box), "leave-notify-event",
         G_CALLBACK(more_leave_notify), NULL);
 }

@@ -6,7 +6,6 @@
 
 /*          Entry Fields          */
 /* ============================== */
-
 #entry_search {
     background-color: #e1e1e1;
     color: #1f1f1f;
@@ -23,13 +22,18 @@
     border-color: #e1e1e1;
     border-radius: 5px;
     font-size: 16px;
-}
+} 
 /* ============================== */
 
+#back_blackout {
+   background-color: rgba(31, 31, 31, 0.6);
+}
+
 #edit_user_form {
+    padding: 5px;
     background: #1f1f1f;
     box-shadow: 0px 0px 5px 2px #e1e1e1;
-    border-radius: 20px;
+    border-radius: 15px;
     animation-name: fade;
     animation-duration: .2s;
 }
@@ -38,6 +42,134 @@
     0% {opacity: 0;}
     75% {opacity: 0.4;}
     100% {opacity: 1;}
+}
+
+#close_image_box {
+    background-image: url("../img/standard/cancel.png");
+    background-size: 25px;
+    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+}
+#close_image_box:hover {
+    background-image: url("../img/standard/cancel-hovered.png");
+}
+
+#add_image {
+    background-image: url("../img/standard/add.png");
+    background-size: 33px;
+    background-repeat: no-repeat;
+}
+#add_image:hover {
+    background-image: url("../img/standard/add-hovered.png");
+    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+}
+#add_image:checked {
+    background-image: url("../img/standard/add-hovered.png");
+}
+
+#ban_image {
+    background-image: url("../img/standard/ban.png");
+    background-size: 33px;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+}
+
+#tick_image {
+    background-image: url("../img/standard/tick.png");
+    background-size: 33px;
+    background-repeat: no-repeat;
+}
+#tick_image:hover {
+    background-image: url("../img/standard/tick-hovered.png");
+    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+}
+
+#more_image {
+    background-image: url("../img/standard/more.png");
+    background-size: 33px;
+    background-repeat: no-repeat;
+}
+#more_image:hover {
+    background-image: url("../img/standard/more-hovered.png");
+    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+}
+#more_image:checked {
+    background-image: url("../img/standard/more-hovered.png");
+}
+
+#edit_user_image {
+    background-image: url("../img/standard/edit-user.png");
+    background-size: 30px;
+    background-repeat: no-repeat;
+}
+#edit_user_image:hover {
+    background-image: url("../img/standard/edit-user-hovered.png");
+    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+}
+
+#change_account_image {
+    background-image: url("../img/standard/identification.png");
+    background-size: 30px;
+    background-repeat: no-repeat;
+}
+#change_account_image:hover {
+    background-image: url("../img/standard/identification-hovered.png");
+    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+}
+
+#chat_settings_image {
+    background-image: url("../img/standard/chat-settings.png");
+    background-size: 30px;
+    background-repeat: no-repeat;
+}
+#chat_settings_image:hover {
+    background-image: url("../img/standard/chat-settings-hovered.png");
+    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+}
+
+#language_image {
+    background-image: url("../img/standard/book.png");
+    background-size: 19px;
+    background-repeat: no-repeat;
+}
+#language_image:hover {
+    background-image: url("../img/standard/book-hovered.png");
+    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+}
+
+#messages_image {
+    background-image: url("../img/standard/messages.png");
+    background-size: 30px;
+    background-repeat: no-repeat;
+}
+#messages_image:hover {
+    background-image: url("../img/standard/messages-hovered.png");
+}
+#messages_image:checked {
+    background-image: url("../img/standard/messages-hovered.png");
+}
+
+#contacts_image {
+    background-image: url("../img/standard/contacts.png");
+    background-size: 25px;
+    background-repeat: no-repeat;
+}
+#contacts_image:hover {
+    background-image: url("../img/standard/contacts-hovered.png");
+}
+#contacts_image:checked {
+    background-image: url("../img/standard/contacts-hovered.png");
+}
+
+#settings_image {
+    background-image: url("../img/standard/settings.png");
+    background-size: 30px;
+    background-repeat: no-repeat;
+}
+#settings_image:hover {
+    background-image: url("../img/standard/settings-hovered.png");
+}
+#settings_image:checked {
+    background-image: url("../img/standard/settings-hovered.png");
 }
 
 #DefaultLabel {
@@ -92,12 +224,15 @@
 
 #label_change_account {
     font-size: 18px;
-    letter-spacing: 1px;}
+    letter-spacing: 1px;
+    margin-left: -1px;
+}
 
 #chat_settings_box {
     padding-top: 7.5px;
     padding-left: 50px;
-    padding-bottom: 7.5px;}
+    padding-bottom: 7.5px;
+}
 
 #label_chat_settings {
     font-size: 18px;
@@ -105,14 +240,14 @@
 }
 
 #language_box {
-    padding-top: 7.5px;
-    padding-bottom: 7.5px;
+    padding-top: 9.5px;
+    padding-bottom: 9.5px;
     padding-left: 56px;
 }
 
 #label_language {
     font-size: 18px;
-    padding-left: 6px;
+    margin-left: -3px;
     letter-spacing: 1px;
 }
 
@@ -158,7 +293,7 @@
 /*        FOOTER         */
 /* ===================== */
 #label_impulse {
-    margin-top: 205px;
+    margin-top: 195px;
     font-size: 22px;
     font-style: italic;
 }

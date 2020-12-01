@@ -27,42 +27,26 @@ gint L_FIELD_WIDTH;
 
 // Images
 //============================
-typedef struct s_image_button
+typedef struct s_img_button
 {
     bool active;
-    char *basic;
-    char *hovered;
-    GtkWidget *standard;
-    GtkWidget *colorful;
-} t_image_button;
+    GtkWidget *box;
+} t_img_button;
 
-t_image_button settings_img;
-t_image_button contacts_img;
-t_image_button messages_img;
+t_img_button add_image;
+t_img_button ban_image;
+t_img_button tick_image;
+t_img_button more_image;
 
-t_image_button add_img;
-t_image_button ban_img;
-t_image_button tick_img;
-t_image_button more_img;
+t_img_button edit_user_image;
+t_img_button change_account_image;
+t_img_button chat_settings_image;
+t_img_button language_image;
 
-t_image_button edit_user_img;
-t_image_button change_account_img;
-t_image_button chat_settings_img;
-t_image_button language_img;
-
-t_image_button *t_active;
-
-// EventBoxes for images
-struct
-{
-    GtkWidget *contacts_box;
-    GtkWidget *settings_box;
-    GtkWidget *messages_box;
-    GtkWidget *add_box;
-    GtkWidget *ban_box;
-    GtkWidget *tick_box;
-    GtkWidget *more_box;
-} t_img_event_box;
+t_img_button settings_image;
+t_img_button contacts_image;
+t_img_button messages_image;
+t_img_button *t_active_image;
 
 void mx_load_images(void);
 //============================
@@ -98,33 +82,33 @@ gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_
 gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr);
-gboolean mx_draw_event_blackout(GtkWidget *widget, cairo_t *cr);
 //==========================================================================================
 
 // Event callback functions (look in "mx_events.c")
 //================================
-void messages_enter_notify(void);
-void messages_leave_notify(void);
+void image_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data);
+void image_enter_notify(GtkWidget *widget);
+void image_leave_notify(GtkWidget *widget);
+
+void messages_enter_notify(GtkWidget *widget);
+void messages_leave_notify(GtkWidget *widget);
 void messages_click(GtkWidget *widget, GdkEventButton *event);
 
-void contacts_enter_notify(void);
-void contacts_leave_notify(void);
+void contacts_enter_notify(GtkWidget *widget);
+void contacts_leave_notify(GtkWidget *widget);
 void contacts_click(GtkWidget *widget, GdkEventButton *event);
 
-void settings_enter_notify(void);
-void settings_leave_notify(void);
+void settings_enter_notify(GtkWidget *widget);
+void settings_leave_notify(GtkWidget *widget);
 void settings_click(GtkWidget *widget, GdkEventButton *event);
 
-void add_enter_notify(void);
-void add_leave_notify(void);
+void add_enter_notify(GtkWidget *widget);
+void add_leave_notify(GtkWidget *widget);
 
 void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);
 
-void tick_enter_notify(void);
-void tick_leave_notify(void);
-
-void more_enter_notify(void);
-void more_leave_notify(void);
+void more_enter_notify(GtkWidget *widget);
+void more_leave_notify(GtkWidget *widget);
 
 void edit_user_enter_notify(GtkWidget *widget);
 void edit_user_leave_notify(GtkWidget *widget);
@@ -139,7 +123,12 @@ void chat_settings_leave_notify(GtkWidget *widget);
 void language_enter_notify(GtkWidget *widget);
 void language_leave_notify(GtkWidget *widget);
 
+void blackout_leave_notify_event(void);
 void blackout_click(GtkWidget *widget, GdkEventButton *event);
+
+void close_image_enter_notify_event(GtkWidget *widget);
+void close_image_leave_notify_event(GtkWidget *widget);
+void close_image_click_event(GtkWidget *widget, GdkEventButton *event);
 //================================
 
 #endif

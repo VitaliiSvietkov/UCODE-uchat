@@ -1,78 +1,83 @@
 #include "../inc/uchat_client.h"
 
 void mx_load_images(void) {
-    messages_img.active = true;
-    messages_img.basic = "client/img/standard/messages-standard.png";
-    messages_img.hovered = "client/img/standard/messages-standard-hovered.png";
-    messages_img.standard = gtk_image_new_from_file(messages_img.hovered);
+    messages_image.box = gtk_event_box_new();
+    messages_image.active = false;
+    gtk_widget_set_valign(GTK_WIDGET(messages_image.box), GTK_ALIGN_END);
+    gtk_widget_set_size_request(GTK_WIDGET(messages_image.box), 30, 30);
+    gtk_widget_set_name(GTK_WIDGET(messages_image.box), "messages_image");
+    gtk_widget_set_state_flags(GTK_WIDGET(messages_image.box), GTK_STATE_FLAG_NORMAL, TRUE);
 
-    settings_img.active = false;
-    settings_img.basic = "client/img/standard/settings-standard.png";
-    settings_img.hovered = "client/img/standard/settings-standard-hovered.png";
-    settings_img.standard = gtk_image_new_from_file(settings_img.basic);
+    contacts_image.box = gtk_event_box_new();
+    contacts_image.active = false;
+    gtk_widget_set_valign(GTK_WIDGET(contacts_image.box), GTK_ALIGN_END);
+    gtk_widget_set_size_request(GTK_WIDGET(contacts_image.box), 30, 30);
+    gtk_widget_set_name(GTK_WIDGET(contacts_image.box), "contacts_image");
+    gtk_widget_set_state_flags(GTK_WIDGET(contacts_image.box), GTK_STATE_FLAG_NORMAL, TRUE);
 
-    contacts_img.active = false;
-    contacts_img.basic = "client/img/standard/contacts-standard.png";
-    contacts_img.hovered = "client/img/standard/contacts-standard-hovered.png";
-    contacts_img.standard = gtk_image_new_from_file(contacts_img.basic);
+    settings_image.box = gtk_event_box_new();
+    settings_image.active = false;
+    gtk_widget_set_valign(GTK_WIDGET(settings_image.box), GTK_ALIGN_END);
+    gtk_widget_set_size_request(GTK_WIDGET(settings_image.box), 30, 30);
+    gtk_widget_set_name(GTK_WIDGET(settings_image.box), "settings_image");
+    gtk_widget_set_state_flags(GTK_WIDGET(settings_image.box), GTK_STATE_FLAG_NORMAL, TRUE);
 
-    add_img.active = false;
-    add_img.basic = "client/img/standard/add-standard.png";
-    add_img.hovered = "client/img/standard/add-standard-hovered.png";
-    add_img.standard = gtk_image_new_from_file(add_img.basic);
+    edit_user_image.box = gtk_event_box_new();
+    edit_user_image.active = false;
+    gtk_widget_set_valign(GTK_WIDGET(edit_user_image.box), GTK_ALIGN_END);
+    gtk_widget_set_size_request(GTK_WIDGET(edit_user_image.box), 30, 30);
+    gtk_widget_set_name(GTK_WIDGET(edit_user_image.box), "edit_user_image");
+    gtk_widget_set_state_flags(GTK_WIDGET(edit_user_image.box), GTK_STATE_FLAG_NORMAL, TRUE);
 
-    ban_img.active = false;
-    ban_img.basic = "client/img/standard/ban-standard.png";
-    ban_img.hovered = NULL;
-    ban_img.standard = gtk_image_new_from_file(ban_img.basic);
-    gtk_widget_set_opacity(GTK_WIDGET(ban_img.standard), 0.7);
+    change_account_image.box = gtk_event_box_new();
+    change_account_image.active = false;
+    gtk_widget_set_valign(GTK_WIDGET(change_account_image.box), GTK_ALIGN_END);
+    gtk_widget_set_size_request(GTK_WIDGET(change_account_image.box), 30, 30);
+    gtk_widget_set_name(GTK_WIDGET(change_account_image.box), "change_account_image");
+    gtk_widget_set_state_flags(GTK_WIDGET(change_account_image.box), GTK_STATE_FLAG_NORMAL, TRUE);
 
-    tick_img.active = false;
-    tick_img.basic = "client/img/standard/tick-standard.png";
-    tick_img.hovered = "client/img/standard/tick-standard-hovered.png";
-    tick_img.standard = gtk_image_new_from_file(tick_img.basic);
+    chat_settings_image.box = gtk_event_box_new();
+    chat_settings_image.active = false;
+    gtk_widget_set_valign(GTK_WIDGET(chat_settings_image.box), GTK_ALIGN_END);
+    gtk_widget_set_size_request(GTK_WIDGET(chat_settings_image.box), 30, 30);
+    gtk_widget_set_name(GTK_WIDGET(chat_settings_image.box), "chat_settings_image");
+    gtk_widget_set_state_flags(GTK_WIDGET(chat_settings_image.box), GTK_STATE_FLAG_NORMAL, TRUE);
 
-    more_img.active = false;
-    more_img.basic = "client/img/standard/more-standard.png";
-    more_img.hovered = "client/img/standard/more-standard-hovered.png";
-    more_img.standard = gtk_image_new_from_file(more_img.basic);
+    language_image.box = gtk_event_box_new();
+    language_image.active = false;
+    gtk_widget_set_valign(GTK_WIDGET(language_image.box), GTK_ALIGN_END);
+    gtk_widget_set_size_request(GTK_WIDGET(language_image.box), 30, 30);
+    gtk_widget_set_name(GTK_WIDGET(language_image.box), "language_image");
+    gtk_widget_set_state_flags(GTK_WIDGET(language_image.box), GTK_STATE_FLAG_NORMAL, TRUE);
 
-    edit_user_img.active = false;
-    edit_user_img.basic = "client/img/standard/edit-user-standard.png";
-    edit_user_img.hovered = "client/img/standard/edit-user-standard-hovered.png";
-    edit_user_img.standard = gtk_image_new_from_file(edit_user_img.basic);
 
-    change_account_img.active = false;
-    change_account_img.basic = "client/img/standard/identification-standard.png";
-    change_account_img.hovered = "client/img/standard/identification-standard-hovered.png";
-    change_account_img.standard = gtk_image_new_from_file(change_account_img.basic);
-
-    chat_settings_img.active = false;
-    chat_settings_img.basic = "client/img/standard/chat-settings-standard.png";
-    chat_settings_img.hovered = "client/img/standard/chat-settings-standard-hovered.png";
-    chat_settings_img.standard = gtk_image_new_from_file(chat_settings_img.basic);
-
-    language_img.active = false;
-    language_img.basic = "client/img/standard/book-standard.png";
-    language_img.hovered = "client/img/standard/book-standard-hovered.png";
-    language_img.standard = gtk_image_new_from_file(language_img.basic);
-
-    t_active = &messages_img;
-
-    t_img_event_box.messages_box = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(t_img_event_box.messages_box), messages_img.standard);
-    t_img_event_box.contacts_box = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(t_img_event_box.contacts_box), contacts_img.standard);
-    t_img_event_box.settings_box = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(t_img_event_box.settings_box), settings_img.standard);
+    t_active_image = NULL;
     
-    t_img_event_box.add_box = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(t_img_event_box.add_box), add_img.standard);
-    t_img_event_box.ban_box = gtk_event_box_new();
-    mx_tooltip("You cannot send an empty message!", t_img_event_box.ban_box);
-    gtk_container_add(GTK_CONTAINER(t_img_event_box.ban_box), ban_img.standard);
-    t_img_event_box.tick_box = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(t_img_event_box.tick_box), tick_img.standard);
-    t_img_event_box.more_box = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(t_img_event_box.more_box), more_img.standard);
+    add_image.box = gtk_event_box_new();
+    add_image.active = false;
+    gtk_widget_set_size_request(GTK_WIDGET(add_image.box), 33, 33);
+    gtk_widget_set_name(GTK_WIDGET(add_image.box), "add_image");
+    gtk_widget_set_state_flags(GTK_WIDGET(add_image.box), GTK_STATE_FLAG_NORMAL, TRUE);
+    g_signal_connect(G_OBJECT(add_image.box), "button_press_event",
+        G_CALLBACK(image_click), &add_image);
+
+    ban_image.box = gtk_event_box_new();
+    mx_tooltip("You cannot send an empty message!", ban_image.box);
+    gtk_widget_set_size_request(GTK_WIDGET(ban_image.box), 33, 33);
+    gtk_widget_set_name(GTK_WIDGET(ban_image.box), "ban_image");
+    gtk_widget_set_state_flags(GTK_WIDGET(ban_image.box), GTK_STATE_FLAG_NORMAL, TRUE);
+
+    tick_image.box = gtk_event_box_new();
+    tick_image.active = false;
+    gtk_widget_set_size_request(GTK_WIDGET(tick_image.box), 33, 33);
+    gtk_widget_set_name(GTK_WIDGET(tick_image.box), "tick_image");
+    gtk_widget_set_state_flags(GTK_WIDGET(tick_image.box), GTK_STATE_FLAG_NORMAL, TRUE);
+
+    more_image.box = gtk_event_box_new();
+    more_image.active = false;
+    gtk_widget_set_size_request(GTK_WIDGET(more_image.box), 33, 33);
+    gtk_widget_set_name(GTK_WIDGET(more_image.box), "more_image");
+    gtk_widget_set_state_flags(GTK_WIDGET(more_image.box), GTK_STATE_FLAG_NORMAL, TRUE);
+    g_signal_connect(G_OBJECT(more_image.box), "button_press_event",
+        G_CALLBACK(image_click), &more_image);
 }
