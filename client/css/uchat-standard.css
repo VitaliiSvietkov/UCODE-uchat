@@ -32,10 +32,17 @@
 #edit_user_form {
     padding: 5px;
     background: #1f1f1f;
-    box-shadow: 0px 0px 5px 2px #e1e1e1;
+    border-color: #e1e1e1;
+    border-width: 1px;
+    border-style: solid;
     border-radius: 15px;
     animation-name: fade;
     animation-duration: .2s;
+}
+
+#username_eventbox {
+    padding: 10px;
+    background: #e1e1e1;
 }
 
 @keyframes fade {
@@ -190,7 +197,7 @@
     padding-bottom: 7.5px;
 }
 
-#contact_info_preview {
+#pseudonim_preview {
     margin-top: -5px;
     font-size: 16px;
     font-style: italic;

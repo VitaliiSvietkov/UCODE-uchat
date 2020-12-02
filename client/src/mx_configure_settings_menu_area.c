@@ -21,13 +21,20 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_box_pack_start(GTK_BOX(user_profile_preview_box), avatar, FALSE, FALSE, 0);
     GtkWidget *user_info_preview = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     gtk_box_pack_start(GTK_BOX(user_profile_preview_box), user_info_preview, FALSE, FALSE, 31);
-    GtkWidget *username = gtk_label_new("Vitalii Svietkov");
+    
+    char *username_tmp = strdup(t_user.FirstName);
+    username_tmp = strcat(username_tmp, " ");
+    username_tmp = strcat(username_tmp, t_user.SecondName);
+    GtkWidget *username = gtk_label_new(username_tmp);
     gtk_widget_set_name(GTK_WIDGET(username), "username_preview");
-    GtkWidget *contact_info = gtk_label_new("a1vitalii.sv@gmail.com");
-    gtk_widget_set_name(GTK_WIDGET(contact_info), "contact_info_preview");
+    free(username_tmp);
+
+    GtkWidget *pseudonim = gtk_label_new(t_user.pseudonim);
+    gtk_widget_set_name(GTK_WIDGET(pseudonim), "pseudonim_preview");
     gtk_box_pack_start(GTK_BOX(user_info_preview), username, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(user_info_preview), pseudonim, FALSE, FALSE, 0);
     gtk_widget_set_halign(username, GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(user_info_preview), contact_info, FALSE, FALSE, 0);
+    gtk_widget_set_halign(pseudonim, GTK_ALIGN_START);
 
     // "Edit profile" section
     GtkWidget *edit_user_eventbox = gtk_event_box_new();

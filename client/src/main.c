@@ -1,14 +1,5 @@
 #include "../inc/uchat_client.h"
 
-gboolean test(GtkWidget *widget, GdkEvent *event, gpointer user_data) {
-    CUR_WIDTH = event->configure.width;
-    CUR_HEIGHT = event->configure.height;
-    //gtk_widget_queue_resize(GTK_WIDGET(widget));
-    gtk_widget_queue_draw(GTK_WIDGET(widget));
-    if (user_data) {}
-    return FALSE;
-}
-
 int main(int argc, char *argv[]) {
     // Containers
     GtkWidget *window = NULL;
@@ -18,6 +9,7 @@ int main(int argc, char *argv[]) {
     GtkWidget *chat_enter_area = NULL;
     chats_list = NULL;
     settings_menu = NULL;
+    active_leftbar_container = NULL;
 
     GtkWidget *entry_search = NULL;
     GtkWidget *entry_chat = NULL;
@@ -25,15 +17,20 @@ int main(int argc, char *argv[]) {
     // Drawing areas
     GtkWidget *background = NULL;
   
+    mx_init_user();
+    mx_change_user_name("Vitalii", "Svietkov");
+    mx_change_user_pseudonim("@mypseudo");
+    mx_change_user_description("Hello, World!");
+
     gtk_init(&argc, &argv);
 
+
     GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(cssProvider, "client/css/uchat.css", NULL);
+    gtk_css_provider_load_from_path(cssProvider, "client/css/uchat-standard.css", NULL);
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
         GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
     mx_load_images();
-  
     // Create a new window
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     mx_init_window(&window);
@@ -53,7 +50,6 @@ int main(int argc, char *argv[]) {
     // Create a chat list area
     chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_fixed_put(GTK_FIXED(main_area), chats_list, 0, 95);
-    active_leftbar_container = chats_list;
 
     // Create a contacts list area
     contacts_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -62,19 +58,21 @@ int main(int argc, char *argv[]) {
     // Create a settings menu
     mx_configure_settings_menu_area(&settings_menu, &main_area);
 
-    g_signal_connect(window, "configure-event", G_CALLBACK(test), NULL);
-
     gtk_widget_show_all (window);
+
     // Hide unneccessary widgets
     gtk_widget_hide(GTK_WIDGET(tick_image.box));
+    gtk_widget_hide(chats_list);
     gtk_widget_hide(GTK_WIDGET(contacts_list));
     gtk_widget_hide(GTK_WIDGET(settings_menu));
+    
     // Return sensativity for entries
     gtk_widget_set_sensitive(GTK_WIDGET(entry_search), TRUE);
     gtk_widget_set_sensitive(GTK_WIDGET(entry_chat), TRUE);
 
 
     gtk_main();
+    g_object_unref(G_OBJECT(t_user.avatar));
   
     return 0;
 }

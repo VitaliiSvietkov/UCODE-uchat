@@ -33,9 +33,7 @@ gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr) {
 }
 
 gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr) {
-    GdkPixbuf *pixbuf = mx_get_pixbuf_with_size("client/img/avatar.jpeg", 70, 70);
-    gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
-    g_object_unref(G_OBJECT(pixbuf));
+    gdk_cairo_set_source_pixbuf(cr, t_user.avatar, 0, 0);
 
     double x = 0,
         y = 0,

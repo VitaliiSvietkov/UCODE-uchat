@@ -40,7 +40,8 @@ void messages_click(GtkWidget *widget, GdkEventButton *event) {
         t_active_image->active = true;
 
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
-        gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
+        if (active_leftbar_container != NULL)
+            gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
         active_leftbar_container = chats_list;
         gtk_widget_show(GTK_WIDGET(active_leftbar_container));
     }
@@ -69,7 +70,8 @@ void contacts_click(GtkWidget *widget, GdkEventButton *event) {
         t_active_image->active = true;
         
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
-        gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
+        if (active_leftbar_container != NULL)
+            gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
         active_leftbar_container = contacts_list;
         gtk_widget_show(GTK_WIDGET(active_leftbar_container));
     }
@@ -98,7 +100,8 @@ void settings_click(GtkWidget *widget, GdkEventButton *event) {
         t_active_image->active = true;
 
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
-        gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
+        if (active_leftbar_container != NULL)
+            gtk_widget_hide(GTK_WIDGET(active_leftbar_container));
         active_leftbar_container = settings_menu;
         gtk_widget_show(GTK_WIDGET(active_leftbar_container));
     }
@@ -218,12 +221,10 @@ void language_leave_notify(GtkWidget *widget) {
 
 // Blackout
 //==============================================================
-void blackout_leave_notify_event() {
-    printf("flkdsf\n");
-}
-
 void blackout_click(GtkWidget *widget, GdkEventButton *event) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1
+        && ((event->x < CUR_WIDTH / 3 - 10 || event->x > CUR_WIDTH / 3 - 10 + 400)
+            || (event->y < CUR_HEIGHT / 5 || event->y > CUR_HEIGHT / 5 + 400))) {
         gtk_widget_destroy(GTK_WIDGET(back_blackout));
     }
     if (widget) {}
@@ -247,3 +248,13 @@ void close_image_click_event(GtkWidget *widget, GdkEventButton *event) {
     if (widget) {}
 }
 //========================================================
+
+// Edit user form
+//=============================================================================
+void username_eventbox_click_event(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        printf("TEST\n");
+    }
+    if (widget) {}
+}
+//=============================================================================
