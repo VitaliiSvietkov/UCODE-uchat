@@ -1,14 +1,5 @@
 #include "../inc/uchat_client.h"
 
-gboolean test(GtkWidget *widget, GdkEvent *event, gpointer user_data) {
-    CUR_WIDTH = event->configure.width;
-    CUR_HEIGHT = event->configure.height;
-    //gtk_widget_queue_resize(GTK_WIDGET(widget));
-    gtk_widget_queue_draw(GTK_WIDGET(widget));
-    if (user_data) {}
-    return FALSE;
-}
-
 int main(int argc, char *argv[]) {
     // Containers
     GtkWidget *window = NULL;
@@ -58,7 +49,7 @@ int main(int argc, char *argv[]) {
     // Create a chat list area
     chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_fixed_put(GTK_FIXED(main_area), chats_list, 0, 95);
-    active_leftbar_container = chats_list;
+    active_leftbar_container = NULL;
 
     // Create a contacts list area
     contacts_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -66,8 +57,6 @@ int main(int argc, char *argv[]) {
 
     // Create a settings menu
     mx_configure_settings_menu_area(&settings_menu, &main_area);
-
-    g_signal_connect(window, "configure-event", G_CALLBACK(test), NULL);
 
     gtk_widget_show_all (window);
     // Hide unneccessary widgets

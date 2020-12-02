@@ -80,8 +80,10 @@ GtkWidget *active_leftbar_container;
 
 GtkWidget *back_blackout;
 GtkWidget *edit_user_form;
-
-//cairo_surface_t *avatar_image;
+GtkWidget *edit_username_eventbox;
+GtkWidget *edit_username_icon;
+GtkWidget *edit_pseudo_eventbox;
+GtkWidget *edit_pseudo_icon;
 
 void mx_init_window(GtkWidget **window);
 
@@ -149,6 +151,19 @@ void blackout_click(GtkWidget *widget, GdkEventButton *event);
 void close_image_enter_notify_event(GtkWidget *widget);
 void close_image_leave_notify_event(GtkWidget *widget);
 void close_image_click_event(GtkWidget *widget, GdkEventButton *event);
+
+void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
+    GtkWidget *data);
+void edit_username_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
+    GtkWidget *data);
+
+void edit_pseudo_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
+    GtkWidget *data);
+void edit_pseudo_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
+    GtkWidget *data);
 //================================
+
+char *mx_strnew(const int size);
+char *mx_strjoin(const char *s1, const char *s2);
 
 #endif
