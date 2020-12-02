@@ -1,5 +1,38 @@
 #include "../inc/uchat_client.h"
 
+
+char *mx_strnew(const int size) {
+    char *memory = NULL;
+    int i = 0;
+
+    if (size < 0)
+        return NULL;
+    memory = (char *)malloc((size + 1) * sizeof(char));
+    while (i < size) {
+        memory[i] = '\0';
+        i++;
+    }
+    memory[i] = '\0';
+    return memory;
+}
+
+char *mx_strjoin(const char *s1, const char *s2) {
+    if (s1 == NULL && s2 == NULL)
+        return NULL;
+    else if (s1 == NULL)
+        return strdup(s2);
+    else if (s2 == NULL)
+        return strdup(s1);
+    else {
+        int ns1 = strlen(s1), ns2 = strlen(s2);
+        char *new = mx_strnew(ns1 + ns2);
+
+        new = strcpy(new, s1);
+        new = strcat(new, s2);
+        return new;
+    }
+}
+
 void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main_area) {
     *settings_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(*settings_menu), L_FIELD_WIDTH, CUR_HEIGHT - 105);
@@ -23,18 +56,17 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     gtk_box_pack_start(GTK_BOX(user_profile_preview_box), user_info_preview, FALSE, FALSE, 31);
     
     char *username_tmp = strdup(t_user.FirstName);
-    username_tmp = strcat(username_tmp, " ");
-    username_tmp = strcat(username_tmp, t_user.SecondName);
+    username_tmp = mx_strjoin(username_tmp, " ");
+    username_tmp = mx_strjoin(username_tmp, t_user.SecondName);
     GtkWidget *username = gtk_label_new(username_tmp);
-    gtk_widget_set_name(GTK_WIDGET(username), "username_preview");
     free(username_tmp);
-
-    GtkWidget *pseudonim = gtk_label_new(t_user.pseudonim);
-    gtk_widget_set_name(GTK_WIDGET(pseudonim), "pseudonim_preview");
+    
+    gtk_widget_set_name(GTK_WIDGET(username), "username_preview");
+    GtkWidget *contact_info = gtk_label_new(t_user.pseudonim);
+    gtk_widget_set_name(GTK_WIDGET(contact_info), "contact_info_preview");
     gtk_box_pack_start(GTK_BOX(user_info_preview), username, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(user_info_preview), pseudonim, FALSE, FALSE, 0);
     gtk_widget_set_halign(username, GTK_ALIGN_START);
-    gtk_widget_set_halign(pseudonim, GTK_ALIGN_START);
+    gtk_box_pack_start(GTK_BOX(user_info_preview), contact_info, FALSE, FALSE, 0);
 
     // "Edit profile" section
     GtkWidget *edit_user_eventbox = gtk_event_box_new();

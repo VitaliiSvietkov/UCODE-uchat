@@ -1,8 +1,9 @@
 #ifndef UCHAT_CLIENT
 #define UCHAT_CLIENT
 
-#include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <gtk/gtk.h>
 #include <sys/ioctl.h>
 #include <stdio.h>
@@ -142,13 +143,12 @@ void chat_settings_leave_notify(GtkWidget *widget);
 void language_enter_notify(GtkWidget *widget);
 void language_leave_notify(GtkWidget *widget);
 
+void blackout_leave_notify_event(void);
 void blackout_click(GtkWidget *widget, GdkEventButton *event);
 
 void close_image_enter_notify_event(GtkWidget *widget);
 void close_image_leave_notify_event(GtkWidget *widget);
 void close_image_click_event(GtkWidget *widget, GdkEventButton *event);
-
-void username_eventbox_click_event(GtkWidget *widget, GdkEventButton *event);
 //================================
 
 #endif
