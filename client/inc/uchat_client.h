@@ -164,6 +164,8 @@ void edit_pseudo_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
 void edit_pseudo_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
+
+void change_description_entry_change_event(GtkWidget *widget);
 //================================
 
 char *mx_strnew(const int size);

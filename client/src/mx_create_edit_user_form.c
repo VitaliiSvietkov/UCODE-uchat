@@ -16,10 +16,11 @@ void mx_create_edit_user_form() {
 
 
     edit_user_form = gtk_box_new(GTK_ORIENTATION_VERTICAL, 15);
-    gtk_widget_set_size_request(GTK_WIDGET(edit_user_form), 400, 400);
+    gtk_widget_set_size_request(GTK_WIDGET(edit_user_form), 400, 520);
     gtk_widget_set_name(GTK_WIDGET(edit_user_form), "edit_user_form");
     gtk_fixed_put(GTK_FIXED(blackout_background), edit_user_form,
-        CUR_WIDTH / 3 - 10, CUR_HEIGHT / 5);
+        CUR_WIDTH / 3 - 10, CUR_HEIGHT / 5 - 50);
+
 
     // "close" image
     //==================================================================================
@@ -48,7 +49,7 @@ void mx_create_edit_user_form() {
 
     GtkWidget *change_avatar_btn = gtk_button_new_with_label("Change photo");
     gtk_box_pack_start(GTK_BOX(edit_user_form), change_avatar_btn, FALSE, FALSE, 0);
-    gtk_widget_set_name(GTK_WIDGET(change_avatar_btn), "button");
+    gtk_widget_set_name(GTK_WIDGET(change_avatar_btn), "edit_button");
     gtk_button_set_relief(GTK_BUTTON(change_avatar_btn), GTK_RELIEF_NONE);
     gtk_widget_set_halign(GTK_WIDGET(change_avatar_btn), GTK_ALIGN_CENTER);
 
@@ -136,10 +137,49 @@ void mx_create_edit_user_form() {
     // "change description" field
     //==================================================================================
     GtkWidget *change_description_label = gtk_label_new("Edit info about you:");
-    gtk_widget_set_name(GTK_WIDGET(change_description_label), "label");
+    gtk_widget_set_name(GTK_WIDGET(change_description_label), "change_description_label");
     gtk_box_pack_start(GTK_BOX(edit_user_form), change_description_label, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(change_description_label), GTK_ALIGN_START);
 
-    
+    GtkWidget *change_description_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(change_description_box), "change_description_box");
+    gtk_box_pack_start(GTK_BOX(edit_user_form), change_description_box, FALSE, FALSE, 0);  
+    GtkWidget *change_description_entry = gtk_text_view_new();
+    gtk_widget_set_name(GTK_WIDGET(change_description_entry), "change_description_entry");
+    gtk_box_pack_start(GTK_BOX(change_description_box), change_description_entry, FALSE, FALSE, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(change_description_entry), 400, 100);
+    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(change_description_entry), GTK_WRAP_WORD);
+    gtk_widget_set_state_flags(GTK_WIDGET(change_description_entry), GTK_STATE_FLAG_NORMAL, TRUE);
+
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(change_description_entry));
+
+    g_signal_connect(G_OBJECT(change_description_entry), "button_press_event",
+        G_CALLBACK(gtk_widget_grab_focus), NULL);
+
+    g_signal_connect(G_OBJECT(buffer), "changed",
+        G_CALLBACK(change_description_entry_change_event), NULL);
+    //gtk_entry_set_text(GTK_ENTRY(change_description_entry), t_user.description);
+    //==================================================================================
+
+    // Buttons to exit
+    //==================================================================================
+    GtkWidget *exit_buttons_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_pack_start(GTK_BOX(edit_user_form), exit_buttons_box, FALSE, FALSE, 0);
+
+    GtkWidget *commit_btn = gtk_button_new_with_label("Apply");
+    gtk_widget_set_name(GTK_WIDGET(commit_btn), "edit_button");
+    gtk_button_set_relief(GTK_BUTTON(commit_btn), GTK_RELIEF_NONE);
+    GtkWidget *exit_btn = gtk_button_new_with_label("Exit");
+    gtk_widget_set_name(GTK_WIDGET(exit_btn), "edit_button");
+    gtk_button_set_relief(GTK_BUTTON(exit_btn), GTK_RELIEF_NONE);
+
+    gtk_box_pack_start(GTK_BOX(exit_buttons_box), exit_btn, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(exit_buttons_box), commit_btn, TRUE, FALSE, 0);
+
+    gtk_widget_set_size_request(GTK_WIDGET(commit_btn), 100, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(exit_btn), 100, 0);
+
+    g_signal_connect(G_OBJECT(exit_btn), "button_press_event",
+        G_CALLBACK(close_image_click_event), NULL);
     //==================================================================================
 }

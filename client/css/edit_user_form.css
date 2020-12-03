@@ -1,0 +1,80 @@
+#edit_label {
+    color: #e1e1e1;
+    margin-left: 20px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+#change_description_label {
+    color: #e1e1e1;
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin-left: 20px;
+}
+
+#change_description_box {
+    box-shadow: none;
+    border: none;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: -15px;
+    border-radius: 0px;
+}
+
+#change_description_entry {
+    font-size: 16px;
+    color: #1f1f1f;
+    background: #e1e1e1;
+    opacity: 0.9;
+}
+
+#edit_button {
+    color: #e1e1e1;
+    font-family: "New Century Schoolbook", Times, serif;
+    letter-spacing: .8px;
+    background: #1f1f1f;
+    border: .5px solid #e1e1e1;
+    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+}
+#edit_button:hover {
+    background: #e1e1e1;
+    color: #1f1f1f;
+}
+
+#edit_user_form {
+    padding: 5px;
+    background: #1f1f1f;
+    box-shadow: 0px 0px 5px 2px #e1e1e1;
+    border-radius: 15px;
+    animation-name: fade;
+    animation-duration: .15s;
+}
+#edit_eventbox {
+    margin-top: 0px;
+    border-bottom: 0.5px solid #e1e1e1;
+}
+#edit_username_icon {
+    background-image: url("../img/standard/edit-user.png");
+    background-size: 30px;
+    background-repeat: no-repeat;
+}
+#edit_username_icon:hover {
+    background-image: url("../img/standard/edit-user-hovered.png");
+}
+#pen {
+    background-size: 20px;
+    background-repeat: no-repeat;
+    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+}
+#pen:hover {
+    background-image: url("../img/standard/pen-standard.png");
+}
+#edit_pseudo_icon {
+    background-image: url("../img/standard/edit-user.png");
+    background-size: 30px;
+    background-repeat: no-repeat;
+}
+#edit_pseudo_icon:hover {
+    background-image: url("../img/standard/edit-user-hovered.png");
+}

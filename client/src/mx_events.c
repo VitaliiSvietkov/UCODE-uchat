@@ -224,7 +224,7 @@ void language_leave_notify(GtkWidget *widget) {
 void blackout_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1
         && ((event->x < CUR_WIDTH / 3 - 10 || event->x > CUR_WIDTH / 3 - 10 + 400)
-            || (event->y < CUR_HEIGHT / 5 || event->y > CUR_HEIGHT / 5 + 400))) {
+            || (event->y < CUR_HEIGHT / 5 - 50 || event->y > CUR_HEIGHT / 5 - 50 + 520))) {
         gtk_widget_destroy(GTK_WIDGET(back_blackout));
     }
     if (widget) {}
@@ -246,52 +246,5 @@ void close_image_click_event(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_destroy(GTK_WIDGET(back_blackout));
     }
     if (widget) {}
-}
-//========================================================
-
-// Change avatar button
-//========================================================
-void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
-    if (widget) {}
-    if (event) {}
-    printf("BUTTON PRESSED\n");
-}
-//========================================================
-
-// Edit username field
-//========================================================
-void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data) {
-    if (event) {}
-    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(edit_username_icon), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT, TRUE);
-}
-
-void edit_username_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data) {
-    if (event) {}
-    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(edit_username_icon), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT);
-}
-//========================================================
-
-// Edit pseudonim field
-//========================================================
-void edit_pseudo_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data) {
-    if (event) {}
-    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(edit_pseudo_icon), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT, TRUE);
-}
-
-void edit_pseudo_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data) {
-    if (event) {}
-    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(edit_pseudo_icon), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT);
 }
 //========================================================
