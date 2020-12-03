@@ -137,7 +137,7 @@ void mx_create_edit_user_form() {
     // "change description" field
     //==================================================================================
     GtkWidget *change_description_label = gtk_label_new("Edit info about you:");
-    gtk_widget_set_name(GTK_WIDGET(change_description_label), "change_description_label");
+    gtk_widget_set_name(GTK_WIDGET(change_description_label), "edit_label");
     gtk_box_pack_start(GTK_BOX(edit_user_form), change_description_label, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(change_description_label), GTK_ALIGN_START);
 
@@ -152,13 +152,14 @@ void mx_create_edit_user_form() {
     gtk_widget_set_state_flags(GTK_WIDGET(change_description_entry), GTK_STATE_FLAG_NORMAL, TRUE);
 
     GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(change_description_entry));
+    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), 
+        t_user.description, strlen(t_user.description));
 
     g_signal_connect(G_OBJECT(change_description_entry), "button_press_event",
         G_CALLBACK(gtk_widget_grab_focus), NULL);
 
     g_signal_connect(G_OBJECT(buffer), "changed",
         G_CALLBACK(change_description_entry_change_event), NULL);
-    //gtk_entry_set_text(GTK_ENTRY(change_description_entry), t_user.description);
     //==================================================================================
 
     // Buttons to exit
