@@ -249,6 +249,15 @@ void close_image_click_event(GtkWidget *widget, GdkEventButton *event) {
 }
 //========================================================
 
+// Change avatar button
+//========================================================
+void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
+    if (widget) {}
+    if (event) {}
+    printf("BUTTON PRESSED\n");
+}
+//========================================================
+
 // Edit username field
 //========================================================
 void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,

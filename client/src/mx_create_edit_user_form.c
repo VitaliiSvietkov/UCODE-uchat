@@ -1,7 +1,8 @@
 #include "../inc/uchat_client.h"
 
 void mx_create_edit_user_form() {
-    // Create a blackout
+    // Create a blackout - a dark background behind the form
+    //==================================================================================
     back_blackout = gtk_event_box_new();
     GtkWidget *blackout_background = gtk_fixed_new();
     gtk_widget_set_name(GTK_WIDGET(back_blackout), "back_blackout");
@@ -11,16 +12,17 @@ void mx_create_edit_user_form() {
     gtk_container_add(GTK_CONTAINER(back_blackout), blackout_background);
     gtk_fixed_put(GTK_FIXED(main_area), back_blackout, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(blackout_background), CUR_WIDTH, CUR_HEIGHT);
+    //==================================================================================
 
 
-    edit_user_form = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    edit_user_form = gtk_box_new(GTK_ORIENTATION_VERTICAL, 15);
     gtk_widget_set_size_request(GTK_WIDGET(edit_user_form), 400, 400);
     gtk_widget_set_name(GTK_WIDGET(edit_user_form), "edit_user_form");
     gtk_fixed_put(GTK_FIXED(blackout_background), edit_user_form,
         CUR_WIDTH / 3 - 10, CUR_HEIGHT / 5);
 
     // "close" image
-    //================================================
+    //==================================================================================
     GtkWidget *close_image_box = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(close_image_box), "close_image_box");
     gtk_widget_set_size_request(GTK_WIDGET(close_image_box), 25, 25);
@@ -34,10 +36,29 @@ void mx_create_edit_user_form() {
         G_CALLBACK(close_image_leave_notify_event), NULL);
     g_signal_connect(G_OBJECT(close_image_box), "button_press_event",
         G_CALLBACK(close_image_click_event), NULL);
-    //================================================
+    //==================================================================================
+
+    // "change avatar" field
+    //==================================================================================
+    GtkWidget *avatar = gtk_drawing_area_new();
+    gtk_widget_set_size_request(GTK_WIDGET(avatar), 100, 100);
+    gtk_box_pack_start(GTK_BOX(edit_user_form), avatar, FALSE, FALSE, 0);
+    gtk_widget_set_halign(GTK_WIDGET(avatar), GTK_ALIGN_CENTER);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_avatar), (int*)100);
+
+    GtkWidget *change_avatar_btn = gtk_button_new_with_label("Change photo");
+    gtk_box_pack_start(GTK_BOX(edit_user_form), change_avatar_btn, FALSE, FALSE, 0);
+    gtk_widget_set_name(GTK_WIDGET(change_avatar_btn), "button");
+    gtk_button_set_relief(GTK_BUTTON(change_avatar_btn), GTK_RELIEF_NONE);
+    gtk_widget_set_halign(GTK_WIDGET(change_avatar_btn), GTK_ALIGN_CENTER);
+
+    g_signal_connect(G_OBJECT(change_avatar_btn), "clicked",
+        G_CALLBACK(change_avatart_btn_click), NULL);
+
+    //==================================================================================
 
     // "change name" field
-    //======================================================
+    //==================================================================================
     edit_username_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(edit_username_eventbox), "edit_eventbox");
     gtk_widget_set_size_request(GTK_WIDGET(edit_username_eventbox), 400, 40);
@@ -57,7 +78,8 @@ void mx_create_edit_user_form() {
     GtkWidget *edit_username_label = gtk_label_new(username_tmp);
     free(username_tmp);
 
-    gtk_box_pack_start(GTK_BOX(edit_username_box), edit_username_label, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(edit_username_box), edit_username_label, FALSE, FALSE, 20);
+    gtk_widget_set_halign(GTK_WIDGET(edit_username_label), GTK_ALIGN_CENTER);
     gtk_widget_set_name(GTK_WIDGET(edit_username_label), "edit_label");
 
     GtkWidget *edit_username_pen = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -73,14 +95,14 @@ void mx_create_edit_user_form() {
         G_CALLBACK(edit_username_eventbox_leave_notify_event), edit_username_pen);
     //g_signal_connect(G_OBJECT(edit_username_eventbox), "button_press_event",
     //    G_CALLBACK(edit_username_eventbox_click_event), NULL);
-    //======================================================
+    //==================================================================================
 
     // "change pseudo" field
-    //======================================================
+    //==================================================================================
     edit_pseudo_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(edit_pseudo_eventbox), "edit_eventbox");
     gtk_widget_set_size_request(GTK_WIDGET(edit_pseudo_eventbox), 400, 40);
-    gtk_box_pack_start(GTK_BOX(edit_user_form), edit_pseudo_eventbox, FALSE, FALSE, 15);
+    gtk_box_pack_start(GTK_BOX(edit_user_form), edit_pseudo_eventbox, FALSE, FALSE, 0);
     GtkWidget *edit_pseudo_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(edit_pseudo_box), 400, 0);
     gtk_container_add(GTK_CONTAINER(edit_pseudo_eventbox), edit_pseudo_box);
@@ -92,7 +114,8 @@ void mx_create_edit_user_form() {
 
     GtkWidget *edit_pseudo_label = gtk_label_new(t_user.pseudonim);
 
-    gtk_box_pack_start(GTK_BOX(edit_pseudo_box), edit_pseudo_label, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(edit_pseudo_box), edit_pseudo_label, FALSE, FALSE, 20);
+    gtk_widget_set_halign(GTK_WIDGET(edit_pseudo_label), GTK_ALIGN_CENTER);
     gtk_widget_set_name(GTK_WIDGET(edit_pseudo_label), "edit_label");
 
     GtkWidget *edit_pseudo_pen = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -108,5 +131,15 @@ void mx_create_edit_user_form() {
         G_CALLBACK(edit_pseudo_eventbox_leave_notify_event), edit_pseudo_pen);
     //g_signal_connect(G_OBJECT(edit_pseudo_eventbox), "button_press_event",
     //    G_CALLBACK(edit_pseudo_eventbox_click_event), NULL);
-    //======================================================
+    //==================================================================================
+
+    // "change description" field
+    //==================================================================================
+    GtkWidget *change_description_label = gtk_label_new("Edit info about you:");
+    gtk_widget_set_name(GTK_WIDGET(change_description_label), "label");
+    gtk_box_pack_start(GTK_BOX(edit_user_form), change_description_label, FALSE, FALSE, 0);
+    gtk_widget_set_halign(GTK_WIDGET(change_description_label), GTK_ALIGN_START);
+
+    
+    //==================================================================================
 }

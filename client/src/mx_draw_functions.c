@@ -32,13 +32,16 @@ gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr) {
     return FALSE;
 }
 
-gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr) {
-    gdk_cairo_set_source_pixbuf(cr, t_user.avatar, 0, 0);
+gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size) {
+    GdkPixbuf *pixbuf = gdk_pixbuf_scale_simple(GDK_PIXBUF(t_user.avatar), 
+        size, size, GDK_INTERP_BILINEAR);
+    gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
+    g_object_unref(G_OBJECT(pixbuf));
 
     double x = 0,
         y = 0,
-        width = 70,
-        height = 70,
+        width = size,
+        height = size,
         aspect = 1.0,                       /* aspect ratio */
         corner_radius = height / 2.7;       /* and corner curvature radius */
     double radius = corner_radius / aspect;

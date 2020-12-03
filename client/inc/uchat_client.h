@@ -79,6 +79,7 @@ GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
 
 GtkWidget *back_blackout;
+
 GtkWidget *edit_user_form;
 GtkWidget *edit_username_eventbox;
 GtkWidget *edit_username_icon;
@@ -103,7 +104,7 @@ void mx_tooltip(char *str, void *data);
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
-gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr);
+gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size);
 //==========================================================================================
 
 // Event callback functions (look in "mx_events.c")
@@ -151,6 +152,8 @@ void blackout_click(GtkWidget *widget, GdkEventButton *event);
 void close_image_enter_notify_event(GtkWidget *widget);
 void close_image_leave_notify_event(GtkWidget *widget);
 void close_image_click_event(GtkWidget *widget, GdkEventButton *event);
+
+void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event);
 
 void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
