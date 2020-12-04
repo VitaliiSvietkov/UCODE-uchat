@@ -58,12 +58,12 @@
 /*              Icon that for "edit username"                */
 /* ========================================================== */
 #edit_username_icon {
-    background-image: url("../img/standard/edit-user.png");
+    background-image: url("../img/standard/change_name.png");
     background-size: 30px;
     background-repeat: no-repeat;
 }
 #edit_username_icon:hover {
-    background-image: url("../img/standard/edit-user-hovered.png");
+    background-image: url("../img/standard/change_name-hovered.png");
 }
 /* ========================================================== */
 
@@ -71,12 +71,14 @@
 /*              Icon that for "edit pseudonim"                */
 /* ========================================================== */
 #edit_pseudo_icon {
-    background-image: url("../img/standard/edit-user.png");
-    background-size: 30px;
+    margin-top: -3px;
+    margin-left: 3px;
+    background-image: url("../img/standard/pseudonim.png");
+    background-size: 23px;
     background-repeat: no-repeat;
 }
 #edit_pseudo_icon:hover {
-    background-image: url("../img/standard/edit-user-hovered.png");
+    background-image: url("../img/standard/pseudonim-hovered.png");
 }
 /* ========================================================== */
 

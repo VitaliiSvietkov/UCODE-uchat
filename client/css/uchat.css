@@ -40,11 +40,23 @@
 #close_image_box {
     background-image: url("../img/standard/cancel.png");
     background-size: 25px;
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
 }
 #close_image_box:hover {
     background-image: url("../img/standard/cancel-hovered.png");
+    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
 }
+
+#return_image_box {
+    background-image: url("../img/standard/left-arrow.png");
+    background-size: 25px;
+}
+#return_image_box:hover {
+    background-image: url("../img/standard/left-arrow-hovered.png");
+    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+}
+
+
+
 
 #add_image {
     background-image: url("../img/standard/add.png");
