@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 void mx_configure_left_header(GtkWidget **left_header, GtkWidget **main_area, 
     GtkWidget **entry_search) {

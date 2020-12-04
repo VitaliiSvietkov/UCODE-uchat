@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main_area) {
     *settings_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);

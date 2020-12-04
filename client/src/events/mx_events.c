@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 void image_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {

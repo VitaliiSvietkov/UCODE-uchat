@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWidget **window) {
     *main_area = gtk_fixed_new();

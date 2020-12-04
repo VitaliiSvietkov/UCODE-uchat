@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **main_area,
     GtkWidget **entry_chat) {

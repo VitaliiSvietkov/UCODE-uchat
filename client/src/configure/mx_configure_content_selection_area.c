@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 void mx_configure_content_selection_area(GtkWidget **content_selection_area, GtkWidget **main_area) {
     // A container which contains section with images and a line just below it

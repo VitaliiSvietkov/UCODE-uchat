@@ -1,6 +1,7 @@
 .PHONY: all install uchat clean uninstall reinstall
 
-SRCS := $(wildcard src/*.c)
+dirs := src src/events src/configure
+SRCS := $(foreach dir, $(dirs), $(wildcard $(dir)/*.c))
 HDRS := $(wildcard inc/*.h)
 
 WFLGS := $(addprefix -W, all extra error pedantic)
