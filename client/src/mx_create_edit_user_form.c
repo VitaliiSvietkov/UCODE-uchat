@@ -29,6 +29,11 @@ void mx_create_edit_user_form() {
     gtk_box_pack_start(GTK_BOX(edit_user_form), edit_username_event_screen, FALSE, FALSE, 0);
     mx_configure_username_event_screen();
 
+    edit_pseudonim_event_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 15);
+    gtk_widget_set_size_request(GTK_WIDGET(edit_pseudonim_event_screen), 440, 500);
+    gtk_box_pack_start(GTK_BOX(edit_user_form), edit_pseudonim_event_screen, FALSE, FALSE, 0);
+    mx_configure_pseudonim_event_screen();
+
 
     // "close" image
     //==================================================================================
@@ -103,7 +108,7 @@ void mx_create_edit_user_form() {
     g_signal_connect(G_OBJECT(edit_username_eventbox), "leave-notify-event",
         G_CALLBACK(edit_username_eventbox_leave_notify_event), edit_username_pen);
     g_signal_connect(G_OBJECT(edit_username_eventbox), "button_press_event",
-        G_CALLBACK(edit_username_eventbox_click_event), edit_username_event_screen);
+        G_CALLBACK(edit_eventbox_click_event), edit_username_event_screen);
     //==================================================================================
 
     // "change pseudo" field
@@ -138,8 +143,8 @@ void mx_create_edit_user_form() {
         G_CALLBACK(edit_pseudo_eventbox_enter_notify_event), edit_pseudo_pen);
     g_signal_connect(G_OBJECT(edit_pseudo_eventbox), "leave-notify-event",
         G_CALLBACK(edit_pseudo_eventbox_leave_notify_event), edit_pseudo_pen);
-    //g_signal_connect(G_OBJECT(edit_pseudo_eventbox), "button_press_event",
-    //    G_CALLBACK(edit_pseudo_eventbox_click_event), NULL);
+    g_signal_connect(G_OBJECT(edit_pseudo_eventbox), "button_press_event",
+        G_CALLBACK(edit_eventbox_click_event), edit_pseudonim_event_screen);
     //==================================================================================
 
     // "change description" field

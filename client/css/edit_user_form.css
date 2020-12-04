@@ -23,6 +23,16 @@
 }
 /* ================================= */
 
+#info_label {
+    color: #e1e1e1;
+    margin-left: 20px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    font-style: italic;
+    margin-left: -5px;
+}
+
 #change_description_box {
     box-shadow: none;
     border: none;

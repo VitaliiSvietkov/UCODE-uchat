@@ -1,7 +1,7 @@
 #include "../inc/uchat_client.h"
 
 void mx_configure_username_event_screen() {
-        // Return image
+    // Return image
     //==================================================================================
     GtkWidget *return_image_box = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(return_image_box), "return_image_box");
@@ -15,7 +15,7 @@ void mx_configure_username_event_screen() {
     g_signal_connect(G_OBJECT(return_image_box), "leave-notify-event",
         G_CALLBACK(image_leave_notify), NULL);
     g_signal_connect(G_OBJECT(return_image_box), "button_press_event",
-        G_CALLBACK(return_image_click_event), NULL);
+        G_CALLBACK(return_image_click_event), edit_username_event_screen);
     //==================================================================================
 
     // Draw avatar block
@@ -78,6 +78,6 @@ void mx_configure_username_event_screen() {
     gtk_widget_set_size_request(GTK_WIDGET(exit_username_btn), 100, 0);
 
     g_signal_connect(G_OBJECT(exit_username_btn), "button_press_event",
-        G_CALLBACK(return_image_click_event), NULL);
+        G_CALLBACK(return_image_click_event), edit_username_event_screen);
     //==================================================================================
 }
