@@ -11,6 +11,14 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
 
 // Edit username field
 //============================================================================================
+void return_image_click_event(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_widget_hide(GTK_WIDGET(edit_username_event_screen));
+        gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
+    }
+    if (widget) {}
+}
+
 void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data) {
     if (event) {}
@@ -25,6 +33,15 @@ void edit_username_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *even
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
     gtk_widget_unset_state_flags(GTK_WIDGET(edit_username_icon), GTK_STATE_FLAG_PRELIGHT);
     gtk_widget_unset_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT);
+}
+
+void edit_username_eventbox_click_event(GtkWidget *widget, GdkEventButton *event,
+    GtkWidget *data) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_widget_hide(GTK_WIDGET(edit_user_main_screen));
+        gtk_widget_show_all(GTK_WIDGET(data));
+    }
+    if (widget) {}
 }
 //============================================================================================
 

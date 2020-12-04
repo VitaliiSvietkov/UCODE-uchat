@@ -81,6 +81,8 @@ GtkWidget *active_leftbar_container;
 GtkWidget *back_blackout;
 
 GtkWidget *edit_user_form;
+GtkWidget *edit_user_main_screen;
+GtkWidget *edit_username_event_screen;
 GtkWidget *edit_username_eventbox;
 GtkWidget *edit_username_icon;
 GtkWidget *edit_pseudo_eventbox;
@@ -95,6 +97,7 @@ void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **main_
     GtkWidget **entry_chat);
 void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main_area);
 void mx_create_edit_user_form(void);
+void mx_configure_username_event_screen(void);
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
 GdkPixbuf *mx_get_pixbuf_with_size(char *path, int w, int h);
 void mx_tooltip(char *str, void *data);
@@ -149,15 +152,16 @@ void language_leave_notify(GtkWidget *widget);
 void blackout_leave_notify_event(void);
 void blackout_click(GtkWidget *widget, GdkEventButton *event);
 
-void close_image_enter_notify_event(GtkWidget *widget);
-void close_image_leave_notify_event(GtkWidget *widget);
 void close_image_click_event(GtkWidget *widget, GdkEventButton *event);
+void return_image_click_event(GtkWidget *widget, GdkEventButton *event);
 
 void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event);
 
 void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
 void edit_username_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
+    GtkWidget *data);
+void edit_username_eventbox_click_event(GtkWidget *widget, GdkEventButton *event,
     GtkWidget *data);
 
 void edit_pseudo_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,

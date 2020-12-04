@@ -17,6 +17,7 @@ void edit_user_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         mx_create_edit_user_form();
         gtk_widget_show_all(GTK_WIDGET(back_blackout));
+        gtk_widget_hide(GTK_WIDGET(edit_username_event_screen));
     }
     if (widget) {}
 }
