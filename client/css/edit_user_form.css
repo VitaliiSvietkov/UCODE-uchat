@@ -56,11 +56,11 @@
     letter-spacing: .8px;
     background: #1f1f1f;
     border: .5px solid #e1e1e1;
-    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
 }
 #edit_button:hover {
     background: #e1e1e1;
     color: #1f1f1f;
+    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
 }
 /* ====================================================== */
 

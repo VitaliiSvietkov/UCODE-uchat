@@ -10,6 +10,11 @@ int main(int argc, char *argv[]) {
     chats_list = NULL;
     settings_menu = NULL;
 
+    NewFirstName = NULL;
+    NewSecondName = NULL;
+    NewPseudonim = NULL;
+    NewDescription = NULL;
+
     GtkWidget *entry_search = NULL;
     GtkWidget *entry_chat = NULL;
 

@@ -54,7 +54,7 @@ void mx_load_images(void);
 //============================
 
 // User info
-//=====================
+//==========================================================================================
 struct
 {
     char *FirstName;
@@ -69,7 +69,7 @@ void mx_change_user_pseudonim(char str[]);
 void mx_change_user_description(char str[]);
 void mx_change_user_avatar(char path[]);
 void mx_init_user(void);
-//=====================
+//==========================================================================================
 
 GtkWidget *main_area;
 
@@ -80,17 +80,38 @@ GtkWidget *active_leftbar_container;
 
 GtkWidget *back_blackout;
 
-
+// Edit user form
+//==========================================================================================
 GtkWidget *edit_user_form;
 GtkWidget *edit_user_main_screen;
 
+GtkWidget *username;
+GtkWidget *contact_info;
+
+GtkWidget *edit_username_label;
+GtkWidget *edit_pseudo_label;
+
+// Variables that will replace old ones
+char *NewFirstName;
+char *NewSecondName;
+char *NewPseudonim;
+char *NewDescription;
+
+// Edit username screen
 GtkWidget *edit_username_event_screen;
 GtkWidget *edit_username_eventbox;
 GtkWidget *edit_username_icon;
 
+GtkWidget *change_fname_entry;
+GtkWidget *change_sname_entry;
+
+// Edit pseudonim screen
 GtkWidget *edit_pseudonim_event_screen;
 GtkWidget *edit_pseudo_eventbox;
 GtkWidget *edit_pseudo_icon;
+
+GtkWidget *change_pseudo_entry;
+//==========================================================================================
 
 void mx_init_window(GtkWidget **window);
 
@@ -121,8 +142,6 @@ void image_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data);
 void image_enter_notify(GtkWidget *widget);
 void image_leave_notify(GtkWidget *widget);
 void close_image_click_event(GtkWidget *widget, GdkEventButton *event);
-void return_image_click_event(GtkWidget *widget, GdkEventButton *event,
-    GtkWidget *data);
 
 void messages_enter_notify(GtkWidget *widget);
 void messages_leave_notify(GtkWidget *widget);
@@ -157,6 +176,9 @@ void chat_settings_leave_notify(GtkWidget *widget);
 void language_enter_notify(GtkWidget *widget);
 void language_leave_notify(GtkWidget *widget);
 
+
+
+
 void blackout_leave_notify_event(void);
 void blackout_click(GtkWidget *widget, GdkEventButton *event);
 
@@ -169,13 +191,23 @@ void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *even
     GtkWidget *data);
 void edit_username_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
+void return_username_click_event(GtkWidget *widget, GdkEventButton *event,
+    GtkWidget *data);
+void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
+    GtkWidget *data);
 
 void edit_pseudo_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
 void edit_pseudo_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
+void return_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
+    GtkWidget *data);
+void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
+    GtkWidget *data);
 
 void change_description_entry_change_event(GtkWidget *widget);
+
+void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event);
 //================================
 
 char *mx_strnew(const int size);

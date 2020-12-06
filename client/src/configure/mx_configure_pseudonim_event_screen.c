@@ -15,7 +15,7 @@ void mx_configure_pseudonim_event_screen() {
     g_signal_connect(G_OBJECT(return_image_box), "leave-notify-event",
         G_CALLBACK(image_leave_notify), NULL);
     g_signal_connect(G_OBJECT(return_image_box), "button_press_event",
-        G_CALLBACK(return_image_click_event), edit_pseudonim_event_screen);
+        G_CALLBACK(return_pseudonim_click_event), edit_pseudonim_event_screen);
     //==================================================================================
 
     // Draw avatar block
@@ -35,7 +35,7 @@ void mx_configure_pseudonim_event_screen() {
     gtk_widget_set_halign(GTK_WIDGET(change_pseudo_label), GTK_ALIGN_START);
     gtk_widget_set_margin_top(GTK_WIDGET(change_pseudo_label), 69);
 
-    GtkWidget *change_pseudo_entry = gtk_entry_new();
+    change_pseudo_entry = gtk_entry_new();
     gtk_widget_set_sensitive(GTK_WIDGET(change_pseudo_entry), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(change_pseudo_entry), TRUE);
     gtk_widget_set_name(GTK_WIDGET(change_pseudo_entry), "edit_entry");
@@ -74,6 +74,8 @@ void mx_configure_pseudonim_event_screen() {
     gtk_widget_set_size_request(GTK_WIDGET(exit_pseudonim_btn), 100, 0);
 
     g_signal_connect(G_OBJECT(exit_pseudonim_btn), "button_press_event",
-        G_CALLBACK(return_image_click_event), edit_pseudonim_event_screen);
+        G_CALLBACK(return_pseudonim_click_event), edit_pseudonim_event_screen);
+    g_signal_connect(G_OBJECT(commit_pseudonim_btn), "button_press_event",
+        G_CALLBACK(commit_pseudonim_click_event), edit_pseudonim_event_screen);
     //==================================================================================
 }

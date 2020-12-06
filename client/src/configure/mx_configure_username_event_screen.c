@@ -15,7 +15,7 @@ void mx_configure_username_event_screen() {
     g_signal_connect(G_OBJECT(return_image_box), "leave-notify-event",
         G_CALLBACK(image_leave_notify), NULL);
     g_signal_connect(G_OBJECT(return_image_box), "button_press_event",
-        G_CALLBACK(return_image_click_event), edit_username_event_screen);
+        G_CALLBACK(return_username_click_event), edit_username_event_screen);
     //==================================================================================
 
     // Draw avatar block
@@ -35,7 +35,7 @@ void mx_configure_username_event_screen() {
     gtk_widget_set_halign(GTK_WIDGET(change_fname_label), GTK_ALIGN_START);
     gtk_widget_set_margin_top(GTK_WIDGET(change_fname_label), 30);
 
-    GtkWidget *change_fname_entry = gtk_entry_new();
+    change_fname_entry = gtk_entry_new();
     gtk_widget_set_sensitive(GTK_WIDGET(change_fname_entry), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(change_fname_entry), TRUE);
     gtk_widget_set_name(GTK_WIDGET(change_fname_entry), "edit_entry");
@@ -50,7 +50,7 @@ void mx_configure_username_event_screen() {
     gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_sname_label, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(change_sname_label), GTK_ALIGN_START);
 
-    GtkWidget *change_sname_entry = gtk_entry_new();
+    change_sname_entry = gtk_entry_new();
     gtk_widget_set_sensitive(GTK_WIDGET(change_sname_entry), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(change_sname_entry), TRUE);
     gtk_widget_set_name(GTK_WIDGET(change_sname_entry), "edit_entry");
@@ -78,6 +78,8 @@ void mx_configure_username_event_screen() {
     gtk_widget_set_size_request(GTK_WIDGET(exit_username_btn), 100, 0);
 
     g_signal_connect(G_OBJECT(exit_username_btn), "button_press_event",
-        G_CALLBACK(return_image_click_event), edit_username_event_screen);
+        G_CALLBACK(return_username_click_event), edit_username_event_screen);
+    g_signal_connect(G_OBJECT(commit_username_btn), "button_press_event",
+        G_CALLBACK(commit_username_click_event), edit_username_event_screen);
     //==================================================================================
 }
