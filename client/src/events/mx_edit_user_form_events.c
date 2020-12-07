@@ -158,13 +158,11 @@ void change_description_entry_change_event(GtkWidget *widget) {
         free(NewDescription);
         NewDescription = NULL;
     }
-    GtkTextIter *start = NULL;
-    GtkTextIter *end = NULL;
-    gtk_text_buffer_get_iter_at_line(GTK_TEXT_BUFFER(widget), start, 1);
-    gtk_text_buffer_get_iter_at_line(GTK_TEXT_BUFFER(widget), end, 1);
-    gtk_text_buffer_get_start_iter (GTK_TEXT_BUFFER(widget), start);
-    gtk_text_buffer_get_end_iter (GTK_TEXT_BUFFER(widget), end);
-    NewDescription = mx_strjoin(NewDescription, gtk_text_buffer_get_text(GTK_TEXT_BUFFER(widget), start, end, FALSE));
+    GtkTextIter start;
+    GtkTextIter end;
+    gtk_text_buffer_get_start_iter (GTK_TEXT_BUFFER(widget), &start);
+    gtk_text_buffer_get_end_iter (GTK_TEXT_BUFFER(widget), &end);
+    NewDescription = mx_strjoin(NewDescription, gtk_text_buffer_get_text(GTK_TEXT_BUFFER(widget), &start, &end, FALSE));
 }
 //============================================================================================
 
