@@ -29,11 +29,14 @@ void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main
     free(username_tmp);
     
     gtk_widget_set_name(GTK_WIDGET(username), "username_preview");
-    contact_info = gtk_label_new(t_user.pseudonim);
-    gtk_widget_set_name(GTK_WIDGET(contact_info), "contact_info_preview");
+    char *tmp_pseudonim = "@";
+    tmp_pseudonim = mx_strjoin(tmp_pseudonim, t_user.pseudonim);
+    user_pseudonim = gtk_label_new(tmp_pseudonim);
+    free(tmp_pseudonim);
+    gtk_widget_set_name(GTK_WIDGET(user_pseudonim), "user_pseudonim_preview");
     gtk_box_pack_start(GTK_BOX(user_info_preview), username, FALSE, FALSE, 0);
     gtk_widget_set_halign(username, GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(user_info_preview), contact_info, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(user_info_preview), user_pseudonim, FALSE, FALSE, 0);
 
     // "Edit profile" section
     GtkWidget *edit_user_eventbox = gtk_event_box_new();

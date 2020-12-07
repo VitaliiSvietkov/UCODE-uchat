@@ -39,8 +39,11 @@ void mx_configure_username_event_screen() {
     gtk_widget_set_sensitive(GTK_WIDGET(change_fname_entry), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(change_fname_entry), TRUE);
     gtk_widget_set_name(GTK_WIDGET(change_fname_entry), "edit_entry");
+    gtk_entry_set_text(GTK_ENTRY(change_fname_entry), NewFirstName);
     gtk_widget_set_size_request(GTK_WIDGET(change_fname_entry), 400, 0);
     gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_fname_entry, FALSE, FALSE, 0);
+    g_signal_connect(G_OBJECT(change_fname_entry), "changed",
+        G_CALLBACK(fname_entry_changed_event), NULL);
     //==================================================================================
 
     // "change second name" block
@@ -54,6 +57,7 @@ void mx_configure_username_event_screen() {
     gtk_widget_set_sensitive(GTK_WIDGET(change_sname_entry), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(change_sname_entry), TRUE);
     gtk_widget_set_name(GTK_WIDGET(change_sname_entry), "edit_entry");
+    gtk_entry_set_text(GTK_ENTRY(change_sname_entry), NewSecondName);
     gtk_widget_set_size_request(GTK_WIDGET(change_sname_entry), 400, 0);
     gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_sname_entry, FALSE, FALSE, 0);
     //==================================================================================

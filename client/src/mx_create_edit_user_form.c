@@ -14,6 +14,14 @@ void mx_create_edit_user_form() {
     gtk_widget_set_size_request(GTK_WIDGET(blackout_background), CUR_WIDTH, CUR_HEIGHT);
     //==================================================================================
 
+    NewFirstName = strdup(t_user.FirstName);
+    if (t_user.SecondName != NULL)
+        NewSecondName = strdup(t_user.SecondName);
+    else
+        NewSecondName = strdup("");
+    NewPseudonim = strdup(t_user.pseudonim);
+    NewDescription = strdup(t_user.description);
+    
     edit_user_form = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(GTK_WIDGET(edit_user_form), "edit_user_form");
     gtk_fixed_put(GTK_FIXED(blackout_background), edit_user_form,

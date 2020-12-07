@@ -12,7 +12,7 @@ void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWi
                      G_CALLBACK(mx_draw_event_background), NULL);
 
 
-
+    
 
     /*
     GdkPixbufAnimation *anim = gdk_pixbuf_animation_new_from_file("client/img/standard/giphy.gif", NULL);

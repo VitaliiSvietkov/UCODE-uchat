@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 
     mx_init_user();
     mx_change_user_name("Vitalii", "Svietkov");
-    mx_change_user_pseudonim("@mypsefsdfdsfsudo");
+    mx_change_user_pseudonim("mypseudo");
     mx_change_user_description("Hello, World!");
   
     gtk_init(&argc, &argv);

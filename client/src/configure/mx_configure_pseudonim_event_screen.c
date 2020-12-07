@@ -39,8 +39,11 @@ void mx_configure_pseudonim_event_screen() {
     gtk_widget_set_sensitive(GTK_WIDGET(change_pseudo_entry), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(change_pseudo_entry), TRUE);
     gtk_widget_set_name(GTK_WIDGET(change_pseudo_entry), "edit_entry");
+    gtk_entry_set_text(GTK_ENTRY(change_pseudo_entry), NewPseudonim);
     gtk_widget_set_size_request(GTK_WIDGET(change_pseudo_entry), 400, 0);
     gtk_box_pack_start(GTK_BOX(edit_pseudonim_event_screen), change_pseudo_entry, FALSE, FALSE, 0);
+    g_signal_connect(G_OBJECT(change_pseudo_entry), "changed",
+        G_CALLBACK(pseudo_entry_changed_event), NULL);
     //==================================================================================
 
     // Additional info block

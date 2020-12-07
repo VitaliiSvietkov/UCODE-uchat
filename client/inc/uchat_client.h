@@ -86,7 +86,7 @@ GtkWidget *edit_user_form;
 GtkWidget *edit_user_main_screen;
 
 GtkWidget *username;
-GtkWidget *contact_info;
+GtkWidget *user_pseudonim;
 
 GtkWidget *edit_username_label;
 GtkWidget *edit_pseudo_label;
@@ -191,6 +191,7 @@ void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *even
     GtkWidget *data);
 void edit_username_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
+void fname_entry_changed_event(GtkWidget *widget);
 void return_username_click_event(GtkWidget *widget, GdkEventButton *event,
     GtkWidget *data);
 void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
@@ -200,6 +201,7 @@ void edit_pseudo_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
 void edit_pseudo_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
+void pseudo_entry_changed_event(GtkWidget *widget);
 void return_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
     GtkWidget *data);
 void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,

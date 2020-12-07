@@ -36,14 +36,23 @@ void edit_eventbox_click_event(GtkWidget *widget, GdkEventButton *event,
     if (widget) {}
 }
 
+void fname_entry_changed_event(GtkWidget *widget) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) == 0) {
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+    }
+    else {
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK);
+    }
+}
+
 
 
 void return_username_click_event(GtkWidget *widget, GdkEventButton *event,
     GtkWidget *data) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         gtk_widget_hide(GTK_WIDGET(data));
-        gtk_entry_set_text(GTK_ENTRY(change_fname_entry), "");
-        gtk_entry_set_text(GTK_ENTRY(change_sname_entry), "");
+        gtk_entry_set_text(GTK_ENTRY(change_fname_entry), NewFirstName);
+        gtk_entry_set_text(GTK_ENTRY(change_sname_entry), NewSecondName);
         gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
     }
     if (widget) {}
@@ -51,29 +60,23 @@ void return_username_click_event(GtkWidget *widget, GdkEventButton *event,
 
 void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
     GtkWidget *data) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1
+        && strlen(gtk_entry_get_text(GTK_ENTRY(change_fname_entry))) != 0) {
         gtk_widget_hide(GTK_WIDGET(data));
-        if (NewFirstName == NULL)
-            NewFirstName = mx_strjoin(NewFirstName, gtk_entry_get_text(GTK_ENTRY(change_fname_entry)));
-        else {
-            free(NewFirstName);
-            NewFirstName = NULL;
-            NewFirstName = mx_strjoin(NewFirstName, gtk_entry_get_text(GTK_ENTRY(change_fname_entry)));
-        }
-        if (NewSecondName == NULL) {
-            if (strlen(gtk_entry_get_text(GTK_ENTRY(change_sname_entry))) == 0)
-                NewSecondName = mx_strjoin(NewSecondName, "");
-            else
-                NewSecondName = mx_strjoin(NewSecondName, gtk_entry_get_text(GTK_ENTRY(change_sname_entry)));
-        }
-        else {
+
+        free(NewFirstName);
+        NewFirstName = NULL;
+        NewFirstName = mx_strjoin(NewFirstName, gtk_entry_get_text(GTK_ENTRY(change_fname_entry)));
+
+        if (NewSecondName != NULL) {
             free(NewSecondName);
-            NewSecondName = NULL;
-            if (strlen(gtk_entry_get_text(GTK_ENTRY(change_sname_entry))) != 0)
-                NewSecondName = mx_strjoin(NewSecondName, gtk_entry_get_text(GTK_ENTRY(change_sname_entry)));
+            NewSecondName = strdup("");
         }
-        gtk_entry_set_text(GTK_ENTRY(change_fname_entry), "");
-        gtk_entry_set_text(GTK_ENTRY(change_sname_entry), "");
+        if (strlen(gtk_entry_get_text(GTK_ENTRY(change_sname_entry))) != 0)
+            NewSecondName = mx_strjoin(NewSecondName, gtk_entry_get_text(GTK_ENTRY(change_sname_entry)));
+
+        gtk_entry_set_text(GTK_ENTRY(change_fname_entry), NewFirstName);
+        gtk_entry_set_text(GTK_ENTRY(change_sname_entry), NewSecondName);
         
 
         char *username_tmp = strdup(NewFirstName);
@@ -107,11 +110,20 @@ void edit_pseudo_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
     gtk_widget_unset_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT);
 }
 
+void pseudo_entry_changed_event(GtkWidget *widget) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) < 5) {
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+    }
+    else {
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK);
+    }
+}
+
 void return_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
     GtkWidget *data) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         gtk_widget_hide(GTK_WIDGET(data));
-        gtk_entry_set_text(GTK_ENTRY(change_pseudo_entry), "");
+        gtk_entry_set_text(GTK_ENTRY(change_pseudo_entry), NewPseudonim);
         gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
     }
     if (widget) {}
@@ -119,7 +131,8 @@ void return_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
 
 void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
     GtkWidget *data) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1 
+        && strlen(gtk_entry_get_text(GTK_ENTRY(change_pseudo_entry))) >= 5) {
         gtk_widget_hide(GTK_WIDGET(data));
         if (NewPseudonim == NULL)
             NewPseudonim = mx_strjoin(NewPseudonim, gtk_entry_get_text(GTK_ENTRY(change_pseudo_entry)));
@@ -128,7 +141,7 @@ void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
             NewPseudonim = NULL;
             NewPseudonim = mx_strjoin(NewPseudonim, gtk_entry_get_text(GTK_ENTRY(change_pseudo_entry)));
         }
-        gtk_entry_set_text(GTK_ENTRY(change_pseudo_entry), "");
+        gtk_entry_set_text(GTK_ENTRY(change_pseudo_entry), NewPseudonim);
 
         gtk_label_set_text(GTK_LABEL(edit_pseudo_label), NewPseudonim);
         gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
@@ -156,19 +169,21 @@ void change_description_entry_change_event(GtkWidget *widget) {
 //============================================================================================
 
 
+
+
+
+// "Apply button" in the form
+//============================================================================================
 void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        free(t_user.FirstName);
-        t_user.FirstName = NULL;
-        t_user.FirstName = mx_strjoin(t_user.FirstName, NewFirstName);
+
+        mx_change_user_name(NewFirstName, NewSecondName);
         free(NewFirstName);
         NewFirstName = NULL;
-
-        free(t_user.SecondName);
-        t_user.SecondName = NULL;
-        t_user.SecondName = mx_strjoin(t_user.SecondName, NewSecondName);
-        free(NewSecondName);
-        NewSecondName = NULL;
+        if (NewSecondName != NULL) {
+            free(NewSecondName);
+            NewSecondName = NULL;
+        }
 
         char *username_tmp = strdup(t_user.FirstName);
         username_tmp = mx_strjoin(username_tmp, " ");
@@ -176,21 +191,22 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
         gtk_label_set_text(GTK_LABEL(username), username_tmp);
         free(username_tmp);
 
-        free(t_user.pseudonim);
-        t_user.pseudonim = NULL;
-        t_user.pseudonim = mx_strjoin(t_user.pseudonim, NewPseudonim);
+
+        mx_change_user_pseudonim(NewPseudonim);
         free(NewPseudonim);
         NewPseudonim = NULL;
-        gtk_label_set_text(GTK_LABEL(contact_info), t_user.pseudonim);
 
-        if (NewDescription != NULL) {
-            free(t_user.description);
-            t_user.description = NULL;
-            t_user.description = mx_strjoin(t_user.description, NewDescription);
-            free(NewDescription);
-        }
+        char *tmp_text = "@";
+        tmp_text = mx_strjoin(tmp_text, t_user.pseudonim);
+        gtk_label_set_text(GTK_LABEL(user_pseudonim), tmp_text);
+        free(tmp_text);
+
+        mx_change_user_description(NewDescription);
+        free(NewDescription);
+        NewDescription = NULL;
 
         gtk_widget_destroy(GTK_WIDGET(back_blackout));
     }
     if (widget) {}
 }
+//============================================================================================
