@@ -78,6 +78,7 @@ GtkWidget *chats_list;
 GtkWidget *contacts_list;
 GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
+GtkWidget *chat_enter_area;
 
 GtkWidget *back_blackout;
 

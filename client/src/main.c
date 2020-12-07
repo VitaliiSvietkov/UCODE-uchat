@@ -6,7 +6,7 @@ int main(int argc, char *argv[]) {
     main_area = NULL;
     GtkWidget *left_header = NULL;
     GtkWidget *content_selection_area = NULL;
-    GtkWidget *chat_enter_area = NULL;
+    chat_enter_area = NULL;
     chats_list = NULL;
     settings_menu = NULL;
 
@@ -69,6 +69,7 @@ int main(int argc, char *argv[]) {
     gtk_widget_hide(GTK_WIDGET(tick_image.box));
     gtk_widget_hide(GTK_WIDGET(contacts_list));
     gtk_widget_hide(GTK_WIDGET(settings_menu));
+    gtk_widget_hide(GTK_WIDGET(chat_enter_area));
     // Return sensativity for entries
     gtk_widget_set_sensitive(GTK_WIDGET(entry_search), TRUE);
     gtk_widget_set_sensitive(GTK_WIDGET(entry_chat), TRUE);
