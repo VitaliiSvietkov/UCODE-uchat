@@ -21,6 +21,7 @@ void mx_create_edit_user_form() {
         NewSecondName = strdup("");
     NewPseudonim = strdup(t_user.pseudonim);
     NewDescription = strdup(t_user.description);
+    NewAvatar = gdk_pixbuf_copy(t_user.avatar);
     
     edit_user_form = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(GTK_WIDGET(edit_user_form), "edit_user_form");
@@ -65,7 +66,7 @@ void mx_create_edit_user_form() {
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 100, 100);
     gtk_box_pack_start(GTK_BOX(edit_user_main_screen), avatar, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(avatar), GTK_ALIGN_CENTER);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_avatar), (int*)100);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &NewAvatar);
 
     GtkWidget *change_avatar_btn = gtk_button_new_with_label("Change photo");
     gtk_box_pack_start(GTK_BOX(edit_user_main_screen), change_avatar_btn, FALSE, FALSE, 0);

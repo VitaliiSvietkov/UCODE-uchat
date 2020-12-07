@@ -3,9 +3,32 @@
 // Change avatar button
 //============================================================================================
 void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
-    if (widget) {}
-    if (event) {}
-    printf("BUTTON PRESSED\n");
+    GtkWidget *dialog;
+    GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
+    gint res;
+
+    dialog = gtk_file_chooser_dialog_new ("Open File",
+                                        GTK_WINDOW(window),
+                                        action,
+                                        "_Cancel",
+                                        GTK_RESPONSE_CANCEL,
+                                        "_Open",
+                                        GTK_RESPONSE_ACCEPT,
+                                        NULL);
+
+    res = gtk_dialog_run (GTK_DIALOG (dialog));
+    if (res == GTK_RESPONSE_ACCEPT)
+    {
+        char *filename;
+        GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
+        filename = gtk_file_chooser_get_filename (chooser);
+        g_object_unref(G_OBJECT(NewAvatar));
+        NewAvatar = mx_get_pixbuf_with_size(filename, 100, 100);
+        free(filename);
+        gtk_widget_queue_draw(GTK_WIDGET(edit_user_main_screen));
+    }
+
+    gtk_widget_destroy (dialog);
 }
 //============================================================================================
 
@@ -13,7 +36,6 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
 //============================================================================================
 void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data) {
-    if (event) {}
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
     gtk_widget_set_state_flags(GTK_WIDGET(edit_username_icon), GTK_STATE_FLAG_PRELIGHT, TRUE);
     gtk_widget_set_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT, TRUE);
@@ -21,7 +43,6 @@ void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *even
 
 void edit_username_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data) {
-    if (event) {}
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
     gtk_widget_unset_state_flags(GTK_WIDGET(edit_username_icon), GTK_STATE_FLAG_PRELIGHT);
     gtk_widget_unset_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT);
@@ -33,7 +54,6 @@ void edit_eventbox_click_event(GtkWidget *widget, GdkEventButton *event,
         gtk_widget_hide(GTK_WIDGET(edit_user_main_screen));
         gtk_widget_show_all(GTK_WIDGET(data));
     }
-    if (widget) {}
 }
 
 void fname_entry_changed_event(GtkWidget *widget) {
@@ -55,7 +75,6 @@ void return_username_click_event(GtkWidget *widget, GdkEventButton *event,
         gtk_entry_set_text(GTK_ENTRY(change_sname_entry), NewSecondName);
         gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
     }
-    if (widget) {}
 }
 
 void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
@@ -87,7 +106,6 @@ void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
 
         gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
     }
-    if (widget) {}
 }
 
 //============================================================================================
@@ -96,7 +114,6 @@ void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
 //============================================================================================
 void edit_pseudo_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data) {
-    if (event) {}
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
     gtk_widget_set_state_flags(GTK_WIDGET(edit_pseudo_icon), GTK_STATE_FLAG_PRELIGHT, TRUE);
     gtk_widget_set_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT, TRUE);
@@ -104,7 +121,6 @@ void edit_pseudo_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
 
 void edit_pseudo_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data) {
-    if (event) {}
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
     gtk_widget_unset_state_flags(GTK_WIDGET(edit_pseudo_icon), GTK_STATE_FLAG_PRELIGHT);
     gtk_widget_unset_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT);
@@ -126,7 +142,6 @@ void return_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
         gtk_entry_set_text(GTK_ENTRY(change_pseudo_entry), NewPseudonim);
         gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
     }
-    if (widget) {}
 }
 
 void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
@@ -146,14 +161,12 @@ void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
         gtk_label_set_text(GTK_LABEL(edit_pseudo_label), NewPseudonim);
         gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
     }
-    if (widget) {}
 }
 //============================================================================================
 
 // Change description field
 //============================================================================================
 void change_description_entry_change_event(GtkWidget *widget) {
-    if (widget) {}
     if (NewDescription != NULL) {
         free(NewDescription);
         NewDescription = NULL;
@@ -174,7 +187,6 @@ void change_description_entry_change_event(GtkWidget *widget) {
 //============================================================================================
 void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-
         mx_change_user_name(NewFirstName, NewSecondName);
         free(NewFirstName);
         NewFirstName = NULL;
@@ -203,8 +215,12 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
         free(NewDescription);
         NewDescription = NULL;
 
+        g_object_unref(G_OBJECT(t_user.avatar));
+        t_user.avatar = gdk_pixbuf_copy(GDK_PIXBUF(NewAvatar));
+        g_object_unref(G_OBJECT(NewAvatar));
+        gtk_widget_queue_draw(GTK_WIDGET(settings_menu));
+
         gtk_widget_destroy(GTK_WIDGET(back_blackout));
     }
-    if (widget) {}
 }
 //============================================================================================

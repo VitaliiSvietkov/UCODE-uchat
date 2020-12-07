@@ -6,8 +6,7 @@ HDRS := $(wildcard inc/*.h)
 
 WFLGS := $(addprefix -W, all extra error pedantic) \
 	-Wno-unused-command-line-argument -Wno-unused-variable \
-    -Wno-unused-function -Wno-unused-parameter -g3 -fsanitize=address,undefined \
-    -fno-omit-frame-pointer -O0
+    -Wno-unused-function -Wno-unused-parameter
 GTK_LINK_FLAGS = `pkg-config --cflags  --libs gtk+-3.0`
 GTK_INC_FLAGS = `pkg-config --cflags gtk+-3.0`
 

@@ -71,6 +71,7 @@ void mx_change_user_avatar(char path[]);
 void mx_init_user(void);
 //==========================================================================================
 
+GtkWidget *window;
 GtkWidget *main_area;
 
 GtkWidget *chats_list;
@@ -96,6 +97,7 @@ char *NewFirstName;
 char *NewSecondName;
 char *NewPseudonim;
 char *NewDescription;
+GdkPixbuf *NewAvatar;
 
 // Edit username screen
 GtkWidget *edit_username_event_screen;
@@ -115,12 +117,11 @@ GtkWidget *change_pseudo_entry;
 
 void mx_init_window(GtkWidget **window);
 
-void mx_configure_main_area(GtkWidget **main_area, GtkWidget **background, GtkWidget **window);
-void mx_configure_left_header(GtkWidget **left_header, GtkWidget **main_area, GtkWidget **entry_search);
-void mx_configure_content_selection_area(GtkWidget **content_selection_area, GtkWidget **main_area);
-void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **main_area,
-    GtkWidget **entry_chat);
-void mx_configure_settings_menu_area(GtkWidget **settings_menu, GtkWidget **main_area);
+void mx_configure_main_area(GtkWidget **background, GtkWidget **window);
+void mx_configure_left_header(GtkWidget **left_header, GtkWidget **entry_search);
+void mx_configure_content_selection_area(GtkWidget **content_selection_area);
+void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **entry_chat);
+void mx_configure_settings_menu_area(void);
 void mx_create_edit_user_form(void);
 void mx_configure_username_event_screen(void);
 void mx_configure_pseudonim_event_screen(void);
@@ -133,7 +134,7 @@ void mx_tooltip(char *str, void *data);
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
-gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size);
+gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
 //==========================================================================================
 
 // Event callback functions (look in "mx_events.c")

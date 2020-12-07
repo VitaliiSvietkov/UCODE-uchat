@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[]) {
     // Containers
-    GtkWidget *window = NULL;
+    window = NULL;
     main_area = NULL;
     GtkWidget *left_header = NULL;
     GtkWidget *content_selection_area = NULL;
@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     NewSecondName = NULL;
     NewPseudonim = NULL;
     NewDescription = NULL;
+    NewAvatar = NULL;
 
     GtkWidget *entry_search = NULL;
     GtkWidget *entry_chat = NULL;
@@ -40,16 +41,16 @@ int main(int argc, char *argv[]) {
     mx_init_window(&window);
 
     // Create a main area where all widgets will be shown
-    mx_configure_main_area(&main_area, &background, &window);
+    mx_configure_main_area(&background, &window);
 
     // Create a header for left area
-    mx_configure_left_header(&left_header, &main_area, &entry_search);
+    mx_configure_left_header(&left_header, &entry_search);
 
     // Create a selection area
-    mx_configure_content_selection_area(&content_selection_area, &main_area);
+    mx_configure_content_selection_area(&content_selection_area);
 
     // Create a chat enter area
-    mx_configure_chat_enter_area(&chat_enter_area, &main_area, &entry_chat);
+    mx_configure_chat_enter_area(&chat_enter_area, &entry_chat);
 
     // Create a chat list area
     chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -61,7 +62,7 @@ int main(int argc, char *argv[]) {
     gtk_fixed_put(GTK_FIXED(main_area), contacts_list, 0, 95);
 
     // Create a settings menu
-    mx_configure_settings_menu_area(&settings_menu, &main_area);
+    mx_configure_settings_menu_area();
 
     gtk_widget_show_all (window);
     // Hide unneccessary widgets

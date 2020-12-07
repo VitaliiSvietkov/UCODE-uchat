@@ -24,7 +24,7 @@ void mx_configure_username_event_screen() {
     gtk_widget_set_size_request(GTK_WIDGET(username_avatar), 100, 100);
     gtk_box_pack_start(GTK_BOX(edit_username_event_screen), username_avatar, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(username_avatar), GTK_ALIGN_CENTER);
-    g_signal_connect(G_OBJECT(username_avatar), "draw", G_CALLBACK(mx_draw_event_avatar), (int*)100);
+    g_signal_connect(G_OBJECT(username_avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &NewAvatar);
     //==================================================================================
 
     // "change first name" block
@@ -41,6 +41,7 @@ void mx_configure_username_event_screen() {
     gtk_widget_set_name(GTK_WIDGET(change_fname_entry), "edit_entry");
     gtk_entry_set_text(GTK_ENTRY(change_fname_entry), NewFirstName);
     gtk_widget_set_size_request(GTK_WIDGET(change_fname_entry), 400, 0);
+    gtk_entry_set_max_length(GTK_ENTRY(change_fname_entry), 15);
     gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_fname_entry, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(change_fname_entry), "changed",
         G_CALLBACK(fname_entry_changed_event), NULL);
@@ -59,6 +60,7 @@ void mx_configure_username_event_screen() {
     gtk_widget_set_name(GTK_WIDGET(change_sname_entry), "edit_entry");
     gtk_entry_set_text(GTK_ENTRY(change_sname_entry), NewSecondName);
     gtk_widget_set_size_request(GTK_WIDGET(change_sname_entry), 400, 0);
+    gtk_entry_set_max_length(GTK_ENTRY(change_sname_entry), 15);
     gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_sname_entry, FALSE, FALSE, 0);
     //==================================================================================
 

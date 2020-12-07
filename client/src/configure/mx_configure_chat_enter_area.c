@@ -1,11 +1,10 @@
 #include "../../inc/uchat_client.h"
 
-void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **main_area,
-    GtkWidget **entry_chat) {
+void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **entry_chat) {
     // "chat_enter_area" is a main container which defines background
     *chat_enter_area = gtk_fixed_new();
     gtk_widget_set_size_request(GTK_WIDGET(*chat_enter_area), CUR_WIDTH - CUR_WIDTH / 3 - 50, 50);
-    gtk_fixed_put(GTK_FIXED(*main_area), *chat_enter_area, L_FIELD_WIDTH, CUR_HEIGHT - 50);
+    gtk_fixed_put(GTK_FIXED(main_area), *chat_enter_area, L_FIELD_WIDTH, CUR_HEIGHT - 50);
 
     // "chat_container" is a pack with all widgets that will be used
     GtkWidget *chat_container = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);

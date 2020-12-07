@@ -20,7 +20,6 @@ void edit_user_click(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_hide(GTK_WIDGET(edit_username_event_screen));
         gtk_widget_hide(GTK_WIDGET(edit_pseudonim_event_screen));
     }
-    if (widget) {}
 }
 //=================================================================================
 

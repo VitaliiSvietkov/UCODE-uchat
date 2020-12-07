@@ -23,7 +23,6 @@ void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
         gtk_widget_hide(GTK_WIDGET(tick_image.box));
         gtk_widget_show(GTK_WIDGET(ban_image.box));
     }
-    if (event) {}
 }
 //=================================================================================
 

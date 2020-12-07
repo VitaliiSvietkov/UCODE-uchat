@@ -26,7 +26,6 @@ void messages_click(GtkWidget *widget, GdkEventButton *event) {
         active_leftbar_container = chats_list;
         gtk_widget_show(GTK_WIDGET(active_leftbar_container));
     }
-    if (widget) {}
 }
 //==================================================================================
 
@@ -56,7 +55,6 @@ void contacts_click(GtkWidget *widget, GdkEventButton *event) {
         active_leftbar_container = contacts_list;
         gtk_widget_show(GTK_WIDGET(active_leftbar_container));
     }
-    if (widget) {}
 }
 //==================================================================================
 
@@ -86,6 +84,5 @@ void settings_click(GtkWidget *widget, GdkEventButton *event) {
         active_leftbar_container = settings_menu;
         gtk_widget_show(GTK_WIDGET(active_leftbar_container));
     }
-    if (widget) {}
 }
 //==================================================================================
