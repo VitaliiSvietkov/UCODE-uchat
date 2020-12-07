@@ -49,7 +49,7 @@ void mx_configure_username_event_screen() {
 
     // "change second name" block
     //==================================================================================
-    GtkWidget *change_sname_label = gtk_label_new("Write your second name:");
+    GtkWidget *change_sname_label = gtk_label_new("Write your second name (not necessary):");
     gtk_widget_set_name(GTK_WIDGET(change_sname_label), "edit_label");
     gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_sname_label, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(change_sname_label), GTK_ALIGN_START);

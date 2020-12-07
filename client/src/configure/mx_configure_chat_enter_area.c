@@ -20,7 +20,7 @@ void mx_configure_chat_enter_area(GtkWidget **chat_enter_area, GtkWidget **entry
 
     *entry_chat = gtk_entry_new();
     gtk_widget_set_sensitive(GTK_WIDGET(*entry_chat), FALSE);
-    gtk_widget_set_name(GTK_WIDGET(*entry_chat), "entry_chat");
+    gtk_widget_set_name(GTK_WIDGET(*entry_chat), "entry");
     gtk_box_pack_start(GTK_BOX(chat_container), *entry_chat, TRUE, TRUE, 8);
     gtk_entry_set_placeholder_text(GTK_ENTRY(*entry_chat), "Write a message...");
     g_signal_connect(G_OBJECT(*entry_chat), "changed", G_CALLBACK(entry_chat_fill_event), NULL);

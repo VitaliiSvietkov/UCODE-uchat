@@ -8,7 +8,7 @@
 
 /*          Entry Fields          */
 /* ============================== */
-#entry_search {
+#entry {
     background-color: #e1e1e1;
     color: #1f1f1f;
     box-shadow: none;
@@ -16,15 +16,6 @@
     border-radius: 5px;
     font-size: 16px;
 }
-
-#entry_chat {
-    background-color: #e1e1e1;
-    color: #1f1f1f;
-    box-shadow: none;
-    border-color: #e1e1e1;
-    border-radius: 5px;
-    font-size: 16px;
-} 
 /* ============================== */
 
 #back_blackout {
@@ -208,13 +199,7 @@
     opacity: 0.8;
 }
 
-#edit_user_box {
-    padding-top: 7.5px;
-    padding-left: 50px;
-    padding-bottom: 7.5px;
-}
-
-#change_account_box {
+#change_box {
     padding-top: 7.5px;
     padding-left: 50px;
     padding-bottom: 7.5px;
@@ -229,12 +214,6 @@
     font-size: 18px;
     letter-spacing: 1px;
     margin-left: -1px;
-}
-
-#chat_settings_box {
-    padding-top: 7.5px;
-    padding-left: 50px;
-    padding-bottom: 7.5px;
 }
 
 #label_chat_settings {
@@ -254,7 +233,7 @@
     letter-spacing: 1px;
 }
 
-/* Hovering effects for settings munu items */
+/* Hovering effects for settings menu items */
 /* ======================================== */
 #edit_user_eventbox {
     transition: all 0.2s;

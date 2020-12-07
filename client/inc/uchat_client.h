@@ -10,25 +10,25 @@
 #include <math.h>
 
 // Window size
-//=========================
+//==========================================================================================
 #define WIN_WIDTH_MIN 915
 #define WIN_HEIGHT_MIN 680
 gint CUR_WIDTH;
 gint CUR_HEIGHT;
 gint L_FIELD_WIDTH;
-//=========================
+//==========================================================================================
 
 // Colors
-//=====================
+//==========================================================================================
 // Standard ones
 #define MX_1F1F1F 0.12
 #define MX_E1E1E1 0.89
 // Colorful theme
 
-//=====================
+//==========================================================================================
 
 // Images
-//============================
+//==========================================================================================
 typedef struct s_img_button
 {
     bool active;
@@ -51,7 +51,7 @@ t_img_button messages_image;
 t_img_button *t_active_image;
 
 void mx_load_images(void);
-//============================
+//==========================================================================================
 
 // User info
 //==========================================================================================
@@ -139,7 +139,7 @@ gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **
 //==========================================================================================
 
 // Event callback functions (look in "mx_events.c")
-//================================
+//==========================================================================================
 void image_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data);
 void image_enter_notify(GtkWidget *widget);
 void image_leave_notify(GtkWidget *widget);
@@ -212,7 +212,7 @@ void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
 void change_description_entry_change_event(GtkWidget *widget);
 
 void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event);
-//================================
+//==========================================================================================
 
 char *mx_strnew(const int size);
 char *mx_strjoin(const char *s1, const char *s2);

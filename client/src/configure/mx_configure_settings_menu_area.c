@@ -45,7 +45,7 @@ void mx_configure_settings_menu_area() {
     GtkWidget *edit_user_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(edit_user_eventbox), "edit_user_eventbox");
     GtkWidget *edit_user_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_widget_set_name(GTK_WIDGET(edit_user_box), "edit_user_box");
+    gtk_widget_set_name(GTK_WIDGET(edit_user_box), "change_box");
     gtk_container_add(GTK_CONTAINER(edit_user_eventbox), edit_user_box);
     gtk_box_pack_start(GTK_BOX(settings_menu), edit_user_eventbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(edit_user_box), edit_user_image.box, FALSE, FALSE, 0);
@@ -59,7 +59,7 @@ void mx_configure_settings_menu_area() {
     GtkWidget *change_account_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(change_account_eventbox), "change_account_eventbox");
     GtkWidget *change_account_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_widget_set_name(GTK_WIDGET(change_account_box), "change_account_box");
+    gtk_widget_set_name(GTK_WIDGET(change_account_box), "change_box");
     gtk_container_add(GTK_CONTAINER(change_account_eventbox), change_account_box);
     gtk_box_pack_start(GTK_BOX(settings_menu), change_account_eventbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(change_account_box), change_account_image.box, FALSE, FALSE, 0);
@@ -72,7 +72,7 @@ void mx_configure_settings_menu_area() {
     GtkWidget *chat_settings_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(chat_settings_eventbox), "chat_settings_eventbox");
     GtkWidget *chat_settings_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_widget_set_name(GTK_WIDGET(chat_settings_box), "chat_settings_box");
+    gtk_widget_set_name(GTK_WIDGET(chat_settings_box), "change_box");
     gtk_container_add(GTK_CONTAINER(chat_settings_eventbox), chat_settings_box);
     gtk_box_pack_start(GTK_BOX(settings_menu), chat_settings_eventbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(chat_settings_box), chat_settings_image.box, FALSE, FALSE, 0);

@@ -1,0 +1,34 @@
+Язык
+Настройти чатов
+Сменить пользователя
+Изменить профиль
+Выберите чат для начала общения
+Изменить фото
+Редактируйте информацию про вас
+Укажите свое имя:
+Укажите свою фамилию (не обязательно):
+Придумайте ваш новый псевдоним:
+Пользователям будет легче найти вас, используя этот идентификатор.
+Выйти
+Применить
+Поиск...
+Напишите что-нибудь...
+
+
+
+
+Language
+Chat settings
+Change account
+Edit profile
+Select a chat to start conversation
+Change photo
+Edit info about you:
+Write your first name:
+Write your second name (not necessary):
+Write your new pseudonim:
+It will be easier for users to find you using this identifier.
+Exit
+Apply
+Search...
+Write a message...
