@@ -9,6 +9,10 @@ void mx_configure_main_area(GtkWidget **background, GtkWidget **window) {
     gtk_fixed_put(GTK_FIXED(main_area), chat_area, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(chat_area), CUR_WIDTH, CUR_HEIGHT);
 
+    authorization_area = gtk_fixed_new();
+    gtk_fixed_put(GTK_FIXED(main_area), authorization_area, 0, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(authorization_area), CUR_WIDTH, CUR_HEIGHT);
+
     *background = gtk_drawing_area_new();
     gtk_fixed_put(GTK_FIXED(chat_area), *background, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(*background), CUR_WIDTH, CUR_HEIGHT);

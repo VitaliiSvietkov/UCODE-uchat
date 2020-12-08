@@ -1,0 +1,70 @@
+#back_black {
+    background-color: #1f1f1f;
+ }
+
+ #registration_menu_form {
+    padding: 5px;
+    background: #1f1f1f;
+    box-shadow: 0px 0px 5px 2px #e1e1e1;
+    border-radius: 15px;
+    animation-name: fade;
+    animation-duration: .2s;
+}
+
+#Autorization {
+    font-size: 24px;
+    color: #e1e1e1;
+    margin-top: 20px;
+}
+
+
+
+#entry_data {
+    background-color: #e1e1e1;
+    color: #1f1f1f;
+    box-shadow: none;
+    border-color: #e1e1e1;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#login_button {
+    color: #e1e1e1;
+    font-family: "New Century Schoolbook", Times, serif;
+    letter-spacing: .8px;
+    background: #1f1f1f;
+    border-radius: 15px;
+    border: .5px solid #e1e1e1;
+    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+}
+#login_button:hover {
+    background: #e1e1e1;
+    color: #1f1f1f;
+}
+
+#Registration {
+    text-decoration: underline;
+    font-size: 14px;
+    color: #878484;
+}
+#Registration:hover {
+    color: #e1e1e1;
+}
+
+#back_button {
+    color: #e1e1e1;
+    font-family: "New Century Schoolbook", Times, serif;
+    letter-spacing: .8px;
+    background: #1f1f1f;
+    border-radius: 15px;
+    border: .5px solid #e1e1e1;
+    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+}
+#back_button:hover {
+    background: #e1e1e1;
+    color: #1f1f1f;
+}
+

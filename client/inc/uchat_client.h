@@ -54,6 +54,52 @@ void mx_load_images(void);
 //==========================================================================================
 
 
+// Log in/Registration menu
+//==========================================================================================
+GtkWidget *back_black;
+GtkWidget *registration_menu_1;
+GtkWidget *registration_menu_2;
+GtkWidget *main_autorization_menu;
+GtkWidget *log_in_menu;
+GtkWidget *login;
+GtkWidget *password; 
+GtkWidget *login_reg;
+GtkWidget *password_reg;
+GtkWidget *firstname_reg;
+GtkWidget *secondname_reg; 
+GtkWidget *password_reg_confirm;
+GtkWidget *login_btn;
+GtkWidget *back_btn;
+GtkWidget *next_btn;
+GtkWidget *back_btn_2;
+GtkWidget *next_btn_2;
+
+void mx_create_registration_menu();
+void registration_label_enter_notify_event(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
+void registration_label_leave_notify_event(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
+
+void data_change_event(GtkWidget *widget, GdkEvent *event);
+void login_btn_enter_notify_event();
+void login_btn_leave_notify_event();
+void hide_autorization_click(GtkWidget *widget);
+void hide_registration_click(GtkWidget *widget);
+void back_btn_enter_notify_event();
+void back_btn_leave_notify_event();
+void next_btn_enter_notify_event();
+void next_btn_leave_notify_event();
+void data_change_registration_event(GtkWidget *widget, GdkEvent *event);
+void transition_registration_click(GtkWidget *widget);
+void hide_registration_click_2(GtkWidget *widget);
+void back_btn_enter_notify_event_2(); 
+void back_btn_leave_notify_event_2(); 
+void next_btn_enter_notify_event_2(); 
+void next_btn_leave_notify_event_2();
+void data_change_registration_event_2(GtkWidget *widget, GdkEvent *event);
+void autorization_after_registration(GtkWidget *widget);
+void autorization(GtkWidget *widget);
+//==========================================================================================
+
+
 // User info
 //==========================================================================================
 struct
@@ -191,6 +237,7 @@ void edit_user_click(GtkWidget *widget, GdkEventButton *event);
 
 void change_account_enter_notify(GtkWidget *widget);
 void change_account_leave_notify(GtkWidget *widget);
+void change_account_click(GtkWidget *widget, GdkEventButton *event);
 
 void chat_settings_enter_notify(GtkWidget *widget);
 void chat_settings_leave_notify(GtkWidget *widget);

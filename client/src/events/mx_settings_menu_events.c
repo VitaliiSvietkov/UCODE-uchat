@@ -36,6 +36,16 @@ void change_account_leave_notify(GtkWidget *widget) {
     gtk_widget_unset_state_flags(GTK_WIDGET(change_account_image.box), 
         GTK_STATE_FLAG_PRELIGHT);
 }
+
+void change_account_click(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        mx_create_registration_menu();
+        gtk_widget_show_all(GTK_WIDGET(authorization_area));
+        gtk_widget_hide(GTK_WIDGET(chat_area));
+        gtk_widget_hide(GTK_WIDGET(registration_menu_1));
+        gtk_widget_hide(GTK_WIDGET(registration_menu_2));
+    }
+}
 //=================================================================================
 
 // Chat_settings icon

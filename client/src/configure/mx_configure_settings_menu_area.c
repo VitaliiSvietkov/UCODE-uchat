@@ -52,6 +52,13 @@ void mx_configure_settings_menu_area() {
     GtkWidget *label_edit_user = gtk_label_new("Edit profile");
     gtk_widget_set_name(GTK_WIDGET(label_edit_user), "label_edit_user");
     gtk_box_pack_start(GTK_BOX(edit_user_box), label_edit_user, FALSE, FALSE, 50);
+
+    g_signal_connect(G_OBJECT(edit_user_eventbox), "enter-notify-event",
+        G_CALLBACK(edit_user_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(edit_user_eventbox), "leave-notify-event",
+        G_CALLBACK(edit_user_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(edit_user_eventbox), "button_press_event",
+        G_CALLBACK(edit_user_click), NULL);   
     //==============================================================================================
 
     // "Change account" section
@@ -66,9 +73,17 @@ void mx_configure_settings_menu_area() {
     GtkWidget *label_change_account = gtk_label_new("Change account");
     gtk_widget_set_name(GTK_WIDGET(label_change_account), "label_change_account");
     gtk_box_pack_start(GTK_BOX(change_account_box), label_change_account, FALSE, FALSE, 50);
+
+    g_signal_connect(G_OBJECT(change_account_eventbox), "enter-notify-event",
+        G_CALLBACK(change_account_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(change_account_eventbox), "leave-notify-event",
+        G_CALLBACK(change_account_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(change_account_eventbox), "button_press_event",
+        G_CALLBACK(change_account_click), NULL); 
     //==============================================================================================
 
     // "Chat settings" section
+    //==============================================================================================
     GtkWidget *chat_settings_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(chat_settings_eventbox), "chat_settings_eventbox");
     GtkWidget *chat_settings_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -79,6 +94,12 @@ void mx_configure_settings_menu_area() {
     GtkWidget *label_chat_settings = gtk_label_new("Chat settings");
     gtk_widget_set_name(GTK_WIDGET(label_chat_settings), "label_chat_settings");
     gtk_box_pack_start(GTK_BOX(chat_settings_box), label_chat_settings, FALSE, FALSE, 50);
+
+    g_signal_connect(G_OBJECT(chat_settings_eventbox), "enter-notify-event",
+        G_CALLBACK(chat_settings_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(chat_settings_eventbox), "leave-notify-event",
+        G_CALLBACK(chat_settings_leave_notify), NULL);
+    //==============================================================================================
 
     // "Language" section
     //==============================================================================================
@@ -92,6 +113,11 @@ void mx_configure_settings_menu_area() {
     GtkWidget *label_language = gtk_label_new("Language");
     gtk_widget_set_name(GTK_WIDGET(label_language), "label_language");
     gtk_box_pack_start(GTK_BOX(language_box), label_language, FALSE, FALSE, 50);
+
+    g_signal_connect(G_OBJECT(language_eventbox), "enter-notify-event",
+        G_CALLBACK(language_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(language_eventbox), "leave-notify-event",
+        G_CALLBACK(language_leave_notify), NULL);
     //==============================================================================================
 
     // Footer section
@@ -105,27 +131,5 @@ void mx_configure_settings_menu_area() {
 
     gtk_widget_set_valign(GTK_WIDGET(label_impulse), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(label_version), GTK_ALIGN_END);
-    //==============================================================================================
-
-    g_signal_connect(G_OBJECT(edit_user_eventbox), "enter-notify-event",
-        G_CALLBACK(edit_user_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(edit_user_eventbox), "leave-notify-event",
-        G_CALLBACK(edit_user_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(edit_user_eventbox), "button_press_event",
-        G_CALLBACK(edit_user_click), NULL);    
-
-    g_signal_connect(G_OBJECT(change_account_eventbox), "enter-notify-event",
-        G_CALLBACK(change_account_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(change_account_eventbox), "leave-notify-event",
-        G_CALLBACK(change_account_leave_notify), NULL);
-
-    g_signal_connect(G_OBJECT(chat_settings_eventbox), "enter-notify-event",
-        G_CALLBACK(chat_settings_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(chat_settings_eventbox), "leave-notify-event",
-        G_CALLBACK(chat_settings_leave_notify), NULL);
-
-    g_signal_connect(G_OBJECT(language_eventbox), "enter-notify-event",
-        G_CALLBACK(language_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(language_eventbox), "leave-notify-event",
-        G_CALLBACK(language_leave_notify), NULL);
+    //============================================================================================== 
 }
