@@ -34,14 +34,14 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
 
 // Edit username field
 //============================================================================================
-void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
+void edit_username_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data) {
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
     gtk_widget_set_state_flags(GTK_WIDGET(edit_username_icon), GTK_STATE_FLAG_PRELIGHT, TRUE);
     gtk_widget_set_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT, TRUE);
 }
 
-void edit_username_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
+void edit_username_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
     gtk_widget_unset_state_flags(GTK_WIDGET(edit_username_icon), GTK_STATE_FLAG_PRELIGHT);
@@ -112,14 +112,14 @@ void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
 
 // Edit pseudonim field
 //============================================================================================
-void edit_pseudo_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
+void edit_pseudo_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data) {
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
     gtk_widget_set_state_flags(GTK_WIDGET(edit_pseudo_icon), GTK_STATE_FLAG_PRELIGHT, TRUE);
     gtk_widget_set_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT, TRUE);
 }
 
-void edit_pseudo_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
+void edit_pseudo_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
     gtk_widget_unset_state_flags(GTK_WIDGET(edit_pseudo_icon), GTK_STATE_FLAG_PRELIGHT);
@@ -220,7 +220,7 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
         g_object_unref(G_OBJECT(NewAvatar));
         gtk_widget_queue_draw(GTK_WIDGET(settings_menu));
 
-        gtk_widget_destroy(GTK_WIDGET(back_blackout));
+        gtk_widget_destroy(GTK_WIDGET(authorization_backout));
     }
 }
 //============================================================================================

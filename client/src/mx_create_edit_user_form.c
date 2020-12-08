@@ -3,14 +3,14 @@
 void mx_create_edit_user_form() {
     // Create a blackout - a dark background behind the form
     //==================================================================================
-    back_blackout = gtk_event_box_new();
+    authorization_backout = gtk_event_box_new();
     GtkWidget *blackout_background = gtk_fixed_new();
-    gtk_widget_set_name(GTK_WIDGET(back_blackout), "back_blackout");
-    gtk_widget_set_state_flags(GTK_WIDGET(back_blackout), GTK_STATE_FLAG_NORMAL, TRUE);
-    g_signal_connect(G_OBJECT(back_blackout), "button_press_event",
+    gtk_widget_set_name(GTK_WIDGET(authorization_backout), "authorization_backout");
+    gtk_widget_set_state_flags(GTK_WIDGET(authorization_backout), GTK_STATE_FLAG_NORMAL, TRUE);
+    g_signal_connect(G_OBJECT(authorization_backout), "button_press_event",
         G_CALLBACK(blackout_click), NULL);
-    gtk_container_add(GTK_CONTAINER(back_blackout), blackout_background);
-    gtk_fixed_put(GTK_FIXED(chat_area), back_blackout, 0, 0);
+    gtk_container_add(GTK_CONTAINER(authorization_backout), blackout_background);
+    gtk_fixed_put(GTK_FIXED(chat_area), authorization_backout, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(blackout_background), CUR_WIDTH, CUR_HEIGHT);
     //==================================================================================
 
@@ -112,9 +112,9 @@ void mx_create_edit_user_form() {
     gtk_box_pack_start(GTK_BOX(edit_username_box), edit_username_pen, TRUE, TRUE, 20);
 
     g_signal_connect(G_OBJECT(edit_username_eventbox), "enter-notify-event",
-        G_CALLBACK(edit_username_eventbox_enter_notify_event), edit_username_pen);
+        G_CALLBACK(edit_username_eventbox_enter_notify), edit_username_pen);
     g_signal_connect(G_OBJECT(edit_username_eventbox), "leave-notify-event",
-        G_CALLBACK(edit_username_eventbox_leave_notify_event), edit_username_pen);
+        G_CALLBACK(edit_username_eventbox_leave_notify), edit_username_pen);
     g_signal_connect(G_OBJECT(edit_username_eventbox), "button_press_event",
         G_CALLBACK(edit_eventbox_click_event), edit_username_event_screen);
     //==================================================================================
@@ -148,9 +148,9 @@ void mx_create_edit_user_form() {
     gtk_box_pack_start(GTK_BOX(edit_pseudo_box), edit_pseudo_pen, TRUE, TRUE, 20);
 
     g_signal_connect(G_OBJECT(edit_pseudo_eventbox), "enter-notify-event",
-        G_CALLBACK(edit_pseudo_eventbox_enter_notify_event), edit_pseudo_pen);
+        G_CALLBACK(edit_pseudo_eventbox_enter_notify), edit_pseudo_pen);
     g_signal_connect(G_OBJECT(edit_pseudo_eventbox), "leave-notify-event",
-        G_CALLBACK(edit_pseudo_eventbox_leave_notify_event), edit_pseudo_pen);
+        G_CALLBACK(edit_pseudo_eventbox_leave_notify), edit_pseudo_pen);
     g_signal_connect(G_OBJECT(edit_pseudo_eventbox), "button_press_event",
         G_CALLBACK(edit_eventbox_click_event), edit_pseudonim_event_screen);
     //==================================================================================

@@ -1,4 +1,4 @@
-#back_black {
+#authorization_back {
     background-color: #1f1f1f;
  }
 
@@ -11,8 +11,9 @@
     animation-duration: .2s;
 }
 
-#Autorization {
+#Authorization {
     font-size: 24px;
+    font-style: italic;
     color: #e1e1e1;
     margin-top: 20px;
 }

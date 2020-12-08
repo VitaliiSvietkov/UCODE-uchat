@@ -56,10 +56,10 @@ void mx_load_images(void);
 
 // Log in/Registration menu
 //==========================================================================================
-GtkWidget *back_black;
+GtkWidget *authorization_back;
 GtkWidget *registration_menu_1;
 GtkWidget *registration_menu_2;
-GtkWidget *main_autorization_menu;
+GtkWidget *main_authorization_menu;
 GtkWidget *log_in_menu;
 GtkWidget *login;
 GtkWidget *password; 
@@ -72,31 +72,31 @@ GtkWidget *login_btn;
 GtkWidget *back_btn;
 GtkWidget *next_btn;
 GtkWidget *back_btn_2;
-GtkWidget *next_btn_2;
+GtkWidget *finish_btn;
 
 void mx_create_registration_menu();
-void registration_label_enter_notify_event(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
-void registration_label_leave_notify_event(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
+void registration_label_enter_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
+void registration_label_leave_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
 
 void data_change_event(GtkWidget *widget, GdkEvent *event);
-void login_btn_enter_notify_event();
-void login_btn_leave_notify_event();
-void hide_autorization_click(GtkWidget *widget);
+void login_btn_enter_notify();
+void login_btn_leave_notify();
+void hide_Authorization_click(GtkWidget *widget);
 void hide_registration_click(GtkWidget *widget);
-void back_btn_enter_notify_event();
-void back_btn_leave_notify_event();
-void next_btn_enter_notify_event();
-void next_btn_leave_notify_event();
+void back_btn_enter_notify();
+void back_btn_leave_notify();
+void next_btn_enter_notify();
+void next_btn_leave_notify();
 void data_change_registration_event(GtkWidget *widget, GdkEvent *event);
 void transition_registration_click(GtkWidget *widget);
 void hide_registration_click_2(GtkWidget *widget);
-void back_btn_enter_notify_event_2(); 
-void back_btn_leave_notify_event_2(); 
-void next_btn_enter_notify_event_2(); 
-void next_btn_leave_notify_event_2();
+void back_btn_enter_notify_2(); 
+void back_btn_leave_notify_2(); 
+void next_btn_enter_notify_2(); 
+void next_btn_leave_notify_2();
 void data_change_registration_event_2(GtkWidget *widget, GdkEvent *event);
-void autorization_after_registration(GtkWidget *widget);
-void autorization(GtkWidget *widget);
+void Authorization_after_registration(GtkWidget *widget);
+void Authorization(GtkWidget *widget);
 //==========================================================================================
 
 
@@ -157,9 +157,9 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event);
 void edit_eventbox_click_event(GtkWidget *widget, GdkEventButton *event,
     GtkWidget *data);
 
-void edit_username_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
+void edit_username_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
-void edit_username_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
+void edit_username_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
 void fname_entry_changed_event(GtkWidget *widget);
 void return_username_click_event(GtkWidget *widget, GdkEventButton *event,
@@ -167,9 +167,9 @@ void return_username_click_event(GtkWidget *widget, GdkEventButton *event,
 void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
     GtkWidget *data);
 
-void edit_pseudo_eventbox_enter_notify_event(GtkWidget *widget, GdkEvent *event,
+void edit_pseudo_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
-void edit_pseudo_eventbox_leave_notify_event(GtkWidget *widget, GdkEvent *event,
+void edit_pseudo_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
 void pseudo_entry_changed_event(GtkWidget *widget);
 void return_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
@@ -199,6 +199,7 @@ void mx_tooltip(char *str, void *data);
 // All draw functions are in "mx_draw_functions.c"
 //==========================================================================================
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+gboolean mx_draw_event_authorization_back(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_message_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
@@ -248,7 +249,7 @@ void language_leave_notify(GtkWidget *widget);
 
 
 
-void blackout_leave_notify_event(void);
+void blackout_leave_notify(void);
 void blackout_click(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
@@ -267,6 +268,6 @@ GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
 GtkWidget *message_enter_area;
 
-GtkWidget *back_blackout;
+GtkWidget *authorization_backout;
 
 #endif

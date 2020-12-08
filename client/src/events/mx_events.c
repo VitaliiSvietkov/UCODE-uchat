@@ -25,7 +25,7 @@ void blackout_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1
         && ((event->x < CUR_WIDTH / 3 - 10 || event->x > CUR_WIDTH / 3 - 10 + 450)
             || (event->y < CUR_HEIGHT / 5 - 50 || event->y > CUR_HEIGHT / 5 - 50 + 520))) {
-        gtk_widget_destroy(GTK_WIDGET(back_blackout));
+        gtk_widget_destroy(GTK_WIDGET(authorization_backout));
     }
 }
 //==============================================================
@@ -41,7 +41,7 @@ void close_image_click_event(GtkWidget *widget, GdkEventButton *event) {
         free(NewDescription);
         NewDescription = NULL;
         g_object_unref(G_OBJECT(NewAvatar));
-        gtk_widget_destroy(GTK_WIDGET(back_blackout));
+        gtk_widget_destroy(GTK_WIDGET(authorization_backout));
     }
 }
 //========================================================
