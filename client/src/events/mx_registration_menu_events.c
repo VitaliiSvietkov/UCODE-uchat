@@ -1,6 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-void data_change_event(GtkWidget *widget, GdkEvent *event) {
+void button_shine(GtkWidget *widget, GdkEvent *event) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
         gtk_widget_set_opacity(GTK_WIDGET(login_btn), 1.0);
     }
@@ -8,6 +8,7 @@ void data_change_event(GtkWidget *widget, GdkEvent *event) {
          gtk_widget_set_opacity(GTK_WIDGET(login_btn), 0.5);
     }
 }
+
 
 void login_btn_enter_notify() {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
@@ -21,6 +22,14 @@ void login_btn_leave_notify() {
     }
 }
 
+void authorization(GtkWidget *widget) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
+        gtk_widget_destroy(GTK_WIDGET(authorization_back));
+        gtk_widget_hide(GTK_WIDGET(authorization_area));
+        gtk_widget_show_all(GTK_WIDGET(chat_area));
+    }
+}
+
 
 void registration_label_enter_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
@@ -30,10 +39,9 @@ void registration_label_leave_notify(GtkWidget *widget, GdkEvent *event, GtkWidg
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 
-void hide_Authorization_click(GtkWidget *widget) {
+void hide_authorization_click(GtkWidget *widget) {
     gtk_widget_hide(GTK_WIDGET(log_in_menu));
     gtk_widget_show_all(GTK_WIDGET(registration_menu_1));
-     
 }
 
 void back_btn_enter_notify() { 
@@ -112,15 +120,7 @@ void data_change_registration_event_2(GtkWidget *widget, GdkEvent *event) {
     }
 }
 
-void Authorization_after_registration(GtkWidget *widget) {
+void authorization_after_registration(GtkWidget *widget) {
     gtk_widget_hide(GTK_WIDGET(registration_menu_2));
     gtk_widget_show_all(GTK_WIDGET(log_in_menu));
-}
-
-void Authorization(GtkWidget *widget) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
-        gtk_widget_destroy(GTK_WIDGET(authorization_back));
-        gtk_widget_hide(GTK_WIDGET(authorization_area));
-        gtk_widget_show_all(GTK_WIDGET(chat_area));
-    }
 }

@@ -78,10 +78,10 @@ void mx_create_registration_menu();
 void registration_label_enter_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
 void registration_label_leave_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
 
-void data_change_event(GtkWidget *widget, GdkEvent *event);
+void button_shine(GtkWidget *widget, GdkEvent *event);
 void login_btn_enter_notify();
 void login_btn_leave_notify();
-void hide_Authorization_click(GtkWidget *widget);
+void hide_authorization_click(GtkWidget *widget);
 void hide_registration_click(GtkWidget *widget);
 void back_btn_enter_notify();
 void back_btn_leave_notify();
@@ -95,8 +95,8 @@ void back_btn_leave_notify_2();
 void next_btn_enter_notify_2(); 
 void next_btn_leave_notify_2();
 void data_change_registration_event_2(GtkWidget *widget, GdkEvent *event);
-void Authorization_after_registration(GtkWidget *widget);
-void Authorization(GtkWidget *widget);
+void authorization_after_registration(GtkWidget *widget);
+void authorization(GtkWidget *widget);
 //==========================================================================================
 
 
