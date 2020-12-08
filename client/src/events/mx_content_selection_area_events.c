@@ -19,7 +19,7 @@ void messages_click(GtkWidget *widget, GdkEventButton *event) {
         }
         t_active_image = &messages_image;
         t_active_image->active = true;
-        gtk_widget_show_all(GTK_WIDGET(chat_enter_area));
+        gtk_widget_show_all(GTK_WIDGET(message_enter_area));
         gtk_widget_hide(GTK_WIDGET(tick_image.box));
 
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
@@ -50,7 +50,7 @@ void contacts_click(GtkWidget *widget, GdkEventButton *event) {
         }
         t_active_image = &contacts_image;
         t_active_image->active = true;
-        gtk_widget_hide(GTK_WIDGET(chat_enter_area));
+        gtk_widget_hide(GTK_WIDGET(message_enter_area));
 
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
         if (active_leftbar_container != NULL)
@@ -80,7 +80,7 @@ void settings_click(GtkWidget *widget, GdkEventButton *event) {
         }
         t_active_image = &settings_image;
         t_active_image->active = true;
-        gtk_widget_hide(GTK_WIDGET(chat_enter_area));
+        gtk_widget_hide(GTK_WIDGET(message_enter_area));
 
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
         if (active_leftbar_container != NULL)

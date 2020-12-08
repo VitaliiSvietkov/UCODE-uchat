@@ -4,11 +4,12 @@ int main(int argc, char *argv[]) {
     // Containers
     window = NULL;
     main_area = NULL;
-    GtkWidget *left_header = NULL;
-    GtkWidget *content_selection_area = NULL;
-    chat_enter_area = NULL;
+    authorization_area = NULL;
+    chat_area = NULL;
+    message_enter_area = NULL;
     chats_list = NULL;
     settings_menu = NULL;
+
 
     NewFirstName = NULL;
     NewSecondName = NULL;
@@ -16,9 +17,12 @@ int main(int argc, char *argv[]) {
     NewDescription = NULL;
     NewAvatar = NULL;
 
+
+    GtkWidget *left_header = NULL;
+    GtkWidget *content_selection_area = NULL;
     GtkWidget *entry_search = NULL;
     GtkWidget *entry_chat = NULL;
-
+    
     // Drawing areas
     GtkWidget *background = NULL;
 
@@ -50,16 +54,16 @@ int main(int argc, char *argv[]) {
     mx_configure_content_selection_area(&content_selection_area);
 
     // Create a chat enter area
-    mx_configure_chat_enter_area(&chat_enter_area, &entry_chat);
+    mx_configure_message_enter_area(&message_enter_area, &entry_chat);
 
     // Create a chat list area
     chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_fixed_put(GTK_FIXED(main_area), chats_list, 0, 95);
+    gtk_fixed_put(GTK_FIXED(chat_area), chats_list, 0, 95);
     active_leftbar_container = NULL;
 
     // Create a contacts list area
     contacts_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_fixed_put(GTK_FIXED(main_area), contacts_list, 0, 95);
+    gtk_fixed_put(GTK_FIXED(chat_area), contacts_list, 0, 95);
 
     // Create a settings menu
     mx_configure_settings_menu_area();
@@ -69,7 +73,7 @@ int main(int argc, char *argv[]) {
     gtk_widget_hide(GTK_WIDGET(tick_image.box));
     gtk_widget_hide(GTK_WIDGET(contacts_list));
     gtk_widget_hide(GTK_WIDGET(settings_menu));
-    gtk_widget_hide(GTK_WIDGET(chat_enter_area));
+    gtk_widget_hide(GTK_WIDGET(message_enter_area));
     // Return sensativity for entries
     gtk_widget_set_sensitive(GTK_WIDGET(entry_search), TRUE);
     gtk_widget_set_sensitive(GTK_WIDGET(entry_chat), TRUE);

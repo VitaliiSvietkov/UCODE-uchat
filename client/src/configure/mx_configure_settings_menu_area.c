@@ -5,7 +5,7 @@ void mx_configure_settings_menu_area() {
     gtk_widget_set_size_request(GTK_WIDGET(settings_menu), L_FIELD_WIDTH, CUR_HEIGHT - 105);
     gtk_widget_set_name(GTK_WIDGET(settings_menu), "settings_menu");
 
-    gtk_fixed_put(GTK_FIXED(main_area), settings_menu, 0, 105);
+    gtk_fixed_put(GTK_FIXED(chat_area), settings_menu, 0, 105);
 
     // Profile info section
     //==============================================================================================

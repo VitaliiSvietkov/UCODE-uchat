@@ -10,7 +10,7 @@ void mx_create_edit_user_form() {
     g_signal_connect(G_OBJECT(back_blackout), "button_press_event",
         G_CALLBACK(blackout_click), NULL);
     gtk_container_add(GTK_CONTAINER(back_blackout), blackout_background);
-    gtk_fixed_put(GTK_FIXED(main_area), back_blackout, 0, 0);
+    gtk_fixed_put(GTK_FIXED(chat_area), back_blackout, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(blackout_background), CUR_WIDTH, CUR_HEIGHT);
     //==================================================================================
 
