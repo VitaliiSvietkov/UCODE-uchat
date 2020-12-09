@@ -8,6 +8,7 @@
 #include <sys/ioctl.h>
 #include <stdio.h>
 #include <math.h>
+#include <sqlite3.h>
 
 // Window size
 //==========================================================================================
@@ -269,5 +270,19 @@ GtkWidget *active_leftbar_container;
 GtkWidget *message_enter_area;
 
 GtkWidget *authorization_backout;
+
+
+
+//int mx_create_db(const char* s); 
+//int mx_create_table(const char* s);
+void mx_write_to_log(char *msg, int stream);
+sqlite3 *mx_opening_db();
+void mx_dberror(sqlite3 *db, int status, char *msg);
+void mx_database_init();
+void mx_add_user_data(char* name, char* surename, char *pseudo);
+char *mx_strnew(int size);
+char *mx_string_copy(char *str);
+int mx_strcmp(char *s1, char *s2);
+void mx_write_user_data_from_bd();
 
 #endif

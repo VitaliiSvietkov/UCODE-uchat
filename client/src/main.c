@@ -1,6 +1,9 @@
 #include "../inc/uchat_client.h"
 
 int main(int argc, char *argv[]) {
+    //sqlite3* DB;
+    //const char *DBdir = "../data/test.db";
+
     // Containers
     window = NULL;
     main_area = NULL;
@@ -25,10 +28,10 @@ int main(int argc, char *argv[]) {
     
     // Drawing areas
     GtkWidget *background = NULL;
-
+    mx_database_init();
+    mx_add_user_data("No", "Name", "Pseudo");
+    mx_write_user_data_from_bd();
     mx_init_user();
-    mx_change_user_name("Vitalii", "Svietkov");
-    mx_change_user_pseudonim("mypseudo");
     mx_change_user_description("Hello, World!");
   
     gtk_init(&argc, &argv);
