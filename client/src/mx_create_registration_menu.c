@@ -86,7 +86,8 @@ void mx_create_registration_menu(void) {
     login_btn = gtk_event_box_new();
     GtkWidget *login_btn_label = gtk_label_new("Log in");
     gtk_container_add(GTK_CONTAINER(login_btn), login_btn_label);
-    gtk_box_pack_start(GTK_BOX(log_in_menu), login_btn, FALSE, FALSE, 30);
+    gtk_box_pack_start(GTK_BOX(log_in_menu), login_btn, FALSE, FALSE, 10);
+    gtk_widget_set_margin_top(GTK_WIDGET(login_btn), 30);
     gtk_widget_set_name(GTK_WIDGET(login_btn), "login_button");
     gtk_widget_set_opacity(GTK_WIDGET(login_btn), 0.5);
     gtk_widget_set_size_request(GTK_WIDGET(login_btn), 200, 50);
@@ -100,14 +101,18 @@ void mx_create_registration_menu(void) {
 
     // Link to registration
     GtkWidget *registration_link = gtk_event_box_new();
-    GtkWidget *registration_lable = gtk_label_new("Follow this link to registration");
-    gtk_container_add(GTK_CONTAINER(registration_link), registration_lable);
-    gtk_box_pack_start(GTK_BOX(log_in_menu), registration_link, FALSE, FALSE, 10);
+    GtkWidget *registration_label = gtk_label_new("Follow this link to registration");
+    gtk_widget_set_name(GTK_WIDGET(registration_label), "Registration_label");
+    gtk_label_set_max_width_chars(GTK_LABEL(registration_label), 32);
+    gtk_widget_set_margin_start(GTK_WIDGET(registration_link), 100);
+    gtk_widget_set_margin_end(GTK_WIDGET(registration_link), 100);
+    gtk_container_add(GTK_CONTAINER(registration_link), registration_label);
+    gtk_box_pack_start(GTK_BOX(log_in_menu), registration_link, FALSE, FALSE, 0);
     gtk_widget_set_name(GTK_WIDGET(registration_link), "Registration");
     g_signal_connect(G_OBJECT(registration_link), "enter-notify-event",
-        G_CALLBACK(activate_prelight), registration_lable);
+        G_CALLBACK(activate_prelight), registration_label);
     g_signal_connect(G_OBJECT(registration_link), "leave-notify-event",
-        G_CALLBACK(deactivate_prelight), registration_lable);
+        G_CALLBACK(deactivate_prelight), registration_label);
     g_signal_connect(G_OBJECT(registration_link), "button_press_event",
         G_CALLBACK(hide_authorization_click), log_in_menu);
     //=================================================================================
@@ -206,6 +211,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_sensitive(GTK_WIDGET(firstname_reg), TRUE);
     gtk_widget_set_name(GTK_WIDGET(firstname_reg), "entry_data");
     gtk_widget_set_size_request(GTK_WIDGET(firstname_reg), 400, 50);
+    gtk_widget_set_margin_top(GTK_WIDGET(firstname_reg), 35);
     gtk_entry_set_placeholder_text(GTK_ENTRY(firstname_reg), "Enter a firstname");
     gtk_box_pack_start(GTK_BOX(registration_menu_2), firstname_reg, FALSE, FALSE, 0);
 
@@ -220,6 +226,7 @@ void mx_create_registration_menu(void) {
 
     // Back button
     GtkWidget *registration_buttons_box_2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(registration_buttons_box_2), "registration_buttons_box_2");
     gtk_box_pack_start(GTK_BOX(registration_menu_2), registration_buttons_box_2, FALSE, FALSE, 90);
     GtkWidget *back_btn_2 = gtk_event_box_new();
     GtkWidget *back_btn_label_2 = gtk_label_new("Back");

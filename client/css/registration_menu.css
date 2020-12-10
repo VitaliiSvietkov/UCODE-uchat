@@ -40,6 +40,8 @@
     border-radius: 15px;
     border: .5px solid #e1e1e1;
     transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+    margin-top: 30px;
+    margin-bottom: 5px;
 }
 #login_button:hover {
     background: #e1e1e1;
@@ -47,12 +49,15 @@
 }
 
 #Registration {
-    text-decoration: underline;
     font-size: 14px;
-    color: #878484;
+    color: grey;
 }
 #Registration:hover {
     color: #e1e1e1;
+}
+#Registration_label {
+    text-decoration-style: solid;
+    text-decoration: underline;
 }
 
 #back_button {
@@ -67,5 +72,8 @@
 #back_button:hover {
     background: #e1e1e1;
     color: #1f1f1f;
+}
+#registration_buttons_box_2 {
+    margin-bottom: -31px;
 }
 
