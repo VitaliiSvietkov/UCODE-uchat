@@ -53,34 +53,36 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_sensitive(GTK_WIDGET(login), TRUE);
     gtk_widget_set_name(GTK_WIDGET(login), "entry_data");
     gtk_widget_set_size_request(GTK_WIDGET(login), 400, 50);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(login), "Your username:");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(login), "Username");
     gtk_box_pack_start(GTK_BOX(log_in_menu), login, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(login), "changed",
         G_CALLBACK(button_shine), NULL);
 
     // Entry for password
     GtkWidget *password_eye_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_pack_start(GTK_BOX(log_in_menu), password_eye_box, FALSE, FALSE, 0);
+    gtk_widget_set_name(GTK_WIDGET(password_eye_box), "password_eye_back");
+    gtk_widget_set_margin_start(GTK_WIDGET(password_eye_box), 20);
+    gtk_widget_set_margin_end(GTK_WIDGET(password_eye_box), 20);
+    gtk_box_pack_start(GTK_BOX(log_in_menu), password_eye_box, FALSE, FALSE, 30);
 
     password = gtk_entry_new();
     gtk_widget_set_sensitive(GTK_WIDGET(password), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(password), TRUE);
-    gtk_widget_set_name(GTK_WIDGET(password), "entry_data");
+    gtk_widget_set_name(GTK_WIDGET(password), "authorization_pass_entry");
     gtk_widget_set_size_request(GTK_WIDGET(password), 335, 0);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(password), "Your password:");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(password), "Password");
     gtk_box_pack_start(GTK_BOX(password_eye_box), password, FALSE, FALSE, 0);
     gtk_entry_set_visibility(GTK_ENTRY(password), FALSE);
     g_signal_connect(G_OBJECT(password), "changed",
         G_CALLBACK(button_shine), NULL);
 
     GtkWidget *eye_eventbox = gtk_event_box_new();
-    GdkPixbuf *eye_pixbuf = mx_get_pixbuf_with_size("client/img/standard/eye.png", 40, 25);
-    GtkWidget *eye = gtk_image_new_from_pixbuf(eye_pixbuf);
-    g_object_unref(G_OBJECT(eye_pixbuf));
-    gtk_container_add(GTK_CONTAINER(eye_eventbox), eye);
-    gtk_box_pack_start(GTK_BOX(password_eye_box), eye_eventbox, FALSE, FALSE, 0);
-    gtk_widget_set_size_request(GTK_WIDGET(eye), 40, 25);
+    gtk_widget_set_name(GTK_WIDGET(eye_eventbox), "eye_password");
+    gtk_box_pack_start(GTK_BOX(password_eye_box), eye_eventbox, FALSE, FALSE, 5);
+    gtk_widget_set_size_request(GTK_WIDGET(eye_eventbox), 35, 30);
     gtk_widget_set_valign(GTK_WIDGET(eye_eventbox), GTK_ALIGN_END);
+    g_signal_connect(G_OBJECT(eye_eventbox), "button_press_event",
+        G_CALLBACK(eye_pressed), password);
     
     // Log in button
     login_btn = gtk_event_box_new();
@@ -133,32 +135,62 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_sensitive(GTK_WIDGET(login_reg), TRUE);
     gtk_widget_set_name(GTK_WIDGET(login_reg), "entry_data");
     gtk_widget_set_size_request(GTK_WIDGET(login_reg), 400, 50);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(login_reg), "Enter an username");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(login_reg), "Enter a username*");
     gtk_box_pack_start(GTK_BOX(registration_menu_1), login_reg, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(login_reg), "changed",
         G_CALLBACK(data_change_registration_event), NULL);
 
     // Entry for a password during registration
+    GtkWidget *password_reg_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(password_reg_box), "password_eye_back");
+    gtk_widget_set_margin_start(GTK_WIDGET(password_reg_box), 20);
+    gtk_widget_set_margin_end(GTK_WIDGET(password_reg_box), 20);
+    gtk_box_pack_start(GTK_BOX(registration_menu_1), password_reg_box, FALSE, FALSE, 30);
+    
     password_reg = gtk_entry_new();
+    gtk_entry_set_visibility(GTK_ENTRY(password_reg), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(password_reg), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(password_reg), TRUE);
-    gtk_widget_set_name(GTK_WIDGET(password_reg), "entry_data");
-    gtk_widget_set_size_request(GTK_WIDGET(password_reg), 400, 50);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(password_reg), "Enter a password");
-    gtk_box_pack_start(GTK_BOX(registration_menu_1), password_reg, FALSE, FALSE, 0);
+    gtk_widget_set_name(GTK_WIDGET(password_reg), "password_reg");
+    gtk_widget_set_size_request(GTK_WIDGET(password_reg), 335, 0);
+    gtk_entry_set_placeholder_text(GTK_ENTRY(password_reg), "Enter a password*");
+    gtk_box_pack_start(GTK_BOX(password_reg_box), password_reg, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(password_reg), "changed",
         G_CALLBACK(data_change_registration_event), NULL);
 
+    GtkWidget *eye_reg_eventbox = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(eye_reg_eventbox), "eye_password");
+    gtk_box_pack_start(GTK_BOX(password_reg_box), eye_reg_eventbox, FALSE, FALSE, 5);
+    gtk_widget_set_size_request(GTK_WIDGET(eye_reg_eventbox), 35, 30);
+    gtk_widget_set_valign(GTK_WIDGET(eye_reg_eventbox), GTK_ALIGN_END);
+    g_signal_connect(G_OBJECT(eye_reg_eventbox), "button_press_event",
+        G_CALLBACK(eye_pressed), password_reg);
+
     // Entry to confirm a password during registration
+    GtkWidget *password_reg_confirm_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(password_reg_confirm_box), "password_eye_back");
+    gtk_widget_set_margin_start(GTK_WIDGET(password_reg_confirm_box), 20);
+    gtk_widget_set_margin_end(GTK_WIDGET(password_reg_confirm_box), 20);
+    gtk_box_pack_start(GTK_BOX(registration_menu_1), password_reg_confirm_box, FALSE, FALSE, 0);
+
     GtkWidget *password_reg_confirm = gtk_entry_new();
+    gtk_entry_set_visibility(GTK_ENTRY(password_reg_confirm), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(password_reg_confirm), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(password_reg_confirm), TRUE);
-    gtk_widget_set_name(GTK_WIDGET(password_reg_confirm), "entry_data");
-    gtk_widget_set_size_request(GTK_WIDGET(password_reg_confirm), 400, 50);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(password_reg_confirm), "Enter a password again");
-    gtk_box_pack_start(GTK_BOX(registration_menu_1), password_reg_confirm, FALSE, FALSE, 0);
+    gtk_widget_set_name(GTK_WIDGET(password_reg_confirm), "password_reg_confirm");
+    gtk_widget_set_size_request(GTK_WIDGET(password_reg_confirm), 335, 0);
+    gtk_entry_set_placeholder_text(GTK_ENTRY(password_reg_confirm), "Enter a password again*");
+    gtk_box_pack_start(GTK_BOX(password_reg_confirm_box), password_reg_confirm, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(password_reg_confirm), "changed",
         G_CALLBACK(data_change_registration_event), NULL);
+    
+    GtkWidget *eye_reg_confirm_eventbox = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(eye_reg_confirm_eventbox), "eye_password");
+    gtk_box_pack_start(GTK_BOX(password_reg_confirm_box), eye_reg_confirm_eventbox, FALSE, FALSE, 5);
+    gtk_widget_set_size_request(GTK_WIDGET(eye_reg_confirm_eventbox), 35, 30);
+    gtk_widget_set_valign(GTK_WIDGET(eye_reg_confirm_eventbox), GTK_ALIGN_END);
+    g_signal_connect(G_OBJECT(eye_reg_confirm_eventbox), "button_press_event",
+        G_CALLBACK(eye_pressed), password_reg_confirm);
 
     // Back button
     GtkWidget *registration_buttons_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -212,7 +244,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_name(GTK_WIDGET(firstname_reg), "entry_data");
     gtk_widget_set_size_request(GTK_WIDGET(firstname_reg), 400, 50);
     gtk_widget_set_margin_top(GTK_WIDGET(firstname_reg), 35);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(firstname_reg), "Enter a firstname");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(firstname_reg), "Your first name*");
     gtk_box_pack_start(GTK_BOX(registration_menu_2), firstname_reg, FALSE, FALSE, 0);
 
     // Entry for a second name
@@ -221,7 +253,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_sensitive(GTK_WIDGET(secondname_reg), TRUE);
     gtk_widget_set_name(GTK_WIDGET(secondname_reg), "entry_data");
     gtk_widget_set_size_request(GTK_WIDGET(secondname_reg), 400, 50);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(secondname_reg), "Enter a secondname");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(secondname_reg), "Your second name");
     gtk_box_pack_start(GTK_BOX(registration_menu_2), secondname_reg, FALSE, FALSE, 0);
 
     // Back button
@@ -243,7 +275,7 @@ void mx_create_registration_menu(void) {
         G_CALLBACK(hide_registration_click_2), NULL);
 
     // Finish button
-    finish_btn = gtk_event_box_new();
+    GtkWidget *finish_btn = gtk_event_box_new();
     GtkWidget *finish_btn_label = gtk_label_new("Finish");
     gtk_container_add(GTK_CONTAINER(finish_btn), finish_btn_label);
     gtk_box_pack_start(GTK_BOX(registration_buttons_box_2), finish_btn, TRUE, FALSE, 0);
@@ -259,6 +291,6 @@ void mx_create_registration_menu(void) {
         G_CALLBACK(authorization_after_registration), log_in_menu);
 
     g_signal_connect(G_OBJECT(firstname_reg), "changed",
-        G_CALLBACK(data_change_registration_event_2), NULL);
+        G_CALLBACK(data_change_registration_event_2), finish_btn);
     //=================================================================================
 }

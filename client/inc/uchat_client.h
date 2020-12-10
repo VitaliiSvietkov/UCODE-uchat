@@ -66,7 +66,6 @@ GtkWidget *login_reg;
 GtkWidget *password_reg;
 GtkWidget *login_btn;
 GtkWidget *next_btn;
-GtkWidget *finish_btn;
 
 void mx_create_registration_menu(void);
 
@@ -86,9 +85,10 @@ void data_change_registration_event(GtkWidget *widget, GdkEvent *event);
 void transition_registration_click(GtkWidget *widget);
 void hide_registration_click_2(GtkWidget *widget);
 
-void data_change_registration_event_2(GtkWidget *widget, GdkEvent *event);
+void data_change_registration_event_2(GtkWidget *widget, gpointer data);
 void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpointer *data);
 void authorization(GtkWidget *widget);
+void eye_pressed(GtkWidget *widget, GdkEventButton *event, gpointer data);
 //==========================================================================================
 
 
