@@ -21,6 +21,21 @@ void mx_create_registration_menu(void) {
         CUR_WIDTH / 5 + 70, CUR_HEIGHT / 5);
     //=================================================================================
 
+    // Close button
+    //=================================================================================
+    GtkWidget *close_image_box = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(close_image_box), "close_image_box");
+    gtk_widget_set_size_request(GTK_WIDGET(close_image_box), 25, 25);
+    gtk_box_pack_start(GTK_BOX(main_authorization_menu), close_image_box, FALSE, FALSE, 0);
+    gtk_widget_set_halign(GTK_WIDGET(close_image_box), GTK_ALIGN_START);
+
+    g_signal_connect(G_OBJECT(close_image_box), "enter-notify-event",
+        G_CALLBACK(activate_prelight), NULL);
+    g_signal_connect(G_OBJECT(close_image_box), "leave-notify-event",
+        G_CALLBACK(deactivate_prelight), NULL);
+    g_signal_connect(G_OBJECT(close_image_box), "button_press_event",
+        G_CALLBACK(authorization_close), NULL);
+    //=================================================================================
 
     // Log in menu
     //=================================================================================

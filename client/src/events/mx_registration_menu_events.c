@@ -97,3 +97,14 @@ void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpoint
     gtk_widget_hide(GTK_WIDGET(registration_menu_2));
     gtk_widget_show_all(GTK_WIDGET(data));
 }
+
+void authorization_close(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_widget_destroy(authorization_fixed_container);
+        gtk_widget_hide(GTK_WIDGET(authorization_area));
+        gtk_widget_show_all(GTK_WIDGET(chat_area));
+        gtk_widget_hide(GTK_WIDGET(message_enter_area));
+        gtk_widget_hide(GTK_WIDGET(chats_list));
+        gtk_widget_hide(GTK_WIDGET(contacts_list));
+    }
+}

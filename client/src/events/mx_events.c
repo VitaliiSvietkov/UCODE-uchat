@@ -13,10 +13,14 @@ void image_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data) {
     }
 }
 void activate_prelight(GtkWidget *widget) {
-    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
+    if (!(flags & GTK_STATE_FLAG_CHECKED))
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
 }
 void deactivate_prelight(GtkWidget *widget) {
-    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+    GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
+    if (!(flags & GTK_STATE_FLAG_CHECKED))
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 
 // Blackout
