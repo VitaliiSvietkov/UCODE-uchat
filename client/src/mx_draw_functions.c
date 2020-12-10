@@ -55,7 +55,7 @@ gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **
     return FALSE;
 }
 
-gboolean mx_draw_event_authorization_back(GtkWidget *widget, cairo_t *cr) {
+gboolean mx_draw_event_authorization_fixed_container(GtkWidget *widget, cairo_t *cr) {
     cairo_set_source_rgba(cr, MX_1F1F1F, MX_1F1F1F, MX_1F1F1F, 1);
     cairo_rectangle(cr, 0, 0, CUR_WIDTH, CUR_HEIGHT);
     cairo_fill(cr);

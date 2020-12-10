@@ -1,7 +1,7 @@
 #include "../inc/uchat_client.h"
 
 // Initialize database, if it does not exist.
-void mx_database_init() {
+void mx_database_init(void) {
     sqlite3 *db = mx_opening_db();
     int exit = 0;
     char *message_error;

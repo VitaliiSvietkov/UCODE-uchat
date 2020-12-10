@@ -24,23 +24,23 @@ void mx_configure_content_selection_area(GtkWidget **content_selection_area) {
         settings_image.box, TRUE, FALSE, 30);
 
     g_signal_connect(G_OBJECT(messages_image.box), "enter-notify-event",
-        G_CALLBACK(messages_enter_notify), NULL);
+        G_CALLBACK(activate_prelight), NULL);
     g_signal_connect(G_OBJECT(messages_image.box), "leave-notify-event",
-        G_CALLBACK(messages_leave_notify), NULL);
+        G_CALLBACK(deactivate_prelight), NULL);
     g_signal_connect(G_OBJECT(messages_image.box), "button_press_event",
         G_CALLBACK(messages_click), NULL);
 
     g_signal_connect(G_OBJECT(contacts_image.box), "enter-notify-event",
-        G_CALLBACK(contacts_enter_notify), NULL);
+        G_CALLBACK(activate_prelight), NULL);
     g_signal_connect(G_OBJECT(contacts_image.box), "leave-notify-event",
-        G_CALLBACK(contacts_leave_notify), NULL);
+        G_CALLBACK(deactivate_prelight), NULL);
     g_signal_connect(G_OBJECT(contacts_image.box), "button_press_event",
         G_CALLBACK(contacts_click), NULL);
 
     g_signal_connect(G_OBJECT(settings_image.box), "enter-notify-event",
-        G_CALLBACK(settings_enter_notify), NULL);
+        G_CALLBACK(activate_prelight), NULL);
     g_signal_connect(G_OBJECT(settings_image.box), "leave-notify-event",
-        G_CALLBACK(settings_leave_notify), NULL);
+        G_CALLBACK(deactivate_prelight), NULL);
     g_signal_connect(G_OBJECT(settings_image.box), "button_press_event",
         G_CALLBACK(settings_click), NULL);
 }

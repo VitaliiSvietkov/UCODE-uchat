@@ -16,7 +16,7 @@ void edit_user_leave_notify(GtkWidget *widget) {
 void edit_user_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         mx_create_edit_user_form();
-        gtk_widget_show_all(GTK_WIDGET(authorization_backout));
+        gtk_widget_show_all(GTK_WIDGET(blackout));
         gtk_widget_hide(GTK_WIDGET(edit_username_event_screen));
         gtk_widget_hide(GTK_WIDGET(edit_pseudonim_event_screen));
     }

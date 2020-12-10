@@ -220,7 +220,7 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
         g_object_unref(G_OBJECT(NewAvatar));
         gtk_widget_queue_draw(GTK_WIDGET(settings_menu));
 
-        gtk_widget_destroy(GTK_WIDGET(authorization_backout));
+        gtk_widget_destroy(GTK_WIDGET(blackout));
     }
 }
 //============================================================================================

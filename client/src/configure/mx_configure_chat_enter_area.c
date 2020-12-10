@@ -30,19 +30,19 @@ void mx_configure_message_enter_area(GtkWidget **message_enter_area, GtkWidget *
     gtk_box_pack_start(GTK_BOX(chat_container), more_image.box, FALSE, FALSE, 8);
 
     g_signal_connect(G_OBJECT(add_image.box), "enter-notify-event",
-        G_CALLBACK(add_enter_notify), &add_image);
+        G_CALLBACK(activate_prelight), &add_image);
     g_signal_connect(G_OBJECT(add_image.box), "leave-notify-event",
-        G_CALLBACK(add_leave_notify), NULL);
+        G_CALLBACK(deactivate_prelight), NULL);
     /*g_signal_connect(G_OBJECT(t_img_event_box.add_box), "button_press_event",
         G_CALLBACK(add_click), NULL);*/
 
     g_signal_connect(G_OBJECT(tick_image.box), "enter-notify-event",
-        G_CALLBACK(image_enter_notify), &tick_image);
+        G_CALLBACK(activate_prelight), &tick_image);
     g_signal_connect(G_OBJECT(tick_image.box), "leave-notify-event",
-        G_CALLBACK(image_leave_notify), NULL);
+        G_CALLBACK(deactivate_prelight), NULL);
 
     g_signal_connect(G_OBJECT(more_image.box), "enter-notify-event",
-        G_CALLBACK(more_enter_notify), &more_image);
+        G_CALLBACK(activate_prelight), &more_image);
     g_signal_connect(G_OBJECT(more_image.box), "leave-notify-event",
-        G_CALLBACK(more_leave_notify), NULL);
+        G_CALLBACK(deactivate_prelight), NULL);
 }
