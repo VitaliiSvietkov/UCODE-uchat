@@ -73,6 +73,7 @@ void mx_create_registration_menu(void);
 void activate_prelight_with_condition_entry(GtkWidget *widget, GdkEvent *event, gpointer *entry);
 void deactivate_prelight_with_condition_entry(GtkWidget *widget, GdkEvent *event, gpointer *entry);
 void authorization_close(GtkWidget *widget, GdkEventButton *event);
+void password_entry_change(GtkWidget *widget);
 
 void button_shine(GtkWidget *widget, GdkEvent *event);
 void login_btn_enter_notify(void);

@@ -1,11 +1,18 @@
 #include "../../inc/uchat_client.h"
 
 void button_shine(GtkWidget *widget, GdkEvent *event) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0
+        && strlen(gtk_entry_get_text(GTK_ENTRY(widget))) >= 5) {
         gtk_widget_set_opacity(GTK_WIDGET(login_btn), 1.0);
     }
     else {
          gtk_widget_set_opacity(GTK_WIDGET(login_btn), 0.5);
+    }
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) < 5) {
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+    }
+    else {
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK);
     }
 }
 
@@ -106,5 +113,15 @@ void authorization_close(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_hide(GTK_WIDGET(message_enter_area));
         gtk_widget_hide(GTK_WIDGET(chats_list));
         gtk_widget_hide(GTK_WIDGET(contacts_list));
+    }
+}
+
+
+void password_entry_change(GtkWidget *widget) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) < 5) {
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+    }
+    else {
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK);
     }
 }
