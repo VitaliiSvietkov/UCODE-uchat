@@ -251,11 +251,11 @@ void mx_write_to_log(char *msg, int stream);
 sqlite3 *mx_opening_db(void);
 void mx_dberror(sqlite3 *db, int status, char *msg);
 void mx_database_init(void);
-void mx_add_user_data(char* name, char* surename, char *pseudo);
+void mx_add_user_data(char* name, char* surename, char *pseudo, char *description);
 char *mx_strnew(int size);
 char *mx_string_copy(char *str);
 int mx_strcmp(char *s1, char *s2);
 void mx_write_user_data_from_bd(void);
-void mx_edit_name(char* name, char* surname, char* pseudo);
+void mx_edit_name(char* name, char* surname, char* pseudo, char *description);
 
 #endif
