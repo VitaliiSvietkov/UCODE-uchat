@@ -208,8 +208,10 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
 
         char *tmp_text = "@";
         tmp_text = mx_strjoin(tmp_text, t_user.pseudonim);
+        printf("%s\n", t_user.pseudonim); 
         gtk_label_set_text(GTK_LABEL(user_pseudonim), tmp_text);
         free(tmp_text);
+        mx_edit_name(t_user.FirstName, t_user.SecondName, t_user.pseudonim);
 
         mx_change_user_description(NewDescription);
         free(NewDescription);

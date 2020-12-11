@@ -256,5 +256,6 @@ char *mx_strnew(int size);
 char *mx_string_copy(char *str);
 int mx_strcmp(char *s1, char *s2);
 void mx_write_user_data_from_bd(void);
+void mx_edit_name(char* name, char* surname, char* pseudo);
 
 #endif

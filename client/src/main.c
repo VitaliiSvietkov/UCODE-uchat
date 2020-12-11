@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     // Drawing areas
     GtkWidget *background = NULL;
     mx_database_init();
-    mx_add_user_data("No", "Name", "Pseudo");
+    //mx_add_user_data("No", "Name", "Pseudo");
     mx_write_user_data_from_bd();
     mx_init_user();
     mx_change_user_description("Hello, World!");
