@@ -10,6 +10,11 @@
 #include <math.h>
 #include <sqlite3.h>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <locale.h>
+
 // Window size
 //==========================================================================================
 #define WIN_WIDTH_MIN 915
@@ -222,12 +227,22 @@ void chat_settings_leave_notify(GtkWidget *widget);
 
 void language_enter_notify(GtkWidget *widget);
 void language_leave_notify(GtkWidget *widget);
+void language_click(GtkWidget *widget, GdkEventButton *event);
 
 void blackout_click(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
 char *mx_strnew(const int size);
 char *mx_strjoin(const char *s1, const char *s2);
+char *mx_file_to_str(const char *file);
+char **mx_strsplit(const char *s, char c);
+char *mx_strndup(const char *s1, size_t n);
+int mx_count_words(const char *str, char c);
+char *mx_strncpy(char *dst, const char *src, int len);
+int mx_strlen(const char *s);
+void mx_del_strarr(char ***arr);
+void mx_strdel(char **str);
+void mx_get_language_arr(void);
 
 
 GtkWidget *window;                      // a top-level window
@@ -242,6 +257,8 @@ GtkWidget *active_leftbar_container;
 GtkWidget *message_enter_area;
 
 GtkWidget *blackout;
+int language;
+char **text_for_labels;
 
 
 

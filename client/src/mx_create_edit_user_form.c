@@ -1,6 +1,7 @@
 #include "../inc/uchat_client.h"
 
 void mx_create_edit_user_form(void) {
+     
     // Create a blackout - a dark background behind the form
     //==================================================================================
     blackout = gtk_event_box_new();
@@ -68,7 +69,7 @@ void mx_create_edit_user_form(void) {
     gtk_widget_set_halign(GTK_WIDGET(avatar), GTK_ALIGN_CENTER);
     g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &NewAvatar);
 
-    GtkWidget *change_avatar_btn = gtk_button_new_with_label("Change photo");
+    GtkWidget *change_avatar_btn = gtk_button_new_with_label(text_for_labels[-1 + 6]);
     gtk_box_pack_start(GTK_BOX(edit_user_main_screen), change_avatar_btn, FALSE, FALSE, 0);
     gtk_widget_set_name(GTK_WIDGET(change_avatar_btn), "edit_button");
     gtk_button_set_relief(GTK_BUTTON(change_avatar_btn), GTK_RELIEF_NONE);
@@ -157,7 +158,7 @@ void mx_create_edit_user_form(void) {
 
     // "change description" field
     //==================================================================================
-    GtkWidget *change_description_label = gtk_label_new("Edit info about you:");
+    GtkWidget *change_description_label = gtk_label_new(text_for_labels[6]);
     gtk_widget_set_name(GTK_WIDGET(change_description_label), "edit_label");
     gtk_box_pack_start(GTK_BOX(edit_user_main_screen), change_description_label, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(change_description_label), GTK_ALIGN_START);
@@ -188,10 +189,11 @@ void mx_create_edit_user_form(void) {
     GtkWidget *exit_buttons_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_start(GTK_BOX(edit_user_main_screen), exit_buttons_box, FALSE, FALSE, 0);
 
-    GtkWidget *commit_btn = gtk_button_new_with_label("Apply");
+    GtkWidget *commit_btn = gtk_button_new_with_label(text_for_labels[12]);
     gtk_widget_set_name(GTK_WIDGET(commit_btn), "edit_button");
     gtk_button_set_relief(GTK_BUTTON(commit_btn), GTK_RELIEF_NONE);
-    GtkWidget *exit_btn = gtk_button_new_with_label("Exit");
+
+    GtkWidget *exit_btn = gtk_button_new_with_label(text_for_labels[11]);
     gtk_widget_set_name(GTK_WIDGET(exit_btn), "edit_button");
     gtk_button_set_relief(GTK_BUTTON(exit_btn), GTK_RELIEF_NONE);
 

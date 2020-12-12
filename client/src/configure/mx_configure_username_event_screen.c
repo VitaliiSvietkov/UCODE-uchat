@@ -1,6 +1,7 @@
 #include "../../inc/uchat_client.h"
 
 void mx_configure_username_event_screen(void) {
+     
     // Return image
     //==================================================================================
     GtkWidget *return_image_box = gtk_event_box_new();
@@ -28,7 +29,7 @@ void mx_configure_username_event_screen(void) {
 
     // "change first name" block
     //==================================================================================
-    GtkWidget *change_fname_label = gtk_label_new("Write your first name:");
+    GtkWidget *change_fname_label = gtk_label_new(text_for_labels[7]);
     gtk_widget_set_name(GTK_WIDGET(change_fname_label), "edit_label");
     gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_fname_label, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(change_fname_label), GTK_ALIGN_START);
@@ -48,7 +49,7 @@ void mx_configure_username_event_screen(void) {
 
     // "change second name" block
     //==================================================================================
-    GtkWidget *change_sname_label = gtk_label_new("Write your second name (not necessary):");
+    GtkWidget *change_sname_label = gtk_label_new(text_for_labels[8]);
     gtk_widget_set_name(GTK_WIDGET(change_sname_label), "edit_label");
     gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_sname_label, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(change_sname_label), GTK_ALIGN_START);
@@ -69,10 +70,11 @@ void mx_configure_username_event_screen(void) {
     gtk_box_pack_start(GTK_BOX(edit_username_event_screen), return_buttons_box, FALSE, FALSE, 0);
     gtk_widget_set_margin_top(GTK_WIDGET(return_buttons_box), 100);
 
-    GtkWidget *commit_username_btn = gtk_button_new_with_label("Apply");
+    GtkWidget *commit_username_btn = gtk_button_new_with_label(text_for_labels[12]);
     gtk_widget_set_name(GTK_WIDGET(commit_username_btn), "edit_button");
     gtk_button_set_relief(GTK_BUTTON(commit_username_btn), GTK_RELIEF_NONE);
-    GtkWidget *exit_username_btn = gtk_button_new_with_label("Back");
+
+    GtkWidget *exit_username_btn = gtk_button_new_with_label(text_for_labels[15]);
     gtk_widget_set_name(GTK_WIDGET(exit_username_btn), "edit_button");
     gtk_button_set_relief(GTK_BUTTON(exit_username_btn), GTK_RELIEF_NONE);
 

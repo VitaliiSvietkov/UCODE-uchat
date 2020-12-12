@@ -4,7 +4,7 @@
 Изменить профиль
 Выберите чат для начала общения
 Изменить фото
-Редактируйте информацию про вас
+Редактируйте информацию про вас:
 Укажите свое имя:
 Укажите свою фамилию (не обязательно):
 Придумайте ваш новый псевдоним:
@@ -13,22 +13,17 @@
 Применить
 Поиск...
 Напишите что-нибудь...
-
-
-
-
-Language
-Chat settings
-Change account
-Edit profile
-Select a chat to start conversation
-Change photo
-Edit info about you:
-Write your first name:
-Write your second name (not necessary):
-Write your new pseudonim:
-It will be easier for users to find you using this identifier.
-Exit
-Apply
-Search...
-Write a message...
+Назад
+Авторизация
+Имя пользователя
+Пароль
+Войти
+Перейти к регистрации
+Регистрация
+Введите имя пользователя
+Введите пароль
+Введите пароль ещё раз
+Дальше
+Ваше имя
+Ваша фамилия
+Завершить

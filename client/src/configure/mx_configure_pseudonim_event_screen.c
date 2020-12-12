@@ -1,6 +1,7 @@
 #include "../../inc/uchat_client.h"
 
 void mx_configure_pseudonim_event_screen(void) {
+     
     // Return image
     //==================================================================================
     GtkWidget *return_image_box = gtk_event_box_new();
@@ -28,7 +29,7 @@ void mx_configure_pseudonim_event_screen(void) {
 
     // "change pseudonim" block
     //==================================================================================
-    GtkWidget *change_pseudo_label = gtk_label_new("Write your new pseudonim:");
+    GtkWidget *change_pseudo_label = gtk_label_new(text_for_labels[9]);
     gtk_widget_set_name(GTK_WIDGET(change_pseudo_label), "edit_label");
     gtk_box_pack_start(GTK_BOX(edit_pseudonim_event_screen), change_pseudo_label, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(change_pseudo_label), GTK_ALIGN_START);
@@ -48,13 +49,15 @@ void mx_configure_pseudonim_event_screen(void) {
 
     // Additional info block
     //==================================================================================
-    GtkWidget *info_label = gtk_label_new("It will be easier for users to find you using this identifier.");
+    GtkWidget *info_label = gtk_label_new(text_for_labels[10]);
     gtk_widget_set_name(GTK_WIDGET(info_label), "info_label");
     gtk_box_pack_start(GTK_BOX(edit_pseudonim_event_screen), info_label, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(info_label), GTK_ALIGN_START);
     gtk_label_set_line_wrap(GTK_LABEL(info_label), TRUE);
     gtk_widget_set_size_request(GTK_WIDGET(info_label), 380, 0);
     gtk_widget_set_margin_top(GTK_WIDGET(info_label), 0);
+    gtk_widget_set_margin_start(GTK_WIDGET(info_label), 20);
+    gtk_widget_set_margin_end(GTK_WIDGET(info_label), 20);
     //==================================================================================
 
     // Return buttons block
@@ -63,10 +66,11 @@ void mx_configure_pseudonim_event_screen(void) {
     gtk_box_pack_start(GTK_BOX(edit_pseudonim_event_screen), return_buttons_box, FALSE, FALSE, 0);
     gtk_widget_set_margin_top(GTK_WIDGET(return_buttons_box), 100);
 
-    GtkWidget *commit_pseudonim_btn = gtk_button_new_with_label("Apply");
+    GtkWidget *commit_pseudonim_btn = gtk_button_new_with_label(text_for_labels[12]);
     gtk_widget_set_name(GTK_WIDGET(commit_pseudonim_btn), "edit_button");
     gtk_button_set_relief(GTK_BUTTON(commit_pseudonim_btn), GTK_RELIEF_NONE);
-    GtkWidget *exit_pseudonim_btn = gtk_button_new_with_label("Back");
+
+    GtkWidget *exit_pseudonim_btn = gtk_button_new_with_label(text_for_labels[15]);
     gtk_widget_set_name(GTK_WIDGET(exit_pseudonim_btn), "edit_button");
     gtk_button_set_relief(GTK_BUTTON(exit_pseudonim_btn), GTK_RELIEF_NONE);
 

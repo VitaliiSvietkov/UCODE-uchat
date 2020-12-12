@@ -76,4 +76,11 @@ void language_leave_notify(GtkWidget *widget) {
     gtk_widget_unset_state_flags(GTK_WIDGET(language_image.box), 
         GTK_STATE_FLAG_PRELIGHT);
 }
+
+void language_click(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        language = 1;
+        mx_get_language_arr();
+    }
+}
 //=================================================================================

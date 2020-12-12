@@ -3,6 +3,9 @@
 int main(int argc, char *argv[]) {
     //sqlite3* DB;
     //const char *DBdir = "../data/test.db";
+    language = 0;
+    text_for_labels = NULL;
+    mx_get_language_arr();
 
     // Containers
     window = NULL;
@@ -89,6 +92,6 @@ int main(int argc, char *argv[]) {
     free(t_user.SecondName);
     free(t_user.pseudonim);
     free(t_user.description);
-  
+    mx_del_strarr(&text_for_labels);
     return 0;
 }

@@ -1,6 +1,7 @@
 #include "../inc/uchat_client.h"
 
 void mx_create_registration_menu(void) {
+     
     // Background
     //=================================================================================
     authorization_fixed_container = gtk_fixed_new();
@@ -43,7 +44,7 @@ void mx_create_registration_menu(void) {
     gtk_box_pack_start(GTK_BOX(main_authorization_menu), log_in_menu, FALSE, FALSE, 0);
 
     // Inscription Log in
-    GtkWidget *log_in_inscription = gtk_label_new("Authorization");
+    GtkWidget *log_in_inscription = gtk_label_new(text_for_labels[16]);
     gtk_box_pack_start(GTK_BOX(log_in_menu), log_in_inscription, FALSE, FALSE, 0);
     gtk_widget_set_name(GTK_WIDGET(log_in_inscription), "authorization");
 
@@ -53,7 +54,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_sensitive(GTK_WIDGET(login), TRUE);
     gtk_widget_set_name(GTK_WIDGET(login), "entry_data");
     gtk_widget_set_size_request(GTK_WIDGET(login), 400, 50);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(login), "Username");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(login), text_for_labels[17]);
     gtk_box_pack_start(GTK_BOX(log_in_menu), login, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(login), "changed",
         G_CALLBACK(button_shine), NULL);
@@ -70,7 +71,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_sensitive(GTK_WIDGET(password), TRUE);
     gtk_widget_set_name(GTK_WIDGET(password), "authorization_pass_entry");
     gtk_widget_set_size_request(GTK_WIDGET(password), 335, 0);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(password), "Password");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(password), text_for_labels[18]);
     gtk_box_pack_start(GTK_BOX(password_eye_box), password, FALSE, FALSE, 0);
     gtk_entry_set_visibility(GTK_ENTRY(password), FALSE);
     g_signal_connect(G_OBJECT(password), "changed",
@@ -86,7 +87,7 @@ void mx_create_registration_menu(void) {
     
     // Log in button
     login_btn = gtk_event_box_new();
-    GtkWidget *login_btn_label = gtk_label_new("Log in");
+    GtkWidget *login_btn_label = gtk_label_new(text_for_labels[19]);
     gtk_container_add(GTK_CONTAINER(login_btn), login_btn_label);
     gtk_box_pack_start(GTK_BOX(log_in_menu), login_btn, FALSE, FALSE, 10);
     gtk_widget_set_margin_top(GTK_WIDGET(login_btn), 30);
@@ -103,7 +104,7 @@ void mx_create_registration_menu(void) {
 
     // Link to registration
     GtkWidget *registration_link = gtk_event_box_new();
-    GtkWidget *registration_label = gtk_label_new("Follow this link to registration");
+    GtkWidget *registration_label = gtk_label_new(text_for_labels[20]);
     gtk_widget_set_name(GTK_WIDGET(registration_label), "Registration_label");
     gtk_label_set_max_width_chars(GTK_LABEL(registration_label), 32);
     gtk_widget_set_margin_start(GTK_WIDGET(registration_link), 100);
@@ -125,7 +126,7 @@ void mx_create_registration_menu(void) {
     gtk_box_pack_start(GTK_BOX(main_authorization_menu), registration_menu_1, FALSE, FALSE, 0);
 
     // Inscription Registration
-    GtkWidget *registration_inscription = gtk_label_new("Registration");
+    GtkWidget *registration_inscription = gtk_label_new(text_for_labels[21]);
     gtk_box_pack_start(GTK_BOX(registration_menu_1), registration_inscription, FALSE, FALSE, 0);
     gtk_widget_set_name(GTK_WIDGET(registration_inscription), "authorization");
     
@@ -135,7 +136,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_sensitive(GTK_WIDGET(login_reg), TRUE);
     gtk_widget_set_name(GTK_WIDGET(login_reg), "entry_data");
     gtk_widget_set_size_request(GTK_WIDGET(login_reg), 400, 50);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(login_reg), "Enter a username*");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(login_reg), text_for_labels[22]);
     gtk_box_pack_start(GTK_BOX(registration_menu_1), login_reg, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(login_reg), "changed",
         G_CALLBACK(data_change_registration_event), NULL);
@@ -153,7 +154,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_sensitive(GTK_WIDGET(password_reg), TRUE);
     gtk_widget_set_name(GTK_WIDGET(password_reg), "password_reg");
     gtk_widget_set_size_request(GTK_WIDGET(password_reg), 335, 0);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(password_reg), "Enter a password*");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(password_reg), text_for_labels[23]);
     gtk_box_pack_start(GTK_BOX(password_reg_box), password_reg, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(password_reg), "changed",
         G_CALLBACK(data_change_registration_event), NULL);
@@ -179,7 +180,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_sensitive(GTK_WIDGET(password_reg_confirm), TRUE);
     gtk_widget_set_name(GTK_WIDGET(password_reg_confirm), "password_reg_confirm");
     gtk_widget_set_size_request(GTK_WIDGET(password_reg_confirm), 335, 0);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(password_reg_confirm), "Enter a password again*");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(password_reg_confirm), text_for_labels[24]);
     gtk_box_pack_start(GTK_BOX(password_reg_confirm_box), password_reg_confirm, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(password_reg_confirm), "changed",
         G_CALLBACK(data_change_registration_event), NULL);
@@ -196,7 +197,7 @@ void mx_create_registration_menu(void) {
     GtkWidget *registration_buttons_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_start(GTK_BOX(registration_menu_1), registration_buttons_box, FALSE, FALSE, 60);
     GtkWidget *back_btn = gtk_event_box_new();
-    GtkWidget *back_btn_label = gtk_label_new("Back");
+    GtkWidget *back_btn_label = gtk_label_new(text_for_labels[15]);
     gtk_container_add(GTK_CONTAINER(back_btn), back_btn_label);
     gtk_box_pack_start(GTK_BOX(registration_buttons_box), back_btn, TRUE, FALSE, 0);
     gtk_widget_set_name(GTK_WIDGET(back_btn), "back_button");
@@ -211,7 +212,7 @@ void mx_create_registration_menu(void) {
 
     // Next button
     next_btn = gtk_event_box_new();
-    GtkWidget *next_btn_label = gtk_label_new("Next");
+    GtkWidget *next_btn_label = gtk_label_new(text_for_labels[25]);
     gtk_container_add(GTK_CONTAINER(next_btn), next_btn_label);
     gtk_box_pack_start(GTK_BOX(registration_buttons_box), next_btn, TRUE, FALSE, 0);
     gtk_widget_set_name(GTK_WIDGET(next_btn), "back_button");
@@ -233,7 +234,7 @@ void mx_create_registration_menu(void) {
     gtk_box_pack_start(GTK_BOX(main_authorization_menu), registration_menu_2, FALSE, FALSE, 0);
 
     // Inscription Registration
-    GtkWidget *registration_inscription_2 = gtk_label_new("Registration");
+    GtkWidget *registration_inscription_2 = gtk_label_new(text_for_labels[21]);
     gtk_box_pack_start(GTK_BOX(registration_menu_2), registration_inscription_2, FALSE, FALSE, 0);
     gtk_widget_set_name(GTK_WIDGET(registration_inscription_2), "authorization");
 
@@ -244,7 +245,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_name(GTK_WIDGET(firstname_reg), "entry_data");
     gtk_widget_set_size_request(GTK_WIDGET(firstname_reg), 400, 50);
     gtk_widget_set_margin_top(GTK_WIDGET(firstname_reg), 35);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(firstname_reg), "Your first name*");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(firstname_reg), text_for_labels[26]);
     gtk_box_pack_start(GTK_BOX(registration_menu_2), firstname_reg, FALSE, FALSE, 0);
 
     // Entry for a second name
@@ -253,7 +254,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_sensitive(GTK_WIDGET(secondname_reg), TRUE);
     gtk_widget_set_name(GTK_WIDGET(secondname_reg), "entry_data");
     gtk_widget_set_size_request(GTK_WIDGET(secondname_reg), 400, 50);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(secondname_reg), "Your second name");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(secondname_reg), text_for_labels[27]);
     gtk_box_pack_start(GTK_BOX(registration_menu_2), secondname_reg, FALSE, FALSE, 0);
 
     // Back button
@@ -261,7 +262,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_name(GTK_WIDGET(registration_buttons_box_2), "registration_buttons_box_2");
     gtk_box_pack_start(GTK_BOX(registration_menu_2), registration_buttons_box_2, FALSE, FALSE, 90);
     GtkWidget *back_btn_2 = gtk_event_box_new();
-    GtkWidget *back_btn_label_2 = gtk_label_new("Back");
+    GtkWidget *back_btn_label_2 = gtk_label_new(text_for_labels[15]);
     gtk_container_add(GTK_CONTAINER(back_btn_2), back_btn_label_2);
     gtk_box_pack_start(GTK_BOX(registration_buttons_box_2), back_btn_2, TRUE, FALSE, 0);
     gtk_widget_set_name(GTK_WIDGET(back_btn_2), "back_button");
@@ -276,7 +277,7 @@ void mx_create_registration_menu(void) {
 
     // Finish button
     GtkWidget *finish_btn = gtk_event_box_new();
-    GtkWidget *finish_btn_label = gtk_label_new("Finish");
+    GtkWidget *finish_btn_label = gtk_label_new(text_for_labels[28]);
     gtk_container_add(GTK_CONTAINER(finish_btn), finish_btn_label);
     gtk_box_pack_start(GTK_BOX(registration_buttons_box_2), finish_btn, TRUE, FALSE, 0);
     gtk_widget_set_name(GTK_WIDGET(finish_btn), "back_button");
