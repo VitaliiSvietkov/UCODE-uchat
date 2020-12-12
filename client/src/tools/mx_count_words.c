@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 int mx_count_words(const char *str, char c) {
     bool state = true;

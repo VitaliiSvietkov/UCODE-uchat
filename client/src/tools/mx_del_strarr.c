@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 void mx_del_strarr(char ***arr) {
     for (int i = 0; (*arr)[i] != NULL; i++)

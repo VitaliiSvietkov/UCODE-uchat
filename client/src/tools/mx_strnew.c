@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 char *mx_strnew(const int size) {
     char *memory = NULL;

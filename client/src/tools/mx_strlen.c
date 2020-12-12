@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 int mx_strlen(const char *s) {
     int j = 0;

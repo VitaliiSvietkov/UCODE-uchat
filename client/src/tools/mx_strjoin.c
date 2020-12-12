@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 char *mx_strjoin(const char *s1, const char *s2) {
     if (s1 == NULL && s2 == NULL)

@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 void mx_get_language_arr(void) {
     if (text_for_labels)

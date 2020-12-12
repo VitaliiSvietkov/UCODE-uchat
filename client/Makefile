@@ -1,6 +1,6 @@
 .PHONY: all install uchat clean uninstall reinstall
 
-dirs := src src/events src/configure
+dirs := src src/events src/configure src/tools src/create
 SRCS := $(foreach dir, $(dirs), $(wildcard $(dir)/*.c))
 HDRS := $(wildcard inc/*.h)
 

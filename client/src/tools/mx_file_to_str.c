@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 static int file_len(const char *file) {
     short fl = open(file, O_RDONLY);

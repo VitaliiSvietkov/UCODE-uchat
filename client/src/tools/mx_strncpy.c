@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 char *mx_strncpy(char *dst, const char *src, int len) {
 if (len != 0) {

@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 GdkPixbuf *mx_get_pixbuf_with_size(char *path, int w, int h) {
     GdkPixbuf *pixbuf = mx_create_pixbuf(path);

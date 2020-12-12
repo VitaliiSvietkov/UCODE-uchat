@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 static int mx_count_letters(const char *s, char c) {
 	int i = 0;
