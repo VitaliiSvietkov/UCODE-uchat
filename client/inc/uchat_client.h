@@ -273,9 +273,6 @@ t_labels *mx_create_node(void *data, int index);
 void mx_pop_front(t_labels **head);
 void mx_push_back(t_labels **list, void *data, int index);
 
-
-
-
 //int mx_create_db(const char* s); 
 //int mx_create_table(const char* s);
 void mx_write_to_log(char *msg, int stream);
