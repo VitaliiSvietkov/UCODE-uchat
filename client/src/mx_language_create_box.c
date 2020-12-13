@@ -3,6 +3,7 @@
 GtkWidget *mx_language_create_box(char *path, char *name) {
     GtkWidget *eventbox = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(eventbox), 400, 60);
+    gtk_widget_set_name(GTK_WIDGET(eventbox), "language_choose_eventbox");
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_container_add(GTK_CONTAINER(eventbox), box);
     GdkPixbuf *pixbuf = mx_get_pixbuf_with_size(path, 50, 50);
@@ -27,6 +28,10 @@ GtkWidget *mx_language_create_box(char *path, char *name) {
     gtk_box_pack_start(GTK_BOX(box), radiobox, FALSE, FALSE, 20);
     gtk_widget_set_halign(GTK_WIDGET(radiobox), GTK_ALIGN_END);
 
+    g_signal_connect(G_OBJECT(eventbox), "enter-notify-event",
+        G_CALLBACK(activate_prelight), NULL);
+    g_signal_connect(G_OBJECT(eventbox), "leave-notify-event",
+        G_CALLBACK(deactivate_prelight), NULL);
     g_signal_connect(G_OBJECT(eventbox), "button_press_event",
         G_CALLBACK(mx_language_eventbox_click), name);
 

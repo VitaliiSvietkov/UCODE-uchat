@@ -11,6 +11,13 @@
     margin-top: 0px;
     border-bottom: 0.5px solid #e1e1e1;
 }
+#edit_eventbox:hover {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    animation-name: gradient;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
 
 /* Style for all labels in this form */
 /* ================================= */

@@ -5,3 +5,12 @@
     font-family: "New Century Schoolbook", Times, serif;
     margin-top: 6px;
 }
+
+#language_choose_eventbox {
+    border-radius: 30px;
+}
+#language_choose_eventbox:hover {
+    animation-name: gradient;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}

@@ -240,6 +240,7 @@ void language_leave_notify(GtkWidget *widget);
 void language_click(GtkWidget *widget, GdkEventButton *event);
 
 void blackout_click(GtkWidget *widget, GdkEventButton *event);
+void blackout_click_language(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
 char *mx_strnew(const int size);

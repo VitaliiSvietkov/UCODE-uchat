@@ -30,6 +30,11 @@
     100% {opacity: 1;}
 }
 
+@keyframes gradient {
+    0% {background: linear-gradient(51deg, rgba(225,225,225,0.4) 0%, rgba(31,31,31,0) 33%);}
+    100% {background: linear-gradient(51deg, rgba(31,31,31,0) 74%, rgba(225,225,225,0) 100%);}
+}
+
 #close_image_box {
     background-image: url("../img/standard/cancel.png");
     background-size: 25px;

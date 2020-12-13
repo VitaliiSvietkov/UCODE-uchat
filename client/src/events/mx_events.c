@@ -32,6 +32,14 @@ void blackout_click(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_destroy(GTK_WIDGET(blackout));
     }
 }
+
+void blackout_click_language(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1
+        && ((event->x < CUR_WIDTH / 3 - 10 || event->x > CUR_WIDTH / 3 - 10 + 410)
+            || (event->y < CUR_HEIGHT / 5 + 75 || event->y > CUR_HEIGHT / 5 + 75 + 230))) {
+        gtk_widget_destroy(GTK_WIDGET(blackout));
+    }
+}
 //==============================================================
 
 // Close image
