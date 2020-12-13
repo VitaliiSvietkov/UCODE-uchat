@@ -1,17 +1,17 @@
 #include "../../inc/uchat_client.h"
 
-void mx_configure_content_selection_area(GtkWidget **content_selection_area) {
+void mx_configure_content_selection_area(void) {
     // A container which contains section with images and a line just below it
-    *content_selection_area = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_fixed_put(GTK_FIXED(chat_area), *content_selection_area, 0, 48);
+    GtkWidget *content_selection_area = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_fixed_put(GTK_FIXED(chat_area), content_selection_area, 0, 48);
 
     GtkWidget *image_container = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(image_container), L_FIELD_WIDTH, 40);
-    gtk_box_pack_start(GTK_BOX(*content_selection_area), image_container, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(content_selection_area), image_container, TRUE, FALSE, 0);
 
     // A line which is under the images
     GtkWidget *delimiter = gtk_drawing_area_new();
-    gtk_box_pack_start(GTK_BOX(*content_selection_area), delimiter, TRUE, FALSE, 15);
+    gtk_box_pack_start(GTK_BOX(content_selection_area), delimiter, TRUE, FALSE, 15);
     gtk_widget_set_size_request(GTK_WIDGET(delimiter), L_FIELD_WIDTH, 1);
     g_signal_connect(G_OBJECT(delimiter), "draw",
                      G_CALLBACK(mx_draw_event_delimiter), NULL);

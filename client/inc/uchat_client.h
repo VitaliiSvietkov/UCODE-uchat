@@ -179,12 +179,13 @@ void change_description_entry_change_event(GtkWidget *widget);
 void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
-void mx_init_window(GtkWidget **window);
+void mx_init_window(void);
+void mx_init_global_vars(void);
 
-void mx_configure_main_area(GtkWidget **background, GtkWidget **window);
-void mx_configure_left_header(GtkWidget **left_header, GtkWidget **entry_search);
-void mx_configure_content_selection_area(GtkWidget **content_selection_area);
-void mx_configure_message_enter_area(GtkWidget **message_enter_area, GtkWidget **entry_chat);
+void mx_configure_main_area(void);
+void mx_configure_left_header(void);
+void mx_configure_content_selection_area(void);
+void mx_configure_message_enter_area(void);
 void mx_configure_settings_menu_area(void);
 void mx_create_edit_user_form(void);
 void mx_configure_username_event_screen(void);

@@ -3,37 +3,12 @@
 int main(int argc, char *argv[]) {
     //sqlite3* DB;
     //const char *DBdir = "../data/test.db";
-    language = 0;
-    text_for_labels = NULL;
+
+    mx_init_global_vars();
+
     mx_get_language_arr();
-
-    // Containers
-    window = NULL;
-    main_area = NULL;
-    authorization_area = NULL;
-    chat_area = NULL;
-    message_enter_area = NULL;
-    chats_list = NULL;
-    settings_menu = NULL;
-
-
-    NewFirstName = NULL;
-    NewSecondName = NULL;
-    NewPseudonim = NULL;
-    NewDescription = NULL;
-    NewAvatar = NULL;
-
-
-    GtkWidget *left_header = NULL;
-    GtkWidget *content_selection_area = NULL;
-    GtkWidget *entry_search = NULL;
-    GtkWidget *entry_chat = NULL;
     
-    // Drawing areas
-    GtkWidget *background = NULL;
     mx_database_init();
-    mx_change_user_description("Hello, World!");
-    //mx_add_user_data("No", "Name", "Pseudo", "Hello, World");
     mx_write_user_data_from_bd();
     mx_init_user();
     
@@ -49,19 +24,13 @@ int main(int argc, char *argv[]) {
   
     // Create a new window
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    mx_init_window(&window);
-
+    mx_init_window();
     // Create a main area where all widgets will be shown
-    mx_configure_main_area(&background, &window);
-
-    // Create a header for left area
-    mx_configure_left_header(&left_header, &entry_search);
-
+    mx_configure_main_area();
     // Create a selection area
-    mx_configure_content_selection_area(&content_selection_area);
-
+    mx_configure_content_selection_area();
     // Create a chat enter area
-    mx_configure_message_enter_area(&message_enter_area, &entry_chat);
+    mx_configure_message_enter_area();
 
     // Create a chat list area
     chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -81,10 +50,6 @@ int main(int argc, char *argv[]) {
     gtk_widget_hide(GTK_WIDGET(contacts_list));
     gtk_widget_hide(GTK_WIDGET(settings_menu));
     gtk_widget_hide(GTK_WIDGET(message_enter_area));
-    // Return sensativity for entries
-    gtk_widget_set_sensitive(GTK_WIDGET(entry_search), TRUE);
-    gtk_widget_set_sensitive(GTK_WIDGET(entry_chat), TRUE);
-
 
     gtk_main();
 
