@@ -35,4 +35,5 @@ void mx_configure_main_area(GtkWidget **background, GtkWidget **window) {
     gtk_widget_set_name(GTK_WIDGET(label), "DefaultLabel");
     gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_CENTER);
     gtk_fixed_put(GTK_FIXED(chat_area), label, CUR_WIDTH - CUR_WIDTH / 2.5 - 50, CUR_HEIGHT / 2 - 20);
+    labels_head = mx_create_node(label, 4);
 }

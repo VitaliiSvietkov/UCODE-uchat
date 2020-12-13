@@ -87,11 +87,14 @@ int main(int argc, char *argv[]) {
 
 
     gtk_main();
+
     g_object_unref(G_OBJECT(t_user.avatar));
     free(t_user.FirstName);
     free(t_user.SecondName);
     free(t_user.pseudonim);
     free(t_user.description);
     mx_del_strarr(&text_for_labels);
+    while (labels_head != NULL)
+        mx_pop_front(&labels_head);
     return 0;
 }

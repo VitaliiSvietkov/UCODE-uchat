@@ -244,7 +244,6 @@ void mx_del_strarr(char ***arr);
 void mx_strdel(char **str);
 void mx_get_language_arr(void);
 
-
 GtkWidget *window;                      // a top-level window
 GtkWidget *main_area;                   // an area that contains area with authorization form and chat area
 GtkWidget *authorization_area;
@@ -257,8 +256,22 @@ GtkWidget *active_leftbar_container;
 GtkWidget *message_enter_area;
 
 GtkWidget *blackout;
+
+
 int language;
 char **text_for_labels;
+typedef struct s_labels
+{
+    int index;
+    GtkWidget *data;
+    struct s_labels *next;
+} t_labels;
+t_labels *labels_head;
+
+t_labels *mx_create_node(void *data, int index);
+void mx_pop_front(t_labels **head);
+void mx_push_back(t_labels **list, void *data, int index);
+
 
 
 

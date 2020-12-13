@@ -81,6 +81,11 @@ void language_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         language = 1;
         mx_get_language_arr();
+        t_labels *temp = labels_head;
+        while (temp != NULL) {
+            gtk_label_set_text(GTK_LABEL(temp->data), text_for_labels[temp->index]);
+            temp = temp->next;
+        }
     }
 }
 //=================================================================================
