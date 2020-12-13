@@ -11,7 +11,9 @@ void mx_get_language_arr(void) {
         break;
     case 1:
         language_from_file = mx_file_to_str("client/data/rus.txt");
+        break;
     default:
+        language_from_file = mx_file_to_str("client/data/eng.txt");
         break;
     }
     text_for_labels = mx_strsplit(language_from_file, '\n');

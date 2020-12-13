@@ -148,6 +148,7 @@ GtkWidget *edit_pseudo_eventbox;
 GtkWidget *edit_pseudo_icon;
 
 GtkWidget *change_pseudo_entry;
+void mx_create_edit_user_form(void);
 
 void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event);
 
@@ -179,6 +180,15 @@ void change_description_entry_change_event(GtkWidget *widget);
 void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
+// Language
+//==========================================================================================
+GtkWidget *mx_language_create_box(char *path, char *name);
+void mx_create_language_menu(void);
+void mx_language_eventbox_click(GtkWidget *widget, GdkEventButton *event, char *name);
+void mx_language_close(GtkWidget *widget, GdkEventButton *event);
+//==========================================================================================
+
+
 void mx_init_window(void);
 void mx_init_global_vars(void);
 
@@ -187,7 +197,6 @@ void mx_configure_left_header(void);
 void mx_configure_content_selection_area(void);
 void mx_configure_message_enter_area(void);
 void mx_configure_settings_menu_area(void);
-void mx_create_edit_user_form(void);
 void mx_configure_username_event_screen(void);
 void mx_configure_pseudonim_event_screen(void);
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
@@ -244,6 +253,9 @@ int mx_strlen(const char *s);
 void mx_del_strarr(char ***arr);
 void mx_strdel(char **str);
 void mx_get_language_arr(void);
+bool mx_isupper(int c);
+bool mx_isalpha(int c);
+int mx_strcmp(const char *s1, const char *s2);
 
 GtkWidget *window;                      // a top-level window
 GtkWidget *main_area;                   // an area that contains area with authorization form and chat area
@@ -282,7 +294,6 @@ void mx_database_init(void);
 void mx_add_user_data(char* name, char* surename, char *pseudo, char *description);
 char *mx_strnew(int size);
 char *mx_string_copy(char *str);
-int mx_strcmp(char *s1, char *s2);
 void mx_write_user_data_from_bd(void);
 void mx_edit_name(char* name, char* surname, char* pseudo, char *description);
 

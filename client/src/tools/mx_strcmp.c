@@ -1,22 +1,43 @@
 #include "../../inc/uchat_client.h"
 
-static void error_msg(void) {
-	char *msg = "mx_strcmp error| one of the values is NULL";
-
-	write(2, msg, (int)strlen(msg));
-	exit(1);
-}
-
-// The same as std. strcmp
-int mx_strcmp(char *s1, char *s2) {
-	if (s1 == NULL || s2 == NULL)
-		error_msg();
-    int counter = 0;
-    
-    while (s1[counter] == s2[counter]) {
-        if (s1[counter] == '\0' && s2[counter] == '\0')
-            return 0;
-    	counter++;
+/*int mx_strcmp(const char *s1, const char *s2) {
+    for (int i = 0; i < s1[i]; i++) {
+        if (s1[i] == s2[i]) {
+            continue;
+        } 
+        else {
+            if ((int)s1[i] > (int)s2[i]) {
+                return ((int)s1[i] - (int)s2[i]);
+            }
+            else {
+                return ((int)s1[i] - (int)s2[i]);
+            }
+        }
     }
-    return s1[counter] - s2[counter];
+    return 0;
+}*/
+
+int mx_strcmp(const char *s1, const char *s2) {
+    int len1 = mx_strlen(s1);
+    int len2 = mx_strlen(s2);
+    for (int i = 0; i < len1 && i < len2; i++) {
+        char c1 = s1[i];
+        char c2 = s2[i];
+        if (mx_isupper(c1))
+            c1 += 32;
+        if (mx_isupper(c2))
+            c2 += 32;
+        if (c1 != c2) {
+            if (mx_isalpha(c1) && mx_isalpha(c2)) {
+                return c1 - c2;
+            }
+            return c1 - c2;
+        }
+    }
+    if (len1 < len2)
+        return -1;
+    if (len1 > len2)
+        return 1;
+    return 0;
 }
+
