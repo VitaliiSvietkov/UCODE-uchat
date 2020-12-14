@@ -94,8 +94,10 @@ void next_btn_leave_notify(GtkWidget *widget, GdkEvent *event, gpointer *data) {
 }
 
 void transition_registration_click(GtkWidget *widget) {
-    gtk_widget_hide(GTK_WIDGET(registration_menu_1));
-    gtk_widget_show_all(GTK_WIDGET(registration_menu_2));
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg_confirm))) > 0) {
+        gtk_widget_hide(GTK_WIDGET(registration_menu_1));
+        gtk_widget_show_all(GTK_WIDGET(registration_menu_2));
+    }
 }
 
 void hide_registration_click_2(GtkWidget *widget) {
@@ -104,8 +106,10 @@ void hide_registration_click_2(GtkWidget *widget) {
 }
 
 void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpointer *data) {
-    gtk_widget_hide(GTK_WIDGET(registration_menu_2));
-    gtk_widget_show_all(GTK_WIDGET(data));
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(data))) > 0) {
+        gtk_widget_hide(GTK_WIDGET(registration_menu_2));
+        gtk_widget_show_all(GTK_WIDGET(log_in_menu));
+    }
 }
 
 void password_entry_change(GtkWidget *widget) {

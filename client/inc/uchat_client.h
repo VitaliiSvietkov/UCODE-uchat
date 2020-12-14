@@ -62,6 +62,7 @@ void mx_load_images(void);
 
 // Log in/Registration menu
 //==========================================================================================
+GtkWidget *log_in_menu;
 GtkWidget *authorization_fixed_container;
 GtkWidget *registration_menu_1;
 GtkWidget *registration_menu_2;
@@ -69,6 +70,7 @@ GtkWidget *login;
 GtkWidget *password; 
 GtkWidget *login_reg;
 GtkWidget *password_reg;
+GtkWidget *password_reg_confirm;
 GtkWidget *login_btn;
 GtkWidget *next_btn;
 

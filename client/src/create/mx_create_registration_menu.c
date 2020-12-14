@@ -40,7 +40,7 @@ void mx_create_registration_menu(void) {
 
     // Log in menu
     //=================================================================================
-    GtkWidget *log_in_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    log_in_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(main_authorization_menu), log_in_menu, FALSE, FALSE, 0);
 
     // Inscription Log in
@@ -174,7 +174,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_margin_end(GTK_WIDGET(password_reg_confirm_box), 20);
     gtk_box_pack_start(GTK_BOX(registration_menu_1), password_reg_confirm_box, FALSE, FALSE, 0);
 
-    GtkWidget *password_reg_confirm = gtk_entry_new();
+    password_reg_confirm = gtk_entry_new();
     gtk_entry_set_visibility(GTK_ENTRY(password_reg_confirm), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(password_reg_confirm), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(password_reg_confirm), TRUE);
@@ -289,7 +289,7 @@ void mx_create_registration_menu(void) {
     g_signal_connect(G_OBJECT(finish_btn), "leave-notify-event",
         G_CALLBACK(deactivate_prelight_with_condition_entry), firstname_reg);
     g_signal_connect(G_OBJECT(finish_btn), "button_press_event",
-        G_CALLBACK(authorization_after_registration), log_in_menu);
+        G_CALLBACK(authorization_after_registration), firstname_reg);
 
     g_signal_connect(G_OBJECT(firstname_reg), "changed",
         G_CALLBACK(data_change_registration_event_2), finish_btn);
