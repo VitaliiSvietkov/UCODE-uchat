@@ -59,6 +59,7 @@ t_img_button *t_active_image;
 void mx_load_images(void);
 //==========================================================================================
 
+GtkWidget *mx_create_room(int id);
 
 // Log in/Registration menu
 //==========================================================================================
@@ -212,6 +213,7 @@ gboolean mx_draw_event_authorization_fixed_container(GtkWidget *widget, cairo_t 
 gboolean mx_draw_event_message_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
+gboolean mx_draw_event_round_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
 //==========================================================================================
 
 // Event callback functions

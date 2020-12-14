@@ -35,6 +35,15 @@
     100% {background: linear-gradient(51deg, rgba(31,31,31,0) 74%, rgba(225,225,225,0) 100%);}
 }
 
+#eventbox_room:hover {
+    animation-name: gradient;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+}
+#room_avatar {
+    background: green;
+}
+
 #close_image_box {
     background-image: url("../img/standard/cancel.png");
     background-size: 25px;
