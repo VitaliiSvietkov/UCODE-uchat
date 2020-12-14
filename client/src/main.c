@@ -5,7 +5,7 @@ int main(int argc, char *argv[]) {
     //const char *DBdir = "../data/test.db";
 
     mx_init_global_vars();
-
+    mx_write_language_data_from_bd();
     mx_get_language_arr();
     
     mx_database_init();

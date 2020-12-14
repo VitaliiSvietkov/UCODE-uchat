@@ -12,5 +12,9 @@ void mx_database_init(void) {
         "DESCRIPTION TEXT NOT NULL);";
     exit = sqlite3_exec(db, sql, NULL, 0, &message_error);
     mx_dberror(db, exit, "Error to create USERS table");
+    sql = "CREATE TABLE IF NOT EXISTS LANGUAGE("
+        "LANGUAGE INTEGER);";
+    exit = sqlite3_exec(db, sql, NULL, 0, &message_error);
+    mx_dberror(db, exit, "Error to create USERS table");
     sqlite3_close(db);
 }

@@ -7,7 +7,7 @@ void mx_language_eventbox_click(GtkWidget *widget, GdkEventButton *event, char *
         language = 1;
     else
         language = 2;
-
+    mx_edit_language(language);
     mx_get_language_arr();
     t_labels *temp = labels_head;
     while (temp != NULL) {

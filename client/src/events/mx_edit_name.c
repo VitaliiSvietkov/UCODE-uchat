@@ -7,6 +7,9 @@ void mx_edit_name(char* name, char* surname, char* pseudo, char *description) {
     bzero(sql, 500);
     int st;
     char *errmsg;
+    if (surname == NULL) {
+        surname = " ";
+    }
     sprintf(sql, "SELECT NAME, SURENAME, PSEUDONIM, DESCRIPTION FROM USERS;");
     char *check_name;
     char *check_sname;

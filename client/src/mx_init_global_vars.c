@@ -17,6 +17,6 @@ void mx_init_global_vars(void) {
     NewDescription = NULL;
     NewAvatar = NULL;
 
-    language = 0;
+    //language = 0;
     text_for_labels = NULL;
 }
