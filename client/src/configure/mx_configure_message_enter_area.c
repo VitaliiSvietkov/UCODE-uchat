@@ -21,7 +21,7 @@ void mx_configure_message_enter_area(void) {
     GtkWidget *entry_chat = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(entry_chat), "entry");
     gtk_box_pack_start(GTK_BOX(chat_container), entry_chat, TRUE, TRUE, 8);
-    //gtk_entry_set_placeholder_text(GTK_ENTRY(entry_chat), "Write a message...");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(entry_chat), text_for_labels[14]);
     g_signal_connect(G_OBJECT(entry_chat), "changed", G_CALLBACK(entry_chat_fill_event), NULL);
 
     gtk_box_pack_start(GTK_BOX(chat_container), ban_image.box, FALSE, FALSE, 8);

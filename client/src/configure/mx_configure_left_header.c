@@ -9,6 +9,6 @@ void mx_configure_left_header(void) {
     GtkWidget *entry_search = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(entry_search), "entry");
     gtk_box_pack_start(GTK_BOX(left_header), entry_search, TRUE, TRUE, 0);
-    //gtk_entry_set_placeholder_text(GTK_ENTRY(*entry_search), "Search...");
+    //gtk_entry_set_placeholder_text(GTK_ENTRY(entry_search), text_for_labels[13]);
     gtk_entry_set_max_length(GTK_ENTRY(entry_search), 20);
 }

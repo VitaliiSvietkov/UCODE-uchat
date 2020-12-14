@@ -50,6 +50,7 @@ void mx_configure_pseudonim_event_screen(void) {
     // Additional info block
     //==================================================================================
     GtkWidget *info_label = gtk_label_new(text_for_labels[10]);
+    gtk_label_set_max_width_chars(GTK_LABEL(info_label), 38);
     gtk_widget_set_name(GTK_WIDGET(info_label), "info_label");
     gtk_box_pack_start(GTK_BOX(edit_pseudonim_event_screen), info_label, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(info_label), GTK_ALIGN_START);
