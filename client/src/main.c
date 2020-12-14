@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
 
     // Create a chat list area
     chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_fixed_put(GTK_FIXED(chat_area), chats_list, 0, 95);
+    gtk_fixed_put(GTK_FIXED(chat_area), chats_list, 0, 105);
     gtk_box_pack_start(GTK_BOX(chats_list), mx_create_room(0), FALSE, FALSE, 0);
     active_leftbar_container = NULL;
 
@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
 
     gtk_widget_show_all (window);
     // Hide unneccessary widgets
+    gtk_widget_hide(GTK_WIDGET(chats_list));
     gtk_widget_hide(GTK_WIDGET(tick_image.box));
     gtk_widget_hide(GTK_WIDGET(contacts_list));
     gtk_widget_hide(GTK_WIDGET(settings_menu));

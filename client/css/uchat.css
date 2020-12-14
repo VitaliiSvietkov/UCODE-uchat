@@ -35,6 +35,21 @@
     100% {background: linear-gradient(51deg, rgba(31,31,31,0) 74%, rgba(225,225,225,0) 100%);}
 }
 
+#room_title {
+    color: #e1e1e1;
+    font-size: 18px;
+    font-family: "New Century Schoolbook", Times, serif;
+    font-style: italic;
+}
+#room_text_preview {
+    color: #e1e1e1;
+    font-size: 14px;
+    font-family: "New Century Schoolbook", Times, serif;
+}
+
+#eventbox_room {
+    border-bottom: .8px solid #e1e1e1;
+}
 #eventbox_room:hover {
     animation-name: gradient;
     animation-duration: .5s;
