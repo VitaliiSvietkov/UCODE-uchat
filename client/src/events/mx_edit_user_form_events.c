@@ -22,6 +22,7 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
         char *filename;
         GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
         filename = gtk_file_chooser_get_filename (chooser);
+        mx_write_photo_to_bd(filename);
         g_object_unref(G_OBJECT(NewAvatar));
         NewAvatar = mx_get_pixbuf_with_size(filename, 100, 100);
         free(filename);

@@ -303,4 +303,6 @@ void mx_write_user_data_from_bd(void);
 void mx_edit_name(char* name, char* surname, char* pseudo, char *description);
 void mx_write_language_data_from_bd(void);
 void mx_edit_language(int language);
+void mx_read_photo_from_bd(void);
+void mx_write_photo_to_bd(char *path);
 #endif
