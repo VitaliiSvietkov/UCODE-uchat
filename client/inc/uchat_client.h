@@ -72,6 +72,8 @@ GtkWidget *password;
 GtkWidget *login_reg;
 GtkWidget *password_reg;
 GtkWidget *password_reg_confirm;
+GtkWidget *firstname_reg;
+GtkWidget *secondname_reg;
 GtkWidget *login_btn;
 GtkWidget *next_btn;
 
@@ -104,11 +106,13 @@ void eye_pressed(GtkWidget *widget, GdkEventButton *event, gpointer data);
 //==========================================================================================
 struct
 {
+    int id;
     char *FirstName;
     char *SecondName;
     char *pseudonim;
     char *description;
     GdkPixbuf *avatar;
+    char *password;
 } t_user;
 
 void mx_change_user_name(char fName[], char sName[]);
@@ -296,7 +300,7 @@ void mx_write_to_log(char *msg, int stream);
 sqlite3 *mx_opening_db(void);
 void mx_dberror(sqlite3 *db, int status, char *msg);
 void mx_database_init(void);
-void mx_add_user_data(char* name, char* surename, char *pseudo, char *description);
+void mx_add_user_data(const char *pseudo, const char *password, const char *name, const char *sname);
 char *mx_strnew(int size);
 char *mx_string_copy(char *str);
 void mx_write_user_data_from_bd(void);
