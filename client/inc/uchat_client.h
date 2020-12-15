@@ -304,9 +304,10 @@ void mx_add_user_data(const char *pseudo, const char *password, const char *name
 char *mx_strnew(int size);
 char *mx_string_copy(char *str);
 void mx_write_user_data_from_bd(void);
-void mx_edit_name(char* name, char* surname, char* pseudo, char *description);
+void mx_edit_name(char* name, char* surname, char* pseudo, char *description, int id);
 void mx_write_language_data_from_bd(void);
 void mx_edit_language(int language);
 void mx_read_photo_from_bd(void);
 void mx_write_photo_to_bd(char *path);
+void mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
 #endif

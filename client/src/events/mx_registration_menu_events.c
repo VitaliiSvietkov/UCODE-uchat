@@ -43,6 +43,9 @@ void login_btn_leave_notify(void) {
 
 void authorization(GtkWidget *widget) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
+        const char *login1 = gtk_entry_get_text(GTK_ENTRY(login));
+        const char *password1 = gtk_entry_get_text(GTK_ENTRY(password));
+        mx_write_user_data_from_bd_after_auth(login1, password1);
         gtk_widget_destroy(GTK_WIDGET(authorization_fixed_container));
         gtk_widget_hide(GTK_WIDGET(authorization_area));
         gtk_widget_show_all(GTK_WIDGET(chat_area));
