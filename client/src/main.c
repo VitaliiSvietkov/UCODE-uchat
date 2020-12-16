@@ -11,7 +11,6 @@ int main(int argc, char *argv[]) {
     mx_database_init();
     mx_write_user_data_from_bd();
     mx_init_user();
-    
   
     gtk_init(&argc, &argv);
 

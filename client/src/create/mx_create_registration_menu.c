@@ -239,7 +239,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_name(GTK_WIDGET(registration_inscription_2), "authorization");
 
     // Entry for a first name
-    GtkWidget *firstname_reg = gtk_entry_new();
+    firstname_reg = gtk_entry_new();
     gtk_widget_set_sensitive(GTK_WIDGET(firstname_reg), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(firstname_reg), TRUE);
     gtk_widget_set_name(GTK_WIDGET(firstname_reg), "entry_data");
@@ -249,7 +249,7 @@ void mx_create_registration_menu(void) {
     gtk_box_pack_start(GTK_BOX(registration_menu_2), firstname_reg, FALSE, FALSE, 0);
 
     // Entry for a second name
-    GtkWidget *secondname_reg = gtk_entry_new();
+    secondname_reg = gtk_entry_new();
     gtk_widget_set_sensitive(GTK_WIDGET(secondname_reg), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(secondname_reg), TRUE);
     gtk_widget_set_name(GTK_WIDGET(secondname_reg), "entry_data");

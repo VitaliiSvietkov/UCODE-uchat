@@ -1,6 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-void mx_edit_name(char* name, char* surname, char* pseudo, char *description) {
+void mx_edit_name(char* name, char* surname, char* pseudo, char *description, int id) {
     sqlite3 *db = mx_opening_db();
     sqlite3_stmt *res;
     char sql[500];
@@ -10,7 +10,7 @@ void mx_edit_name(char* name, char* surname, char* pseudo, char *description) {
     if (surname == NULL) {
         surname = " ";
     }
-    sprintf(sql, "SELECT NAME, SURENAME, PSEUDONIM, DESCRIPTION FROM USERS;");
+    sprintf(sql, "SELECT NAME, SURENAME, PSEUDONIM, DESCRIPTION FROM USERS WHERE ID = '%d';", id);
     char *check_name;
     char *check_sname;
     char *check_pseudo;
@@ -25,8 +25,8 @@ void mx_edit_name(char* name, char* surname, char* pseudo, char *description) {
     sprintf(sql, "UPDATE USERS SET NAME = REPLACE(NAME, '%s' ,'%s'), "
     "SURENAME = REPLACE(SURENAME, '%s', '%s'), "
     "PSEUDONIM = REPLACE(PSEUDONIM, '%s','%s'), "
-    "DESCRIPTION = REPLACE(DESCRIPTION, '%s','%s');",
-        check_name, name, check_sname, surname, check_pseudo, pseudo, check_description, description);   
+    "DESCRIPTION = REPLACE(DESCRIPTION, '%s','%s') WHERE ID = '%d' ;",
+    check_name, name, check_sname, surname, check_pseudo, pseudo, check_description, description, id);   
     st = sqlite3_exec(db, sql, NULL, 0, &errmsg);
     mx_dberror(db, st, errmsg); 
 }

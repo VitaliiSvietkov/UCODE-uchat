@@ -43,6 +43,9 @@ void login_btn_leave_notify(void) {
 
 void authorization(GtkWidget *widget) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
+        const char *login1 = gtk_entry_get_text(GTK_ENTRY(login));
+        const char *password1 = gtk_entry_get_text(GTK_ENTRY(password));
+        mx_write_user_data_from_bd_after_auth(login1, password1);
         gtk_widget_destroy(GTK_WIDGET(authorization_fixed_container));
         gtk_widget_hide(GTK_WIDGET(authorization_area));
         gtk_widget_show_all(GTK_WIDGET(chat_area));
@@ -95,6 +98,7 @@ void next_btn_leave_notify(GtkWidget *widget, GdkEvent *event, gpointer *data) {
 
 void transition_registration_click(GtkWidget *widget) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg_confirm))) > 0) {
+        
         gtk_widget_hide(GTK_WIDGET(registration_menu_1));
         gtk_widget_show_all(GTK_WIDGET(registration_menu_2));
     }
@@ -107,6 +111,14 @@ void hide_registration_click_2(GtkWidget *widget) {
 
 void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpointer *data) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(data))) > 0) {
+        const char *login = gtk_entry_get_text(GTK_ENTRY(login_reg));
+        const char *password = gtk_entry_get_text(GTK_ENTRY(password_reg));
+        const char *password2 = gtk_entry_get_text(GTK_ENTRY(password_reg_confirm));
+        const char *name = gtk_entry_get_text(GTK_ENTRY(firstname_reg));
+        const char *sname = gtk_entry_get_text(GTK_ENTRY(secondname_reg));
+        if(mx_strcmp(password, password2) == 0) {
+            mx_add_user_data(login, password, name, sname);
+        }
         gtk_widget_hide(GTK_WIDGET(registration_menu_2));
         gtk_widget_show_all(GTK_WIDGET(log_in_menu));
     }
