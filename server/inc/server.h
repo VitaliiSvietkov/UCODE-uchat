@@ -13,6 +13,7 @@
 #include <netinet/in.h>
 #include <sqlite3.h>
 #include <pthread.h>
+#include <stdint.h>
 #include <stdbool.h>
 #include <sys/types.h>
 #include <sys/stat.h>

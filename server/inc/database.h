@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../../libraries/include/sqlite3.h"
-#include "../../libraries/libmx/inc/libmx.h"
+#include "server.h"
 
 //creation database and stuff
 sqlite3 *mx_opening_db(void);
+
 
 //storing data
 
@@ -19,6 +19,7 @@ sqlite3 *mx_opening_db(void);
 //edits
 
 //delete
+
 
 void mx_add_user_data(char* name, char* surename, char *pseudo, char* description);
 void mx_database_init(void);

@@ -1,5 +1,9 @@
 #include "../../inc/server.h"
-
+/*
+Reading photos from the db.
+In case of incapability of opening,
+Closing db.
+*/
 void mx_read_photo_from_bd(void) {
     
     FILE *fp = fopen("client/img/avatar2.jpg", "wb");

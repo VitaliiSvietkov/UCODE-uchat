@@ -1,4 +1,4 @@
-#include "../../inc/server.h"
+#include "../inc/server.h"
 
 void mx_write_to_log(char *msg, int stream) {
     FILE *fd = 0;
