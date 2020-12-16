@@ -1,6 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-t_labels *mx_create_node(void *data, int index) {
+t_labels *mx_label_create_node(void *data, int index) {
     t_labels *new_node = NULL;
 
     if (!data)

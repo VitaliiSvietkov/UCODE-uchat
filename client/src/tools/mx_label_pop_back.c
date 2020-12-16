@@ -1,6 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-void mx_push_back(t_labels **list, void *data, int index) {
+void mx_label_push_back(t_labels **list, void *data, int index) {
     t_labels *back_list = mx_create_node(data, index);
     t_labels *temp = NULL;
     if (list == NULL || *list == NULL)
