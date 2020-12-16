@@ -1,4 +1,4 @@
-#include "../inc/server.h"
+#include "../../inc/server.h"
 
 static void deamon_successfull_output(pid_t pid) {
     write(1, "uchat_server started successfully\n", 34);

@@ -1,4 +1,4 @@
-#include "../inc/server.h"
+#include "../../inc/server.h"
 
 int mx_socket_list_remove(connected_client_list_t *head, int sock_fd) {
     if (head == NULL) return -1;

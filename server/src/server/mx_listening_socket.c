@@ -1,4 +1,4 @@
-#include "../inc/server.h"
+#include "../../inc/server.h"
 
 static struct sockaddr_in serv_address_description(int port) {
     struct sockaddr_in serv_addr;

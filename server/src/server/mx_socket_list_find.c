@@ -1,4 +1,4 @@
-#include "../inc/server.h"
+#include "../../inc/server.h"
 
 connected_client_list_t *mx_socket_list_find(connected_client_list_t *head, int sock_fd) {
     if (head == NULL) return NULL;

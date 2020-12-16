@@ -1,4 +1,4 @@
-#include "../inc/server.h"
+#include "../../inc/server.h"
 
 int mx_socket_list_free(connected_client_list_t *head) {
     if (head == NULL) return -1;

@@ -1,4 +1,4 @@
-#include "../inc/server.h"
+#include "../../inc/server.h"
 
 static server_context_t ctx;
 static pthread_mutex_t ctx_mutex = PTHREAD_MUTEX_INITIALIZER;

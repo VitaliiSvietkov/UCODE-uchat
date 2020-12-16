@@ -1,4 +1,4 @@
-#include "../inc/server.h"
+#include "../../inc/server.h"
 
 int mx_socket_list_add(connected_client_list_t *head, int new_sock_fd) {
     connected_client_list_t *p    = NULL;

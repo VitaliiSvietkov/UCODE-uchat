@@ -1,4 +1,4 @@
-#include "../inc/server.h"
+#include "../../inc/server.h"
 
 void mx_check_port(int port) {
     if (port == 0) {

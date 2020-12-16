@@ -1,4 +1,4 @@
-#include "../inc/server.h"
+#include "../../inc/server.h"
 
 struct timeval wait_time(int sec, int msec) {
     struct timeval tv;
