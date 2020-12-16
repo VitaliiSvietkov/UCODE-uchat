@@ -10,6 +10,8 @@
 #include <math.h>
 #include <sqlite3.h>
 
+#include "../../server/inc/database.h"
+#include "../../server/inc/server.h"
 #include "../../libraries/libmx/inc/libmx.h"
 
 #include <sys/types.h>
@@ -274,9 +276,9 @@ typedef struct s_labels
 } t_labels;
 t_labels *labels_head;
 
-t_labels *mx_create_node(void *data, int index);
-void mx_pop_front(t_labels **head);
-void mx_push_back(t_labels **list, void *data, int index);
+t_labels *mx_label_create_node(void *data, int index);
+void mx_label_pop_front(t_labels **head);
+void mx_label_push_back(t_labels **list, void *data, int index);
 
 //int mx_create_db(const char* s); 
 //int mx_create_table(const char* s);
