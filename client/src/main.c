@@ -61,6 +61,6 @@ int main(int argc, char *argv[]) {
     free(t_user.description);
     mx_del_strarr(&text_for_labels);
     while (labels_head != NULL)
-        mx_pop_front(&labels_head);
+        mx_label_pop_front(&labels_head);
     return 0;
 }

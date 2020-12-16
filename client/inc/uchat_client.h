@@ -10,8 +10,8 @@
 #include <math.h>
 #include <sqlite3.h>
 
-#include "../../server/inc/database.h"
-#include "../../server/inc/server.h"
+//#include "../../server/inc/database.h"
+//#include "../../server/inc/server.h"
 #include "../../libraries/libmx/inc/libmx.h"
 
 #include <sys/types.h>
@@ -290,12 +290,8 @@ void mx_write_to_log(char *msg, int stream);
 sqlite3 *mx_opening_db(void);
 void mx_dberror(sqlite3 *db, int status, char *msg);
 void mx_database_init(void);
-<<<<<<< HEAD
 void mx_add_user_data(const char *pseudo, const char *password, const char *name, const char *sname);
-char *mx_strnew(int size);
-=======
-void mx_add_user_data(char* name, char* surename, char *pseudo, char *description);
->>>>>>> 123
+//char *mx_strnew(int size);
 char *mx_string_copy(char *str);
 void mx_write_user_data_from_bd(void);
 void mx_edit_name(char* name, char* surname, char* pseudo, char *description, int id);
