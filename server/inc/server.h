@@ -19,7 +19,7 @@
 #include <sys/stat.h>
 #include <signal.h> 
 #include "../../libraries/include/cJSON.h"
-#include "../../libraries/libamx/inc/libmx.h"
+#include "../../libraries/libmx/inc/libmx.h"
 
 //server
 typedef struct socket_list {
