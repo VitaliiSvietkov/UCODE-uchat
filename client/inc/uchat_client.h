@@ -4,8 +4,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <gtk/gtk.h>
 #include <sys/ioctl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <locale.h>
 #include <stdio.h>
 #include <math.h>
 #include <sqlite3.h>
@@ -13,11 +16,7 @@
 //#include "../../server/inc/database.h"
 //#include "../../server/inc/server.h"
 #include "../../libraries/libmx/inc/libmx.h"
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <locale.h>
+#include "tools.h"
 
 // Window size
 //==========================================================================================
@@ -62,8 +61,6 @@ t_img_button *t_active_image;
 
 void mx_load_images(void);
 //==========================================================================================
-
-GtkWidget *mx_create_room(int id);
 
 // Log in/Registration menu
 //==========================================================================================
@@ -149,7 +146,6 @@ GdkPixbuf *NewAvatar;
 GtkWidget *edit_username_event_screen;
 GtkWidget *edit_username_eventbox;
 GtkWidget *edit_username_icon;
-
 GtkWidget *change_fname_entry;
 GtkWidget *change_sname_entry;
 
@@ -157,8 +153,8 @@ GtkWidget *change_sname_entry;
 GtkWidget *edit_pseudonim_event_screen;
 GtkWidget *edit_pseudo_eventbox;
 GtkWidget *edit_pseudo_icon;
-
 GtkWidget *change_pseudo_entry;
+
 void mx_create_edit_user_form(void);
 
 void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event);
@@ -206,15 +202,13 @@ void mx_init_global_vars(void);
 void mx_configure_main_area(void);
 void mx_configure_left_header(void);
 void mx_configure_content_selection_area(void);
-void mx_configure_message_enter_area(void);
+void mx_create_message_enter_area(void);
 void mx_configure_settings_menu_area(void);
 void mx_configure_username_event_screen(void);
 void mx_configure_pseudonim_event_screen(void);
-GdkPixbuf *mx_create_pixbuf(const gchar *filename);
-GdkPixbuf *mx_get_pixbuf_with_size(char *path, int w, int h);
 void mx_tooltip(char *str, void *data);
 
-// All draw functions are in "mx_draw_functions.c"
+// Draw functions
 //==========================================================================================
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_authorization_fixed_container(GtkWidget *widget, cairo_t *cr);
@@ -255,8 +249,6 @@ void blackout_click(GtkWidget *widget, GdkEventButton *event);
 void blackout_click_language(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
-void mx_get_language_arr(void);
-
 GtkWidget *window;                      // a top-level window
 GtkWidget *main_area;                   // an area that contains area with authorization form and chat area
 GtkWidget *authorization_area;
@@ -266,38 +258,48 @@ GtkWidget *chats_list;
 GtkWidget *contacts_list;
 GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
+
+GtkWidget *right_container;
 GtkWidget *message_enter_area;
 
 GtkWidget *blackout;
 
 int language;
 char **text_for_labels;
-typedef struct s_labels
-{
-    int index;
-    GtkWidget *data;
-    struct s_labels *next;
-} t_labels;
-t_labels *labels_head;
 
-t_labels *mx_label_create_node(void *data, int index);
-void mx_label_pop_front(t_labels **head);
-void mx_label_push_back(t_labels **list, void *data, int index);
+// Chat room
+//==========================================================================================
+GtkWidget *mx_create_room(int id);
+void room_click(GtkWidget *widget, GdkEventButton *event);
+void room_close(GtkWidget *widget, GdkEventKey *event);
+void mx_create_chat_area(void);
+//==========================================================================================
 
+
+
+
+
+// DATA BASE
+//==========================================================================================
 //int mx_create_db(const char* s); 
 //int mx_create_table(const char* s);
 void mx_write_to_log(char *msg, int stream);
+
 sqlite3 *mx_opening_db(void);
 void mx_dberror(sqlite3 *db, int status, char *msg);
 void mx_database_init(void);
 void mx_add_user_data(const char *pseudo, const char *password, const char *name, const char *sname);
-//char *mx_strnew(int size);
+void mx_read_photo_from_bd(void);
+void mx_write_language_data_from_bd(void);
+void mx_write_photo_to_bd(char *path);
+
+
+
 char *mx_string_copy(char *str);
 void mx_write_user_data_from_bd(void);
 void mx_edit_name(char* name, char* surname, char* pseudo, char *description, int id);
-void mx_write_language_data_from_bd(void);
 void mx_edit_language(int language);
-void mx_read_photo_from_bd(void);
-void mx_write_photo_to_bd(char *path);
 void mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
+//==========================================================================================
+
 #endif

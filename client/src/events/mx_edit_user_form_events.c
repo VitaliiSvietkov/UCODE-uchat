@@ -223,6 +223,7 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_queue_draw(GTK_WIDGET(settings_menu));
 
         gtk_widget_destroy(GTK_WIDGET(blackout));
+        blackout = NULL;
     }
 }
 //============================================================================================

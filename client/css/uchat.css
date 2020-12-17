@@ -65,7 +65,7 @@
 }
 #close_image_box:hover {
     background-image: url("../img/standard/cancel-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 
 #return_image_box {
@@ -74,7 +74,7 @@
 }
 #return_image_box:hover {
     background-image: url("../img/standard/left-arrow-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 
 
@@ -87,7 +87,7 @@
 }
 #add_image:hover {
     background-image: url("../img/standard/add-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 #add_image:checked {
     background-image: url("../img/standard/add-hovered.png");
@@ -107,7 +107,7 @@
 }
 #tick_image:hover {
     background-image: url("../img/standard/tick-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 
 #more_image {
@@ -117,7 +117,7 @@
 }
 #more_image:hover {
     background-image: url("../img/standard/more-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 #more_image:checked {
     background-image: url("../img/standard/more-hovered.png");
@@ -130,7 +130,7 @@
 }
 #edit_user_image:hover {
     background-image: url("../img/standard/edit-user-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 
 #change_account_image {
@@ -140,7 +140,7 @@
 }
 #change_account_image:hover {
     background-image: url("../img/standard/identification-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 
 #chat_settings_image {
@@ -150,7 +150,7 @@
 }
 #chat_settings_image:hover {
     background-image: url("../img/standard/chat-settings-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 
 #language_image {
@@ -160,7 +160,7 @@
 }
 #language_image:hover {
     background-image: url("../img/standard/book-hovered.png");
-    transition: all 0.5s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.5s ;
 }
 
 #messages_image {
