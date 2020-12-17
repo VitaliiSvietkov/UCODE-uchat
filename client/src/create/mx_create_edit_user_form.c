@@ -208,4 +208,8 @@ void mx_create_edit_user_form(void) {
     g_signal_connect(G_OBJECT(commit_btn), "button_press_event",
         G_CALLBACK(commit_edit_user_click_event), NULL);
     //==================================================================================
+
+    gtk_widget_show_all(GTK_WIDGET(blackout));
+    gtk_widget_hide(GTK_WIDGET(edit_username_event_screen));
+    gtk_widget_hide(GTK_WIDGET(edit_pseudonim_event_screen));
 }

@@ -12,6 +12,8 @@ void messages_click(GtkWidget *widget, GdkEventButton *event) {
         t_active_image = &messages_image;
         t_active_image->active = true;
 
+        labels_head->index = 4;
+        gtk_label_set_text(GTK_LABEL(labels_head->data), text_for_labels[labels_head->index]);
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
         gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
         if (active_leftbar_container != NULL)
@@ -34,6 +36,8 @@ void contacts_click(GtkWidget *widget, GdkEventButton *event) {
         t_active_image = &contacts_image;
         t_active_image->active = true;
 
+        labels_head->index = 29;
+        gtk_label_set_text(GTK_LABEL(labels_head->data), text_for_labels[labels_head->index]);
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
         gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
         if (active_leftbar_container != NULL)
@@ -56,6 +60,7 @@ void settings_click(GtkWidget *widget, GdkEventButton *event) {
         t_active_image = &settings_image;
         t_active_image->active = true;
 
+        gtk_label_set_text(GTK_LABEL(labels_head->data), NULL);
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
         gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
         if (active_leftbar_container != NULL)

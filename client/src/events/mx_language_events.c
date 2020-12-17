@@ -9,7 +9,7 @@ void mx_language_eventbox_click(GtkWidget *widget, GdkEventButton *event, char *
         language = 2;
     mx_edit_language(language);
     mx_get_language_arr();
-    t_labels *temp = labels_head;
+    t_labels *temp = labels_head->next;
     while (temp != NULL) {
         gtk_label_set_text(GTK_LABEL(temp->data), text_for_labels[temp->index]);
         temp = temp->next;
