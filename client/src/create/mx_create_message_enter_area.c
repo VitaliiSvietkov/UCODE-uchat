@@ -35,7 +35,7 @@ void mx_create_message_enter_area(void) {
 
     ban_image.box = gtk_event_box_new();
     gtk_box_pack_start(GTK_BOX(chat_container), ban_image.box, FALSE, FALSE, 8);
-    mx_tooltip("You cannot send an empty message!", ban_image.box);
+    mx_tooltip(text_for_labels[30], ban_image.box);
     gtk_widget_set_size_request(GTK_WIDGET(ban_image.box), 33, 33);
     gtk_widget_set_name(GTK_WIDGET(ban_image.box), "ban_image");
 

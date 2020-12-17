@@ -294,4 +294,9 @@ void mx_create_registration_menu(void) {
     g_signal_connect(G_OBJECT(firstname_reg), "changed",
         G_CALLBACK(data_change_registration_event_2), finish_btn);
     //=================================================================================
+
+    gtk_widget_show_all(GTK_WIDGET(authorization_area));
+    gtk_widget_hide(GTK_WIDGET(chat_area));
+    gtk_widget_hide(GTK_WIDGET(registration_menu_1));
+    gtk_widget_hide(GTK_WIDGET(registration_menu_2));
 }
