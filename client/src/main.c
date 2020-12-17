@@ -28,8 +28,6 @@ int main(int argc, char *argv[]) {
     mx_configure_main_area();
     // Create a selection area
     mx_configure_content_selection_area();
-    // Create a chat enter area
-    mx_configure_message_enter_area();
 
     // Create a chat list area
     chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -47,10 +45,8 @@ int main(int argc, char *argv[]) {
     gtk_widget_show_all (window);
     // Hide unneccessary widgets
     gtk_widget_hide(GTK_WIDGET(chats_list));
-    gtk_widget_hide(GTK_WIDGET(tick_image.box));
     gtk_widget_hide(GTK_WIDGET(contacts_list));
     gtk_widget_hide(GTK_WIDGET(settings_menu));
-    gtk_widget_hide(GTK_WIDGET(message_enter_area));
 
     gtk_main();
 

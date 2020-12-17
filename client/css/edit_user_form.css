@@ -3,8 +3,8 @@
     background: #1f1f1f;
     box-shadow: 0px 0px 5px 2px #e1e1e1;
     border-radius: 15px;
-    animation-name: fade;
-    animation-duration: .15s;
+    /*animation-name: fade;
+    animation-duration: .15s;*/
 }
 
 #edit_eventbox {
@@ -67,7 +67,7 @@
 #edit_button:hover {
     background: #e1e1e1;
     color: #1f1f1f;
-    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.2s;
 }
 /* ====================================================== */
 
@@ -105,7 +105,7 @@
 #pen {
     background-size: 20px;
     background-repeat: no-repeat;
-    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+    transition: all 0.2s ;
 }
 #pen:hover {
     background-image: url("../img/standard/pen-standard.png");

@@ -4,7 +4,6 @@ all: install
 
 install:
 	@make -C libraries/libmx
-
 	@make -C client/
 
 uninstall:

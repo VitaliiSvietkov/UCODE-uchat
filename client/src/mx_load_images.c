@@ -45,28 +45,4 @@ void mx_load_images(void) {
 
 
     t_active_image = NULL;
-    
-    add_image.box = gtk_event_box_new();
-    add_image.active = false;
-    gtk_widget_set_size_request(GTK_WIDGET(add_image.box), 33, 33);
-    gtk_widget_set_name(GTK_WIDGET(add_image.box), "add_image");
-    g_signal_connect(G_OBJECT(add_image.box), "button_press_event",
-        G_CALLBACK(image_click), &add_image);
-
-    ban_image.box = gtk_event_box_new();
-    mx_tooltip("You cannot send an empty message!", ban_image.box);
-    gtk_widget_set_size_request(GTK_WIDGET(ban_image.box), 33, 33);
-    gtk_widget_set_name(GTK_WIDGET(ban_image.box), "ban_image");
-
-    tick_image.box = gtk_event_box_new();
-    tick_image.active = false;
-    gtk_widget_set_size_request(GTK_WIDGET(tick_image.box), 33, 33);
-    gtk_widget_set_name(GTK_WIDGET(tick_image.box), "tick_image");
-
-    more_image.box = gtk_event_box_new();
-    more_image.active = false;
-    gtk_widget_set_size_request(GTK_WIDGET(more_image.box), 33, 33);
-    gtk_widget_set_name(GTK_WIDGET(more_image.box), "more_image");
-    g_signal_connect(G_OBJECT(more_image.box), "button_press_event",
-        G_CALLBACK(image_click), &more_image);
 }

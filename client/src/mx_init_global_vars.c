@@ -7,6 +7,7 @@ void mx_init_global_vars(void) {
     authorization_area = NULL;
     chat_area = NULL;
     message_enter_area = NULL;
+    right_container = NULL;
     chats_list = NULL;
     settings_menu = NULL;
 

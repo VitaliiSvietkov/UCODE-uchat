@@ -3,7 +3,6 @@
 void mx_write_language_data_from_bd(void) {
     sqlite3 *db = mx_opening_db();
     sqlite3_stmt *res;
-    int language;
     char sql[500];
     bzero(sql, 500);
     int st;

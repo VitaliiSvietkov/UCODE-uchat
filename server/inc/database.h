@@ -2,9 +2,6 @@
 
 #include <sqlite3.h>
 
-
-
-#include "../../libraries/include/cJSON.h"
 #include "../../libraries/include/sqlite3.h"
 
 //creation database and stuff

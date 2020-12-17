@@ -1,6 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-void mx_configure_message_enter_area(void) {
+void mx_create_message_enter_area(void) {
     // "message_enter_area" is a main container which defines background
     message_enter_area = gtk_fixed_new();
     gtk_widget_set_size_request(GTK_WIDGET(message_enter_area), CUR_WIDTH - CUR_WIDTH / 3 - 50, 50);
@@ -15,8 +15,17 @@ void mx_configure_message_enter_area(void) {
         G_CALLBACK(mx_draw_event_message_enter_area), NULL);
     
 
-    //gtk_box_pack_start(GTK_BOX(chat_container), t_img_event_box.add_box, FALSE, FALSE, 8);
+    add_image.box = gtk_event_box_new();
     gtk_box_pack_start(GTK_BOX(chat_container), add_image.box, FALSE, FALSE, 8);
+    add_image.active = false;
+    gtk_widget_set_size_request(GTK_WIDGET(add_image.box), 33, 33);
+    gtk_widget_set_name(GTK_WIDGET(add_image.box), "add_image");
+    g_signal_connect(G_OBJECT(add_image.box), "button_press_event",
+        G_CALLBACK(image_click), &add_image);
+    g_signal_connect(G_OBJECT(add_image.box), "enter-notify-event",
+        G_CALLBACK(activate_prelight), &add_image);
+    g_signal_connect(G_OBJECT(add_image.box), "leave-notify-event",
+        G_CALLBACK(deactivate_prelight), NULL);
 
     GtkWidget *entry_chat = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(entry_chat), "entry");
@@ -24,24 +33,34 @@ void mx_configure_message_enter_area(void) {
     gtk_entry_set_placeholder_text(GTK_ENTRY(entry_chat), text_for_labels[14]);
     g_signal_connect(G_OBJECT(entry_chat), "changed", G_CALLBACK(entry_chat_fill_event), NULL);
 
+    ban_image.box = gtk_event_box_new();
     gtk_box_pack_start(GTK_BOX(chat_container), ban_image.box, FALSE, FALSE, 8);
+    mx_tooltip("You cannot send an empty message!", ban_image.box);
+    gtk_widget_set_size_request(GTK_WIDGET(ban_image.box), 33, 33);
+    gtk_widget_set_name(GTK_WIDGET(ban_image.box), "ban_image");
+
+    tick_image.box = gtk_event_box_new();
     gtk_box_pack_start(GTK_BOX(chat_container), tick_image.box, FALSE, FALSE, 8);
-    gtk_box_pack_start(GTK_BOX(chat_container), more_image.box, FALSE, FALSE, 8);
-
-    g_signal_connect(G_OBJECT(add_image.box), "enter-notify-event",
-        G_CALLBACK(activate_prelight), &add_image);
-    g_signal_connect(G_OBJECT(add_image.box), "leave-notify-event",
-        G_CALLBACK(deactivate_prelight), NULL);
-    /*g_signal_connect(G_OBJECT(t_img_event_box.add_box), "button_press_event",
-        G_CALLBACK(add_click), NULL);*/
-
+    tick_image.active = false;
+    gtk_widget_set_size_request(GTK_WIDGET(tick_image.box), 33, 33);
+    gtk_widget_set_name(GTK_WIDGET(tick_image.box), "tick_image");
     g_signal_connect(G_OBJECT(tick_image.box), "enter-notify-event",
         G_CALLBACK(activate_prelight), &tick_image);
     g_signal_connect(G_OBJECT(tick_image.box), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), NULL);
 
+    more_image.box = gtk_event_box_new();
+    gtk_box_pack_start(GTK_BOX(chat_container), more_image.box, FALSE, FALSE, 8);
+    more_image.active = false;
+    gtk_widget_set_size_request(GTK_WIDGET(more_image.box), 33, 33);
+    gtk_widget_set_name(GTK_WIDGET(more_image.box), "more_image");
+    g_signal_connect(G_OBJECT(more_image.box), "button_press_event",
+        G_CALLBACK(image_click), &more_image);
     g_signal_connect(G_OBJECT(more_image.box), "enter-notify-event",
         G_CALLBACK(activate_prelight), &more_image);
     g_signal_connect(G_OBJECT(more_image.box), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), NULL);
+
+    gtk_widget_show_all(GTK_WIDGET(message_enter_area));
+    gtk_widget_hide(GTK_WIDGET(tick_image.box));
 }

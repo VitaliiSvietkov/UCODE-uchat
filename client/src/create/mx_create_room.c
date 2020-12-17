@@ -7,6 +7,8 @@ GtkWidget *mx_create_room(int id) {
         G_CALLBACK(activate_prelight), NULL);
     g_signal_connect(G_OBJECT(eventbox), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), NULL);
+    g_signal_connect(G_OBJECT(eventbox), "button_press_event",
+        G_CALLBACK(room_click), NULL);
 
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(box), L_FIELD_WIDTH, 55);
