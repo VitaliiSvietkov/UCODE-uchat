@@ -1,7 +1,7 @@
 #include "../../inc/uchat_client.h"
 
 void mx_create_registration_menu(void) {
-     
+    GtkWidget *fail_inscription = gtk_label_new(text_for_labels[31]);;
     // Background
     //=================================================================================
     authorization_fixed_container = gtk_fixed_new();
@@ -117,13 +117,14 @@ void mx_create_registration_menu(void) {
     g_signal_connect(G_OBJECT(registration_link), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), registration_label);
     g_signal_connect(G_OBJECT(registration_link), "button_press_event",
-        G_CALLBACK(hide_authorization_click), log_in_menu);
+        G_CALLBACK(hide_authorization_click), fail_inscription);
     //=================================================================================
 
     // Registration menu page 1
     //=================================================================================
     registration_menu_1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(main_authorization_menu), registration_menu_1, FALSE, FALSE, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(registration_menu_1), 400, 400);
 
     // Inscription Registration
     GtkWidget *registration_inscription = gtk_label_new(text_for_labels[21]);
@@ -193,9 +194,15 @@ void mx_create_registration_menu(void) {
     g_signal_connect(G_OBJECT(eye_reg_confirm_eventbox), "button_press_event",
         G_CALLBACK(eye_pressed), password_reg_confirm);
 
+    // Inscription fail
+    gtk_box_pack_start(GTK_BOX(registration_menu_1), fail_inscription, FALSE, FALSE, 0);
+    gtk_widget_set_name(GTK_WIDGET(fail_inscription), "error");
+    
+
     // Back button
     GtkWidget *registration_buttons_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_pack_start(GTK_BOX(registration_menu_1), registration_buttons_box, FALSE, FALSE, 60);
+    gtk_box_pack_start(GTK_BOX(registration_menu_1), registration_buttons_box, TRUE, FALSE, 0);
+    gtk_widget_set_valign(GTK_WIDGET(registration_buttons_box), GTK_ALIGN_END);
     GtkWidget *back_btn = gtk_event_box_new();
     GtkWidget *back_btn_label = gtk_label_new(text_for_labels[15]);
     gtk_container_add(GTK_CONTAINER(back_btn), back_btn_label);
@@ -208,7 +215,7 @@ void mx_create_registration_menu(void) {
     g_signal_connect(G_OBJECT(back_btn), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), NULL);
     g_signal_connect(G_OBJECT(back_btn), "button_press_event",
-        G_CALLBACK(hide_registration_click), log_in_menu);
+        G_CALLBACK(hide_registration_click), NULL);
 
     // Next button
     next_btn = gtk_event_box_new();
@@ -224,7 +231,7 @@ void mx_create_registration_menu(void) {
     g_signal_connect(G_OBJECT(next_btn), "leave-notify-event",
         G_CALLBACK(next_btn_leave_notify), password_reg_confirm);
     g_signal_connect(G_OBJECT(next_btn), "button_press_event",
-        G_CALLBACK(transition_registration_click), NULL);
+        G_CALLBACK(transition_registration_click), fail_inscription);
     //=================================================================================
     
 
@@ -232,6 +239,7 @@ void mx_create_registration_menu(void) {
     //=================================================================================
     registration_menu_2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(main_authorization_menu), registration_menu_2, FALSE, FALSE, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(registration_menu_2), 420, 400);
 
     // Inscription Registration
     GtkWidget *registration_inscription_2 = gtk_label_new(text_for_labels[21]);
@@ -273,7 +281,7 @@ void mx_create_registration_menu(void) {
     g_signal_connect(G_OBJECT(back_btn_2), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), NULL);
     g_signal_connect(G_OBJECT(back_btn_2), "button_press_event",
-        G_CALLBACK(hide_registration_click_2), NULL);
+        G_CALLBACK(hide_registration_click_2), fail_inscription);
 
     // Finish button
     GtkWidget *finish_btn = gtk_event_box_new();
@@ -298,5 +306,6 @@ void mx_create_registration_menu(void) {
     gtk_widget_show_all(GTK_WIDGET(authorization_area));
     gtk_widget_hide(GTK_WIDGET(chat_area));
     gtk_widget_hide(GTK_WIDGET(registration_menu_1));
+    gtk_widget_hide(GTK_WIDGET(fail_inscription));
     gtk_widget_hide(GTK_WIDGET(registration_menu_2));
 }
