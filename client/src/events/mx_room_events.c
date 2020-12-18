@@ -10,7 +10,7 @@ void room_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_widget_destroy(GTK_WIDGET(right_container));
             right_container = NULL;
         }
-        mx_create_chat_area();
+        mx_create_messages_area();
         mx_create_message_enter_area();
     }
 }

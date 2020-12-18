@@ -6,7 +6,7 @@ sqlite3 *mx_opening_db(void) {
     if (status != SQLITE_OK) {
         mx_write_to_log("Can`t open database.\n", 2);
         sqlite3_close(db); 
-        exit(1);
+        //exit(1);
     }
     return db;
 }

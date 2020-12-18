@@ -9,6 +9,6 @@ void mx_dberror(sqlite3 *db, int status, char *msg) {
         mx_write_to_log(msg, 2);
         sqlite3_free(msg);
         sqlite3_close(db); 
-        exit(1);
+        //exit(1);
     }
 }

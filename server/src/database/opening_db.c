@@ -11,5 +11,5 @@ sqlite3 *mx_opening_db(void) {
         mx_write_to_log("Can`t open database.\n", 2);
             sqlite3_errmsg(db);
     sqlite3_close(db); 
-    exit(1);
+    //exit(1);
 }

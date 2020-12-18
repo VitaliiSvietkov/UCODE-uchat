@@ -4,7 +4,7 @@ static void error_msg(void) {
 	char *msg = "mx_string_copy error| one of the values is NULL";
 
 	write(2, msg, (int)strlen(msg));
-	exit(1);
+	//exit(1);
 }
 
 // Copies str into new allocated memmory.

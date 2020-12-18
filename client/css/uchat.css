@@ -9,6 +9,12 @@
     font-size: 14px;
 }
 
+#usr_message {
+    background: grey;
+    color: #e1e1e1;    
+    border-radius: 10px;
+}
+
 /*          Entry Fields          */
 /* ============================== */
 #entry {
@@ -48,9 +54,6 @@
     font-family: "New Century Schoolbook", Times, serif;
 }
 
-#eventbox_room {
-    border-bottom: .8px solid #e1e1e1;
-}
 #eventbox_room:hover {
     animation-name: gradient;
     animation-duration: .5s;
