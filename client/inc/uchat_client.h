@@ -254,6 +254,7 @@ GtkWidget *main_area;                   // an area that contains area with autho
 GtkWidget *authorization_area;
 GtkWidget *chat_area;
 
+GtkWidget *entry_search;
 GtkWidget *chats_list;                  
 GtkWidget *contacts_list;
 GtkWidget *settings_menu;

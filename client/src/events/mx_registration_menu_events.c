@@ -151,6 +151,8 @@ void authorization_close(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_destroy(authorization_fixed_container);
         gtk_widget_hide(GTK_WIDGET(authorization_area));
         gtk_widget_show_all(GTK_WIDGET(chat_area));
+        gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
+        gtk_widget_grab_focus(GTK_WIDGET(chat_area));
         gtk_widget_hide(GTK_WIDGET(chats_list));
         gtk_widget_hide(GTK_WIDGET(contacts_list));
     }
