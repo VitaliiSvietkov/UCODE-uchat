@@ -288,7 +288,11 @@ GtkWidget *mx_create_room(int id);
 void room_click(GtkWidget *widget, GdkEventButton *event);
 void room_close(GtkWidget *widget, GdkEventKey *event);
 void mx_create_messages_area(void);
+void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
+void mx_attach_send_message_on_enter(GtkWidget *widget, char *filename);
+void mx_create_attach_form(GtkWidget *entry, char *filename);
 void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
+void mx_send_message_on_enter(GtkWidget *widget);
 void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);
 //==========================================================================================
 

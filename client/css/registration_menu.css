@@ -2,6 +2,12 @@
     background-color: #1f1f1f;
  }
 
+ #error {
+    font-size: 16px;
+    color: red;
+    margin-top: 20px;
+}
+
  #registration_menu_form {
     padding: 5px;
     background: #1f1f1f;

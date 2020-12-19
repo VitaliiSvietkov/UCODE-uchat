@@ -24,6 +24,7 @@ int main(int argc, char *argv[]) {
     // Create a new window
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     mx_init_window();
+
     // Create a main area where all widgets will be shown
     mx_configure_main_area();
     // Create a selection area
@@ -48,7 +49,10 @@ int main(int argc, char *argv[]) {
     gtk_widget_hide(GTK_WIDGET(contacts_list));
     gtk_widget_hide(GTK_WIDGET(settings_menu));*/
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     gtk_main();
 
     g_object_unref(G_OBJECT(t_user.avatar));

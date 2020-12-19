@@ -45,6 +45,7 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 5) {
         const char *login1 = gtk_entry_get_text(GTK_ENTRY(login));
         const char *password1 = gtk_entry_get_text(GTK_ENTRY(password));
+<<<<<<< HEAD
         if(mx_write_user_data_from_bd_after_auth(login1, password1) == 1) {
             gtk_widget_show(GTK_WIDGET(data)); 
         }
@@ -58,6 +59,13 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
             gtk_widget_hide(GTK_WIDGET(contacts_list));
             gtk_widget_hide(GTK_WIDGET(settings_menu));
         }
+=======
+        mx_write_user_data_from_bd_after_auth(login1, password1);
+        gtk_widget_destroy(GTK_WIDGET(authorization_fixed_container));
+        gtk_widget_hide(GTK_WIDGET(authorization_area));
+        gtk_widget_show_all(GTK_WIDGET(chat_area));
+        gtk_widget_hide(GTK_WIDGET(chats_list));
+>>>>>>> main
     }
 }
 
@@ -71,11 +79,17 @@ void hide_registration_click(GtkWidget *widget, GdkEvent *event, gpointer *data)
     gtk_entry_set_text(GTK_ENTRY(login_reg), "");
     gtk_entry_set_text(GTK_ENTRY(password_reg), "");
     gtk_entry_set_text(GTK_ENTRY(password_reg_confirm), "");
+<<<<<<< HEAD
     gtk_entry_set_text(GTK_ENTRY(login), "");
     gtk_entry_set_text(GTK_ENTRY(password), "");
     gtk_widget_hide(GTK_WIDGET(registration_menu_1));
     gtk_widget_show_all(GTK_WIDGET(log_in_menu));
     gtk_widget_hide(GTK_WIDGET(data)); 
+=======
+    gtk_widget_hide(GTK_WIDGET(registration_menu_1));
+    gtk_widget_show_all(GTK_WIDGET(log_in_menu));
+     
+>>>>>>> main
 }
 
 // Events which change opacity of "next" buttons

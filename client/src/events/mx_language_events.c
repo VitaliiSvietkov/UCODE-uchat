@@ -16,10 +16,12 @@ void mx_language_eventbox_click(GtkWidget *widget, GdkEventButton *event, char *
         temp = temp->next;
     }
     gtk_widget_destroy(GTK_WIDGET(blackout));
+    blackout = NULL;
 }
 
 void mx_language_close(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         gtk_widget_destroy(GTK_WIDGET(blackout));
+        blackout = NULL;
     }
 }

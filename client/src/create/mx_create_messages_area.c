@@ -16,6 +16,7 @@ void mx_create_messages_area(void) {
     test->usr_id = t_user.id;
     mx_add_message(messages_box, test);
     free(test->text);
+    g_object_unref(G_OBJECT(test->image));
     free(test);
 
     gtk_widget_show_all(GTK_WIDGET(right_container));

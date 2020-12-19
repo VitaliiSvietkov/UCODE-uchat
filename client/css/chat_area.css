@@ -1,15 +1,29 @@
-
 #chat_background {
     background: rgb(255,255,255);
     background: linear-gradient(180deg, rgba(255,255,255,1) 20%, rgba(231,231,231,1) 63%, rgba(193,193,193,1) 100%);
 }
 
 #usr_message {
-    background: #909090;
-    color: white;    
+    background: #A6A5A5;
+    color: #1f1f1f;    
     border-radius: 12px;
 }
 
 #message {
+    background: #A6A5A5;
+    color: #1f1f1f;
+    border-radius: 12px;
+}
 
+#attach_container {
+    background: #1f1f1f;
+    box-shadow: 0px 0px 5px 2px #e1e1e1;
+}
+
+#attach_entry {
+    box-shadow: none;
+    background: none;
+    border: none;
+    color:#e1e1e1;
+    border-radius: 0px;
 }
