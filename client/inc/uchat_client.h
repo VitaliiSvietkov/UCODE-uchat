@@ -111,7 +111,7 @@ void hide_registration_click_2(GtkWidget *widget, GdkEvent *event, gpointer *dat
 
 void data_change_registration_event_2(GtkWidget *widget, gpointer data);
 void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpointer *data);
-void authorization(GtkWidget *widget);
+void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data);
 void eye_pressed(GtkWidget *widget, GdkEventButton *event, gpointer data);
 //==========================================================================================
 

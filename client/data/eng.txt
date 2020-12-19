@@ -30,3 +30,4 @@ Finish
 Select a contact to learn more
 You cannot send an empty message!
 Password are not match!
+Incorrect Username or Password!
