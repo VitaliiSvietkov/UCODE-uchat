@@ -30,25 +30,30 @@ void deactivate_prelight_with_condition_entry(GtkWidget *widget, GdkEvent *event
 
 
 void login_btn_enter_notify(void) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 5) {
         gtk_widget_set_state_flags(GTK_WIDGET(login_btn), GTK_STATE_FLAG_PRELIGHT, TRUE);
     }
 }
 
 void login_btn_leave_notify(void) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 5) {
         gtk_widget_unset_state_flags(GTK_WIDGET(login_btn), GTK_STATE_FLAG_PRELIGHT);
     }
 }
 
 void authorization(GtkWidget *widget) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 5) {
         const char *login1 = gtk_entry_get_text(GTK_ENTRY(login));
         const char *password1 = gtk_entry_get_text(GTK_ENTRY(password));
-        mx_write_user_data_from_bd_after_auth(login1, password1);
+        if(mx_write_user_data_from_bd_after_auth(login1, password1)==1) {
+            write(1, "error", 5);
+        }
+        else {
         gtk_widget_destroy(GTK_WIDGET(authorization_fixed_container));
         gtk_widget_hide(GTK_WIDGET(authorization_area));
         gtk_widget_show_all(GTK_WIDGET(chat_area));
+        }
+        
     }
 }
 

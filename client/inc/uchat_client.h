@@ -316,7 +316,11 @@ char *mx_string_copy(char *str);
 void mx_write_user_data_from_bd(void);
 void mx_edit_name(char* name, char* surname, char* pseudo, char *description, int id);
 void mx_edit_language(int language);
-void mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
+//void mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
 //==========================================================================================
+
+
+int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
+
 
 #endif
