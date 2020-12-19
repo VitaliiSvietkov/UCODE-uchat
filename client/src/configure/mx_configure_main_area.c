@@ -20,12 +20,6 @@ void mx_configure_main_area(void) {
     gtk_widget_set_size_request(GTK_WIDGET(background), CUR_WIDTH, CUR_HEIGHT);
     g_signal_connect(G_OBJECT(background), "draw",
                      G_CALLBACK(mx_draw_event_background), NULL);
-    
-    /*
-    GdkPixbufAnimation *anim = gdk_pixbuf_animation_new_from_file("client/img/standard/giphy.gif", NULL);
-    GtkWidget *gif = gtk_image_new_from_animation(anim);
-    gtk_fixed_put(GTK_FIXED(main_area), gif, 100, 100);
-    */
 
     GtkWidget *label = gtk_label_new(text_for_labels[4]);
     gtk_widget_set_name(GTK_WIDGET(label), "DefaultLabel");

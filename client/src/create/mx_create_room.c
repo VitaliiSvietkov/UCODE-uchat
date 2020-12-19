@@ -25,7 +25,7 @@ GtkWidget *mx_create_room(int id) {
     gtk_widget_set_margin_top(GTK_WIDGET(preview), 10);
 
     if (id == 0) {
-        pixbuf = mx_get_pixbuf_with_size("client/img/ukraine.png", 40, 40);
+        pixbuf = mx_get_pixbuf_with_size("client/img/standard/bookmark.png", 40, 40);
         gtk_label_set_text(GTK_LABEL(title), "Saved Messages");
         gtk_label_set_text(GTK_LABEL(preview), "Lorem ipsum");
         avatar = gtk_image_new_from_pixbuf(GDK_PIXBUF(pixbuf));

@@ -14,9 +14,6 @@ GtkWidget *mx_create_message(t_message *data) {
         GtkWidget *image = gtk_image_new_from_pixbuf(GDK_PIXBUF(gdk_pixbuf_scale_simple(data->image, 
             300, 300, GDK_INTERP_BILINEAR)));
         gtk_box_pack_start(GTK_BOX(box), image, FALSE, FALSE, 0);
-        gtk_widget_set_margin_top(GTK_WIDGET(image), 10);
-        gtk_widget_set_margin_start(GTK_WIDGET(image), 10);
-        gtk_widget_set_margin_end(GTK_WIDGET(image), 10);
     }
     if (data->text != NULL) {
         GtkWidget *label = gtk_label_new(data->text);

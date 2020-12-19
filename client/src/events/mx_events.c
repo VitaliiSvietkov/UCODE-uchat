@@ -15,7 +15,7 @@ void image_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data) {
 void activate_prelight(GtkWidget *widget) {
     GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
     if (!(flags & GTK_STATE_FLAG_CHECKED))
-        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 void deactivate_prelight(GtkWidget *widget) {
     GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));

@@ -5,11 +5,13 @@
 }
 
 #usr_message {
-    background: #909090;
-    color: white;    
+    background: #A6A5A5;
+    color: #1f1f1f;    
     border-radius: 12px;
 }
 
 #message {
-
+    background: #A6A5A5;
+    color: #1f1f1f;
+    border-radius: 12px;
 }

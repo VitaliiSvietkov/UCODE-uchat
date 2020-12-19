@@ -8,6 +8,11 @@ void mx_create_registration_menu(void) {
     gtk_fixed_put(GTK_FIXED(authorization_area), authorization_fixed_container, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(authorization_fixed_container), CUR_WIDTH, CUR_HEIGHT);
 
+    /*GdkPixbufAnimation *anim = gdk_pixbuf_animation_new_from_file("client/img/eart_line.gif", NULL);
+    GtkWidget *gif = gtk_image_new_from_animation(anim);
+    gtk_fixed_put(GTK_FIXED(authorization_fixed_container), gif, 0, 0);
+    g_object_unref(anim);*/
+
     g_signal_connect(G_OBJECT(authorization_fixed_container), "draw",
         G_CALLBACK(mx_draw_event_authorization_fixed_container), NULL);
     //=================================================================================

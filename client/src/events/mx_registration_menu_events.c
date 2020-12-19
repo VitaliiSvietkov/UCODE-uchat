@@ -49,6 +49,7 @@ void authorization(GtkWidget *widget) {
         gtk_widget_destroy(GTK_WIDGET(authorization_fixed_container));
         gtk_widget_hide(GTK_WIDGET(authorization_area));
         gtk_widget_show_all(GTK_WIDGET(chat_area));
+        gtk_widget_hide(GTK_WIDGET(chats_list));
     }
 }
 
