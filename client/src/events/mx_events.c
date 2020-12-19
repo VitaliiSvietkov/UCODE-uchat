@@ -50,6 +50,9 @@ void close_image_click_event(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         free(NewFirstName);
         NewFirstName = NULL;
+        if (NewSecondName != NULL)
+            free(NewSecondName);
+        NewSecondName = NULL;
         free(NewPseudonim);
         NewPseudonim = NULL;
         free(NewDescription);
