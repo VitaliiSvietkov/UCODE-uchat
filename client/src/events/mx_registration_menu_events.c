@@ -113,12 +113,19 @@ void next_btn_leave_notify(GtkWidget *widget, GdkEvent *event, gpointer *data) {
 
 void transition_registration_click(GtkWidget *widget, GdkEvent *event, gpointer *data) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg_confirm))) > 0) {
-        if (mx_strcmp(gtk_entry_get_text(GTK_ENTRY(password_reg)), gtk_entry_get_text(GTK_ENTRY(password_reg_confirm))) == 0) {
-            gtk_widget_hide(GTK_WIDGET(registration_menu_1));
-            gtk_widget_show_all(GTK_WIDGET(registration_menu_2));
+        if (mx_check_login_reg(gtk_entry_get_text(GTK_ENTRY(login_reg))) == 1) {
+            gtk_label_set_text(GTK_LABEL(data), text_for_labels[33]);
+            gtk_widget_show(GTK_WIDGET(data));
         }
         else {
-            gtk_widget_show(GTK_WIDGET(data)); 
+            if (mx_strcmp(gtk_entry_get_text(GTK_ENTRY(password_reg)), gtk_entry_get_text(GTK_ENTRY(password_reg_confirm))) == 0) {
+                gtk_widget_hide(GTK_WIDGET(registration_menu_1));
+                gtk_widget_show_all(GTK_WIDGET(registration_menu_2));
+            }
+            else {
+                gtk_label_set_text(GTK_LABEL(data), text_for_labels[31]);
+                gtk_widget_show(GTK_WIDGET(data)); 
+            }
         }
     }
 }

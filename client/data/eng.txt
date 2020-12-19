@@ -29,8 +29,6 @@ Your second name
 Finish
 Select a contact to learn more
 You cannot send an empty message!
-Password are not match!
-<<<<<<< HEAD
+Passwords are not match!
 Incorrect Username or Password!
-=======
->>>>>>> main
+This username is already exist!

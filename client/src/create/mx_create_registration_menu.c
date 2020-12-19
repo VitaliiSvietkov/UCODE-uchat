@@ -207,7 +207,6 @@ void mx_create_registration_menu(void) {
     // Inscription fail
     gtk_box_pack_start(GTK_BOX(registration_menu_1), fail_inscription, FALSE, FALSE, 0);
     gtk_widget_set_name(GTK_WIDGET(fail_inscription), "error");
-    
 
     // Back button
     GtkWidget *registration_buttons_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);

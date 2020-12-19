@@ -325,6 +325,7 @@ void mx_edit_language(int language);
 
 
 int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
+int mx_check_login_reg(const char *pseudo);
 
 
 #endif
