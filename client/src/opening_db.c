@@ -1,12 +1,16 @@
-#include "../inc/uchat_client.h"
-
-sqlite3 *mx_opening_db(void) {
+#include "../../inc/database.h"
+/*
+Opens db, or creates new.
+In case, it cannot be open,
+Prints error msg and exits program.
+*/
+sqlite3 *mx_opening_db(char *name_db) {
     sqlite3 *db;
-    int status = sqlite3_open("client/data/test.db", &db);
-    if (status != SQLITE_OK) {
+
+    if (sqlite3_open(name_db, &db) != SQLITE_OK) {
         mx_write_to_log("Can`t open database.\n", 2);
-        sqlite3_close(db); 
-        //exit(1);
+            sqlite3_errmsg(db);
     }
-    return db;
+    mx_create_table(db);
+return db;
 }
