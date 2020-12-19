@@ -49,10 +49,6 @@ int main(int argc, char *argv[]) {
     gtk_widget_hide(GTK_WIDGET(contacts_list));
     gtk_widget_hide(GTK_WIDGET(settings_menu));*/
 
-<<<<<<< HEAD
-
-=======
->>>>>>> main
     gtk_main();
 
     g_object_unref(G_OBJECT(t_user.avatar));
