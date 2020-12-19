@@ -18,6 +18,11 @@ void room_click(GtkWidget *widget, GdkEventButton *event) {
 void room_close(GtkWidget *widget, GdkEventKey *event) {
     switch (event->keyval) {
         case GDK_KEY_Escape:
+            if (blackout != NULL) {
+                gtk_widget_destroy(GTK_WIDGET(blackout));
+                blackout = NULL;
+                break;
+            }
             if (message_enter_area != NULL) {
                 gtk_widget_destroy(GTK_WIDGET(message_enter_area));
                 message_enter_area = NULL;

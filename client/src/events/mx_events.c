@@ -30,6 +30,7 @@ void blackout_click(GtkWidget *widget, GdkEventButton *event) {
         && ((event->x < CUR_WIDTH / 3 - 10 || event->x > CUR_WIDTH / 3 - 10 + 450)
             || (event->y < CUR_HEIGHT / 5 - 50 || event->y > CUR_HEIGHT / 5 - 50 + 520))) {
         gtk_widget_destroy(GTK_WIDGET(blackout));
+        blackout = NULL;
     }
 }
 
@@ -38,6 +39,7 @@ void blackout_click_language(GtkWidget *widget, GdkEventButton *event) {
         && ((event->x < CUR_WIDTH / 3 - 10 || event->x > CUR_WIDTH / 3 - 10 + 410)
             || (event->y < CUR_HEIGHT / 5 + 75 || event->y > CUR_HEIGHT / 5 + 75 + 230))) {
         gtk_widget_destroy(GTK_WIDGET(blackout));
+        blackout = NULL;
     }
 }
 //==============================================================
@@ -54,6 +56,7 @@ void close_image_click_event(GtkWidget *widget, GdkEventButton *event) {
         NewDescription = NULL;
         g_object_unref(G_OBJECT(NewAvatar));
         gtk_widget_destroy(GTK_WIDGET(blackout));
+        blackout = NULL;
     }
 }
 //========================================================
