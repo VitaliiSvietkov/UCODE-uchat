@@ -29,7 +29,6 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
             t_user.description = newDescr;
             char *newPass = check_password;
             t_user.password = newPass;
-            return 5;
         }
         else {
         return 1;
