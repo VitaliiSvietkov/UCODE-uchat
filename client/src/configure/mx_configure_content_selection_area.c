@@ -9,13 +9,6 @@ void mx_configure_content_selection_area(void) {
     gtk_widget_set_size_request(GTK_WIDGET(image_container), L_FIELD_WIDTH, 40);
     gtk_box_pack_start(GTK_BOX(content_selection_area), image_container, TRUE, FALSE, 0);
 
-    // A line which is under the images
-    GtkWidget *delimiter = gtk_drawing_area_new();
-    gtk_box_pack_start(GTK_BOX(content_selection_area), delimiter, TRUE, FALSE, 15);
-    gtk_widget_set_size_request(GTK_WIDGET(delimiter), L_FIELD_WIDTH, 1);
-    g_signal_connect(G_OBJECT(delimiter), "draw",
-                     G_CALLBACK(mx_draw_event_delimiter), NULL);
-
     gtk_box_pack_start(GTK_BOX(image_container),
         messages_image.box, TRUE, FALSE, 30);
     gtk_box_pack_start(GTK_BOX(image_container),

@@ -20,13 +20,6 @@ gboolean mx_draw_event_message_enter_area(GtkWidget *widget, cairo_t *cr, gpoint
     return FALSE;
 }
 
-gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr) {
-    cairo_set_source_rgba(cr, MX_E1E1E1, MX_E1E1E1, MX_E1E1E1, 1);
-    cairo_rectangle(cr, 0, 0, L_FIELD_WIDTH, 1);
-    cairo_fill(cr);
-    return FALSE;
-}
-
 gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data) {
     int img_w, img_h;
     gtk_widget_get_size_request(GTK_WIDGET(widget), &img_w, &img_h);

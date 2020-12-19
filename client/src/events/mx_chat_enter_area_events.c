@@ -22,7 +22,17 @@ void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
 
 // Tick button
 //=========================================================
-
+void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        t_message *msg = (t_message *)malloc(sizeof(t_message));
+        msg->text = strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
+        msg->image = NULL;
+        msg->usr_id = t_user.id;
+        mx_add_message(messages_box, msg);
+        free(msg->text);
+        free(msg);
+    }
+}
 //========================================================
 
 // More button

@@ -1,4 +1,15 @@
 
 #chat_background {
-    background: #e1e1e1;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 20%, rgba(231,231,231,1) 63%, rgba(193,193,193,1) 100%);
+}
+
+#usr_message {
+    background: #909090;
+    color: white;    
+    border-radius: 12px;
+}
+
+#message {
+
 }

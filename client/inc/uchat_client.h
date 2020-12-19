@@ -36,6 +36,19 @@ gint L_FIELD_WIDTH;
 
 //==========================================================================================
 
+// A message
+//==========================================================================================
+typedef struct s_message
+{
+    GdkPixbuf *image;
+    char *text;
+    int usr_id;
+}              t_message;
+
+GtkWidget *mx_create_message(t_message *data);
+void mx_add_message(GtkWidget *container, t_message *message);
+//==========================================================================================
+
 // Images
 //==========================================================================================
 typedef struct s_img_button
@@ -228,7 +241,6 @@ void close_image_click_event(GtkWidget *widget, GdkEventButton *event);
 void messages_click(GtkWidget *widget, GdkEventButton *event);
 void contacts_click(GtkWidget *widget, GdkEventButton *event);
 void settings_click(GtkWidget *widget, GdkEventButton *event);
-void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);
 
 void edit_user_enter_notify(GtkWidget *widget);
 void edit_user_leave_notify(GtkWidget *widget);
@@ -255,6 +267,8 @@ GtkWidget *authorization_area;
 GtkWidget *chat_area;
 
 GtkWidget *entry_search;
+GtkWidget *messages_box;
+
 GtkWidget *chats_list;                  
 GtkWidget *contacts_list;
 GtkWidget *settings_menu;
@@ -273,7 +287,9 @@ char **text_for_labels;
 GtkWidget *mx_create_room(int id);
 void room_click(GtkWidget *widget, GdkEventButton *event);
 void room_close(GtkWidget *widget, GdkEventKey *event);
-void mx_create_chat_area(void);
+void mx_create_messages_area(void);
+void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
+void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);
 //==========================================================================================
 
 
@@ -300,7 +316,11 @@ char *mx_string_copy(char *str);
 void mx_write_user_data_from_bd(void);
 void mx_edit_name(char* name, char* surname, char* pseudo, char *description, int id);
 void mx_edit_language(int language);
-void mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
+//void mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
 //==========================================================================================
+
+
+int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
+
 
 #endif

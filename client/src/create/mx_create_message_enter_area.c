@@ -48,6 +48,8 @@ void mx_create_message_enter_area(void) {
         G_CALLBACK(activate_prelight), &tick_image);
     g_signal_connect(G_OBJECT(tick_image.box), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), NULL);
+    g_signal_connect(G_OBJECT(tick_image.box), "button_press_event",
+        G_CALLBACK(mx_send_message), entry_chat);
 
     more_image.box = gtk_event_box_new();
     gtk_box_pack_start(GTK_BOX(chat_container), more_image.box, FALSE, FALSE, 8);
