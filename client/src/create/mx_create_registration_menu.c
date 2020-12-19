@@ -25,18 +25,20 @@ void mx_create_registration_menu(void) {
 
     // Close button
     //=================================================================================
-    GtkWidget *close_image_box = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(close_image_box), "close_image_box");
-    gtk_widget_set_size_request(GTK_WIDGET(close_image_box), 25, 25);
-    gtk_box_pack_start(GTK_BOX(main_authorization_menu), close_image_box, FALSE, FALSE, 0);
-    gtk_widget_set_halign(GTK_WIDGET(close_image_box), GTK_ALIGN_START);
+    if(t_user.id != -1) {
+        GtkWidget *close_image_box = gtk_event_box_new();
+        gtk_widget_set_name(GTK_WIDGET(close_image_box), "close_image_box");
+        gtk_widget_set_size_request(GTK_WIDGET(close_image_box), 25, 25);
+        gtk_box_pack_start(GTK_BOX(main_authorization_menu), close_image_box, FALSE, FALSE, 0);
+        gtk_widget_set_halign(GTK_WIDGET(close_image_box), GTK_ALIGN_START);
 
-    g_signal_connect(G_OBJECT(close_image_box), "enter-notify-event",
-        G_CALLBACK(activate_prelight), NULL);
-    g_signal_connect(G_OBJECT(close_image_box), "leave-notify-event",
-        G_CALLBACK(deactivate_prelight), NULL);
-    g_signal_connect(G_OBJECT(close_image_box), "button_press_event",
-        G_CALLBACK(authorization_close), NULL);
+        g_signal_connect(G_OBJECT(close_image_box), "enter-notify-event",
+            G_CALLBACK(activate_prelight), NULL);
+        g_signal_connect(G_OBJECT(close_image_box), "leave-notify-event",
+            G_CALLBACK(deactivate_prelight), NULL);
+        g_signal_connect(G_OBJECT(close_image_box), "button_press_event",
+            G_CALLBACK(authorization_close), NULL);
+    }
     //=================================================================================
 
     // Log in menu
@@ -122,7 +124,7 @@ void mx_create_registration_menu(void) {
     g_signal_connect(G_OBJECT(registration_link), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), registration_label);
     g_signal_connect(G_OBJECT(registration_link), "button_press_event",
-        G_CALLBACK(hide_authorization_click), fail_inscription);
+        G_CALLBACK(hide_authorization_click), fail_inscription); ///////////
     //=================================================================================
 
     // Registration menu page 1
@@ -220,7 +222,7 @@ void mx_create_registration_menu(void) {
     g_signal_connect(G_OBJECT(back_btn), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), NULL);
     g_signal_connect(G_OBJECT(back_btn), "button_press_event",
-        G_CALLBACK(hide_registration_click), NULL);
+        G_CALLBACK(hide_registration_click), fail_auto_inscription);
 
     // Next button
     next_btn = gtk_event_box_new();

@@ -49,11 +49,15 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
             gtk_widget_show(GTK_WIDGET(data)); 
         }
         else {
-        gtk_widget_destroy(GTK_WIDGET(authorization_fixed_container));
-        gtk_widget_hide(GTK_WIDGET(authorization_area));
-        gtk_widget_show_all(GTK_WIDGET(chat_area));
+            gtk_widget_destroy(GTK_WIDGET(authorization_fixed_container));
+            gtk_widget_hide(GTK_WIDGET(authorization_area));
+            // Create a settings menu
+            mx_configure_settings_menu_area();
+            gtk_widget_show_all(GTK_WIDGET(chat_area));
+            gtk_widget_hide(GTK_WIDGET(chats_list));
+            gtk_widget_hide(GTK_WIDGET(contacts_list));
+            gtk_widget_hide(GTK_WIDGET(settings_menu));
         }
-        
     }
 }
 
@@ -67,9 +71,11 @@ void hide_registration_click(GtkWidget *widget, GdkEvent *event, gpointer *data)
     gtk_entry_set_text(GTK_ENTRY(login_reg), "");
     gtk_entry_set_text(GTK_ENTRY(password_reg), "");
     gtk_entry_set_text(GTK_ENTRY(password_reg_confirm), "");
+    gtk_entry_set_text(GTK_ENTRY(login), "");
+    gtk_entry_set_text(GTK_ENTRY(password), "");
     gtk_widget_hide(GTK_WIDGET(registration_menu_1));
     gtk_widget_show_all(GTK_WIDGET(log_in_menu));
-     
+    gtk_widget_hide(GTK_WIDGET(data)); 
 }
 
 // Events which change opacity of "next" buttons
@@ -176,5 +182,7 @@ void authorization_close(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_grab_focus(GTK_WIDGET(chat_area));
         gtk_widget_hide(GTK_WIDGET(chats_list));
         gtk_widget_hide(GTK_WIDGET(contacts_list));
+        gtk_entry_set_text(GTK_ENTRY(login), "");
+        gtk_entry_set_text(GTK_ENTRY(password), "");
     }
 }

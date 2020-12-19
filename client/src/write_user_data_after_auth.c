@@ -7,7 +7,6 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
     bzero(sql, 500);
     int st;
     char *errmsg;
-    //int i = 0;
     sprintf(sql, "SELECT PASSWORD FROM USERS WHERE PSEUDONIM = '%s';", pseudo);
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
     sqlite3_step(res);
@@ -29,15 +28,17 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
             t_user.description = newDescr;
             char *newPass = check_password;
             t_user.password = newPass;
+            printf("%d\n", t_user.id);
         }
-        else {
-        return 1;
-        }
-        //i++;
+        //else {
+        //return 1;
+        //}
     }
-    return 1; 
+    else 
+        return 1; 
     //sqlite3_finalize(res);
     //sqlite3_close(db);
+    return 0;
 }
 
 
