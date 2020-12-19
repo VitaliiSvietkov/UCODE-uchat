@@ -106,8 +106,8 @@ void hide_registration_click(GtkWidget *widget, GdkEvent *event, gpointer *data)
 void next_btn_enter_notify(GtkWidget *widget, GdkEvent *event, gpointer *data);
 void next_btn_leave_notify(GtkWidget *widget, GdkEvent *event, gpointer *data);
 void data_change_registration_event(GtkWidget *widget, GdkEvent *event);
-void transition_registration_click(GtkWidget *widget);
-void hide_registration_click_2(GtkWidget *widget);
+void transition_registration_click(GtkWidget *widget, GdkEvent *event, gpointer *data);
+void hide_registration_click_2(GtkWidget *widget, GdkEvent *event, gpointer *data);
 
 void data_change_registration_event_2(GtkWidget *widget, gpointer data);
 void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpointer *data);
