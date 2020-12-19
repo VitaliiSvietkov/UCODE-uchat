@@ -24,6 +24,12 @@ int main(int argc, char *argv[]) {
     // Create a new window
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     mx_init_window();
+
+    gtk_widget_hide(main_area);
+
+    mx_create_registration_menu();
+
+
     // Create a main area where all widgets will be shown
     mx_configure_main_area();
     // Create a selection area
