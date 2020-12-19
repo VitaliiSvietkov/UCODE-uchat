@@ -25,10 +25,6 @@ int main(int argc, char *argv[]) {
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     mx_init_window();
 
-    gtk_widget_hide(main_area);
-
-    mx_create_registration_menu();
-
 
     // Create a main area where all widgets will be shown
     mx_configure_main_area();
@@ -49,7 +45,11 @@ int main(int argc, char *argv[]) {
     mx_configure_settings_menu_area();
 
     gtk_widget_show_all (window);
+
+    //mx_create_registration_menu();
+
     // Hide unneccessary widgets
+    //gtk_widget_hide(GTK_WIDGET(chat_area));
     gtk_widget_hide(GTK_WIDGET(chats_list));
     gtk_widget_hide(GTK_WIDGET(contacts_list));
     gtk_widget_hide(GTK_WIDGET(settings_menu));

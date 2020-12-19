@@ -9,8 +9,8 @@ static void error_msg(void) {
 
 // Copies str into new allocated memmory.
 char *mx_string_copy(char *str) {
-	if (str == NULL)
-		error_msg();
+	//if (str == NULL)
+	//	error_msg();
     char *new_str = mx_strnew((int)strlen(str));
 
     for (int i = 0; str[i]; ++i) {
