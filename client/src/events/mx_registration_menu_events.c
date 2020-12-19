@@ -132,7 +132,7 @@ void hide_registration_click_2(GtkWidget *widget, GdkEvent *event, gpointer *dat
 }
 
 void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpointer *data) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(data))) > 0) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(firstname_reg))) > 0) {
         const char *login = gtk_entry_get_text(GTK_ENTRY(login_reg));
         const char *password = gtk_entry_get_text(GTK_ENTRY(password_reg));
         const char *password2 = gtk_entry_get_text(GTK_ENTRY(password_reg_confirm));
@@ -148,6 +148,7 @@ void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpoint
         gtk_entry_set_text(GTK_ENTRY(secondname_reg), "");
         gtk_widget_hide(GTK_WIDGET(registration_menu_2));
         gtk_widget_show_all(GTK_WIDGET(log_in_menu));
+        gtk_widget_hide(GTK_WIDGET(data));
     }
 }
 

@@ -304,7 +304,7 @@ void mx_create_registration_menu(void) {
     g_signal_connect(G_OBJECT(finish_btn), "leave-notify-event",
         G_CALLBACK(deactivate_prelight_with_condition_entry), firstname_reg);
     g_signal_connect(G_OBJECT(finish_btn), "button_press_event",
-        G_CALLBACK(authorization_after_registration), firstname_reg);
+        G_CALLBACK(authorization_after_registration), fail_auto_inscription);
 
     g_signal_connect(G_OBJECT(firstname_reg), "changed",
         G_CALLBACK(data_change_registration_event_2), finish_btn);
