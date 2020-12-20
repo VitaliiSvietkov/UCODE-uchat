@@ -111,7 +111,7 @@ void hide_registration_click_2(GtkWidget *widget, GdkEvent *event, gpointer *dat
 
 void data_change_registration_event_2(GtkWidget *widget, gpointer data);
 void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpointer *data);
-void authorization(GtkWidget *widget);
+void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data);
 void eye_pressed(GtkWidget *widget, GdkEventButton *event, gpointer data);
 //==========================================================================================
 
@@ -319,7 +319,12 @@ char *mx_string_copy(char *str);
 void mx_write_user_data_from_bd(void);
 void mx_edit_name(char* name, char* surname, char* pseudo, char *description, int id);
 void mx_edit_language(int language);
-void mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
+//void mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
 //==========================================================================================
+
+
+int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password);
+int mx_check_login_reg(const char *pseudo);
+
 
 #endif

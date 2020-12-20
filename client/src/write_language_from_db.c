@@ -12,5 +12,5 @@ void mx_write_language_data_from_bd(void) {
     sqlite3_step(res);
     language = (int)sqlite3_column_int(res, 0);
     sqlite3_finalize(res);
-    sqlite3_close(db);
+    //sqlite3_close(db);
 }

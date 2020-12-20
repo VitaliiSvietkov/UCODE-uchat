@@ -1,0 +1,9 @@
+<<<<<<< HEAD
+Sat Dec 19 18:04:11 2020: STD_ERR: database is locked
+Sat Dec 19 22:38:43 2020: STD_ERR: USER EXISTS
+Sat Dec 19 22:38:43 2020: STD_ERR: database is locked
+Sat Dec 19 23:22:18 2020: STD_ERR: database is locked
+=======
+Sat Dec 19 22:22:09 2020: STD_ERR: USER NOT EXIST
+>>>>>>> main
+Sun Dec 20 00:14:19 2020: STD_ERR: USER EXISTS
