@@ -11,6 +11,7 @@ void mx_init_global_vars(void) {
     chats_list = NULL;
     settings_menu = NULL;
     blackout = NULL;
+    labels_head = NULL;
 
     // Temporary variables for edit user form
     NewFirstName = NULL;

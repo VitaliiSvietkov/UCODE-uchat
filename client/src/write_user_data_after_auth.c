@@ -30,9 +30,8 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
             t_user.password = newPass;
             //printf("%d\n", t_user.id);
         }
-        //else {
-        //return 1;
-        //}
+        else 
+            return 1;
     }
     else 
         return 1; 

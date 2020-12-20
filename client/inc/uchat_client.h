@@ -13,8 +13,6 @@
 #include <math.h>
 #include <sqlite3.h>
 
-//#include "../../server/inc/database.h"
-//#include "../../server/inc/server.h"
 #include "../../libraries/libmx/inc/libmx.h"
 #include "tools.h"
 
@@ -63,6 +61,7 @@ t_img_button tick_image;
 t_img_button more_image;
 
 t_img_button edit_user_image;
+t_img_button account_settings_image;
 t_img_button change_account_image;
 t_img_button chat_settings_image;
 t_img_button language_image;
@@ -78,7 +77,7 @@ void mx_load_images(void);
 // Log in/Registration menu
 //==========================================================================================
 GtkWidget *log_in_menu;
-GtkWidget *authorization_fixed_container;
+GtkWidget *authorization_container;
 GtkWidget *registration_menu_1;
 GtkWidget *registration_menu_2;
 GtkWidget *login;
@@ -90,6 +89,7 @@ GtkWidget *firstname_reg;
 GtkWidget *secondname_reg;
 GtkWidget *login_btn;
 GtkWidget *next_btn;
+GtkWidget *fail_auto_inscription;
 
 void mx_create_registration_menu(void);
 
@@ -115,6 +115,19 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data);
 void eye_pressed(GtkWidget *widget, GdkEventButton *event, gpointer data);
 //==========================================================================================
 
+// Log in/Registration menu
+//==========================================================================================
+GtkWidget *account_settings_menu;
+
+
+
+
+
+//==========================================================================================
+
+
+
+
 
 // User info
 //==========================================================================================
@@ -134,6 +147,7 @@ void mx_change_user_pseudonim(char str[]);
 void mx_change_user_description(char str[]);
 void mx_change_user_avatar(char path[]);
 void mx_init_user(void);
+void mx_update_user_data_preview(void);
 //==========================================================================================
 
 
@@ -200,6 +214,12 @@ void change_description_entry_change_event(GtkWidget *widget);
 void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
+// Account settings form
+//==========================================================================================
+void mx_create_account_settings_form(void);
+
+//==========================================================================================
+
 // Language
 //==========================================================================================
 GtkWidget *mx_language_create_box(char *path, char *name);
@@ -224,7 +244,7 @@ void mx_tooltip(char *str, void *data);
 // Draw functions
 //==========================================================================================
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
-gboolean mx_draw_event_authorization_fixed_container(GtkWidget *widget, cairo_t *cr);
+gboolean mx_draw_event_authorization_container(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_message_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
@@ -245,6 +265,10 @@ void settings_click(GtkWidget *widget, GdkEventButton *event);
 void edit_user_enter_notify(GtkWidget *widget);
 void edit_user_leave_notify(GtkWidget *widget);
 void edit_user_click(GtkWidget *widget, GdkEventButton *event);
+
+void account_settings_enter_notify(GtkWidget *widget);
+void account_settings_leave_notify(GtkWidget *widget);
+void account_settings_click(GtkWidget *widget, GdkEventButton *event);
 
 void change_account_enter_notify(GtkWidget *widget);
 void change_account_leave_notify(GtkWidget *widget);
