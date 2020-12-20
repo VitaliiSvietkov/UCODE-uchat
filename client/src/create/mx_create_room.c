@@ -30,7 +30,7 @@ GtkWidget *mx_create_room(int id) {
         gtk_label_set_text(GTK_LABEL(preview), "Lorem ipsum");
         avatar = gtk_image_new_from_pixbuf(GDK_PIXBUF(pixbuf));
         gtk_widget_set_size_request(GTK_WIDGET(avatar), 40, 40);
-        gtk_widget_set_margin_start(GTK_WIDGET(avatar), 5);
+        gtk_widget_set_margin_start(GTK_WIDGET(avatar), 15);
         g_object_unref(pixbuf);
     }
     else {

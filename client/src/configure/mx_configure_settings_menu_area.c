@@ -56,7 +56,7 @@ void mx_configure_settings_menu_area(void) {
     gtk_label_set_max_width_chars(GTK_LABEL(label_edit_user), 16);
     gtk_widget_set_margin_start(GTK_WIDGET(label_edit_user), 50);
     mx_label_push_back(&labels_head, label_edit_user, 3);
-    gtk_widget_set_name(GTK_WIDGET(label_edit_user), "label_edit_user");
+    gtk_widget_set_name(GTK_WIDGET(label_edit_user), "label_settings_menu");
     gtk_box_pack_start(GTK_BOX(edit_user_box), label_edit_user, FALSE, FALSE, 0);
 
     g_signal_connect(G_OBJECT(edit_user_eventbox), "enter-notify-event",
@@ -81,7 +81,7 @@ void mx_configure_settings_menu_area(void) {
     gtk_label_set_max_width_chars(GTK_LABEL(label_account_settings), 16);
     gtk_widget_set_margin_start(GTK_WIDGET(label_account_settings), 50);
     mx_label_push_back(&labels_head, label_account_settings, 34);
-    gtk_widget_set_name(GTK_WIDGET(label_account_settings), "label_edit_user");
+    gtk_widget_set_name(GTK_WIDGET(label_account_settings), "label_settings_menu");
     gtk_box_pack_start(GTK_BOX(account_settings_box), label_account_settings, FALSE, FALSE, 0);
 
     g_signal_connect(G_OBJECT(account_settings_eventbox), "enter-notify-event",
@@ -106,7 +106,7 @@ void mx_configure_settings_menu_area(void) {
     gtk_label_set_max_width_chars(GTK_LABEL(label_change_account), 16);
     gtk_widget_set_margin_start(GTK_WIDGET(label_change_account), 50);
     mx_label_push_back(&labels_head, label_change_account, 2);
-    gtk_widget_set_name(GTK_WIDGET(label_change_account), "label_change_account");
+    gtk_widget_set_name(GTK_WIDGET(label_change_account), "label_settings_menu");
     gtk_box_pack_start(GTK_BOX(change_account_box), label_change_account, FALSE, FALSE, 0);
 
     g_signal_connect(G_OBJECT(change_account_eventbox), "enter-notify-event",
@@ -131,7 +131,7 @@ void mx_configure_settings_menu_area(void) {
     gtk_label_set_max_width_chars(GTK_LABEL(label_chat_settings), 16);
     gtk_widget_set_margin_start(GTK_WIDGET(label_chat_settings), 50);
     mx_label_push_back(&labels_head, label_chat_settings, 1);
-    gtk_widget_set_name(GTK_WIDGET(label_chat_settings), "label_chat_settings");
+    gtk_widget_set_name(GTK_WIDGET(label_chat_settings), "label_settings_menu");
     gtk_box_pack_start(GTK_BOX(chat_settings_box), label_chat_settings, FALSE, FALSE, 0);
 
     g_signal_connect(G_OBJECT(chat_settings_eventbox), "enter-notify-event",
@@ -154,7 +154,7 @@ void mx_configure_settings_menu_area(void) {
     gtk_label_set_max_width_chars(GTK_LABEL(label_language), 16);
     gtk_widget_set_margin_start(GTK_WIDGET(label_language), 50);
     mx_label_push_back(&labels_head, label_language, 0);
-    gtk_widget_set_name(GTK_WIDGET(label_language), "label_language");
+    gtk_widget_set_name(GTK_WIDGET(label_language), "label_settings_menu");
     gtk_box_pack_start(GTK_BOX(language_box), label_language, FALSE, FALSE, 0);
 
     g_signal_connect(G_OBJECT(language_eventbox), "enter-notify-event",
