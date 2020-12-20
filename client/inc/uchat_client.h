@@ -257,8 +257,7 @@ void language_enter_notify(GtkWidget *widget);
 void language_leave_notify(GtkWidget *widget);
 void language_click(GtkWidget *widget, GdkEventButton *event);
 
-void blackout_click(GtkWidget *widget, GdkEventButton *event);
-void blackout_click_language(GtkWidget *widget, GdkEventButton *event);
+void blackout_destroy(GtkWidget *widget, GdkEventButton *event, GtkWidget *box);
 //==========================================================================================
 
 GtkWidget *window;                      // a top-level window

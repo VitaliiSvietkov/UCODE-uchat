@@ -264,40 +264,10 @@
 
 /* Hovering effects for settings menu items */
 /* ======================================== */
-#edit_user_eventbox {
-    transition: all 0.2s;
-}
-#edit_user_eventbox:hover {
-    border-left: 5px solid #e1e1e1;
-    border-right: 5px solid #e1e1e1;
-}
-#edit_user_eventbox:active {
-    border-left: 5px solid #e1e1e1;
-    border-right: 5px solid #e1e1e1;
-}
-
-#change_account_eventbox {
-    transition: all 0.2s;
-}
-#change_account_eventbox:hover {
-    border-left: 5px solid #e1e1e1;
-    border-right: 5px solid #e1e1e1;
-}
-
-#chat_settings_eventbox {
-    transition: all 0.2s;
-}
-#chat_settings_eventbox:hover {
-    border-left: 5px solid #e1e1e1;
-    border-right: 5px solid #e1e1e1;
-}
-
-#language_eventbox {
-    transition: all 0.2s;
-}
-#language_eventbox:hover {
-    border-left: 5px solid #e1e1e1;
-    border-right: 5px solid #e1e1e1;
+#setting_menu_eventbox:hover {
+    animation-name: gradient;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
 }
 /* ======================================== */
 

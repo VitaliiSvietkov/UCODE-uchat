@@ -1,23 +1,12 @@
 #include "../../inc/uchat_client.h"
 
-void blackout_attach_close(GtkWidget *widget, GdkEvent *event) {
-    if ( ((GdkEventButton *)event)->type == GDK_BUTTON_PRESS && ((GdkEventButton *)event)->button == 1) {
-        gtk_widget_destroy(GTK_WIDGET(widget));
-        gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
-        gtk_widget_grab_focus(GTK_WIDGET(chat_area));
-        return;
-    }
-}
-
 void mx_create_attach_form(GtkWidget *entry, char *filename) {
-    // Blackout 
+    // Blackout with main container
     //==================================================================================
     blackout = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(blackout), "blackout");
     gtk_fixed_put(GTK_FIXED(chat_area), blackout, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(blackout), CUR_WIDTH, CUR_HEIGHT);
-    g_signal_connect(G_OBJECT(blackout), "button_press_event",
-        G_CALLBACK(blackout_attach_close), NULL);
 
     GtkWidget *attach_container = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(GTK_WIDGET(attach_container), "attach_container");
@@ -25,6 +14,9 @@ void mx_create_attach_form(GtkWidget *entry, char *filename) {
     gtk_widget_set_valign(GTK_WIDGET(attach_container), GTK_ALIGN_CENTER);
     gtk_widget_set_halign(GTK_WIDGET(attach_container), GTK_ALIGN_CENTER);
     gtk_widget_set_size_request(GTK_WIDGET(attach_container), 300, 300);
+
+    g_signal_connect(G_OBJECT(blackout), "button_press_event",
+        G_CALLBACK(blackout_destroy), attach_container);
     //==================================================================================
 
     // Image preview

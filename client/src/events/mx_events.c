@@ -25,21 +25,30 @@ void deactivate_prelight(GtkWidget *widget) {
 
 // Blackout
 //==============================================================
-void blackout_click(GtkWidget *widget, GdkEventButton *event) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1
-        && ((event->x < CUR_WIDTH / 3 - 10 || event->x > CUR_WIDTH / 3 - 10 + 450)
-            || (event->y < CUR_HEIGHT / 5 - 50 || event->y > CUR_HEIGHT / 5 - 50 + 520))) {
-        gtk_widget_destroy(GTK_WIDGET(blackout));
-        blackout = NULL;
-    }
-}
+void blackout_destroy(GtkWidget *widget, GdkEventButton *event, GtkWidget *box) {
+    if ( (event->type == GDK_BUTTON_PRESS && event->button == 1) ) {
+        GtkAllocation alloc;
+        gtk_widget_get_allocation(GTK_WIDGET(box), &alloc);
+        if ( (event->x < alloc.x || event->x > (alloc.x + alloc.width))
+            || (event->y < alloc.y || event->y > (alloc.y + alloc.height)) ) {
+            gtk_widget_destroy(GTK_WIDGET(blackout));
+            blackout = NULL;
 
-void blackout_click_language(GtkWidget *widget, GdkEventButton *event) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1
-        && ((event->x < CUR_WIDTH / 3 - 10 || event->x > CUR_WIDTH / 3 - 10 + 410)
-            || (event->y < CUR_HEIGHT / 5 + 75 || event->y > CUR_HEIGHT / 5 + 75 + 230))) {
-        gtk_widget_destroy(GTK_WIDGET(blackout));
-        blackout = NULL;
+            if (NewFirstName != NULL) {
+                free(NewFirstName);
+                NewFirstName = NULL;
+                free(NewPseudonim);
+                NewPseudonim = NULL;
+                free(NewDescription);
+                NewDescription = NULL;
+                g_object_unref(G_OBJECT(NewAvatar));
+                NewAvatar = NULL;
+            }
+            if (NewSecondName != NULL) {
+                free(NewSecondName);
+                NewSecondName = NULL;
+            }
+        }
     }
 }
 //==============================================================
