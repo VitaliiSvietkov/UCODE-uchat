@@ -24,6 +24,20 @@ void mx_change_user_avatar(char path[]) {
     t_user.avatar = mx_get_pixbuf_with_size(path, 100, 100);
 }
 
+void mx_update_user_data_preview(void) {
+    char *username_tmp = strdup(t_user.FirstName);
+    username_tmp = mx_strjoin(username_tmp, " ");
+    username_tmp = mx_strjoin(username_tmp, t_user.SecondName);
+    gtk_label_set_text(GTK_LABEL(username), username_tmp);
+    free(username_tmp);
+    
+    gtk_widget_set_name(GTK_WIDGET(username), "username_preview");
+    char *tmp_pseudonim = "@";
+    tmp_pseudonim = mx_strjoin(tmp_pseudonim, t_user.pseudonim);
+    gtk_label_set_text(GTK_LABEL(user_pseudonim), tmp_pseudonim);
+    free(tmp_pseudonim);
+}
+
 void mx_init_user(void) {
     //t_user.FirstName = NULL;
     //t_user.SecondName = NULL;

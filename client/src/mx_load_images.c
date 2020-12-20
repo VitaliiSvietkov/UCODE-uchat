@@ -14,7 +14,8 @@ void mx_load_images(void) {
     gtk_widget_set_name(GTK_WIDGET(contacts_image.box), "contacts_image");
 
     settings_image.box = gtk_event_box_new();
-    settings_image.active = false;
+    settings_image.active = true;
+    gtk_widget_set_state_flags(GTK_WIDGET(settings_image.box), GTK_STATE_FLAG_CHECKED, TRUE);
     gtk_widget_set_valign(GTK_WIDGET(settings_image.box), GTK_ALIGN_END);
     gtk_widget_set_size_request(GTK_WIDGET(settings_image.box), 30, 30);
     gtk_widget_set_name(GTK_WIDGET(settings_image.box), "settings_image");
@@ -50,5 +51,5 @@ void mx_load_images(void) {
     gtk_widget_set_name(GTK_WIDGET(language_image.box), "language_image");
 
 
-    t_active_image = NULL;
+    t_active_image = &settings_image;
 }

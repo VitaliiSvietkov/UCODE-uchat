@@ -133,6 +133,7 @@ void mx_change_user_pseudonim(char str[]);
 void mx_change_user_description(char str[]);
 void mx_change_user_avatar(char path[]);
 void mx_init_user(void);
+void mx_update_user_data_preview(void);
 //==========================================================================================
 
 

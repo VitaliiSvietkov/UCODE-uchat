@@ -177,4 +177,6 @@ void mx_configure_settings_menu_area(void) {
     gtk_widget_set_valign(GTK_WIDGET(label_impulse), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(label_version), GTK_ALIGN_END);
     //============================================================================================== 
+
+    active_leftbar_container = settings_menu;
 }

@@ -27,27 +27,10 @@ int main(int argc, char *argv[]) {
 
     // Create a main area where all widgets will be shown
     mx_configure_main_area();
-    // Create a selection area
-    mx_configure_content_selection_area();
-
-    // Create a chat list area
-    chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_fixed_put(GTK_FIXED(chat_area), chats_list, 0, 105);
-    gtk_box_pack_start(GTK_BOX(chats_list), mx_create_room(0), FALSE, FALSE, 0);
-    active_leftbar_container = NULL;
-
-    // Create a contacts list area
-    contacts_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_fixed_put(GTK_FIXED(chat_area), contacts_list, 0, 95);
 
     gtk_widget_show_all (window);
-    // Hide unneccessary widgets
     mx_create_registration_menu();
-
     gtk_widget_hide(GTK_WIDGET(chat_area));
-    /*gtk_widget_hide(GTK_WIDGET(chats_list));
-    gtk_widget_hide(GTK_WIDGET(contacts_list));
-    gtk_widget_hide(GTK_WIDGET(settings_menu));*/
 
     gtk_main();
 
