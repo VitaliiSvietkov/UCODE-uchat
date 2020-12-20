@@ -37,22 +37,16 @@ void blackout_destroy(GtkWidget *widget, GdkEventButton *event, GtkWidget *box) 
             if (NewFirstName != NULL) {
                 free(NewFirstName);
                 NewFirstName = NULL;
+                free(NewPseudonim);
+                NewPseudonim = NULL;
+                free(NewDescription);
+                NewDescription = NULL;
+                g_object_unref(G_OBJECT(NewAvatar));
+                NewAvatar = NULL;
             }
             if (NewSecondName != NULL) {
                 free(NewSecondName);
                 NewSecondName = NULL;
-            }
-            if (NewPseudonim != NULL) {
-                free(NewPseudonim);
-                NewPseudonim = NULL;
-            }
-            if (NewDescription != NULL) {
-                free(NewDescription);
-                NewDescription = NULL;
-            }
-            if (NewAvatar != NULL) {
-                g_object_unref(G_OBJECT(NewAvatar));
-                NewAvatar = NULL;
             }
         }
     }

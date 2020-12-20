@@ -15,6 +15,8 @@ void room_click(GtkWidget *widget, GdkEventButton *event) {
     }
 }
 
+
+// Close a room on the Esc button press
 void room_close(GtkWidget *widget, GdkEventKey *event) {
     switch (event->keyval) {
         case GDK_KEY_Escape:
@@ -23,22 +25,16 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
                 if (NewFirstName != NULL) {
                     free(NewFirstName);
                     NewFirstName = NULL;
+                    free(NewPseudonim);
+                    NewPseudonim = NULL;
+                    free(NewDescription);
+                    NewDescription = NULL;
+                    g_object_unref(G_OBJECT(NewAvatar));
+                    NewAvatar = NULL;
                 }
                 if (NewSecondName != NULL) {
                     free(NewSecondName);
                     NewSecondName = NULL;
-                }
-                if (NewPseudonim != NULL) {
-                    free(NewPseudonim);
-                    NewPseudonim = NULL;
-                }
-                if (NewDescription != NULL) {
-                    free(NewDescription);
-                    NewDescription = NULL;
-                }
-                if (NewAvatar != NULL) {
-                    g_object_unref(G_OBJECT(NewAvatar));
-                    NewAvatar = NULL;
                 }
                 blackout = NULL;
                 break;
