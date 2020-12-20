@@ -7,3 +7,6 @@ Sat Dec 19 23:22:18 2020: STD_ERR: database is locked
 Sat Dec 19 22:22:09 2020: STD_ERR: USER NOT EXIST
 >>>>>>> main
 Sun Dec 20 00:14:19 2020: STD_ERR: USER EXISTS
+Sun Dec 20 15:40:30 2020: STD_ERR: database is locked
+Sun Dec 20 15:40:33 2020: STD_ERR: database is locked
+Sun Dec 20 15:40:45 2020: STD_ERR: database is locked
