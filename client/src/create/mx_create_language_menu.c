@@ -6,8 +6,6 @@ void mx_create_language_menu(void) {
     blackout = gtk_event_box_new();
     GtkWidget *language_fixed_container = gtk_fixed_new();
     gtk_widget_set_name(GTK_WIDGET(blackout), "blackout");
-    g_signal_connect(G_OBJECT(blackout), "button_press_event",
-        G_CALLBACK(blackout_click_language), NULL);
     gtk_container_add(GTK_CONTAINER(blackout), language_fixed_container);
     gtk_fixed_put(GTK_FIXED(chat_area), blackout, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(language_fixed_container), CUR_WIDTH, CUR_HEIGHT);
@@ -17,6 +15,9 @@ void mx_create_language_menu(void) {
     gtk_widget_set_name(GTK_WIDGET(language_form), "edit_user_form");
     gtk_fixed_put(GTK_FIXED(language_fixed_container), language_form,
         CUR_WIDTH / 3 - 10, CUR_HEIGHT / 5 + 75);
+
+    g_signal_connect(G_OBJECT(blackout), "button_press_event",
+        G_CALLBACK(blackout_destroy), language_form);
     
 
     // "close" image

@@ -45,8 +45,12 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, char *filename) {
         free(msg->text);
     g_object_unref(G_OBJECT(msg->image));
     free(msg);
+    
     gtk_widget_destroy(GTK_WIDGET(blackout));
     blackout = NULL;
+
+    gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
+    gtk_widget_grab_focus(GTK_WIDGET(chat_area));
 }
 //=================================================================================
 
