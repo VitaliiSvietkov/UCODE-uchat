@@ -11,12 +11,10 @@ void mx_create_registration_menu(void) {
 
     // Background
     //=================================================================================
-    authorization_fixed_container = gtk_fixed_new();
-    gtk_fixed_put(GTK_FIXED(authorization_area), authorization_fixed_container, 0, 0);
-    gtk_widget_set_size_request(GTK_WIDGET(authorization_fixed_container), CUR_WIDTH, CUR_HEIGHT);
-
-    g_signal_connect(G_OBJECT(authorization_fixed_container), "draw",
-        G_CALLBACK(mx_draw_event_authorization_fixed_container), NULL);
+    authorization_container = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(authorization_container), "authorization_container");
+    gtk_fixed_put(GTK_FIXED(authorization_area), authorization_container, 0, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(authorization_container), CUR_WIDTH, CUR_HEIGHT);
     //=================================================================================
 
 
@@ -25,8 +23,9 @@ void mx_create_registration_menu(void) {
     GtkWidget *main_authorization_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(main_authorization_menu), 400, 400);
     gtk_widget_set_name(GTK_WIDGET(main_authorization_menu), "registration_menu_form");
-    gtk_fixed_put(GTK_FIXED(authorization_fixed_container), main_authorization_menu,
-        CUR_WIDTH / 5 + 70, CUR_HEIGHT / 5);
+    gtk_widget_set_valign(GTK_WIDGET(main_authorization_menu), GTK_ALIGN_CENTER);
+    gtk_widget_set_halign(GTK_WIDGET(main_authorization_menu), GTK_ALIGN_CENTER);
+    gtk_container_add(GTK_CONTAINER(authorization_container), main_authorization_menu);
     //=================================================================================
 
     // Close button

@@ -49,11 +49,13 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
             gtk_widget_show(GTK_WIDGET(data)); 
         }
         else {
-            gtk_widget_destroy(GTK_WIDGET(authorization_fixed_container));
+            gtk_widget_destroy(GTK_WIDGET(authorization_container));
             gtk_widget_hide(GTK_WIDGET(authorization_area));
             // Create a settings menu
             mx_configure_settings_menu_area();
             gtk_widget_show_all(GTK_WIDGET(chat_area));
+            gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
+            gtk_widget_grab_focus(GTK_WIDGET(chat_area));
             gtk_widget_hide(GTK_WIDGET(chats_list));
             gtk_widget_hide(GTK_WIDGET(contacts_list));
             gtk_widget_hide(GTK_WIDGET(settings_menu));
@@ -185,7 +187,7 @@ void eye_pressed(GtkWidget *widget, GdkEventButton *event, gpointer data) {
 
 void authorization_close(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_destroy(authorization_fixed_container);
+        gtk_widget_destroy(authorization_container);
         gtk_widget_hide(GTK_WIDGET(authorization_area));
         gtk_widget_show_all(GTK_WIDGET(chat_area));
         gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
