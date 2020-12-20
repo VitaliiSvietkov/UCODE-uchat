@@ -37,9 +37,20 @@ void mx_create_account_settings_form(void) {
         G_CALLBACK(close_image_click_event), NULL);
     //==================================================================================
 
-    // Main area
+    // Account settings menu
     //==================================================================================
-    
+    account_settings_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_box_pack_start(GTK_BOX(account_settings_container), account_settings_menu, FALSE, FALSE, 0);
+
+
+    //Account settings inscription
+    GtkWidget *account_settings_inscription = gtk_label_new(text_for_labels[34]);
+    gtk_box_pack_start(GTK_BOX(account_settings_menu), account_settings_inscription, FALSE, FALSE, 0);
+    gtk_widget_set_name(GTK_WIDGET(account_settings_inscription), "authorization");
+
+
+    //
+
     //==================================================================================
     gtk_widget_show_all(GTK_WIDGET(blackout));
 }

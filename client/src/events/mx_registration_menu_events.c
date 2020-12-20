@@ -43,7 +43,7 @@ void login_btn_leave_notify(void) {
 
 void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 5) {
-        if (t_user.id == -1) {
+        if (t_user.id == -1 && labels_head == NULL) {
             GtkWidget *background = gtk_drawing_area_new();
             gtk_fixed_put(GTK_FIXED(chat_area), background, 0, 0);
             gtk_widget_set_size_request(GTK_WIDGET(background), CUR_WIDTH, CUR_HEIGHT);
@@ -76,13 +76,12 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
         const char *login1 = gtk_entry_get_text(GTK_ENTRY(login));
         const char *password1 = gtk_entry_get_text(GTK_ENTRY(password));
         if(mx_write_user_data_from_bd_after_auth(login1, password1) == 1) {
-            gtk_widget_show(GTK_WIDGET(data)); 
+            gtk_widget_show(GTK_WIDGET(fail_auto_inscription)); 
         }
         else {
             mx_update_user_data_preview();
             gtk_widget_destroy(GTK_WIDGET(authorization_container));
             gtk_widget_hide(GTK_WIDGET(authorization_area));
-
             gtk_widget_show_all(GTK_WIDGET(chat_area));
             gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
             gtk_widget_grab_focus(GTK_WIDGET(chat_area));

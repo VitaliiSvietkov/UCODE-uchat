@@ -89,6 +89,7 @@ GtkWidget *firstname_reg;
 GtkWidget *secondname_reg;
 GtkWidget *login_btn;
 GtkWidget *next_btn;
+GtkWidget *fail_auto_inscription;
 
 void mx_create_registration_menu(void);
 
@@ -113,6 +114,19 @@ void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpoint
 void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data);
 void eye_pressed(GtkWidget *widget, GdkEventButton *event, gpointer data);
 //==========================================================================================
+
+// Log in/Registration menu
+//==========================================================================================
+GtkWidget *account_settings_menu;
+
+
+
+
+
+//==========================================================================================
+
+
+
 
 
 // User info

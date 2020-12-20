@@ -7,7 +7,7 @@ void login_activate(GtkWidget *widget) {
 
 void mx_create_registration_menu(void) {
     GtkWidget *fail_inscription = gtk_label_new(text_for_labels[31]);
-    GtkWidget *fail_auto_inscription = gtk_label_new(text_for_labels[32]);
+    fail_auto_inscription = gtk_label_new(text_for_labels[32]);
 
     // Background
     //=================================================================================
@@ -87,7 +87,7 @@ void mx_create_registration_menu(void) {
     g_signal_connect(G_OBJECT(password), "changed",
         G_CALLBACK(button_shine), NULL);
     g_signal_connect(G_OBJECT(password), "activate",
-        G_CALLBACK(authorization), fail_auto_inscription);
+        G_CALLBACK(authorization), NULL);
 
     GtkWidget *eye_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(eye_eventbox), "eye_password");
