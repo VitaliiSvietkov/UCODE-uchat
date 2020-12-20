@@ -1,5 +1,10 @@
 #include "../../inc/uchat_client.h"
 
+void login_activate(GtkWidget *widget) {
+    gtk_widget_set_can_focus(GTK_WIDGET(password), TRUE);
+    gtk_widget_grab_focus(GTK_WIDGET(password));
+}
+
 void mx_create_registration_menu(void) {
     GtkWidget *fail_inscription = gtk_label_new(text_for_labels[31]);
     GtkWidget *fail_auto_inscription = gtk_label_new(text_for_labels[32]);
@@ -62,6 +67,8 @@ void mx_create_registration_menu(void) {
     gtk_box_pack_start(GTK_BOX(log_in_menu), login, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(login), "changed",
         G_CALLBACK(button_shine), NULL);
+    g_signal_connect(G_OBJECT(login), "activate",
+        G_CALLBACK(login_activate), NULL);
 
     // Entry for password
     GtkWidget *password_eye_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -80,6 +87,8 @@ void mx_create_registration_menu(void) {
     gtk_entry_set_visibility(GTK_ENTRY(password), FALSE);
     g_signal_connect(G_OBJECT(password), "changed",
         G_CALLBACK(button_shine), NULL);
+    g_signal_connect(G_OBJECT(password), "activate",
+        G_CALLBACK(authorization), fail_auto_inscription);
 
     GtkWidget *eye_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(eye_eventbox), "eye_password");

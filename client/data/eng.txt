@@ -32,3 +32,4 @@ You cannot send an empty message!
 Passwords are not match!
 Incorrect Username or Password!
 This username is already exist!
+Account settings

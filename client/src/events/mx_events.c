@@ -57,16 +57,18 @@ void blackout_destroy(GtkWidget *widget, GdkEventButton *event, GtkWidget *box) 
 //========================================================
 void close_image_click_event(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        free(NewFirstName);
-        NewFirstName = NULL;
+        if (NewFirstName != NULL) {
+            free(NewFirstName);
+            NewFirstName = NULL;
+            free(NewPseudonim);
+            NewPseudonim = NULL;
+            free(NewDescription);
+            NewDescription = NULL;
+            g_object_unref(G_OBJECT(NewAvatar));
+        }
         if (NewSecondName != NULL)
             free(NewSecondName);
         NewSecondName = NULL;
-        free(NewPseudonim);
-        NewPseudonim = NULL;
-        free(NewDescription);
-        NewDescription = NULL;
-        g_object_unref(G_OBJECT(NewAvatar));
         gtk_widget_destroy(GTK_WIDGET(blackout));
         blackout = NULL;
     }

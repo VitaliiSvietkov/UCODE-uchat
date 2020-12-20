@@ -25,6 +25,12 @@ void mx_load_images(void) {
     gtk_widget_set_size_request(GTK_WIDGET(edit_user_image.box), 30, 30);
     gtk_widget_set_name(GTK_WIDGET(edit_user_image.box), "edit_user_image");
 
+    account_settings_image.box = gtk_event_box_new();
+    account_settings_image.active = false;
+    gtk_widget_set_valign(GTK_WIDGET(account_settings_image.box), GTK_ALIGN_END);
+    gtk_widget_set_size_request(GTK_WIDGET(account_settings_image.box), 30, 30);
+    gtk_widget_set_name(GTK_WIDGET(account_settings_image.box), "edit_user_image");
+
     change_account_image.box = gtk_event_box_new();
     change_account_image.active = false;
     gtk_widget_set_valign(GTK_WIDGET(change_account_image.box), GTK_ALIGN_END);
