@@ -2,6 +2,7 @@
 @import url("registration_menu.css");
 @import url("language_form.css");
 @import url("chat_area.css");
+@import url("account_settings.css");
 
 * {
     font-family: "New Century Schoolbook", Times, serif;

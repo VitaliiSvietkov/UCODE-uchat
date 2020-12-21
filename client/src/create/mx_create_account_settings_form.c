@@ -68,7 +68,7 @@ void mx_create_account_settings_form(void) {
     gtk_label_set_max_width_chars(GTK_LABEL(label_change_password), 10);
     gtk_widget_set_margin_start(GTK_WIDGET(label_change_password), 20);
     mx_label_push_back(&labels_head, label_change_password, 3);
-    gtk_widget_set_name(GTK_WIDGET(label_change_password), "label_settings_menu");
+    gtk_widget_set_name(GTK_WIDGET(label_change_password), "password_change_lable");
     gtk_box_pack_start(GTK_BOX(password_change_box), label_change_password, FALSE, FALSE, 0);
 
     g_signal_connect(G_OBJECT(password_change_eventbox), "enter-notify-event",
