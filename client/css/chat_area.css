@@ -33,3 +33,31 @@
     border: 1px solid #1f1f1f;
     border-radius: 15px;
 }
+
+#stickers_eventbox {
+    background-image: url("../img/happy.png");
+    background-size: 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-bottom: 1px solid #e1e1e1;
+    transition: all ease-in-out .3s;
+}
+#stickers_eventbox:checked {
+    background-image: url("../img/happy-selected.png");
+    border-bottom: 1px solid #416ef2;
+    transition: all ease-in-out .3s;
+}
+
+#gifs_eventbox {
+    background-image: url("../img/gif.png");
+    background-size: 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-bottom: 1px solid #e1e1e1;
+    transition: all ease-in-out .3s;
+}
+#gifs_eventbox:checked {
+    background-image: url("../img/gif-selected.png");
+    border-bottom: 1px solid #416ef2;
+    transition: all ease-in-out .3s;
+}
