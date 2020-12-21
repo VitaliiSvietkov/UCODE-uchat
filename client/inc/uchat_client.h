@@ -115,10 +115,19 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data);
 void eye_pressed(GtkWidget *widget, GdkEventButton *event, gpointer data);
 //==========================================================================================
 
-// Log in/Registration menu
+// Account settings menu
 //==========================================================================================
 GtkWidget *account_settings_menu;
 
+GtkWidget *edit_password_change_icon;
+
+void mx_create_account_settings_form(void);
+
+void password_change_enter_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
+
+void password_change_leave_notify(GtkWidget *widget, GdkEvent *event, GtkWidget *data);
+
+void password_change_click(GtkWidget *widget, GdkEventButton *event);
 
 
 
@@ -214,11 +223,7 @@ void change_description_entry_change_event(GtkWidget *widget);
 void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
-// Account settings form
-//==========================================================================================
-void mx_create_account_settings_form(void);
 
-//==========================================================================================
 
 // Language
 //==========================================================================================
