@@ -6,11 +6,14 @@ void mx_init_global_vars(void) {
     main_area = NULL;
     authorization_area = NULL;
     chat_area = NULL;
-    message_enter_area = NULL;
-    right_container = NULL;
     chats_list = NULL;
     settings_menu = NULL;
     blackout = NULL;
+
+    // Chat variables
+    message_enter_area = NULL;
+    right_container = NULL;
+    more_box = NULL;
 
     // Temporary variables for edit user form
     NewFirstName = NULL;

@@ -276,15 +276,11 @@ GtkWidget *authorization_area;
 GtkWidget *chat_area;
 
 GtkWidget *entry_search;
-GtkWidget *messages_box;
 
 GtkWidget *chats_list;                  
 GtkWidget *contacts_list;
 GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
-
-GtkWidget *right_container;
-GtkWidget *message_enter_area;
 
 GtkWidget *blackout;
 
@@ -293,16 +289,25 @@ char **text_for_labels;
 
 // Chat room
 //==========================================================================================
+GtkWidget *more_box;
+GtkWidget *right_container;
+GtkWidget *messages_box;
+GtkWidget *message_enter_area;
+
 GtkWidget *mx_create_room(int id);
 void room_click(GtkWidget *widget, GdkEventButton *event);
 void room_close(GtkWidget *widget, GdkEventKey *event);
 void mx_create_messages_area(void);
+
 void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
 void mx_attach_send_message_on_enter(GtkWidget *widget, char *filename);
 void mx_create_attach_form(GtkWidget *entry, char *filename);
+
+void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);
 void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
 void mx_send_message_on_enter(GtkWidget *widget);
-void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);
+
+void mx_more_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data);
 //==========================================================================================
 
 

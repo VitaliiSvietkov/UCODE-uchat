@@ -1,7 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-void mx_create_edit_user_form(void) {
-     
+void mx_create_edit_user_form(void) {    
     // Create a blackout - a dark background behind the form
     //==================================================================================
     blackout = gtk_event_box_new();
@@ -210,4 +209,6 @@ void mx_create_edit_user_form(void) {
     gtk_widget_show_all(GTK_WIDGET(blackout));
     gtk_widget_hide(GTK_WIDGET(edit_username_event_screen));
     gtk_widget_hide(GTK_WIDGET(edit_pseudonim_event_screen));
+    gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
+    gtk_widget_grab_focus(GTK_WIDGET(chat_area));
 }

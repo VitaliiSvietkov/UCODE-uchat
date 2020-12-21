@@ -58,7 +58,7 @@ void mx_create_message_enter_area(void) {
     gtk_widget_set_size_request(GTK_WIDGET(more_image.box), 33, 33);
     gtk_widget_set_name(GTK_WIDGET(more_image.box), "more_image");
     g_signal_connect(G_OBJECT(more_image.box), "button_press_event",
-        G_CALLBACK(image_click), &more_image);
+        G_CALLBACK(mx_more_click), &more_image);
     g_signal_connect(G_OBJECT(more_image.box), "enter-notify-event",
         G_CALLBACK(activate_prelight), &more_image);
     g_signal_connect(G_OBJECT(more_image.box), "leave-notify-event",

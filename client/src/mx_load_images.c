@@ -30,7 +30,7 @@ void mx_load_images(void) {
     account_settings_image.active = false;
     gtk_widget_set_valign(GTK_WIDGET(account_settings_image.box), GTK_ALIGN_CENTER);
     gtk_widget_set_size_request(GTK_WIDGET(account_settings_image.box), 30, 30);
-    gtk_widget_set_name(GTK_WIDGET(account_settings_image.box), "edit_user_image");
+    gtk_widget_set_name(GTK_WIDGET(account_settings_image.box), "account_settings_image");
 
     change_account_image.box = gtk_event_box_new();
     change_account_image.active = false;

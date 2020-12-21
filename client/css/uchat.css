@@ -138,6 +138,15 @@
     background-image: url("../img/standard/identification-hovered.png");
 }
 
+#account_settings_image {
+    background-image: url("../img/standard/resume.png");
+    background-size: 30px;
+    background-repeat: no-repeat;
+}
+#account_settings_image:hover {
+    background-image: url("../img/standard/resume-hovered.png");
+}
+
 #chat_settings_image {
     background-image: url("../img/standard/chat-settings.png");
     background-size: 30px;

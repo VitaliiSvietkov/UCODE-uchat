@@ -102,5 +102,30 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
 
 // More button
 //=================================================================================
+void mx_more_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        if (!(data->active)) {
+            gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
+            data->active = true;
 
+            more_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+            gtk_widget_set_name(GTK_WIDGET(more_box), "more_box");
+            GtkAllocation alloc;
+            gtk_widget_get_allocation(GTK_WIDGET(widget), &alloc);
+            gtk_fixed_put(GTK_FIXED(chat_area), more_box, alloc.x - 260, alloc.y - 515);
+
+            
+            gtk_widget_set_size_request(GTK_WIDGET(more_box), 300, 500);
+
+            gtk_widget_show_all(GTK_WIDGET(more_box));
+        }
+        else {
+            gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED);
+            data->active = false;
+
+            gtk_widget_destroy(GTK_WIDGET(more_box));
+            more_box = NULL;
+        }
+    }
+}
 //=================================================================================
