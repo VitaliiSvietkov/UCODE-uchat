@@ -1,0 +1,9 @@
+<interface>
+    <object class="GtkBox" id="edit_user_form">
+        <property name="orientation">vertical</property>
+        <property name="valign">center</property>
+        <property name="halign">center</property>
+        <property name="visible">False</property>
+        
+    </object>
+</interface>
