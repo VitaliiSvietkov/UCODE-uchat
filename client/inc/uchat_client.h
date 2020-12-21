@@ -176,7 +176,7 @@ void edit_eventbox_click_event(GtkWidget *widget, GdkEventButton *event,
     GtkWidget *data);
 
 void edit_username_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data);
+    gpointer builder);
 void edit_username_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event,
     GtkWidget *data);
 void fname_entry_changed_event(GtkWidget *widget);

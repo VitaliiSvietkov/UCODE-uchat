@@ -17,38 +17,40 @@ void mx_create_edit_user_form(void) {
     NewPseudonim = strdup(t_user.pseudonim);
     NewDescription = strdup(t_user.description);
     NewAvatar = gdk_pixbuf_copy(t_user.avatar);
+
+    GtkBuilder *builder;
+    GError *error = NULL;
+
+    builder = gtk_builder_new();
+    if (gtk_builder_add_from_file(builder, "client/data/edit_user.ui", &error) == 0) {
+        g_printerr("Error loading file: %s\n", error->message);
+        g_clear_error(&error);
+        return;
+    }
     
-    edit_user_form = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    edit_user_form = GTK_WIDGET(gtk_builder_get_object(builder, "edit_user_form"));
     gtk_widget_set_name(GTK_WIDGET(edit_user_form), "edit_user_form");
-    gtk_widget_set_valign(GTK_WIDGET(edit_user_form), GTK_ALIGN_CENTER);
-    gtk_widget_set_halign(GTK_WIDGET(edit_user_form), GTK_ALIGN_CENTER);
     gtk_container_add(GTK_CONTAINER(blackout), edit_user_form);
     g_signal_connect(G_OBJECT(blackout), "button_press_event",
         G_CALLBACK(blackout_destroy), edit_user_form);
 
-    edit_user_main_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 15);
+    edit_user_main_screen = GTK_WIDGET(gtk_builder_get_object(builder, "edit_user_main_screen"));
     gtk_widget_set_size_request(GTK_WIDGET(edit_user_form), 400, 520);
-    gtk_box_pack_start(GTK_BOX(edit_user_form), edit_user_main_screen, FALSE, FALSE, 0);
 
-    edit_username_event_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 15);
+    edit_username_event_screen = GTK_WIDGET(gtk_builder_get_object(builder, "edit_username_event_screen"));
     gtk_widget_set_size_request(GTK_WIDGET(edit_username_event_screen), 440, 500);
-    gtk_box_pack_start(GTK_BOX(edit_user_form), edit_username_event_screen, FALSE, FALSE, 0);
     mx_configure_username_event_screen();
 
-    edit_pseudonim_event_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 15);
+    edit_pseudonim_event_screen = GTK_WIDGET(gtk_builder_get_object(builder, "edit_username_event_screen"));
     gtk_widget_set_size_request(GTK_WIDGET(edit_pseudonim_event_screen), 440, 500);
-    gtk_box_pack_start(GTK_BOX(edit_user_form), edit_pseudonim_event_screen, FALSE, FALSE, 0);
     mx_configure_pseudonim_event_screen();
 
 
     // "close" image
     //==================================================================================
-    GtkWidget *close_image_box = gtk_event_box_new();
+    GtkWidget *close_image_box = GTK_WIDGET(gtk_builder_get_object(builder, "close_image_box"));
     gtk_widget_set_name(GTK_WIDGET(close_image_box), "close_image_box");
     gtk_widget_set_size_request(GTK_WIDGET(close_image_box), 25, 25);
-    gtk_box_pack_start(GTK_BOX(edit_user_main_screen), close_image_box, FALSE, FALSE, 0);
-    gtk_widget_set_state_flags(GTK_WIDGET(close_image_box), GTK_STATE_FLAG_NORMAL, TRUE);
-    gtk_widget_set_halign(GTK_WIDGET(close_image_box), GTK_ALIGN_START);
 
     g_signal_connect(G_OBJECT(close_image_box), "enter-notify-event",
         G_CALLBACK(activate_prelight), NULL);
@@ -60,17 +62,13 @@ void mx_create_edit_user_form(void) {
 
     // "change avatar" field
     //==================================================================================
-    GtkWidget *avatar = gtk_drawing_area_new();
+    GtkWidget *avatar = GTK_WIDGET(gtk_builder_get_object(builder, "avatar"));
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 100, 100);
-    gtk_box_pack_start(GTK_BOX(edit_user_main_screen), avatar, FALSE, FALSE, 0);
-    gtk_widget_set_halign(GTK_WIDGET(avatar), GTK_ALIGN_CENTER);
     g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &NewAvatar);
 
-    GtkWidget *change_avatar_btn = gtk_button_new_with_label(text_for_labels[-1 + 6]);
-    gtk_box_pack_start(GTK_BOX(edit_user_main_screen), change_avatar_btn, FALSE, FALSE, 0);
+    GtkWidget *change_avatar_btn = GTK_WIDGET(gtk_builder_get_object(builder, "change_avatar_btn"));
+    gtk_button_set_label(GTK_BUTTON(change_avatar_btn), text_for_labels[5]);
     gtk_widget_set_name(GTK_WIDGET(change_avatar_btn), "edit_button");
-    gtk_button_set_relief(GTK_BUTTON(change_avatar_btn), GTK_RELIEF_NONE);
-    gtk_widget_set_halign(GTK_WIDGET(change_avatar_btn), GTK_ALIGN_CENTER);
 
     g_signal_connect(G_OBJECT(change_avatar_btn), "clicked",
         G_CALLBACK(change_avatart_btn_click), NULL);
@@ -79,38 +77,31 @@ void mx_create_edit_user_form(void) {
 
     // "change name" field
     //==================================================================================
-    edit_username_eventbox = gtk_event_box_new();
+    edit_username_eventbox = GTK_WIDGET(gtk_builder_get_object(builder, "edit_username_eventbox"));
     gtk_widget_set_name(GTK_WIDGET(edit_username_eventbox), "edit_eventbox");
     gtk_widget_set_size_request(GTK_WIDGET(edit_username_eventbox), 400, 40);
-    gtk_box_pack_start(GTK_BOX(edit_user_main_screen), edit_username_eventbox, FALSE, FALSE, 0);
-    GtkWidget *edit_username_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+
+    GtkWidget *edit_username_box = GTK_WIDGET(gtk_builder_get_object(builder, "edit_username_box"));
     gtk_widget_set_size_request(GTK_WIDGET(edit_username_box), 400, 0);
-    gtk_container_add(GTK_CONTAINER(edit_username_eventbox), edit_username_box);
-    edit_username_icon = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+
+    edit_username_icon = GTK_WIDGET(gtk_builder_get_object(builder, "edit_username_icon"));
     gtk_widget_set_name(GTK_WIDGET(edit_username_icon), "edit_username_icon");
     gtk_widget_set_size_request(GTK_WIDGET(edit_username_icon), 30, 30);
-    gtk_widget_set_valign(GTK_WIDGET(edit_username_icon), GTK_ALIGN_CENTER);
-    gtk_box_pack_start(GTK_BOX(edit_username_box), edit_username_icon, FALSE, FALSE, 20);
     
     char *username_tmp = strdup(t_user.FirstName);
     username_tmp = mx_strjoin(username_tmp, " ");
     username_tmp = mx_strjoin(username_tmp, t_user.SecondName);
-    edit_username_label = gtk_label_new(username_tmp);
+    edit_username_label = GTK_WIDGET(gtk_builder_get_object(builder, "edit_username_label"));
+    gtk_label_set_text(GTK_LABEL(edit_username_label), username_tmp);
     free(username_tmp);
-
-    gtk_box_pack_start(GTK_BOX(edit_username_box), edit_username_label, FALSE, FALSE, 20);
-    gtk_widget_set_halign(GTK_WIDGET(edit_username_label), GTK_ALIGN_CENTER);
     gtk_widget_set_name(GTK_WIDGET(edit_username_label), "edit_label");
 
-    GtkWidget *edit_username_pen = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    GtkWidget *edit_username_pen = GTK_WIDGET(gtk_builder_get_object(builder, "edit_username_pen"));
     gtk_widget_set_name(GTK_WIDGET(edit_username_pen), "pen");
     gtk_widget_set_size_request(GTK_WIDGET(edit_username_pen), 20, 20);
-    gtk_widget_set_valign(GTK_WIDGET(edit_username_pen), GTK_ALIGN_CENTER);
-    gtk_widget_set_halign(GTK_WIDGET(edit_username_pen), GTK_ALIGN_END);
-    gtk_box_pack_start(GTK_BOX(edit_username_box), edit_username_pen, TRUE, TRUE, 20);
 
     g_signal_connect(G_OBJECT(edit_username_eventbox), "enter-notify-event",
-        G_CALLBACK(edit_username_eventbox_enter_notify), edit_username_pen);
+        G_CALLBACK(edit_username_eventbox_enter_notify), (gpointer)builder);
     g_signal_connect(G_OBJECT(edit_username_eventbox), "leave-notify-event",
         G_CALLBACK(edit_username_eventbox_leave_notify), edit_username_pen);
     g_signal_connect(G_OBJECT(edit_username_eventbox), "button_press_event",
@@ -119,31 +110,23 @@ void mx_create_edit_user_form(void) {
 
     // "change pseudo" field
     //==================================================================================
-    edit_pseudo_eventbox = gtk_event_box_new();
+    edit_pseudo_eventbox = GTK_WIDGET(gtk_builder_get_object(builder, "edit_pseudo_eventbox"));
     gtk_widget_set_name(GTK_WIDGET(edit_pseudo_eventbox), "edit_eventbox");
     gtk_widget_set_size_request(GTK_WIDGET(edit_pseudo_eventbox), 400, 40);
-    gtk_box_pack_start(GTK_BOX(edit_user_main_screen), edit_pseudo_eventbox, FALSE, FALSE, 0);
-    GtkWidget *edit_pseudo_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+
+    GtkWidget *edit_pseudo_box = GTK_WIDGET(gtk_builder_get_object(builder, "edit_pseudo_box"));
     gtk_widget_set_size_request(GTK_WIDGET(edit_pseudo_box), 400, 0);
-    gtk_container_add(GTK_CONTAINER(edit_pseudo_eventbox), edit_pseudo_box);
-    edit_pseudo_icon = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    edit_pseudo_icon = GTK_WIDGET(gtk_builder_get_object(builder, "edit_pseudo_icon"));
     gtk_widget_set_name(GTK_WIDGET(edit_pseudo_icon), "edit_pseudo_icon");
     gtk_widget_set_size_request(GTK_WIDGET(edit_pseudo_icon), 30, 30);
-    gtk_widget_set_valign(GTK_WIDGET(edit_pseudo_icon), GTK_ALIGN_CENTER);
-    gtk_box_pack_start(GTK_BOX(edit_pseudo_box), edit_pseudo_icon, FALSE, FALSE, 20);
 
-    edit_pseudo_label = gtk_label_new(t_user.pseudonim);
-
-    gtk_box_pack_start(GTK_BOX(edit_pseudo_box), edit_pseudo_label, FALSE, FALSE, 20);
-    gtk_widget_set_halign(GTK_WIDGET(edit_pseudo_label), GTK_ALIGN_CENTER);
+    edit_pseudo_label = GTK_WIDGET(gtk_builder_get_object(builder, "edit_pseudo_label"));
+    gtk_label_set_text(GTK_LABEL(edit_pseudo_label), t_user.pseudonim);
     gtk_widget_set_name(GTK_WIDGET(edit_pseudo_label), "edit_label");
 
-    GtkWidget *edit_pseudo_pen = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    GtkWidget *edit_pseudo_pen = GTK_WIDGET(gtk_builder_get_object(builder, "edit_pseudo_pen"));
     gtk_widget_set_name(GTK_WIDGET(edit_pseudo_pen), "pen");
     gtk_widget_set_size_request(GTK_WIDGET(edit_pseudo_pen), 20, 20);
-    gtk_widget_set_valign(GTK_WIDGET(edit_pseudo_pen), GTK_ALIGN_CENTER);
-    gtk_widget_set_halign(GTK_WIDGET(edit_pseudo_pen), GTK_ALIGN_END);
-    gtk_box_pack_start(GTK_BOX(edit_pseudo_box), edit_pseudo_pen, TRUE, TRUE, 20);
 
     g_signal_connect(G_OBJECT(edit_pseudo_eventbox), "enter-notify-event",
         G_CALLBACK(edit_pseudo_eventbox_enter_notify), edit_pseudo_pen);
@@ -155,17 +138,15 @@ void mx_create_edit_user_form(void) {
 
     // "change description" field
     //==================================================================================
-    GtkWidget *change_description_label = gtk_label_new(text_for_labels[6]);
+    GtkWidget *change_description_label = GTK_WIDGET(gtk_builder_get_object(builder, "change_description_label"));
+    gtk_label_set_text(GTK_LABEL(change_description_label), text_for_labels[6]);
     gtk_widget_set_name(GTK_WIDGET(change_description_label), "edit_label");
-    gtk_box_pack_start(GTK_BOX(edit_user_main_screen), change_description_label, FALSE, FALSE, 0);
-    gtk_widget_set_halign(GTK_WIDGET(change_description_label), GTK_ALIGN_START);
 
-    GtkWidget *change_description_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget *change_description_box = GTK_WIDGET(gtk_builder_get_object(builder, "change_description_box"));
     gtk_widget_set_name(GTK_WIDGET(change_description_box), "change_description_box");
-    gtk_box_pack_start(GTK_BOX(edit_user_main_screen), change_description_box, FALSE, FALSE, 0);  
-    GtkWidget *change_description_entry = gtk_text_view_new();
+    
+    GtkWidget *change_description_entry = GTK_WIDGET(gtk_builder_get_object(builder, "change_description_entry"));
     gtk_widget_set_name(GTK_WIDGET(change_description_entry), "change_description_entry");
-    gtk_box_pack_start(GTK_BOX(change_description_box), change_description_entry, FALSE, FALSE, 0);
     gtk_widget_set_size_request(GTK_WIDGET(change_description_entry), 400, 100);
     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(change_description_entry), GTK_WRAP_WORD);
     gtk_widget_set_state_flags(GTK_WIDGET(change_description_entry), GTK_STATE_FLAG_NORMAL, TRUE);
@@ -184,7 +165,8 @@ void mx_create_edit_user_form(void) {
     // Buttons to exit
     //==================================================================================
     GtkWidget *exit_buttons_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_pack_start(GTK_BOX(edit_user_main_screen), exit_buttons_box, FALSE, FALSE, 0);
+    gtk_widget_set_margin_top(GTK_WIDGET(exit_buttons_box), 15);
+    gtk_box_pack_start(GTK_BOX(edit_user_main_screen), exit_buttons_box, FALSE, FALSE, 15);
 
     GtkWidget *commit_btn = gtk_button_new_with_label(text_for_labels[12]);
     gtk_widget_set_name(GTK_WIDGET(commit_btn), "edit_button");
@@ -211,4 +193,6 @@ void mx_create_edit_user_form(void) {
     gtk_widget_hide(GTK_WIDGET(edit_pseudonim_event_screen));
     gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
     gtk_widget_grab_focus(GTK_WIDGET(chat_area));
+
+    //g_object_unref(G_OBJECT(builder));
 }
