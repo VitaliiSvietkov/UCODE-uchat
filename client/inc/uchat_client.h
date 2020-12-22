@@ -139,14 +139,8 @@ void mx_update_user_data_preview(void);
 
 // Edit user form
 //==========================================================================================
-GtkWidget *edit_user_form;
-GtkWidget *edit_user_main_screen;
-
 GtkWidget *username;
 GtkWidget *user_pseudonim;
-
-GtkWidget *edit_username_label;
-GtkWidget *edit_pseudo_label;
 
 // Variables that will replace old ones
 char *NewFirstName;
@@ -155,45 +149,20 @@ char *NewPseudonim;
 char *NewDescription;
 GdkPixbuf *NewAvatar;
 
-// Edit username screen
-GtkWidget *edit_username_event_screen;
-GtkWidget *edit_username_eventbox;
-GtkWidget *edit_username_icon;
-GtkWidget *change_fname_entry;
-GtkWidget *change_sname_entry;
-
-// Edit pseudonim screen
-GtkWidget *edit_pseudonim_event_screen;
-GtkWidget *edit_pseudo_eventbox;
-GtkWidget *edit_pseudo_icon;
-GtkWidget *change_pseudo_entry;
-
 void mx_create_edit_user_form(void);
 
 void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event);
 
-void edit_eventbox_click_event(GtkWidget *widget, GdkEventButton *event,
-    GtkWidget *data);
-
-void edit_username_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data);
-void edit_username_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data);
+void edit_username_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event, gpointer builder);
+void edit_username_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event, gpointer builder);
 void fname_entry_changed_event(GtkWidget *widget);
-void return_username_click_event(GtkWidget *widget, GdkEventButton *event,
-    GtkWidget *data);
-void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
-    GtkWidget *data);
+void commit_username_click_event(GtkWidget *widget, GdkEventButton *event, gpointer builder);
 
-void edit_pseudo_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data);
-void edit_pseudo_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data);
+void edit_pseudo_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event, gpointer builder);
+void edit_pseudo_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event, gpointer builder);
 void pseudo_entry_changed_event(GtkWidget *widget);
-void return_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
-    GtkWidget *data);
-void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
-    GtkWidget *data);
+void return_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event, gpointer builder);
+void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event, gpointer builder);
 
 void change_description_entry_change_event(GtkWidget *widget);
 
@@ -223,8 +192,8 @@ void mx_configure_left_header(void);
 void mx_configure_content_selection_area(void);
 void mx_create_message_enter_area(void);
 void mx_configure_settings_menu_area(void);
-void mx_configure_username_event_screen(void);
-void mx_configure_pseudonim_event_screen(void);
+void mx_configure_username_event_screen(GtkBuilder *builder);
+void mx_configure_pseudonim_event_screen(GtkBuilder *builder);
 void mx_tooltip(char *str, void *data);
 
 // Draw functions
