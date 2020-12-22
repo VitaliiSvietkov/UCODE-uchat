@@ -1,73 +1,69 @@
 #include "../../inc/uchat_client.h"
 
-void mx_configure_username_event_screen(void) {
+void return_username_click_event(GtkWidget *widget, GdkEventButton *event,
+    gpointer builder) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(builder, "edit_username_event_screen")));
+        gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(builder, "change_fname_entry")), NewFirstName);
+        gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(builder, "change_sname_entry")), NewSecondName);
+        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(builder, "edit_user_main_screen")));
+    }
+}
+
+void mx_configure_username_event_screen(GtkBuilder *builder) {
      
     // Return image
     //==================================================================================
-    GtkWidget *return_image_box = gtk_event_box_new();
+    GtkWidget *return_image_box = GTK_WIDGET(gtk_builder_get_object(builder, "return_image_box"));
     gtk_widget_set_name(GTK_WIDGET(return_image_box), "return_image_box");
     gtk_widget_set_size_request(GTK_WIDGET(return_image_box), 25, 25);
-    gtk_box_pack_start(GTK_BOX(edit_username_event_screen), return_image_box, FALSE, FALSE, 0);
-    gtk_widget_set_halign(GTK_WIDGET(return_image_box), GTK_ALIGN_START);
 
     g_signal_connect(G_OBJECT(return_image_box), "enter-notify-event",
         G_CALLBACK(activate_prelight), NULL);
     g_signal_connect(G_OBJECT(return_image_box), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), NULL);
     g_signal_connect(G_OBJECT(return_image_box), "button_press_event",
-        G_CALLBACK(return_username_click_event), edit_username_event_screen);
+        G_CALLBACK(return_username_click_event), builder);
     //==================================================================================
 
     // Draw avatar block
     //==================================================================================
-    GtkWidget *username_avatar = gtk_drawing_area_new();
+    GtkWidget *username_avatar = GTK_WIDGET(gtk_builder_get_object(builder, "username_avatar"));
     gtk_widget_set_size_request(GTK_WIDGET(username_avatar), 100, 100);
-    gtk_box_pack_start(GTK_BOX(edit_username_event_screen), username_avatar, FALSE, FALSE, 0);
-    gtk_widget_set_halign(GTK_WIDGET(username_avatar), GTK_ALIGN_CENTER);
-    g_signal_connect(G_OBJECT(username_avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &NewAvatar);
+    g_signal_connect(G_OBJECT(username_avatar), "draw", 
+        G_CALLBACK(mx_draw_event_image_avatar), &NewAvatar);
     //==================================================================================
 
     // "change first name" block
     //==================================================================================
-    GtkWidget *change_fname_label = gtk_label_new(text_for_labels[7]);
+    GtkWidget *change_fname_label = GTK_WIDGET(gtk_builder_get_object(builder, "change_fname_label"));
+    gtk_label_set_text(GTK_LABEL(change_fname_label), text_for_labels[7]);
     gtk_widget_set_name(GTK_WIDGET(change_fname_label), "edit_label");
-    gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_fname_label, FALSE, FALSE, 0);
-    gtk_widget_set_halign(GTK_WIDGET(change_fname_label), GTK_ALIGN_START);
-    gtk_widget_set_margin_top(GTK_WIDGET(change_fname_label), 30);
 
-    change_fname_entry = gtk_entry_new();
-    gtk_widget_set_sensitive(GTK_WIDGET(change_fname_entry), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(change_fname_entry), TRUE);
+    GtkWidget *change_fname_entry = GTK_WIDGET(gtk_builder_get_object(builder, "change_fname_entry"));
     gtk_widget_set_name(GTK_WIDGET(change_fname_entry), "edit_entry");
     gtk_entry_set_text(GTK_ENTRY(change_fname_entry), NewFirstName);
     gtk_widget_set_size_request(GTK_WIDGET(change_fname_entry), 400, 0);
-    gtk_entry_set_max_length(GTK_ENTRY(change_fname_entry), 15);
-    gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_fname_entry, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(change_fname_entry), "changed",
         G_CALLBACK(fname_entry_changed_event), NULL);
     //==================================================================================
 
     // "change second name" block
     //==================================================================================
-    GtkWidget *change_sname_label = gtk_label_new(text_for_labels[8]);
+    GtkWidget *change_sname_label = GTK_WIDGET(gtk_builder_get_object(builder, "change_sname_label"));
+    gtk_label_set_text(GTK_LABEL(change_sname_label), text_for_labels[8]);
     gtk_widget_set_name(GTK_WIDGET(change_sname_label), "edit_label");
-    gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_sname_label, FALSE, FALSE, 0);
-    gtk_widget_set_halign(GTK_WIDGET(change_sname_label), GTK_ALIGN_START);
 
-    change_sname_entry = gtk_entry_new();
-    gtk_widget_set_sensitive(GTK_WIDGET(change_sname_entry), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(change_sname_entry), TRUE);
+    GtkWidget *change_sname_entry = GTK_WIDGET(gtk_builder_get_object(builder, "change_sname_entry"));
     gtk_widget_set_name(GTK_WIDGET(change_sname_entry), "edit_entry");
     gtk_entry_set_text(GTK_ENTRY(change_sname_entry), NewSecondName);
     gtk_widget_set_size_request(GTK_WIDGET(change_sname_entry), 400, 0);
-    gtk_entry_set_max_length(GTK_ENTRY(change_sname_entry), 15);
-    gtk_box_pack_start(GTK_BOX(edit_username_event_screen), change_sname_entry, FALSE, FALSE, 0);
     //==================================================================================
 
     // Return buttons block
     //==================================================================================
     GtkWidget *return_buttons_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_pack_start(GTK_BOX(edit_username_event_screen), return_buttons_box, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_event_screen")), return_buttons_box, FALSE, FALSE, 0);
     gtk_widget_set_margin_top(GTK_WIDGET(return_buttons_box), 100);
 
     GtkWidget *commit_username_btn = gtk_button_new_with_label(text_for_labels[12]);
@@ -85,8 +81,8 @@ void mx_configure_username_event_screen(void) {
     gtk_widget_set_size_request(GTK_WIDGET(exit_username_btn), 100, 0);
 
     g_signal_connect(G_OBJECT(exit_username_btn), "button_press_event",
-        G_CALLBACK(return_username_click_event), edit_username_event_screen);
+        G_CALLBACK(return_username_click_event), (gpointer)builder);
     g_signal_connect(G_OBJECT(commit_username_btn), "button_press_event",
-        G_CALLBACK(commit_username_click_event), edit_username_event_screen);
+        G_CALLBACK(commit_username_click_event), (gpointer)builder);
     //==================================================================================
 }

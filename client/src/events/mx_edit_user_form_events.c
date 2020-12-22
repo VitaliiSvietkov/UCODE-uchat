@@ -43,18 +43,10 @@ void edit_username_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event,
 }
 
 void edit_username_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data) {
+    gpointer builder) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(edit_username_icon), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT);
-}
-
-void edit_eventbox_click_event(GtkWidget *widget, GdkEventButton *event,
-    GtkWidget *data) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_hide(GTK_WIDGET(edit_user_main_screen));
-        gtk_widget_show_all(GTK_WIDGET(data));
-    }
+    gtk_widget_unset_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_icon")), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_pen")), GTK_STATE_FLAG_PRELIGHT);
 }
 
 void fname_entry_changed_event(GtkWidget *widget) {
@@ -68,44 +60,36 @@ void fname_entry_changed_event(GtkWidget *widget) {
 
 
 
-void return_username_click_event(GtkWidget *widget, GdkEventButton *event,
-    GtkWidget *data) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_hide(GTK_WIDGET(data));
-        gtk_entry_set_text(GTK_ENTRY(change_fname_entry), NewFirstName);
-        gtk_entry_set_text(GTK_ENTRY(change_sname_entry), NewSecondName);
-        gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
-    }
-}
-
 void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
-    GtkWidget *data) {
+    gpointer builder) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1
-        && strlen(gtk_entry_get_text(GTK_ENTRY(change_fname_entry))) != 0) {
-        gtk_widget_hide(GTK_WIDGET(data));
+        && strlen(gtk_entry_get_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_fname_entry")))) != 0) {
+        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_event_screen")));
 
         free(NewFirstName);
         NewFirstName = NULL;
-        NewFirstName = mx_strjoin(NewFirstName, gtk_entry_get_text(GTK_ENTRY(change_fname_entry)));
+        NewFirstName = mx_strjoin(NewFirstName, 
+            gtk_entry_get_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_fname_entry"))));
 
         if (NewSecondName != NULL) {
             free(NewSecondName);
             NewSecondName = strdup("");
         }
-        if (strlen(gtk_entry_get_text(GTK_ENTRY(change_sname_entry))) != 0)
-            NewSecondName = mx_strjoin(NewSecondName, gtk_entry_get_text(GTK_ENTRY(change_sname_entry)));
+        if (strlen(gtk_entry_get_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_sname_entry")))) != 0)
+            NewSecondName = mx_strjoin(NewSecondName, 
+                gtk_entry_get_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_sname_entry"))));
 
-        gtk_entry_set_text(GTK_ENTRY(change_fname_entry), NewFirstName);
-        gtk_entry_set_text(GTK_ENTRY(change_sname_entry), NewSecondName);
+        gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_fname_entry")), NewFirstName);
+        gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_sname_entry")), NewSecondName);
         
 
         char *username_tmp = strdup(NewFirstName);
         username_tmp = mx_strjoin(username_tmp, " ");
         username_tmp = mx_strjoin(username_tmp, NewSecondName);
-        gtk_label_set_text(GTK_LABEL(edit_username_label), username_tmp);
+        gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_label")), username_tmp);
         free(username_tmp);
 
-        gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
+        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_user_main_screen")));
     }
 }
 
@@ -114,17 +98,17 @@ void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
 // Edit pseudonim field
 //============================================================================================
 void edit_pseudo_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data) {
+    gpointer builder) {
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(edit_pseudo_icon), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_widget_set_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudo_icon")), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_widget_set_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudo_pen")), GTK_STATE_FLAG_PRELIGHT, TRUE);
 }
 
 void edit_pseudo_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event,
-    GtkWidget *data) {
+    gpointer builder) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(edit_pseudo_icon), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(data), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudo_icon")), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudo_pen")), GTK_STATE_FLAG_PRELIGHT);
 }
 
 void pseudo_entry_changed_event(GtkWidget *widget) {
@@ -137,30 +121,30 @@ void pseudo_entry_changed_event(GtkWidget *widget) {
 }
 
 void return_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
-    GtkWidget *data) {
+    gpointer builder) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_hide(GTK_WIDGET(data));
-        gtk_entry_set_text(GTK_ENTRY(change_pseudo_entry), NewPseudonim);
-        gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
+        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudonim_event_screen")));
+        gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_pseudo_entry")), NewPseudonim);
+        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_user_main_screen")));
     }
 }
 
 void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
-    GtkWidget *data) {
+    gpointer builder) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1 
-        && strlen(gtk_entry_get_text(GTK_ENTRY(change_pseudo_entry))) >= 5) {
-        gtk_widget_hide(GTK_WIDGET(data));
+        && strlen(gtk_entry_get_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_pseudo_entry")))) >= 5) {
+        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudonim_event_screen")));
         if (NewPseudonim == NULL)
-            NewPseudonim = mx_strjoin(NewPseudonim, gtk_entry_get_text(GTK_ENTRY(change_pseudo_entry)));
+            NewPseudonim = mx_strjoin(NewPseudonim, gtk_entry_get_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_pseudo_entry"))));
         else {
             free(NewPseudonim);
             NewPseudonim = NULL;
-            NewPseudonim = mx_strjoin(NewPseudonim, gtk_entry_get_text(GTK_ENTRY(change_pseudo_entry)));
+            NewPseudonim = mx_strjoin(NewPseudonim, gtk_entry_get_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_pseudo_entry"))));
         }
-        gtk_entry_set_text(GTK_ENTRY(change_pseudo_entry), NewPseudonim);
+        gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_pseudo_entry")), NewPseudonim);
 
-        gtk_label_set_text(GTK_LABEL(edit_pseudo_label), NewPseudonim);
-        gtk_widget_show_all(GTK_WIDGET(edit_user_main_screen));
+        gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudo_label")), NewPseudonim);
+        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_user_main_screen")));
     }
 }
 //============================================================================================

@@ -1,70 +1,56 @@
 #include "../../inc/uchat_client.h"
 
-void mx_configure_pseudonim_event_screen(void) {
+void mx_configure_pseudonim_event_screen(GtkBuilder *builder) {
      
     // Return image
     //==================================================================================
-    GtkWidget *return_image_box = gtk_event_box_new();
+    GtkWidget *return_image_box = GTK_WIDGET(gtk_builder_get_object(builder, "return_image_box1"));
     gtk_widget_set_name(GTK_WIDGET(return_image_box), "return_image_box");
     gtk_widget_set_size_request(GTK_WIDGET(return_image_box), 25, 25);
-    gtk_box_pack_start(GTK_BOX(edit_pseudonim_event_screen), return_image_box, FALSE, FALSE, 0);
-    gtk_widget_set_halign(GTK_WIDGET(return_image_box), GTK_ALIGN_START);
 
     g_signal_connect(G_OBJECT(return_image_box), "enter-notify-event",
         G_CALLBACK(activate_prelight), NULL);
     g_signal_connect(G_OBJECT(return_image_box), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), NULL);
     g_signal_connect(G_OBJECT(return_image_box), "button_press_event",
-        G_CALLBACK(return_pseudonim_click_event), edit_pseudonim_event_screen);
+        G_CALLBACK(return_pseudonim_click_event), (gpointer)builder);
     //==================================================================================
 
     // Draw avatar block
     //==================================================================================
-    GtkWidget *pseudonim_avatar = gtk_drawing_area_new();
+    GtkWidget *pseudonim_avatar = GTK_WIDGET(gtk_builder_get_object(builder, "pseudonim_avatar"));
     gtk_widget_set_size_request(GTK_WIDGET(pseudonim_avatar), 100, 100);
-    gtk_box_pack_start(GTK_BOX(edit_pseudonim_event_screen), pseudonim_avatar, FALSE, FALSE, 0);
-    gtk_widget_set_halign(GTK_WIDGET(pseudonim_avatar), GTK_ALIGN_CENTER);
-    g_signal_connect(G_OBJECT(pseudonim_avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &NewAvatar);
+    g_signal_connect(G_OBJECT(pseudonim_avatar), "draw", 
+        G_CALLBACK(mx_draw_event_image_avatar), &NewAvatar);
     //==================================================================================
 
     // "change pseudonim" block
     //==================================================================================
-    GtkWidget *change_pseudo_label = gtk_label_new(text_for_labels[9]);
+    GtkWidget *change_pseudo_label = GTK_WIDGET(gtk_builder_get_object(builder, "change_pseudo_label"));
+    gtk_label_set_text(GTK_LABEL(change_pseudo_label), text_for_labels[9]);
     gtk_widget_set_name(GTK_WIDGET(change_pseudo_label), "edit_label");
-    gtk_box_pack_start(GTK_BOX(edit_pseudonim_event_screen), change_pseudo_label, FALSE, FALSE, 0);
-    gtk_widget_set_halign(GTK_WIDGET(change_pseudo_label), GTK_ALIGN_START);
-    gtk_widget_set_margin_top(GTK_WIDGET(change_pseudo_label), 69);
 
-    change_pseudo_entry = gtk_entry_new();
-    gtk_widget_set_sensitive(GTK_WIDGET(change_pseudo_entry), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(change_pseudo_entry), TRUE);
+    GtkWidget *change_pseudo_entry = GTK_WIDGET(gtk_builder_get_object(builder, "change_pseudo_entry"));
     gtk_widget_set_name(GTK_WIDGET(change_pseudo_entry), "edit_entry");
     gtk_entry_set_text(GTK_ENTRY(change_pseudo_entry), NewPseudonim);
     gtk_widget_set_size_request(GTK_WIDGET(change_pseudo_entry), 400, 0);
-    gtk_entry_set_max_length(GTK_ENTRY(change_pseudo_entry), 15);
-    gtk_box_pack_start(GTK_BOX(edit_pseudonim_event_screen), change_pseudo_entry, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(change_pseudo_entry), "changed",
         G_CALLBACK(pseudo_entry_changed_event), NULL);
     //==================================================================================
 
     // Additional info block
     //==================================================================================
-    GtkWidget *info_label = gtk_label_new(text_for_labels[10]);
-    gtk_label_set_max_width_chars(GTK_LABEL(info_label), 38);
+    GtkWidget *info_label = GTK_WIDGET(gtk_builder_get_object(builder, "info_label"));
+    gtk_label_set_text(GTK_LABEL(info_label), text_for_labels[10]);
     gtk_widget_set_name(GTK_WIDGET(info_label), "info_label");
-    gtk_box_pack_start(GTK_BOX(edit_pseudonim_event_screen), info_label, FALSE, FALSE, 0);
-    gtk_widget_set_halign(GTK_WIDGET(info_label), GTK_ALIGN_START);
     gtk_label_set_line_wrap(GTK_LABEL(info_label), TRUE);
     gtk_widget_set_size_request(GTK_WIDGET(info_label), 380, 0);
-    gtk_widget_set_margin_top(GTK_WIDGET(info_label), 0);
-    gtk_widget_set_margin_start(GTK_WIDGET(info_label), 20);
-    gtk_widget_set_margin_end(GTK_WIDGET(info_label), 20);
     //==================================================================================
 
     // Return buttons block
     //==================================================================================
     GtkWidget *return_buttons_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_pack_start(GTK_BOX(edit_pseudonim_event_screen), return_buttons_box, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(gtk_builder_get_object(builder, "edit_pseudonim_event_screen")), return_buttons_box, FALSE, FALSE, 0);
     gtk_widget_set_margin_top(GTK_WIDGET(return_buttons_box), 100);
 
     GtkWidget *commit_pseudonim_btn = gtk_button_new_with_label(text_for_labels[12]);
@@ -82,8 +68,8 @@ void mx_configure_pseudonim_event_screen(void) {
     gtk_widget_set_size_request(GTK_WIDGET(exit_pseudonim_btn), 100, 0);
 
     g_signal_connect(G_OBJECT(exit_pseudonim_btn), "button_press_event",
-        G_CALLBACK(return_pseudonim_click_event), edit_pseudonim_event_screen);
+        G_CALLBACK(return_pseudonim_click_event), (gpointer)builder);
     g_signal_connect(G_OBJECT(commit_pseudonim_btn), "button_press_event",
-        G_CALLBACK(commit_pseudonim_click_event), edit_pseudonim_event_screen);
+        G_CALLBACK(commit_pseudonim_click_event), (gpointer)builder);
     //==================================================================================
 }
