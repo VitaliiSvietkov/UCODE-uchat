@@ -15,15 +15,11 @@ all: install
 install: uchat
 
 uchat:
-	@clang -c -lsqlite3 -lpthread $(WFLGS) $(GTK_INC_FLAGS) $(SRCS) $(HDRS) $(GTK_LINK_FLAGS)
-	@mkdir obj
-	@mv *.o obj
-	@clang -lsqlite3 -lpthread $(GTK_INC_FLAGS) obj/*.o ../libraries/libmx/libmx.a $(GTK_LINK_FLAGS)
+	@clang -lsqlite3 -lpthread $(WFLGS) $(GTK_INC_FLAGS) $(SRCS) $(HDRS) $(GTK_LINK_FLAGS) ../libraries/libmx/libmx.a
 	@mv a.out ../$@
 
 clean:
 	@rm -rf inc/*.gch
-	@rm -rf obj
 
 uninstall: clean
 	@rm -rf ../uchat
