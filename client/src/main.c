@@ -30,7 +30,6 @@ int main(int argc, char *argv[]) {
 
     gtk_widget_show_all (window);
     mx_create_registration_menu();
-    gtk_widget_hide(GTK_WIDGET(chat_area));
 
     gtk_main();
 
