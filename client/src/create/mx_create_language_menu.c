@@ -19,9 +19,14 @@ void mx_create_language_menu(void) {
         return;
     }
 
+    GtkWidget *revealer = gtk_revealer_new();
+    gtk_revealer_set_transition_type(GTK_REVEALER(revealer), GTK_REVEALER_TRANSITION_TYPE_CROSSFADE);
+    gtk_container_add(GTK_CONTAINER(blackout), revealer);
+
     GtkWidget *language_form = GTK_WIDGET(gtk_builder_get_object(builder, "language_form"));
+    gtk_container_add(GTK_CONTAINER(revealer), language_form);
     gtk_widget_set_name(GTK_WIDGET(language_form), "edit_user_form");
-    gtk_container_add(GTK_CONTAINER(blackout), language_form);
+    //gtk_container_add(GTK_CONTAINER(blackout), language_form);
     g_signal_connect(G_OBJECT(blackout), "button_press_event",
         G_CALLBACK(blackout_destroy), language_form);
     
@@ -53,6 +58,7 @@ void mx_create_language_menu(void) {
         FALSE, FALSE, 0);
 
     gtk_widget_show_all(GTK_WIDGET(blackout));
+    gtk_revealer_set_reveal_child(GTK_REVEALER(revealer), TRUE);
 
     g_object_unref(G_OBJECT(builder));
 }

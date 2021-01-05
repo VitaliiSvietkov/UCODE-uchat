@@ -1,6 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-void login_activate(GtkWidget *widget) {
+static void login_activate(GtkWidget *widget) {
     gtk_widget_set_can_focus(GTK_WIDGET(password), TRUE);
     gtk_widget_grab_focus(GTK_WIDGET(password));
 }
@@ -15,6 +15,10 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_name(GTK_WIDGET(authorization_container), "authorization_container");
     gtk_fixed_put(GTK_FIXED(authorization_area), authorization_container, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(authorization_container), CUR_WIDTH, CUR_HEIGHT);
+
+    GtkWidget *revealer = gtk_revealer_new();
+    gtk_revealer_set_transition_type(GTK_REVEALER(revealer), GTK_REVEALER_TRANSITION_TYPE_CROSSFADE);
+    gtk_container_add(GTK_CONTAINER(authorization_container), revealer);
     //=================================================================================
 
 
@@ -25,7 +29,7 @@ void mx_create_registration_menu(void) {
     gtk_widget_set_name(GTK_WIDGET(main_authorization_menu), "registration_menu_form");
     gtk_widget_set_valign(GTK_WIDGET(main_authorization_menu), GTK_ALIGN_CENTER);
     gtk_widget_set_halign(GTK_WIDGET(main_authorization_menu), GTK_ALIGN_CENTER);
-    gtk_container_add(GTK_CONTAINER(authorization_container), main_authorization_menu);
+    gtk_container_add(GTK_CONTAINER(revealer), main_authorization_menu);
     //=================================================================================
 
     // Close button
@@ -326,4 +330,5 @@ void mx_create_registration_menu(void) {
     gtk_widget_hide(GTK_WIDGET(fail_inscription));
     gtk_widget_hide(GTK_WIDGET(fail_auto_inscription));
     gtk_widget_hide(GTK_WIDGET(registration_menu_2));
+    gtk_revealer_set_reveal_child(GTK_REVEALER(revealer), TRUE);
 }
