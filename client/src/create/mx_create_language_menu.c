@@ -1,5 +1,7 @@
 #include "../../inc/uchat_client.h"
 
+static void mx_language_close(GtkWidget *widget, GdkEventButton *event);
+
 void mx_create_language_menu(void) {
     // Create a blackout - a dark background behind the form
     //==================================================================================
@@ -61,4 +63,11 @@ void mx_create_language_menu(void) {
     gtk_revealer_set_reveal_child(GTK_REVEALER(revealer), TRUE);
 
     g_object_unref(G_OBJECT(builder));
+}
+
+static void mx_language_close(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_widget_destroy(GTK_WIDGET(blackout));
+        blackout = NULL;
+    }
 }

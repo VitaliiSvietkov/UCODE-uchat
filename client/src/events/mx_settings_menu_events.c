@@ -20,27 +20,6 @@ void edit_user_click(GtkWidget *widget, GdkEventButton *event) {
 }
 //=================================================================================
 
-// Account settings icon
-//=================================================================================
-void account_settings_enter_notify(GtkWidget *widget) {
-    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(account_settings_image.box), 
-        GTK_STATE_FLAG_PRELIGHT, FALSE);
-}
-
-void account_settings_leave_notify(GtkWidget *widget) {
-    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(account_settings_image.box), 
-        GTK_STATE_FLAG_PRELIGHT);
-}
-
-void account_settings_click(GtkWidget *widget, GdkEventButton *event) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        mx_create_account_settings_form();
-    }
-}
-//=================================================================================
-
 // Change_account icon
 //=================================================================================
 void change_account_enter_notify(GtkWidget *widget) {

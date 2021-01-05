@@ -172,15 +172,12 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event);
 // Account settings form
 //==========================================================================================
 void mx_create_account_settings_form(void);
-
 //==========================================================================================
 
 // Language
 //==========================================================================================
 GtkWidget *mx_language_create_box(char *path, char *name);
 void mx_create_language_menu(void);
-void mx_language_eventbox_click(GtkWidget *widget, GdkEventButton *event, char *name);
-void mx_language_close(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
 
@@ -220,10 +217,6 @@ void settings_click(GtkWidget *widget, GdkEventButton *event);
 void edit_user_enter_notify(GtkWidget *widget);
 void edit_user_leave_notify(GtkWidget *widget);
 void edit_user_click(GtkWidget *widget, GdkEventButton *event);
-
-void account_settings_enter_notify(GtkWidget *widget);
-void account_settings_leave_notify(GtkWidget *widget);
-void account_settings_click(GtkWidget *widget, GdkEventButton *event);
 
 void change_account_enter_notify(GtkWidget *widget);
 void change_account_leave_notify(GtkWidget *widget);

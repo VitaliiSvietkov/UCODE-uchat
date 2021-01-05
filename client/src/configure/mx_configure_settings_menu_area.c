@@ -1,5 +1,9 @@
 #include "../../inc/uchat_client.h"
 
+static void account_settings_enter_notify(GtkWidget *widget);
+static void account_settings_leave_notify(GtkWidget *widget);
+static void account_settings_click(GtkWidget *widget, GdkEventButton *event);
+
 void mx_configure_settings_menu_area(void) {
     settings_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(settings_menu), L_FIELD_WIDTH, CUR_HEIGHT - 105);
@@ -184,4 +188,22 @@ void mx_configure_settings_menu_area(void) {
     //============================================================================================== 
 
     active_leftbar_container = settings_menu;
+}
+
+static void account_settings_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_widget_set_state_flags(GTK_WIDGET(account_settings_image.box), 
+        GTK_STATE_FLAG_PRELIGHT, FALSE);
+}
+
+static void account_settings_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(account_settings_image.box), 
+        GTK_STATE_FLAG_PRELIGHT);
+}
+
+static void account_settings_click(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        mx_create_account_settings_form();
+    }
 }
