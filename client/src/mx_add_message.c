@@ -2,7 +2,7 @@
 
 void mx_add_message(GtkWidget *container, t_message *message) {
     GtkWidget *msg = mx_create_message(message);
-    if (message->usr_id == t_user.id) {
+    if (message->uid == t_user.id) {
         gtk_widget_set_halign(GTK_WIDGET(msg), GTK_ALIGN_END);
         gtk_widget_set_margin_end(GTK_WIDGET(msg), 5);
     }

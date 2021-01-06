@@ -32,7 +32,9 @@ int main(int argc, char *argv[]) {
     mx_create_registration_menu();
 
     gtk_main();
-
+    if (curr_room_msg_head != NULL)
+        mx_clear_message_list(&curr_room_msg_head);
+    
     g_object_unref(G_OBJECT(t_user.avatar));
     free(t_user.FirstName);
     free(t_user.SecondName);

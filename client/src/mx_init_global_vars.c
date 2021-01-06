@@ -11,6 +11,7 @@ void mx_init_global_vars(void) {
     blackout = NULL;
 
     // Chat variables
+    curr_room_msg_head = NULL;
     message_enter_area = NULL;
     right_container = NULL;
     more_box = NULL;

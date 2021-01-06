@@ -37,7 +37,7 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, char *filename) {
         msg->text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
     else
         msg->text = NULL;
-    msg->usr_id = t_user.id;
+    msg->uid = t_user.id;
     msg->image = mx_get_pixbuf_with_size(filename, 300, 300); 
     mx_add_message(messages_box, msg);
 
@@ -73,7 +73,7 @@ void mx_send_message_on_enter(GtkWidget *widget) {
         t_message *msg = (t_message *)malloc(sizeof(t_message));
         msg->text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
         msg->image = NULL;
-        msg->usr_id = t_user.id;
+        msg->uid = t_user.id;
         mx_add_message(messages_box, msg);
         free(msg->text);
         free(msg);
@@ -90,7 +90,7 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
             t_message *msg = (t_message *)malloc(sizeof(t_message));
             msg->text = strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
             msg->image = NULL;
-            msg->usr_id = t_user.id;
+            msg->uid = t_user.id;
             mx_add_message(messages_box, msg);
             free(msg->text);
             free(msg);

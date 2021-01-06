@@ -40,8 +40,16 @@ typedef struct s_message
 {
     GdkPixbuf *image;
     char *text;
-    int usr_id;
+    int uid;
+    struct s_message *next;
 }              t_message;
+
+t_message *curr_room_msg_head;
+void mx_del_message_node(t_message **data);
+void mx_clear_message_list(t_message **head);
+void mx_push_back_message(t_message **head, char *text, int uid, GdkPixbuf *image);
+t_message *mx_new_message_node(char *text, int uid, GdkPixbuf *image);
+
 
 GtkWidget *mx_create_message(t_message *data);
 void mx_add_message(GtkWidget *container, t_message *message);
