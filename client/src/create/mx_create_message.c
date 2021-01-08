@@ -16,6 +16,8 @@ GtkWidget *mx_create_message(t_message *data) {
             gdk_pixbuf_get_height(GDK_PIXBUF(data->image)));
         g_signal_connect(G_OBJECT(image), "draw", G_CALLBACK(draw_image), data->image);
         gtk_box_pack_start(GTK_BOX(box), image, FALSE, FALSE, 0);
+        if (data->text == NULL)
+            gtk_widget_set_name(GTK_WIDGET(eventbox), NULL);
     }
     if (data->text != NULL) {
         GtkWidget *label = gtk_label_new(data->text);

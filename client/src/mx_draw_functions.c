@@ -83,14 +83,12 @@ void draw_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf *data) {
     img_w = alloc.width;
     img_h = alloc.height;
 
-    gdk_cairo_set_source_pixbuf(cr, data, 0, 0);
-
     double x = 0,
         y = 0,
         width = img_w,
         height = img_h,
         aspect = 1.0,                       /* aspect ratio */
-        corner_radius = 12;         /* and corner curvature radius */
+        corner_radius = 12;                 /* and corner curvature radius */
     double radius = corner_radius / aspect;
     double degrees = M_PI / 180.0;
 
@@ -101,12 +99,6 @@ void draw_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf *data) {
     cairo_arc (cr, x + radius, y + radius, radius, 180 * degrees, 270 * degrees);
     cairo_close_path (cr);
 
+    gdk_cairo_set_source_pixbuf(cr, data, 0, 0);
     cairo_fill(cr);
-}
-
-gboolean mx_draw_event_authorization_container(GtkWidget *widget, cairo_t *cr) {
-    cairo_set_source_rgba(cr, MX_1F1F1F, MX_1F1F1F, MX_1F1F1F, 1);
-    cairo_rectangle(cr, 0, 0, CUR_WIDTH, CUR_HEIGHT);
-    cairo_fill(cr);
-    return FALSE;
 }

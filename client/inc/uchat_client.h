@@ -189,7 +189,6 @@ void mx_tooltip(char *str, void *data);
 // Draw functions
 //==========================================================================================
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
-gboolean mx_draw_event_authorization_container(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_message_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
