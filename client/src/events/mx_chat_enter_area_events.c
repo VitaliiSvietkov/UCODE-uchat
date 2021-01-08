@@ -32,20 +32,16 @@ void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
 }
 
 void mx_attach_send_message_on_enter(GtkWidget *widget, char *filename) {
-    t_message *msg = (t_message *)malloc(sizeof(t_message));
+    char *text = NULL;
     if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0)
-        msg->text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
-    else
-        msg->text = NULL;
-    msg->uid = t_user.id;
-    msg->image = mx_get_pixbuf_with_size(filename, 300, 300); 
+        text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
+    
+    t_message *msg = mx_push_back_message(&curr_room_msg_head,
+        text, 
+        t_user.id, 
+        mx_get_pixbuf_with_size(filename, 300, 300));
     mx_add_message(messages_box, msg);
 
-    if (msg->text != NULL)
-        free(msg->text);
-    g_object_unref(G_OBJECT(msg->image));
-    free(msg);
-    
     gtk_widget_destroy(GTK_WIDGET(blackout));
     blackout = NULL;
 
@@ -70,13 +66,11 @@ void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
 
 void mx_send_message_on_enter(GtkWidget *widget) {
     if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0) {
-        t_message *msg = (t_message *)malloc(sizeof(t_message));
-        msg->text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
-        msg->image = NULL;
-        msg->uid = t_user.id;
+        t_message *msg = mx_push_back_message(&curr_room_msg_head,
+            strdup(gtk_entry_get_text(GTK_ENTRY(widget))), 
+            t_user.id, 
+            NULL);
         mx_add_message(messages_box, msg);
-        free(msg->text);
-        free(msg);
         gtk_entry_set_text(GTK_ENTRY(widget), "");
     }
 }
@@ -87,13 +81,11 @@ void mx_send_message_on_enter(GtkWidget *widget) {
 void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(entry))) > 0) {
-            t_message *msg = (t_message *)malloc(sizeof(t_message));
-            msg->text = strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
-            msg->image = NULL;
-            msg->uid = t_user.id;
+            t_message *msg = mx_push_back_message(&curr_room_msg_head,
+                strdup(gtk_entry_get_text(GTK_ENTRY(entry))), 
+                t_user.id, 
+                NULL);
             mx_add_message(messages_box, msg);
-            free(msg->text);
-            free(msg);
             gtk_entry_set_text(GTK_ENTRY(entry), "");
         }
     }

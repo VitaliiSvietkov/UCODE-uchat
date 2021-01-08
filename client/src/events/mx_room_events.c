@@ -42,11 +42,11 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
             if (message_enter_area != NULL) {
                 gtk_widget_destroy(GTK_WIDGET(message_enter_area));
                 message_enter_area = NULL;
-            }
-            if (right_container != NULL) {
                 gtk_widget_destroy(GTK_WIDGET(right_container));
                 right_container = NULL;
             }
+            if (curr_room_msg_head != NULL)
+                mx_clear_message_list(&curr_room_msg_head);
             break;
         default:
             break;

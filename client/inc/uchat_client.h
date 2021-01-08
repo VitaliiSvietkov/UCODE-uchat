@@ -47,7 +47,7 @@ typedef struct s_message
 t_message *curr_room_msg_head;
 void mx_del_message_node(t_message **data);
 void mx_clear_message_list(t_message **head);
-void mx_push_back_message(t_message **head, char *text, int uid, GdkPixbuf *image);
+t_message *mx_push_back_message(t_message **head, char *text, int uid, GdkPixbuf *image);
 t_message *mx_new_message_node(char *text, int uid, GdkPixbuf *image);
 
 

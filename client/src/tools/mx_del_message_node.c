@@ -2,7 +2,9 @@
 
 void mx_del_message_node(t_message **data) {
     free((*data)->text);
-    g_object_unref(G_OBJECT((*data)->image));
+    if ((*data)->image != NULL)
+        g_object_unref(G_OBJECT((*data)->image));
+    (*data)->next = NULL;
     free(*data);
     *data = NULL;
 }

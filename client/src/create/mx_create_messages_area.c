@@ -10,9 +10,9 @@ void mx_create_messages_area(void) {
     gtk_widget_set_size_request(GTK_WIDGET(messages_box), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 50);
     gtk_container_add(GTK_CONTAINER(right_container), messages_box);
 
-    mx_push_back_message(&curr_room_msg_head, mx_strdup("HELLOJDFOSF"), t_user.id, 
+    t_message *msg = mx_push_back_message(&curr_room_msg_head, mx_strdup("HELLOJDFOSF"), t_user.id, 
         mx_get_pixbuf_with_size("client/img/avatar.jpg", 300, 300));
-    mx_add_message(messages_box, curr_room_msg_head);
+    mx_add_message(messages_box, msg);
 
 
     gtk_widget_show_all(GTK_WIDGET(right_container));
