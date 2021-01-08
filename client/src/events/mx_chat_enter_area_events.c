@@ -31,7 +31,7 @@ void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
     }
 }
 
-void mx_attach_send_message_on_enter(GtkWidget *widget, char *filename) {
+void mx_attach_send_message_on_enter(GtkWidget *widget, GdkPixbuf *pixbuf) {
     char *text = NULL;
     if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0)
         text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
@@ -39,7 +39,7 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, char *filename) {
     t_message *msg = mx_push_back_message(&curr_room_msg_head,
         text, 
         t_user.id, 
-        mx_get_pixbuf_with_size(filename, 300, 300));
+        pixbuf);
     mx_add_message(messages_box, msg);
 
     gtk_widget_destroy(GTK_WIDGET(blackout));

@@ -36,21 +36,6 @@ gint L_FIELD_WIDTH;
 
 // A message
 //==========================================================================================
-typedef struct s_message
-{
-    GdkPixbuf *image;
-    char *text;
-    int uid;
-    struct s_message *next;
-}              t_message;
-
-t_message *curr_room_msg_head;
-void mx_del_message_node(t_message **data);
-void mx_clear_message_list(t_message **head);
-t_message *mx_push_back_message(t_message **head, char *text, int uid, GdkPixbuf *image);
-t_message *mx_new_message_node(char *text, int uid, GdkPixbuf *image);
-
-
 GtkWidget *mx_create_message(t_message *data);
 void mx_add_message(GtkWidget *container, t_message *message);
 //==========================================================================================
@@ -209,6 +194,7 @@ gboolean mx_draw_event_message_enter_area(GtkWidget *widget, cairo_t *cr, gpoint
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
 gboolean mx_draw_event_round_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
+void draw_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf *data);
 //==========================================================================================
 
 // Event callback functions
@@ -270,7 +256,7 @@ void room_close(GtkWidget *widget, GdkEventKey *event);
 void mx_create_messages_area(void);
 
 void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
-void mx_attach_send_message_on_enter(GtkWidget *widget, char *filename);
+void mx_attach_send_message_on_enter(GtkWidget *widget, GdkPixbuf *pixbuf);
 void mx_create_attach_form(GtkWidget *entry, char *filename);
 
 void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);

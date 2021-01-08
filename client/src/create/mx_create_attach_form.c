@@ -20,10 +20,16 @@ void mx_create_attach_form(GtkWidget *entry, char *filename) {
 
     // Image preview
     //==================================================================================
-    GdkPixbuf *pixbuf = mx_get_pixbuf_with_size(filename, 300, 300);
-    GtkWidget *image = gtk_image_new_from_pixbuf(GDK_PIXBUF(pixbuf));
-    g_object_unref(G_OBJECT(pixbuf));
-    gtk_box_pack_start(GTK_BOX(attach_container), image, FALSE, FALSE, 0);
+    GdkPixbuf *pixbuf = mx_create_pixbuf(filename);
+    pixbuf = mx_size_image_down(pixbuf);
+
+    GtkWidget *image = gtk_drawing_area_new();
+    gtk_widget_set_halign(GTK_WIDGET(image), GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(GTK_WIDGET(image), gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf)), 
+        gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf)));
+    g_signal_connect(G_OBJECT(image), "draw", G_CALLBACK(draw_image), pixbuf);
+
+    gtk_box_pack_start(GTK_BOX(attach_container), image, TRUE, TRUE, 0);
     //==================================================================================
 
     // Entry for a message
@@ -42,7 +48,7 @@ void mx_create_attach_form(GtkWidget *entry, char *filename) {
     gtk_box_pack_start(GTK_BOX(entry_container), message_entry, TRUE, TRUE, 0);
 
     g_signal_connect(G_OBJECT(message_entry), "activate", 
-        G_CALLBACK(mx_attach_send_message_on_enter), filename);
+        G_CALLBACK(mx_attach_send_message_on_enter), pixbuf);
     g_signal_connect(G_OBJECT(message_entry), "enter-notify-event",
         G_CALLBACK(activate_prelight), NULL);
     g_signal_connect(G_OBJECT(message_entry), "leave-notify-event",
