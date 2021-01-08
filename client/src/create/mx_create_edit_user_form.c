@@ -1,20 +1,9 @@
 #include "../../inc/uchat_client.h"
 
-void edit_username_click_event(GtkWidget *widget, GdkEventButton *event,
-    gpointer builder) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_user_main_screen")));
-        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_event_screen")));
-    }
-}
-
-void edit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
-    gpointer builder) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_user_main_screen")));
-        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudonim_event_screen")));
-    }
-}
+static void edit_username_click_event(GtkWidget *widget, GdkEventButton *event,
+    gpointer builder);
+static void edit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
+    gpointer builder);
 
 void mx_create_edit_user_form(void) {    
     // Create a blackout - a dark background behind the form
@@ -216,4 +205,20 @@ void mx_create_edit_user_form(void) {
     gtk_widget_grab_focus(GTK_WIDGET(chat_area));
 
     //g_object_unref(G_OBJECT(builder));
+}
+
+static void edit_username_click_event(GtkWidget *widget, GdkEventButton *event,
+    gpointer builder) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_user_main_screen")));
+        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_event_screen")));
+    }
+}
+
+static void edit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
+    gpointer builder) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_user_main_screen")));
+        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudonim_event_screen")));
+    }
 }
