@@ -26,8 +26,14 @@ void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
         }
         gtk_widget_destroy (dialog);
 
-        if (filename != NULL)
-            mx_create_attach_form(entry, filename);
+        if (filename != NULL) {
+            struct stat buf;
+            stat(filename, &buf);
+            if (buf.st_size < 20971520) // > 20mb
+                mx_create_attach_form(entry, filename);
+            else
+                mx_run_error_pop_up("The file is too big!");
+        }
     }
 }
 

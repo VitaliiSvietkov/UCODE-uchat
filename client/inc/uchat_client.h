@@ -185,6 +185,7 @@ void mx_configure_settings_menu_area(void);
 void mx_configure_username_event_screen(GtkBuilder *builder);
 void mx_configure_pseudonim_event_screen(GtkBuilder *builder);
 void mx_tooltip(char *str, void *data);
+void mx_run_error_pop_up(const char *text);
 
 // Draw functions
 //==========================================================================================

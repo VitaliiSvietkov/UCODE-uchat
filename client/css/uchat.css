@@ -25,10 +25,12 @@
    background-color: rgba(31, 31, 31, 0.6);
 }
 
-@keyframes fade {
-    0% {opacity: 0;}
-    75% {opacity: 0.4;}
-    100% {opacity: 1;}
+#pop_up_error {
+    background: #1f1f1f;
+    color: #e1e1e1;
+    border: 1.5px solid #e1e1e1;
+    border-radius: 12px;
+    padding: 20px 10px 20px 10px; 
 }
 
 @keyframes gradient {
