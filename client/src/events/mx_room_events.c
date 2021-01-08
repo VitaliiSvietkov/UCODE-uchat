@@ -12,6 +12,9 @@ void room_click(GtkWidget *widget, GdkEventButton *event) {
         }
         mx_create_messages_area();
         mx_create_message_enter_area();
+
+        gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
+        gtk_widget_grab_focus(GTK_WIDGET(chat_area));
     }
 }
 
@@ -37,6 +40,9 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
                     NewSecondName = NULL;
                 }
                 blackout = NULL;
+
+                gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
+                gtk_widget_grab_focus(GTK_WIDGET(chat_area));
                 break;
             }
             if (message_enter_area != NULL) {

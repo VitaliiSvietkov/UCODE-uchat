@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 static void error_msg(void) {
 	char *msg = "mx_string_copy error| one of the values is NULL";
