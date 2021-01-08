@@ -12,6 +12,9 @@ void room_click(GtkWidget *widget, GdkEventButton *event) {
         }
         mx_create_messages_area();
         mx_create_message_enter_area();
+
+        gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
+        gtk_widget_grab_focus(GTK_WIDGET(chat_area));
     }
 }
 
@@ -37,16 +40,19 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
                     NewSecondName = NULL;
                 }
                 blackout = NULL;
+
+                gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
+                gtk_widget_grab_focus(GTK_WIDGET(chat_area));
                 break;
             }
             if (message_enter_area != NULL) {
                 gtk_widget_destroy(GTK_WIDGET(message_enter_area));
                 message_enter_area = NULL;
-            }
-            if (right_container != NULL) {
                 gtk_widget_destroy(GTK_WIDGET(right_container));
                 right_container = NULL;
             }
+            if (curr_room_msg_head != NULL)
+                mx_clear_message_list(&curr_room_msg_head);
             break;
         default:
             break;

@@ -1,5 +1,7 @@
 #include "../inc/uchat_client.h"
 
+static void mx_language_eventbox_click(GtkWidget *widget, GdkEventButton *event, char *name);
+
 GtkWidget *mx_language_create_box(char *path, char *name) {
     GtkWidget *eventbox = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(eventbox), 400, 60);
@@ -36,4 +38,23 @@ GtkWidget *mx_language_create_box(char *path, char *name) {
         G_CALLBACK(mx_language_eventbox_click), name);
 
     return eventbox;
+}
+
+static void mx_language_eventbox_click(GtkWidget *widget, GdkEventButton *event, char *name) {
+    if (!mx_strcmp(name, "English"))
+        language = 0;
+    else if (!mx_strcmp(name, "Русский"))
+        language = 1;
+    else
+        language = 2;
+    mx_edit_language(language);
+    mx_get_language_arr();
+    gtk_entry_set_text(GTK_ENTRY(entry_search), text_for_labels[13]);
+    t_labels *temp = labels_head->next;
+    while (temp != NULL) {
+        gtk_label_set_text(GTK_LABEL(temp->data), text_for_labels[temp->index]);
+        temp = temp->next;
+    }
+    gtk_widget_destroy(GTK_WIDGET(blackout));
+    blackout = NULL;
 }

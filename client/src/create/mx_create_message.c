@@ -2,7 +2,7 @@
 
 GtkWidget *mx_create_message(t_message *data) {
     GtkWidget *eventbox = gtk_event_box_new();
-    if (data->usr_id == t_user.id)
+    if (data->uid == t_user.id)
         gtk_widget_set_name(GTK_WIDGET(eventbox), "usr_message");
     else
         gtk_widget_set_name(GTK_WIDGET(eventbox), "message");
@@ -11,9 +11,13 @@ GtkWidget *mx_create_message(t_message *data) {
     gtk_container_add(GTK_CONTAINER(eventbox), box);
 
     if (data->image != NULL) {
-        GtkWidget *image = gtk_image_new_from_pixbuf(GDK_PIXBUF(gdk_pixbuf_scale_simple(data->image, 
-            300, 300, GDK_INTERP_BILINEAR)));
+        GtkWidget *image = gtk_drawing_area_new();
+        gtk_widget_set_size_request(GTK_WIDGET(image), gdk_pixbuf_get_width(GDK_PIXBUF(data->image)), 
+            gdk_pixbuf_get_height(GDK_PIXBUF(data->image)));
+        g_signal_connect(G_OBJECT(image), "draw", G_CALLBACK(draw_image), data->image);
         gtk_box_pack_start(GTK_BOX(box), image, FALSE, FALSE, 0);
+        if (data->text == NULL)
+            gtk_widget_set_name(GTK_WIDGET(eventbox), NULL);
     }
     if (data->text != NULL) {
         GtkWidget *label = gtk_label_new(data->text);

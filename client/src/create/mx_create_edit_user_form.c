@@ -1,20 +1,9 @@
 #include "../../inc/uchat_client.h"
 
-void edit_username_click_event(GtkWidget *widget, GdkEventButton *event,
-    gpointer builder) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_user_main_screen")));
-        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_event_screen")));
-    }
-}
-
-void edit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
-    gpointer builder) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_user_main_screen")));
-        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudonim_event_screen")));
-    }
-}
+static void edit_username_click_event(GtkWidget *widget, GdkEventButton *event,
+    gpointer builder);
+static void edit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
+    gpointer builder);
 
 void mx_create_edit_user_form(void) {    
     // Create a blackout - a dark background behind the form
@@ -23,6 +12,10 @@ void mx_create_edit_user_form(void) {
     gtk_widget_set_name(GTK_WIDGET(blackout), "blackout");
     gtk_fixed_put(GTK_FIXED(chat_area), blackout, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(blackout), CUR_WIDTH, CUR_HEIGHT);
+
+    GtkWidget *revealer = gtk_revealer_new();
+    gtk_revealer_set_transition_type(GTK_REVEALER(revealer), GTK_REVEALER_TRANSITION_TYPE_CROSSFADE);
+    gtk_container_add(GTK_CONTAINER(blackout), revealer);
     //==================================================================================
 
     NewFirstName = strdup(t_user.FirstName);
@@ -46,7 +39,7 @@ void mx_create_edit_user_form(void) {
     
     GtkWidget *edit_user_form = GTK_WIDGET(gtk_builder_get_object(builder, "edit_user_form"));
     gtk_widget_set_name(GTK_WIDGET(edit_user_form), "edit_user_form");
-    gtk_container_add(GTK_CONTAINER(blackout), edit_user_form);
+    gtk_container_add(GTK_CONTAINER(revealer), edit_user_form);
     g_signal_connect(G_OBJECT(blackout), "button_press_event",
         G_CALLBACK(blackout_destroy), edit_user_form);
 
@@ -205,10 +198,27 @@ void mx_create_edit_user_form(void) {
     //==================================================================================
 
     gtk_widget_show_all(GTK_WIDGET(blackout));
+    gtk_revealer_set_reveal_child(GTK_REVEALER(revealer), TRUE);
     gtk_widget_hide(GTK_WIDGET(edit_username_event_screen));
     gtk_widget_hide(GTK_WIDGET(edit_pseudonim_event_screen));
     gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
     gtk_widget_grab_focus(GTK_WIDGET(chat_area));
 
     //g_object_unref(G_OBJECT(builder));
+}
+
+static void edit_username_click_event(GtkWidget *widget, GdkEventButton *event,
+    gpointer builder) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_user_main_screen")));
+        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_event_screen")));
+    }
+}
+
+static void edit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
+    gpointer builder) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_user_main_screen")));
+        gtk_widget_show_all(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudonim_event_screen")));
+    }
 }

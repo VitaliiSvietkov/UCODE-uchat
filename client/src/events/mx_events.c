@@ -49,6 +49,9 @@ void blackout_destroy(GtkWidget *widget, GdkEventButton *event, GtkWidget *box) 
                 NewSecondName = NULL;
             }
         }
+
+        gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
+        gtk_widget_grab_focus(GTK_WIDGET(chat_area));
     }
 }
 //==============================================================
@@ -71,6 +74,9 @@ void close_image_click_event(GtkWidget *widget, GdkEventButton *event) {
         NewSecondName = NULL;
         gtk_widget_destroy(GTK_WIDGET(blackout));
         blackout = NULL;
+
+        gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
+        gtk_widget_grab_focus(GTK_WIDGET(chat_area));
     }
 }
 //========================================================

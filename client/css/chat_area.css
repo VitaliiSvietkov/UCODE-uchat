@@ -4,28 +4,29 @@
 }
 
 #usr_message {
-    background: #A6A5A5;
-    color: #1f1f1f;    
+    /*background: #A6A5A5;*/
+    background: #1f1f1f;
+    color: #e1e1e1; 
     border-radius: 12px;
 }
 
 #message {
-    background: #A6A5A5;
-    color: #1f1f1f;
-    border-radius: 12px;
-}
-
-#attach_container {
+    color: #e1e1e1;
     background: #1f1f1f;
-    box-shadow: 0px 0px 5px 2px #e1e1e1;
+    border-radius: 12px;
 }
 
 #attach_entry {
     box-shadow: none;
-    background: none;
-    border: none;
+    background: #1f1f1f;
+    border: 1px solid #e1e1e1;
     color:#e1e1e1;
-    border-radius: 0px;
+    border-radius: 8px;
+    transition: all .2s;
+}
+#attach_entry:hover {
+    border: 2px solid #e1e1e1;
+    border-radius: 12px;
 }
 
 #more_box {

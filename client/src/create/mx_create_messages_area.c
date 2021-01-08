@@ -10,14 +10,12 @@ void mx_create_messages_area(void) {
     gtk_widget_set_size_request(GTK_WIDGET(messages_box), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 50);
     gtk_container_add(GTK_CONTAINER(right_container), messages_box);
 
-    t_message *test = (t_message *)malloc(sizeof(t_message));
-    test->text = strdup("HELLOLJJGKLJDS!");
-    test->image = mx_get_pixbuf_with_size("client/img/avatar.jpg", 300, 300);
-    test->usr_id = t_user.id;
-    mx_add_message(messages_box, test);
-    free(test->text);
-    g_object_unref(G_OBJECT(test->image));
-    free(test);
+    GdkPixbuf *pixbuf = mx_create_pixbuf("client/img/avatar.jpg");
+    pixbuf = mx_size_image_down(pixbuf);
+    t_message *msg = mx_push_back_message(&curr_room_msg_head, mx_strdup("HELLOJDFOSF"), t_user.id, 
+        pixbuf);
+    mx_add_message(messages_box, msg);
+
 
     gtk_widget_show_all(GTK_WIDGET(right_container));
 }

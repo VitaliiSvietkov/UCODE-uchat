@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 void mx_write_photo_to_bd(char *path){
     FILE *fp = fopen(path, "rb");

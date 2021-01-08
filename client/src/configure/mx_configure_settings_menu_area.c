@@ -1,5 +1,9 @@
 #include "../../inc/uchat_client.h"
 
+static void account_settings_enter_notify(GtkWidget *widget);
+static void account_settings_leave_notify(GtkWidget *widget);
+static void account_settings_click(GtkWidget *widget, GdkEventButton *event);
+
 void mx_configure_settings_menu_area(void) {
     settings_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(settings_menu), L_FIELD_WIDTH, CUR_HEIGHT - 105);
@@ -46,6 +50,7 @@ void mx_configure_settings_menu_area(void) {
     //==============================================================================================
     GtkWidget *edit_user_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(edit_user_eventbox), "setting_menu_eventbox");
+    gtk_widget_set_size_request(GTK_WIDGET(edit_user_eventbox), L_FIELD_WIDTH, 50);
     GtkWidget *edit_user_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(edit_user_box), "change_box");
     gtk_container_add(GTK_CONTAINER(edit_user_eventbox), edit_user_box);
@@ -71,6 +76,7 @@ void mx_configure_settings_menu_area(void) {
     //==============================================================================================
     GtkWidget *change_account_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(change_account_eventbox), "setting_menu_eventbox");
+    gtk_widget_set_size_request(GTK_WIDGET(change_account_eventbox), L_FIELD_WIDTH, 50);
     GtkWidget *change_account_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(change_account_box), "change_box");
     gtk_container_add(GTK_CONTAINER(change_account_eventbox), change_account_box);
@@ -96,6 +102,7 @@ void mx_configure_settings_menu_area(void) {
     //==============================================================================================
     GtkWidget *account_settings_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(account_settings_eventbox), "setting_menu_eventbox");
+    gtk_widget_set_size_request(GTK_WIDGET(account_settings_eventbox), L_FIELD_WIDTH, 50);
     GtkWidget *account_settings_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(account_settings_box), "change_box");
     gtk_container_add(GTK_CONTAINER(account_settings_eventbox), account_settings_box);
@@ -121,6 +128,7 @@ void mx_configure_settings_menu_area(void) {
     //==============================================================================================
     GtkWidget *chat_settings_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(chat_settings_eventbox), "setting_menu_eventbox");
+    gtk_widget_set_size_request(GTK_WIDGET(chat_settings_eventbox), L_FIELD_WIDTH, 50);
     GtkWidget *chat_settings_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(chat_settings_box), "change_box");
     gtk_container_add(GTK_CONTAINER(chat_settings_eventbox), chat_settings_box);
@@ -144,6 +152,7 @@ void mx_configure_settings_menu_area(void) {
     //==============================================================================================
     GtkWidget *language_eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(language_eventbox), "setting_menu_eventbox");
+    gtk_widget_set_size_request(GTK_WIDGET(language_eventbox), L_FIELD_WIDTH, 50);
     GtkWidget *language_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(language_box), "language_box");
     gtk_container_add(GTK_CONTAINER(language_eventbox), language_box);
@@ -179,4 +188,22 @@ void mx_configure_settings_menu_area(void) {
     //============================================================================================== 
 
     active_leftbar_container = settings_menu;
+}
+
+static void account_settings_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_widget_set_state_flags(GTK_WIDGET(account_settings_image.box), 
+        GTK_STATE_FLAG_PRELIGHT, FALSE);
+}
+
+static void account_settings_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(account_settings_image.box), 
+        GTK_STATE_FLAG_PRELIGHT);
+}
+
+static void account_settings_click(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        mx_create_account_settings_form();
+    }
 }

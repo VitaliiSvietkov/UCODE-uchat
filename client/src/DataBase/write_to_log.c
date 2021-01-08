@@ -1,4 +1,4 @@
-#include "../inc/uchat_client.h"
+#include "../../inc/uchat_client.h"
 
 /*
  * Function creat log-file (if does not exist) and write log msg to the
