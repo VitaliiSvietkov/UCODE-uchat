@@ -12,7 +12,6 @@ void mx_create_attach_form(GtkWidget *entry, char *filename) {
     gtk_container_add(GTK_CONTAINER(blackout), attach_container);
     gtk_widget_set_valign(GTK_WIDGET(attach_container), GTK_ALIGN_CENTER);
     gtk_widget_set_halign(GTK_WIDGET(attach_container), GTK_ALIGN_CENTER);
-    gtk_widget_set_size_request(GTK_WIDGET(attach_container), 300, 300);
 
     g_signal_connect(G_OBJECT(blackout), "button_press_event",
         G_CALLBACK(blackout_destroy), attach_container);
