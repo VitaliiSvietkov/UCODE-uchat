@@ -1,8 +1,10 @@
 #include "../../inc/uchat_client.h"
 
+static void message_click(GtkWidget *widget, GdkEventButton *event, t_message *data);
+
 GtkWidget *mx_create_message(t_message *data) {
     GtkWidget *eventbox = gtk_event_box_new();
-    if (data->uid == t_user.id)
+    if (data->uid == (unsigned int)t_user.id)
         gtk_widget_set_name(GTK_WIDGET(eventbox), "usr_message");
     else
         gtk_widget_set_name(GTK_WIDGET(eventbox), "message");
@@ -29,5 +31,15 @@ GtkWidget *mx_create_message(t_message *data) {
         gtk_widget_set_margin_bottom(GTK_WIDGET(label), 10);
     }
 
+    g_signal_connect(G_OBJECT(eventbox), "button_press_event",
+        G_CALLBACK(message_click), data);
+
     return eventbox;
+}
+
+static void message_click(GtkWidget *widget, GdkEventButton *event, t_message *data) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
+        gtk_widget_destroy(GTK_WIDGET(widget));
+        mx_remove_message(&curr_room_msg_head, data->id);
+    }
 }

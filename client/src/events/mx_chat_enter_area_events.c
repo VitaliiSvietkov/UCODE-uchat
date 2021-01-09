@@ -50,11 +50,13 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, GdkPixbuf *pixbuf) {
             pixbuf);
         mx_add_message(messages_box, msg);
 
-        msg = mx_push_back_message(&curr_room_msg_head,
-            text, 
-            t_user.id, 
-            NULL);
-        mx_add_message(messages_box, msg);
+        if (text != NULL) {
+            msg = mx_push_back_message(&curr_room_msg_head,
+                text, 
+                t_user.id, 
+                NULL);
+            mx_add_message(messages_box, msg);
+        }
     }
     else {
         msg = mx_push_back_message(&curr_room_msg_head,

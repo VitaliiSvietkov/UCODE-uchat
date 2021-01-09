@@ -27,16 +27,19 @@ void mx_label_push_back(t_labels **list, void *data, int index);
 typedef struct s_message
 {
     GdkPixbuf *image;
+    unsigned int id;
     char *text;
-    int uid;
+    unsigned int uid;
     struct s_message *next;
 }              t_message;
 
 t_message *curr_room_msg_head;
 void mx_del_message_node(t_message **data);
 void mx_clear_message_list(t_message **head);
+unsigned int mx_message_list_size(t_message **head);
+unsigned int mx_remove_message(t_message **head, unsigned int id);
 t_message *mx_push_back_message(t_message **head, char *text, int uid, GdkPixbuf *image);
-t_message *mx_new_message_node(char *text, int uid, GdkPixbuf *image);
+t_message *mx_new_message_node(char *text, unsigned int uid, GdkPixbuf *image);
 //=======================================================================================
 
 #endif
