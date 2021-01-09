@@ -1,5 +1,6 @@
 #include "../../inc/uchat_client.h"
 
+static void create_tools_menu(GdkEventButton *event);
 static void message_click(GtkWidget *widget, GdkEventButton *event, t_message *data);
 
 GtkWidget *mx_create_message(t_message *data) {
@@ -37,9 +38,41 @@ GtkWidget *mx_create_message(t_message *data) {
     return eventbox;
 }
 
+static void create_tools_menu(GdkEventButton *event) {
+    if (tools_menu != NULL) {
+        gtk_widget_destroy(GTK_WIDGET(tools_menu));
+        tools_menu = NULL;
+    }
+    if (more_box != NULL) {
+        gtk_widget_destroy(GTK_WIDGET(more_box));
+        more_box = NULL;
+        more_image.active = false;
+        gtk_widget_unset_state_flags(GTK_WIDGET(more_image.box), GTK_STATE_FLAG_PRELIGHT);
+        gtk_widget_unset_state_flags(GTK_WIDGET(more_image.box), GTK_STATE_FLAG_CHECKED);
+    }
+
+    tools_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(tools_menu), "tools_menu_1layer");
+
+    GtkWidget *tools_container = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(tools_container), "tools_menu_2layer");
+    gtk_box_pack_start(GTK_BOX(tools_menu), tools_container, FALSE, FALSE, 0);
+
+    gtk_fixed_put(GTK_FIXED(chat_area), tools_menu, event->x + 340, event->y);
+
+    gtk_widget_set_size_request(GTK_WIDGET(tools_container), 200, 200);
+
+    gtk_widget_show_all(GTK_WIDGET(tools_menu));
+}
+
 static void message_click(GtkWidget *widget, GdkEventButton *event, t_message *data) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
-        gtk_widget_destroy(GTK_WIDGET(widget));
-        mx_remove_message(&curr_room_msg_head, data->id);
+        create_tools_menu(event);
+        //gtk_widget_destroy(GTK_WIDGET(widget));
+        //mx_remove_message(&curr_room_msg_head, data->id);
+
+        GtkClipboard *clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+        gtk_clipboard_clear(GTK_CLIPBOARD(clipboard));
+        gtk_clipboard_set_text(GTK_CLIPBOARD(clipboard), data->text, mx_strlen(data->text));
     }
 }

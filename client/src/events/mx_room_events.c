@@ -45,6 +45,15 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
                 gtk_widget_grab_focus(GTK_WIDGET(chat_area));
                 break;
             }
+            if (tools_menu != NULL) {
+                gtk_widget_destroy(GTK_WIDGET(tools_menu));
+                tools_menu = NULL;
+            }
+            if (more_box != NULL) {
+                gtk_widget_destroy(GTK_WIDGET(more_box));
+                more_box = NULL;
+                break;
+            }
             if (message_enter_area != NULL) {
                 gtk_widget_destroy(GTK_WIDGET(message_enter_area));
                 message_enter_area = NULL;

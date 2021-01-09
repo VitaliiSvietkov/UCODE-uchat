@@ -240,6 +240,7 @@ GtkWidget *active_leftbar_container;
 
 GtkWidget *blackout;
 GtkWidget *error_revealer;
+GtkWidget *tools_menu;
 
 int language;
 char **text_for_labels;

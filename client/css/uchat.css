@@ -25,6 +25,16 @@
    background-color: rgba(31, 31, 31, 0.6);
 }
 
+#tools_menu_1layer {
+    border-radius: 8px;
+    border: 2px solid #e1e1e1;
+}
+#tools_menu_2layer {
+    background: #e1e1e1;
+    border: 2px solid #1f1f1f;
+    border-radius: 8px;
+}
+
 #pop_up_error {
     background: #1f1f1f;
     color: #e1e1e1;

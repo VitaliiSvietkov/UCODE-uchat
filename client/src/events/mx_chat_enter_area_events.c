@@ -139,6 +139,10 @@ void more_content_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *dat
 
 void mx_more_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        if (tools_menu != NULL) {
+            gtk_widget_destroy(GTK_WIDGET(tools_menu));
+            tools_menu = NULL;
+        }
         if (!(data->active)) {
             gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
             data->active = true;
