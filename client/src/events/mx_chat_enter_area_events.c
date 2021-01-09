@@ -29,7 +29,7 @@ void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
         if (filename != NULL) {
             struct stat buf;
             stat(filename, &buf);
-            if (buf.st_size < 20971520) // > 20mb
+            if (buf.st_size < 20971520) // < 20mb
                 mx_create_attach_form(entry, filename);
             else
                 mx_run_error_pop_up("The file is too big!");
@@ -42,11 +42,27 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, GdkPixbuf *pixbuf) {
     if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0)
         text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
     
-    t_message *msg = mx_push_back_message(&curr_room_msg_head,
-        text, 
-        t_user.id, 
-        pixbuf);
-    mx_add_message(messages_box, msg);
+    t_message *msg = NULL;
+    if (gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf)) > 350) {
+        msg = mx_push_back_message(&curr_room_msg_head,
+            NULL, 
+            t_user.id, 
+            pixbuf);
+        mx_add_message(messages_box, msg);
+
+        msg = mx_push_back_message(&curr_room_msg_head,
+            text, 
+            t_user.id, 
+            NULL);
+        mx_add_message(messages_box, msg);
+    }
+    else {
+        msg = mx_push_back_message(&curr_room_msg_head,
+            text, 
+            t_user.id, 
+            pixbuf);
+        mx_add_message(messages_box, msg);
+    }
 
     gtk_widget_destroy(GTK_WIDGET(blackout));
     blackout = NULL;

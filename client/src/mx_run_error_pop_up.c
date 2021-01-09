@@ -1,20 +1,20 @@
 #include "../inc/uchat_client.h"
 
-static void pop_up_destroy(GtkWidget *widget, gpointer revealer) {
+static void pop_up_destroy(GtkWidget *widget) {
     gtk_widget_destroy(GTK_WIDGET(widget));
-    //g_object_unref(G_OBJECT(revealer)); ???????????
+    gtk_widget_destroy(GTK_WIDGET(error_revealer));
 }
 
 void mx_run_error_pop_up(const char *text) {
-    GtkWidget *revealer = gtk_revealer_new();
-    gtk_revealer_set_transition_type(GTK_REVEALER(revealer), 
+    error_revealer = gtk_revealer_new();
+    gtk_revealer_set_transition_type(GTK_REVEALER(error_revealer), 
         GTK_REVEALER_TRANSITION_TYPE_CROSSFADE);
-    gtk_revealer_set_transition_duration(GTK_REVEALER(revealer), 1000);
+    gtk_revealer_set_transition_duration(GTK_REVEALER(error_revealer), 1000);
     
     GtkWidget *body = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(revealer), body);
+    gtk_container_add(GTK_CONTAINER(error_revealer), body);
     g_signal_connect(G_OBJECT(body), "button_press_event",
-        G_CALLBACK(pop_up_destroy), (gpointer)revealer);
+        G_CALLBACK(pop_up_destroy), NULL);
 
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
     gtk_widget_set_name(GTK_WIDGET(box), "pop_up_error");
@@ -25,9 +25,9 @@ void mx_run_error_pop_up(const char *text) {
 
     int width = mx_strlen(text) * 5;
     width += 30;
-    gtk_fixed_put(GTK_FIXED(chat_area), revealer, 
+    gtk_fixed_put(GTK_FIXED(chat_area), error_revealer, 
         CUR_WIDTH - width - 20, 20);
 
-    gtk_widget_show_all(GTK_WIDGET(revealer));
-    gtk_revealer_set_reveal_child(GTK_REVEALER(revealer), TRUE);
+    gtk_widget_show_all(GTK_WIDGET(error_revealer));
+    gtk_revealer_set_reveal_child(GTK_REVEALER(error_revealer), TRUE);
 }

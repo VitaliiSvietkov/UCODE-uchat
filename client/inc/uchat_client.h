@@ -239,6 +239,7 @@ GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
 
 GtkWidget *blackout;
+GtkWidget *error_revealer;
 
 int language;
 char **text_for_labels;

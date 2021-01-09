@@ -9,6 +9,7 @@ void mx_init_global_vars(void) {
     chats_list = NULL;
     settings_menu = NULL;
     blackout = NULL;
+    error_revealer = NULL;
 
     // Chat variables
     curr_room_msg_head = NULL;
