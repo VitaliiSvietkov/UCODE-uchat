@@ -33,3 +33,5 @@ Passwords are not match!
 Incorrect Username or Password!
 This username is already exist!
 Account settings
+Copy
+Delete
