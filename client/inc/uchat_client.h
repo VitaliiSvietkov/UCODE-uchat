@@ -40,6 +40,7 @@ GtkWidget *mx_create_message(t_message *data);
 void mx_add_message(GtkWidget *container, t_message *message);
 
 GtkWidget *selected_msg_widget;
+sqlite3 *messages_db;
 //==========================================================================================
 
 // Images
@@ -255,8 +256,8 @@ GtkWidget *right_container;
 GtkWidget *messages_box;
 GtkWidget *message_enter_area;
 
-GtkWidget *mx_create_room(int id);
-void room_click(GtkWidget *widget, GdkEventButton *event);
+GtkWidget *mx_create_room(unsigned int id);
+void room_click(GtkWidget *widget, GdkEventButton *event, gpointer id);
 void room_close(GtkWidget *widget, GdkEventKey *event);
 void mx_create_messages_area(void);
 

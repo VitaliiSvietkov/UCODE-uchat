@@ -43,6 +43,8 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, GdkPixbuf *pixbuf) {
         text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
     
     t_message *msg = NULL;
+    char *err_msg = 0;
+    char sql[50];
     if (gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf)) > 350) {
         msg = mx_push_back_message(&curr_room_msg_head,
             NULL, 
@@ -56,6 +58,11 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, GdkPixbuf *pixbuf) {
                 t_user.id, 
                 NULL);
             mx_add_message(messages_box, msg);
+
+            sprintf(sql,
+                    "INSERT INTO Messages VALUES('%u','%u','%s');",
+                    msg->id, msg->uid, msg->text);
+            sqlite3_exec(messages_db, sql, 0, 0, &err_msg);
         }
     }
     else {
@@ -64,6 +71,11 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, GdkPixbuf *pixbuf) {
             t_user.id, 
             pixbuf);
         mx_add_message(messages_box, msg);
+
+        sprintf(sql,
+                "INSERT INTO Messages VALUES('%u','%u','%s');",
+                msg->id, msg->uid, msg->text);
+        sqlite3_exec(messages_db, sql, 0, 0, &err_msg);
     }
 
     gtk_widget_destroy(GTK_WIDGET(blackout));
@@ -95,6 +107,14 @@ void mx_send_message_on_enter(GtkWidget *widget) {
             t_user.id, 
             NULL);
         mx_add_message(messages_box, msg);
+
+        char *err_msg = 0;
+        char sql[50];
+        sprintf(sql,
+                "INSERT INTO Messages VALUES('%u','%u','%s');",
+                msg->id, msg->uid, msg->text);
+        sqlite3_exec(messages_db, sql, 0, 0, &err_msg);
+
         gtk_entry_set_text(GTK_ENTRY(widget), "");
     }
 }
@@ -110,6 +130,14 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
                 t_user.id, 
                 NULL);
             mx_add_message(messages_box, msg);
+
+            char *err_msg = 0;
+            char sql[50];
+            sprintf(sql,
+                    "INSERT INTO Messages VALUES('%u','%u','%s');",
+                    msg->id, msg->uid, msg->text);
+            sqlite3_exec(messages_db, sql, 0, 0, &err_msg);
+
             gtk_entry_set_text(GTK_ENTRY(entry), "");
         }
     }

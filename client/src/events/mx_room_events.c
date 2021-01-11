@@ -1,7 +1,21 @@
 #include "../../inc/uchat_client.h"
 
-void room_click(GtkWidget *widget, GdkEventButton *event) {
+void room_click(GtkWidget *widget, GdkEventButton *event, gpointer id) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        unsigned int uid = (unsigned int)(uintptr_t)id;
+
+        char *err_msg = 0;
+        int status = sqlite3_open("client/data/messages.db", &messages_db);
+        if (status != SQLITE_OK) {
+            mx_write_to_log("Can`t open database.\n", 2);
+            sqlite3_close(messages_db);
+            messages_db = NULL; 
+            return;
+        }
+        sqlite3_exec(messages_db,
+                    "CREATE TABLE IF NOT EXISTS Messages(id UNSIGNED INT, uid UNSIGNED INT, Text TEXT);",
+                    0, 0, &err_msg);
+
         if (message_enter_area != NULL) {
             gtk_widget_destroy(GTK_WIDGET(message_enter_area));
             message_enter_area = NULL;
@@ -10,6 +24,7 @@ void room_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_widget_destroy(GTK_WIDGET(right_container));
             right_container = NULL;
         }
+
         mx_create_messages_area();
         mx_create_message_enter_area();
 
@@ -51,6 +66,8 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
                 message_enter_area = NULL;
                 gtk_widget_destroy(GTK_WIDGET(right_container));
                 right_container = NULL;
+                sqlite3_close(messages_db);
+                messages_db = NULL;
             }
             if (curr_room_msg_head != NULL)
                 mx_clear_message_list(&curr_room_msg_head);
