@@ -38,6 +38,8 @@ gint L_FIELD_WIDTH;
 //==========================================================================================
 GtkWidget *mx_create_message(t_message *data);
 void mx_add_message(GtkWidget *container, t_message *message);
+
+GtkWidget *selected_msg_widget;
 //==========================================================================================
 
 // Images
@@ -186,6 +188,7 @@ void mx_configure_username_event_screen(GtkBuilder *builder);
 void mx_configure_pseudonim_event_screen(GtkBuilder *builder);
 void mx_tooltip(char *str, void *data);
 void mx_run_error_pop_up(const char *text);
+void mx_destroy_popups(void);
 
 // Draw functions
 //==========================================================================================
