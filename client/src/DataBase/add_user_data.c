@@ -11,7 +11,9 @@ void mx_add_user_data(const char *pseudo, const char *password, const char *name
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
     sqlite3_step(res);
     int id = (int)sqlite3_column_int(res, 0);
-    sprintf(sql, "SELECT PSEUDONIM FROM USERS;");
+    sqlite3_finalize(res);
+
+    /*sprintf(sql, "SELECT PSEUDONIM FROM USERS;");
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
     sqlite3_step(res);
     char *check_pseudo;
@@ -25,12 +27,13 @@ void mx_add_user_data(const char *pseudo, const char *password, const char *name
         }
         sqlite3_step(res);
     }
-    sqlite3_finalize(res);
+    sqlite3_finalize(res);*/
     id++;
     char *description = " ";
     sprintf(sql, 
             "INSERT INTO USERS (ID, NAME, SURENAME, PSEUDONIM, DESCRIPTION, PASSWORD) VALUES('%d','%s','%s','%s','%s','%s');", 
             id, name, sname, pseudo, description, password);   
+    mx_write_photo_to_bd("client/img/ukraine.png");
     st = sqlite3_exec(db, sql, NULL, 0, &errmsg);
     mx_dberror(db, st, errmsg); 
 }

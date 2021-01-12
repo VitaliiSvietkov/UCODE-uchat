@@ -36,8 +36,8 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
     }
     else 
         return 1; 
-    //sqlite3_finalize(res);
-    //sqlite3_close(db);
+    sqlite3_finalize(res);
+    sqlite3_close(db);
     return 0;
 }
 

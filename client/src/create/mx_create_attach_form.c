@@ -46,8 +46,11 @@ void mx_create_attach_form(GtkWidget *entry, char *filename) {
     gtk_entry_set_text(GTK_ENTRY(message_entry), gtk_entry_get_text(GTK_ENTRY(entry)));
     gtk_box_pack_start(GTK_BOX(entry_container), message_entry, TRUE, TRUE, 0);
 
+    void **arr = g_new(void *, 2);
+    arr[0] = filename;
+    arr[1] = pixbuf;
     g_signal_connect(G_OBJECT(message_entry), "activate", 
-        G_CALLBACK(mx_attach_send_message_on_enter), pixbuf);
+        G_CALLBACK(mx_attach_send_message_on_enter), arr);
     g_signal_connect(G_OBJECT(message_entry), "enter-notify-event",
         G_CALLBACK(activate_prelight), NULL);
     g_signal_connect(G_OBJECT(message_entry), "leave-notify-event",

@@ -37,20 +37,26 @@ void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
     }
 }
 
-void mx_attach_send_message_on_enter(GtkWidget *widget, GdkPixbuf *pixbuf) {
+void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
+    GdkPixbuf *pixbuf = arr[1];
     char *text = NULL;
     if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0)
         text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
     
     t_message *msg = NULL;
     char *err_msg = 0;
-    char sql[50];
+    char sql[500];
     if (gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf)) > 350) {
         msg = mx_push_back_message(&curr_room_msg_head,
             NULL, 
             t_user.id, 
             pixbuf);
         mx_add_message(messages_box, msg);
+        sprintf(sql,
+                "INSERT INTO Messages (id, uid) VALUES('%u','%u');",
+                msg->id, msg->uid);
+        sqlite3_exec(messages_db, sql, 0, 0, &err_msg);
+        mx_write_image_message((char *)arr[0], msg->id, messages_db);
 
         if (text != NULL) {
             msg = mx_push_back_message(&curr_room_msg_head,
@@ -60,7 +66,7 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, GdkPixbuf *pixbuf) {
             mx_add_message(messages_box, msg);
 
             sprintf(sql,
-                    "INSERT INTO Messages VALUES('%u','%u','%s');",
+                    "INSERT INTO Messages (id, uid, Text) VALUES('%u','%u','%s');",
                     msg->id, msg->uid, msg->text);
             sqlite3_exec(messages_db, sql, 0, 0, &err_msg);
         }
@@ -73,13 +79,15 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, GdkPixbuf *pixbuf) {
         mx_add_message(messages_box, msg);
 
         sprintf(sql,
-                "INSERT INTO Messages VALUES('%u','%u','%s');",
+                "INSERT INTO Messages (id, uid, Text) VALUES('%u','%u','%s');",
                 msg->id, msg->uid, msg->text);
         sqlite3_exec(messages_db, sql, 0, 0, &err_msg);
+        mx_write_image_message((char *)arr[0], msg->id, messages_db);
     }
 
     gtk_widget_destroy(GTK_WIDGET(blackout));
     blackout = NULL;
+    g_free(arr);
 
     gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
     gtk_widget_grab_focus(GTK_WIDGET(chat_area));
@@ -109,9 +117,9 @@ void mx_send_message_on_enter(GtkWidget *widget) {
         mx_add_message(messages_box, msg);
 
         char *err_msg = 0;
-        char sql[50];
+        char sql[500];
         sprintf(sql,
-                "INSERT INTO Messages VALUES('%u','%u','%s');",
+                "INSERT INTO Messages (id, uid, Text) VALUES('%u','%u','%s');",
                 msg->id, msg->uid, msg->text);
         sqlite3_exec(messages_db, sql, 0, 0, &err_msg);
 
@@ -132,9 +140,9 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
             mx_add_message(messages_box, msg);
 
             char *err_msg = 0;
-            char sql[50];
+            char sql[500];
             sprintf(sql,
-                    "INSERT INTO Messages VALUES('%u','%u','%s');",
+                    "INSERT INTO Messages (id, uid, Text) VALUES('%u','%u','%s');",
                     msg->id, msg->uid, msg->text);
             sqlite3_exec(messages_db, sql, 0, 0, &err_msg);
 

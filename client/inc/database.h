@@ -1,6 +1,7 @@
 #ifndef CLIENT_DB
 #define CLIENT_DB
 
+#include <gtk/gtk.h>
 #include <sqlite3.h>
 
 //int mx_create_db(const char* s); 
@@ -15,6 +16,8 @@ void mx_read_photo_from_bd(void);
 void mx_write_language_data_from_bd(void);
 void mx_write_photo_to_bd(char *path);
 
+void mx_write_image_message(char *path, unsigned int id, sqlite3 *data_base);
+GdkPixbuf *mx_read_image_message(unsigned int id, sqlite3 *data_base);
 
 
 char *mx_string_copy(char *str);

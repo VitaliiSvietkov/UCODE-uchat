@@ -15,13 +15,13 @@ void mx_create_messages_area(void) {
     char sql[35];
     bzero(sql, 35);
     char *err_msg;
-    sprintf(sql, "SELECT uid, Text FROM Messages;");
+    sprintf(sql, "SELECT id, uid, Text FROM Messages;");
     sqlite3_prepare_v2(messages_db, sql, -1, &res, 0);
     while (sqlite3_step(res) != SQLITE_DONE) {
         msg = mx_push_back_message(&curr_room_msg_head, 
-            mx_strdup((char *)sqlite3_column_text(res, 1)), 
-            (unsigned int)sqlite3_column_int64(res, 0),
-            NULL);
+            mx_strdup((char *)sqlite3_column_text(res, 2)), 
+            (unsigned int)sqlite3_column_int64(res, 1),
+            mx_read_image_message((unsigned int)sqlite3_column_int64(res, 0), messages_db));
         mx_add_message(messages_box, msg);
     }
     if (res != NULL)

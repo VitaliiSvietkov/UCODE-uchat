@@ -13,7 +13,7 @@ void room_click(GtkWidget *widget, GdkEventButton *event, gpointer id) {
             return;
         }
         sqlite3_exec(messages_db,
-                    "CREATE TABLE IF NOT EXISTS Messages(id UNSIGNED INT, uid UNSIGNED INT, Text TEXT);",
+                    "CREATE TABLE IF NOT EXISTS Messages(id UNSIGNED INT, uid UNSIGNED INT, Text TEXT, Image BLOB);",
                     0, 0, &err_msg);
 
         if (message_enter_area != NULL) {
