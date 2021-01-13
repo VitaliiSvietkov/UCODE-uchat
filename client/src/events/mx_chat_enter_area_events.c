@@ -85,6 +85,7 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
         sqlite3_exec(db, sql, 0, 0, &err_msg);
         mx_write_image_message((char *)arr[0], msg->id, db);
     }
+    sqlite3_close(db);
 
     gtk_widget_destroy(GTK_WIDGET(blackout));
     blackout = NULL;
@@ -123,7 +124,8 @@ void mx_send_message_on_enter(GtkWidget *widget) {
         bzero(sql, 500);
         sprintf(sql, "INSERT INTO Messages (id, uid, Text) VALUES('%u','%u','%s');", msg->id, msg->uid, msg->text);
         st = sqlite3_exec(db, sql, NULL, 0, &err_msg);
-        mx_dberror(db, st, err_msg); 
+        mx_dberror(db, st, err_msg);
+        sqlite3_close(db);
         gtk_entry_set_text(GTK_ENTRY(widget), "");
     }
 }
@@ -147,6 +149,7 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
             sprintf(sql, "INSERT INTO Messages (id, uid, Text) VALUES('%u','%u','%s');", msg->id, msg->uid, msg->text);
             st = sqlite3_exec(db, sql, NULL, 0, &err_msg);
             mx_dberror(db, st, err_msg); 
+            sqlite3_close(db);
             gtk_entry_set_text(GTK_ENTRY(entry), "");
         }
     }
