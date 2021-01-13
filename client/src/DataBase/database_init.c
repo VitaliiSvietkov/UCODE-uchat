@@ -2,7 +2,7 @@
 
 // Initialize database, if it does not exist.
 void mx_database_init(void) {
-    sqlite3 *db = mx_opening_db();
+    sqlite3 *db = mx_opening_db("test");
     int exit = 0;
     char *message_error;
     char *sql = "CREATE TABLE IF NOT EXISTS USERS("
@@ -20,4 +20,15 @@ void mx_database_init(void) {
     exit = sqlite3_exec(db, sql, NULL, 0, &message_error);
     mx_dberror(db, exit, "Error to create USERS table");
     sqlite3_close(db);
+
+    int status = sqlite3_open("client/data/messages.db", &db);
+    if (status != SQLITE_OK) {
+        mx_write_to_log("Can`t open database.\n", 2);
+        sqlite3_close(db);
+        return;
+    }
+    sqlite3_exec(db,
+                "CREATE TABLE IF NOT EXISTS Messages(id BIGINT, uid BIGINT, Text TEXT, Image BLOB);",
+                0, 0, &message_error);
+    sqlite3_close(db);       
 }

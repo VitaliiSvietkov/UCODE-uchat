@@ -40,7 +40,6 @@ GtkWidget *mx_create_message(t_message *data);
 void mx_add_message(GtkWidget *container, t_message *message);
 
 GtkWidget *selected_msg_widget;
-sqlite3 *messages_db;
 //==========================================================================================
 
 // Images

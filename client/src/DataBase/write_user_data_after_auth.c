@@ -1,7 +1,7 @@
 #include "../../inc/uchat_client.h"
 
 int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password) {
-    sqlite3 *db = mx_opening_db();
+    sqlite3 *db = mx_opening_db("test");
     sqlite3_stmt *res;
     char sql[500];
     bzero(sql, 500);
@@ -42,7 +42,7 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
 }
 
 int mx_check_login_reg(const char *pseudo) {
-    sqlite3 *db = mx_opening_db();
+    sqlite3 *db = mx_opening_db("test");
     sqlite3_stmt *res;
     char sql[500];
     bzero(sql, 500);

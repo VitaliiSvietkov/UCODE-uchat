@@ -1,7 +1,7 @@
 #include "../../inc/uchat_client.h"
 
 void mx_add_user_data(const char *pseudo, const char *password, const char *name, const char *sname) {
-    sqlite3 *db = mx_opening_db();
+    sqlite3 *db = mx_opening_db("test");
     sqlite3_stmt *res;
     char sql[500];
     bzero(sql, 500);

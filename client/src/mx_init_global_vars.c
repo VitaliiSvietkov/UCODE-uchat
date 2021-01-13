@@ -18,7 +18,6 @@ void mx_init_global_vars(void) {
     right_container = NULL;
     more_box = NULL;
     selected_msg_widget = NULL;
-    messages_db = NULL;
 
     // Temporary variables for edit user form
     NewFirstName = NULL;
