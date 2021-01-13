@@ -9,23 +9,22 @@ void mx_create_messages_area(void) {
     gtk_widget_set_name(GTK_WIDGET(right_container), "chat_background");
     gtk_widget_set_size_request(GTK_WIDGET(messages_box), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 50);
     gtk_container_add(GTK_CONTAINER(right_container), messages_box);
-
+    sqlite3 *db = mx_opening_db();
     t_message *msg = NULL;
-    sqlite3_stmt *res = NULL;
+    sqlite3_stmt *res;
     char sql[35];
     bzero(sql, 35);
     char *err_msg;
     sprintf(sql, "SELECT id, uid, Text FROM Messages;");
-    sqlite3_prepare_v2(messages_db, sql, -1, &res, 0);
+    sqlite3_prepare_v2(db, sql, -1, &res, 0);
     while (sqlite3_step(res) != SQLITE_DONE) {
         msg = mx_push_back_message(&curr_room_msg_head, 
             mx_strdup((char *)sqlite3_column_text(res, 2)), 
             (unsigned int)sqlite3_column_int64(res, 1),
-            mx_read_image_message((unsigned int)sqlite3_column_int64(res, 0), messages_db));
+            mx_read_image_message((unsigned int)sqlite3_column_int64(res, 0), db));
         mx_add_message(messages_box, msg);
     }
-    if (res != NULL)
-        sqlite3_finalize(res);
-
+    sqlite3_finalize(res);
+    sqlite3_close(db);
     gtk_widget_show_all(GTK_WIDGET(right_container));
 }

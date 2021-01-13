@@ -13,6 +13,7 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
     if(sqlite3_column_text(res, 0) != NULL) {
         char *check_password = mx_string_copy((char *)sqlite3_column_text(res, 0));
         if (mx_strcmp(check_password, password) == 0) {
+            sqlite3_finalize(res);
             sprintf(sql, "SELECT ID, NAME, SURENAME, PSEUDONIM, DESCRIPTION FROM USERS WHERE PSEUDONIM = '%s';", pseudo);
             sqlite3_prepare_v2(db, sql, -1, &res, 0);
             sqlite3_step(res);
@@ -28,16 +29,13 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
             t_user.description = newDescr;
             char *newPass = check_password;
             t_user.password = newPass;
-            //printf("%d\n", t_user.id);
         }
-        //else {
-        //return 1;
-        //}
-    }
-    else 
-        return 1; 
     sqlite3_finalize(res);
-    sqlite3_close(db);
+    //sqlite3_close(db);
+    }
+    else {
+        return 1; 
+    }
     return 0;
 }
 
@@ -52,6 +50,8 @@ int mx_check_login_reg(const char *pseudo) {
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
     sqlite3_step(res);
     if(sqlite3_column_text(res, 0) != NULL) {
+        sqlite3_finalize(res);
+        //sqlite3_close(db);
         return 1;
     }
     return 0;

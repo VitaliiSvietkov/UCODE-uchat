@@ -6,7 +6,7 @@ void mx_database_init(void) {
     int exit = 0;
     char *message_error;
     char *sql = "CREATE TABLE IF NOT EXISTS USERS("
-        "ID          INT"
+        "ID          INT,"
         "NAME        TEXT NOT NULL, "
         "SURENAME    TEXT NOT NULL, "
         "PSEUDONIM   TEXT NOT NULL, "
@@ -18,6 +18,9 @@ void mx_database_init(void) {
     sql = "CREATE TABLE IF NOT EXISTS LANGUAGE("
         "LANGUAGE INTEGER);";
     exit = sqlite3_exec(db, sql, NULL, 0, &message_error);
-    mx_dberror(db, exit, "Error to create USERS table");
+    mx_dberror(db, exit, "Error to create LANGUAGE table");
+    sql = "CREATE TABLE IF NOT EXISTS Messages(id UNSIGNED INT, uid UNSIGNED INT, Text TEXT, Image BLOB);";
+    exit = sqlite3_exec(db, sql, NULL, 0, &message_error);
+    mx_dberror(db, exit, "Error to create Messages table");
     sqlite3_close(db);
 }
