@@ -42,19 +42,13 @@ void mx_write_image_message(char *path, unsigned int id, sqlite3 *data_base) {
     if (r == EOF) {
         fprintf(stderr, "Cannot close file handler\n");
     }
-    /* 
-    sqlite3 *db;
-    char *err_msg = 0;
-    int rc = sqlite3_open("client/data/test.db", &db);
-    if (rc != SQLITE_OK) {
-        
-        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-    }
-    */
+
     sqlite3_stmt *pStmt;
-    char sql[100];
-    sprintf(sql, "UPDATE Messages SET Image=? WHERE id='%u';", id);
+    char sql[250];
+    bzero(sql, 250);
+    sprintf(sql, "UPDATE Messages SET Image=? WHERE id=%u AND\
+            ((addresser=%u OR addresser=%u) AND (destination=%u OR destination=%u));",
+            id, curr_destination, t_user.id, curr_destination, t_user.id);
     
     int rc = sqlite3_prepare(data_base, sql, -1, &pStmt, 0);
     
@@ -69,5 +63,4 @@ void mx_write_image_message(char *path, unsigned int id, sqlite3 *data_base) {
     }  
     sqlite3_finalize(pStmt);
 
-    //sqlite3_close(data_base);
 }

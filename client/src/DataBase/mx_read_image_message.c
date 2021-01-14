@@ -6,8 +6,11 @@ GdkPixbuf *mx_read_image_message(unsigned int id, sqlite3 *data_base) {
     if (fp == NULL)
         fprintf(stderr, "Cannot open image file\n");
 
-    char sql[100];
-    sprintf(sql, "SELECT Image FROM Messages WHERE id='%u';", id);
+    char sql[200];
+    bzero(sql, 200);
+    sprintf(sql, "SELECT Image FROM Messages WHERE id=%u AND\
+            ((addresser=%u OR addresser=%u) AND (destination=%u OR destination=%u));",
+            id, curr_destination, t_user.id, curr_destination, t_user.id);
         
     sqlite3_stmt *pStmt;
     int rc = sqlite3_prepare_v2(data_base, sql, -1, &pStmt, 0);

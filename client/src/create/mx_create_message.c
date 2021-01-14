@@ -120,9 +120,11 @@ static void message_click(GtkWidget *widget, GdkEvent *event, t_message *data) {
 }
 
 static void copy_click(GtkWidget *widget, t_message *data) {
-    GtkClipboard *clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-    gtk_clipboard_clear(GTK_CLIPBOARD(clipboard));
-    gtk_clipboard_set_text(GTK_CLIPBOARD(clipboard), data->text, mx_strlen(data->text));
+    if (data->text != NULL) {
+        GtkClipboard *clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+        gtk_clipboard_clear(GTK_CLIPBOARD(clipboard));
+        gtk_clipboard_set_text(GTK_CLIPBOARD(clipboard), data->text, mx_strlen(data->text));
+    }
 
     mx_destroy_popups();
 }

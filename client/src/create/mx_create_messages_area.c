@@ -12,10 +12,12 @@ void mx_create_messages_area(void) {
     sqlite3 *db = mx_opening_db();
     t_message *msg = NULL;
     sqlite3_stmt *res;
-    char sql[100];
-    bzero(sql, 100);
+    char sql[250];
+    bzero(sql, 250);
     char *err_msg;
-    sprintf(sql, "SELECT id, uid, Text FROM Messages WHERE gid='%s';", curr_gid);
+    sprintf(sql, "SELECT id, addresser, Text FROM Messages\
+            WHERE (addresser=%u OR addresser=%u) AND (destination=%u OR destination=%u);",
+            curr_destination, t_user.id, curr_destination, t_user.id);
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
     while (sqlite3_step(res) != SQLITE_DONE) {
         msg = mx_push_back_message(&curr_room_msg_head, 

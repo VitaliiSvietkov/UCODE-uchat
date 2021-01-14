@@ -1,9 +1,9 @@
 #include "../../inc/uchat_client.h"
 
-void room_click(GtkWidget *widget, GdkEventButton *event, char *gid) {
+void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        curr_gid = mx_strdup(gid);
-        mx_sort_string(curr_gid);
+        curr_destination = (unsigned int)(uintptr_t)uid;
+
         char *err_msg = 0;
         if (message_enter_area != NULL) {
             gtk_widget_destroy(GTK_WIDGET(message_enter_area));
@@ -55,8 +55,6 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
                 message_enter_area = NULL;
                 gtk_widget_destroy(GTK_WIDGET(right_container));
                 right_container = NULL;
-                free(curr_gid);
-                curr_gid = NULL;
             }
             if (curr_room_msg_head != NULL)
                 mx_clear_message_list(&curr_room_msg_head);

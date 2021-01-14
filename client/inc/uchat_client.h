@@ -39,7 +39,7 @@ GtkWidget *mx_create_message(t_message *data);
 void mx_add_message(GtkWidget *container, t_message *message);
 
 GtkWidget *selected_msg_widget;
-char *curr_gid;
+unsigned int curr_destination;
 //==========================================================================================
 
 // Images
@@ -255,8 +255,8 @@ GtkWidget *right_container;
 GtkWidget *messages_box;
 GtkWidget *message_enter_area;
 
-GtkWidget *mx_create_room(char *gid);
-void room_click(GtkWidget *widget, GdkEventButton *event, char *gid);
+GtkWidget *mx_create_room(unsigned int uid);
+void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid);
 void room_close(GtkWidget *widget, GdkEventKey *event);
 void mx_create_messages_area(void);
 
