@@ -55,23 +55,6 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
             gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_CENTER);
             gtk_fixed_put(GTK_FIXED(chat_area), label, CUR_WIDTH - CUR_WIDTH / 2.5 - 50, CUR_HEIGHT / 2 - 20);
             labels_head = mx_label_create_node(label, 4);
-
-            // Create a header for left area
-            mx_configure_left_header();
-
-            // Create a selection area
-            mx_configure_content_selection_area();
-
-            // Create a chat list area
-            chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-            gtk_fixed_put(GTK_FIXED(chat_area), chats_list, 0, 105);
-            gtk_box_pack_start(GTK_BOX(chats_list), mx_create_room(0), FALSE, FALSE, 0);
-
-            // Create a contacts list area
-            contacts_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-            gtk_fixed_put(GTK_FIXED(chat_area), contacts_list, 0, 95);
-
-            mx_configure_settings_menu_area();
         }
         const char *login1 = gtk_entry_get_text(GTK_ENTRY(login));
         const char *password1 = gtk_entry_get_text(GTK_ENTRY(password));
@@ -79,6 +62,23 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
             gtk_widget_show(GTK_WIDGET(data)); 
         }
         else {
+            // Create a header for left area
+            mx_configure_left_header();
+            // Create a selection area
+            mx_configure_content_selection_area();
+            
+            // Create a chat list area
+            chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+            gtk_fixed_put(GTK_FIXED(chat_area), chats_list, 0, 105);
+            char *gid = mx_strdup(t_user.pseudonim);
+            mx_sort_string(gid);
+            gtk_box_pack_start(GTK_BOX(chats_list), mx_create_room(gid), FALSE, FALSE, 0);
+
+            // Create a contacts list area
+            contacts_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+            gtk_fixed_put(GTK_FIXED(chat_area), contacts_list, 0, 95);
+            mx_configure_settings_menu_area();
+
             mx_update_user_data_preview();
             gtk_widget_destroy(GTK_WIDGET(authorization_container));
             gtk_widget_hide(GTK_WIDGET(authorization_area));

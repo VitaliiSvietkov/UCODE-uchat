@@ -3,6 +3,8 @@
 #include <gtk/gtk.h>
 
 void mx_get_language_arr(void);
+void mx_sort_string(char *data);
+
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
 GdkPixbuf *mx_size_image_down(GdkPixbuf *pixbuf);
 GdkPixbuf *mx_get_pixbuf_with_size(char *path, int w, int h);

@@ -19,7 +19,7 @@ void mx_database_init(void) {
         "LANGUAGE INTEGER);";
     exit = sqlite3_exec(db, sql, NULL, 0, &message_error);
     mx_dberror(db, exit, "Error to create LANGUAGE table");
-    sql = "CREATE TABLE IF NOT EXISTS Messages(id BIGINT, uid BIGINT, Text TEXT, Image BLOB);";
+    sql = "CREATE TABLE IF NOT EXISTS Messages(id BIGINT, gid TEXT, uid BIGINT, Text TEXT, Image BLOB);";
     exit = sqlite3_exec(db, sql, NULL, 0, &message_error);
     mx_dberror(db, exit, "Error to create Messages table");
     sqlite3_close(db);
