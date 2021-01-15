@@ -1,6 +1,7 @@
 #include "../../inc/uchat_client.h"
 
 void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
+    mx_destroy_popups();
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         curr_destination = (unsigned int)(uintptr_t)uid;
 

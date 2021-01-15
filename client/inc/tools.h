@@ -3,6 +3,7 @@
 #include <gtk/gtk.h>
 #include <stdbool.h>
 
+void mx_free_data(void);
 void mx_get_language_arr(void);
 void mx_sort_string(char *data);
 bool mx_uint_arr_check_value(unsigned int *arr, unsigned int value, int len);

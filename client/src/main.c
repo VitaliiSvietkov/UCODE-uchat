@@ -1,9 +1,6 @@
 #include "../inc/uchat_client.h"
 
 int main(int argc, char *argv[]) {
-    //sqlite3* DB;
-    //const char *DBdir = "../data/test.db";
-
     mx_init_global_vars();
     mx_write_language_data_from_bd();
     mx_get_language_arr();
@@ -29,16 +26,6 @@ int main(int argc, char *argv[]) {
     mx_create_registration_menu();
 
     gtk_main();
-
-    if (curr_room_msg_head != NULL)
-        mx_clear_message_list(&curr_room_msg_head);
-    g_object_unref(G_OBJECT(t_user.avatar));
-    free(t_user.FirstName);
-    free(t_user.SecondName);
-    free(t_user.pseudonim);
-    free(t_user.description);
-    mx_del_strarr(&text_for_labels);
-    while (labels_head != NULL)
-        mx_label_pop_front(&labels_head);
+    mx_free_data();
     return 0;
 }

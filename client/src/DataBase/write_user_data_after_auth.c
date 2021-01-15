@@ -36,6 +36,8 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
                 free(t_user.description);
             t_user.description = newDescr;
             char *newPass = check_password;
+            if (t_user.password != NULL)
+                free(t_user.password);
             t_user.password = newPass;
             mx_read_photo_from_bd(newId);
             if (t_user.avatar != NULL)

@@ -3,6 +3,7 @@
 // Add button
 //=================================================================================
 void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
+    mx_destroy_popups();
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         GtkWidget *dialog;
         GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
@@ -102,6 +103,7 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
 // Message entry field
 //=================================================================================
 void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
+    mx_destroy_popups();
     int len = strlen(gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget))));
     if (len > 0) {
         gtk_widget_hide(GTK_WIDGET(ban_image.box));
@@ -139,6 +141,7 @@ void mx_send_message_on_enter(GtkWidget *widget) {
 // Tick button
 //=================================================================================
 void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
+    mx_destroy_popups();
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(entry))) > 0) {
             t_message *msg = mx_push_back_message(&curr_room_msg_head,

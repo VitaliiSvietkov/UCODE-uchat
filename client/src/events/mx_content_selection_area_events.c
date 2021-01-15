@@ -3,6 +3,7 @@
 // Messages button
 //==================================================================================
 void messages_click(GtkWidget *widget, GdkEventButton *event) {
+    mx_destroy_popups();
     if (messages_image.active) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         if (t_active_image != NULL) {
@@ -27,6 +28,7 @@ void messages_click(GtkWidget *widget, GdkEventButton *event) {
 // Contacts button
 //==================================================================================
 void contacts_click(GtkWidget *widget, GdkEventButton *event) {
+    mx_destroy_popups();
     if (contacts_image.active) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         if (t_active_image != NULL) {
@@ -51,6 +53,7 @@ void contacts_click(GtkWidget *widget, GdkEventButton *event) {
 // Settings button
 //==================================================================================
 void settings_click(GtkWidget *widget, GdkEventButton *event) {
+    mx_destroy_popups();
     if (settings_image.active) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         if (t_active_image != NULL) {
