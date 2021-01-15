@@ -5,7 +5,7 @@ void mx_configure_left_header(void) {
     gtk_fixed_put(GTK_FIXED(chat_area), left_header, 0, 0);
     gtk_container_set_border_width(GTK_CONTAINER(left_header), 8);
     gtk_widget_set_size_request(GTK_WIDGET(left_header), L_FIELD_WIDTH, 23);
-
+        
     entry_search = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(entry_search), "entry");
     gtk_box_pack_start(GTK_BOX(left_header), entry_search, TRUE, TRUE, 0);

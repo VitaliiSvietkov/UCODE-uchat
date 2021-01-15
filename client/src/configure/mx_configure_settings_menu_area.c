@@ -34,8 +34,8 @@ void mx_configure_settings_menu_area(void) {
     username_tmp = mx_strjoin(username_tmp, t_user.SecondName);
     username = gtk_label_new(username_tmp);
     free(username_tmp);
-    
     gtk_widget_set_name(GTK_WIDGET(username), "username_preview");
+
     char *tmp_pseudonim = "@";
     tmp_pseudonim = mx_strjoin(tmp_pseudonim, t_user.pseudonim);
     user_pseudonim = gtk_label_new(tmp_pseudonim);

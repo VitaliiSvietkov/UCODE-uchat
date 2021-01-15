@@ -43,7 +43,24 @@ void login_btn_leave_notify(void) {
 
 void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 5) {
-        if (t_user.id == -1) {
+        const char *login1 = gtk_entry_get_text(GTK_ENTRY(login));
+        const char *password1 = gtk_entry_get_text(GTK_ENTRY(password));
+        if(mx_write_user_data_from_bd_after_auth(login1, password1) == 1) {
+            gtk_widget_show(GTK_WIDGET(data)); 
+        }
+        else {
+            if (chat_area != NULL)
+                gtk_widget_destroy(GTK_WIDGET(chat_area));
+
+            mx_load_images();
+            while (labels_head != NULL)
+                mx_label_pop_front(&labels_head);
+
+            chat_area = gtk_fixed_new();
+            gtk_fixed_put(GTK_FIXED(main_area), chat_area, 0, 0);
+            gtk_widget_set_size_request(GTK_WIDGET(chat_area), CUR_WIDTH, CUR_HEIGHT);
+            g_signal_connect(G_OBJECT(chat_area), "key-press-event", G_CALLBACK(room_close), NULL);
+            
             GtkWidget *background = gtk_drawing_area_new();
             gtk_fixed_put(GTK_FIXED(chat_area), background, 0, 0);
             gtk_widget_set_size_request(GTK_WIDGET(background), CUR_WIDTH, CUR_HEIGHT);
@@ -55,13 +72,7 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
             gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_CENTER);
             gtk_fixed_put(GTK_FIXED(chat_area), label, CUR_WIDTH - CUR_WIDTH / 2.5 - 50, CUR_HEIGHT / 2 - 20);
             labels_head = mx_label_create_node(label, 4);
-        }
-        const char *login1 = gtk_entry_get_text(GTK_ENTRY(login));
-        const char *password1 = gtk_entry_get_text(GTK_ENTRY(password));
-        if(mx_write_user_data_from_bd_after_auth(login1, password1) == 1) {
-            gtk_widget_show(GTK_WIDGET(data)); 
-        }
-        else {
+            
             // Create a header for left area
             mx_configure_left_header();
             // Create a selection area
@@ -72,6 +83,7 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
             // Create a contacts list area
             contacts_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
             gtk_fixed_put(GTK_FIXED(chat_area), contacts_list, 0, 95);
+
             mx_configure_settings_menu_area();
 
             mx_update_user_data_preview();

@@ -1,9 +1,6 @@
 #include "../../inc/uchat_client.h"
 
 void mx_configure_chats_list(void) {
-    if (chats_list != NULL)
-        gtk_widget_destroy(GTK_WIDGET(chats_list));
-
     chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_fixed_put(GTK_FIXED(chat_area), chats_list, 0, 105);
 
@@ -35,4 +32,5 @@ void mx_configure_chats_list(void) {
         gtk_box_pack_start(GTK_BOX(chats_list), mx_create_room(uid_arr[i]), FALSE, FALSE, 0);
     
     free(uid_arr);
+    uid_arr = NULL;
 }

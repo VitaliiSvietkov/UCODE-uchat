@@ -325,7 +325,8 @@ void mx_create_registration_menu(void) {
     //=================================================================================
 
     gtk_widget_show_all(GTK_WIDGET(authorization_area));
-    gtk_widget_hide(GTK_WIDGET(chat_area));
+    if (chat_area != NULL)
+        gtk_widget_hide(GTK_WIDGET(chat_area));
     gtk_widget_hide(GTK_WIDGET(registration_menu_1));
     gtk_widget_hide(GTK_WIDGET(fail_inscription));
     gtk_widget_hide(GTK_WIDGET(fail_auto_inscription));

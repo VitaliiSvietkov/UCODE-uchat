@@ -17,8 +17,6 @@ int main(int argc, char *argv[]) {
     gtk_css_provider_load_from_path(cssProvider, "client/css/uchat.css", NULL);
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
         GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-
-    mx_load_images();
   
     // Create a new window
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -31,9 +29,9 @@ int main(int argc, char *argv[]) {
     mx_create_registration_menu();
 
     gtk_main();
+
     if (curr_room_msg_head != NULL)
         mx_clear_message_list(&curr_room_msg_head);
-    
     g_object_unref(G_OBJECT(t_user.avatar));
     free(t_user.FirstName);
     free(t_user.SecondName);

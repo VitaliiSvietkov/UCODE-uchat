@@ -20,16 +20,26 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
             int newId = (int)sqlite3_column_int(res, 0);
             t_user.id = newId;
             char *newName = mx_string_copy((char *)sqlite3_column_text(res, 1));
+            if (t_user.FirstName != NULL)
+                free(t_user.FirstName);
             t_user.FirstName = newName;
             char *newSName = mx_string_copy((char *)sqlite3_column_text(res, 2));
+            if (t_user.SecondName != NULL)
+                free(t_user.SecondName);
             t_user.SecondName = newSName;
             char *newPseudo = mx_string_copy((char *)sqlite3_column_text(res, 3));
+            if (t_user.pseudonim != NULL)
+                free(t_user.pseudonim);
             t_user.pseudonim = newPseudo;
             char *newDescr = mx_string_copy((char *)sqlite3_column_text(res, 4));
+            if (t_user.description != NULL)
+                free(t_user.description);
             t_user.description = newDescr;
             char *newPass = check_password;
             t_user.password = newPass;
             mx_read_photo_from_bd(newId);
+            if (t_user.avatar != NULL)
+                g_object_unref(t_user.avatar);
             t_user.avatar = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 100, 100);
         }
     sqlite3_finalize(res);
