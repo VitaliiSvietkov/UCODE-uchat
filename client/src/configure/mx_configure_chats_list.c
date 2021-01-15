@@ -33,4 +33,6 @@ void mx_configure_chats_list(void) {
 
     for (int i = 0; i < uid_arr_len; i++)
         gtk_box_pack_start(GTK_BOX(chats_list), mx_create_room(uid_arr[i]), FALSE, FALSE, 0);
+    
+    free(uid_arr);
 }
