@@ -44,6 +44,4 @@ void mx_init_user(void) {
     //t_user.pseudonim = NULL;
     //t_user.description = NULL;
     t_user.id = -1;
-    mx_read_photo_from_bd();
-    t_user.avatar = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 100, 100);
 }

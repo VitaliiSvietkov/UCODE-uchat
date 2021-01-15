@@ -1,6 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-void mx_write_photo_to_bd(char *path){
+void mx_write_photo_to_bd(char *path, int id){
     FILE *fp = fopen(path, "rb");
     if (fp == NULL) {
         fprintf(stderr, "Cannot open image file\n");    
@@ -51,7 +51,9 @@ void mx_write_photo_to_bd(char *path){
         sqlite3_close(db);
     }
     sqlite3_stmt *pStmt;
-    char *sql = "UPDATE USERS SET PHOTO = ?;";
+    char sql[500];
+    bzero(sql, 500);
+    sprintf(sql, "UPDATE USERS SET PHOTO = ? WHERE ID = '%d' ;", id);
     
     rc = sqlite3_prepare(db, sql, -1, &pStmt, 0);
     

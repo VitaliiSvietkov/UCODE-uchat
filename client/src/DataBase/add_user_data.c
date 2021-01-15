@@ -17,7 +17,7 @@ void mx_add_user_data(const char *pseudo, const char *password, const char *name
     sprintf(sql, 
             "INSERT INTO USERS (ID, NAME, SURENAME, PSEUDONIM, DESCRIPTION, PASSWORD) VALUES('%d','%s','%s','%s','%s','%s');", 
             id, name, sname, pseudo, description, password);   
-    mx_write_photo_to_bd("client/img/ukraine.png");
+    mx_write_photo_to_bd("client/img/ukraine.png", id);
     st = sqlite3_exec(db, sql, NULL, 0, &errmsg);
     mx_dberror(db, st, errmsg); 
 }

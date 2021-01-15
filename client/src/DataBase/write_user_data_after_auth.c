@@ -29,6 +29,8 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
             t_user.description = newDescr;
             char *newPass = check_password;
             t_user.password = newPass;
+            mx_read_photo_from_bd(newId);
+            t_user.avatar = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 100, 100);
         }
     sqlite3_finalize(res);
     //sqlite3_close(db);

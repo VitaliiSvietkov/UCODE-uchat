@@ -1,6 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-void mx_read_photo_from_bd(void) {
+void mx_read_photo_from_bd(int id) {
     
     FILE *fp = fopen("client/img/avatar2.jpg", "wb");
     
@@ -20,7 +20,9 @@ void mx_read_photo_from_bd(void) {
         sqlite3_close(db);
     }
     
-    char *sql = "SELECT PHOTO FROM USERS;";
+    char sql[500];
+    bzero(sql, 500);
+    sprintf(sql, "SELECT PHOTO FROM USERS WHERE ID = '%d';", id);
         
     sqlite3_stmt *pStmt;
     rc = sqlite3_prepare_v2(db, sql, -1, &pStmt, 0);
