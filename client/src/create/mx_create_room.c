@@ -36,12 +36,30 @@ GtkWidget *mx_create_room(unsigned int uid) {
     else {
         // Load data from data base
         pixbuf = mx_get_pixbuf_with_size("client/img/standard/bookmark.png", 40, 40);
-        gtk_label_set_text(GTK_LABEL(title), "Some user");
         gtk_label_set_text(GTK_LABEL(preview), "Lorem ipsum");
         avatar = gtk_image_new_from_pixbuf(GDK_PIXBUF(pixbuf));
         gtk_widget_set_size_request(GTK_WIDGET(avatar), 40, 40);
         gtk_widget_set_margin_start(GTK_WIDGET(avatar), 15);
         g_object_unref(pixbuf);
+
+        sqlite3 *db = mx_opening_db();
+        t_message *msg = NULL;
+        sqlite3_stmt *res = NULL;
+        char sql[250];
+        bzero(sql, 250);
+        sprintf(sql, "SELECT NAME, SURENAME FROM USERS\
+                WHERE id=%u;", uid);
+        sqlite3_prepare_v2(db, sql, -1, &res, 0);
+        while (sqlite3_step(res) != SQLITE_DONE) {
+            char *name = mx_strdup((char *)sqlite3_column_text(res, 0));
+            char *surname = mx_strdup((char *)sqlite3_column_text(res, 1));
+            name = mx_strjoin(name, surname);
+            gtk_label_set_text(GTK_LABEL(title), name);
+            free(name);
+            free(surname);
+        }
+        sqlite3_finalize(res);
+        sqlite3_close(db);
     }
 
     gtk_box_pack_start(GTK_BOX(box), avatar, FALSE, FALSE, 0);
@@ -50,6 +68,7 @@ GtkWidget *mx_create_room(unsigned int uid) {
     gtk_widget_set_margin_start(GTK_WIDGET(v_box), 15);
     gtk_box_pack_start(GTK_BOX(box), v_box, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(v_box), title, FALSE, FALSE, 0);
+    gtk_widget_set_halign(GTK_WIDGET(title), GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(v_box), preview, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(preview), GTK_ALIGN_START);
 

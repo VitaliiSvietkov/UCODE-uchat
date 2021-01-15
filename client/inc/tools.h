@@ -1,9 +1,12 @@
 #ifndef TOOLS
 #define TOOLS
 #include <gtk/gtk.h>
+#include <stdbool.h>
 
 void mx_get_language_arr(void);
 void mx_sort_string(char *data);
+bool mx_uint_arr_check_value(unsigned int *arr, unsigned int value, int len);
+int mx_uint_array_insert(unsigned int **arr, unsigned int insert_value, int len);
 
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
 GdkPixbuf *mx_size_image_down(GdkPixbuf *pixbuf);

@@ -13,6 +13,8 @@ void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
             gtk_widget_destroy(GTK_WIDGET(right_container));
             right_container = NULL;
         }
+        if (curr_room_msg_head != NULL)
+            mx_clear_message_list(&curr_room_msg_head);
 
         mx_create_messages_area();
         mx_create_message_enter_area();

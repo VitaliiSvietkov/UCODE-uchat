@@ -66,11 +66,8 @@ void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
             mx_configure_left_header();
             // Create a selection area
             mx_configure_content_selection_area();
-            
             // Create a chat list area
-            chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-            gtk_fixed_put(GTK_FIXED(chat_area), chats_list, 0, 105);
-            gtk_box_pack_start(GTK_BOX(chats_list), mx_create_room(0), FALSE, FALSE, 0);
+            mx_configure_chats_list();
 
             // Create a contacts list area
             contacts_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
