@@ -42,12 +42,13 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
                 g_object_unref(t_user.avatar);
             t_user.avatar = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 100, 100);
         }
-    sqlite3_finalize(res);
-    //sqlite3_close(db);
+        sqlite3_finalize(res);
     }
     else {
+        sqlite3_close(db);
         return 1; 
     }
+    sqlite3_close(db);
     return 0;
 }
 
