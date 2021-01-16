@@ -7,6 +7,11 @@ void mx_destroy_popups(void) {
         tools_menu = NULL;
         //selected_msg_widget = NULL;
     }
+    if (search_menu != NULL) {
+        gdk_seat_ungrab(gdk_display_get_default_seat(gdk_display_get_default()));
+        gtk_widget_destroy(GTK_WIDGET(search_menu));
+        search_menu = NULL;
+    }
     if (more_box != NULL) {
         gtk_widget_destroy(GTK_WIDGET(more_box));
         more_box = NULL;

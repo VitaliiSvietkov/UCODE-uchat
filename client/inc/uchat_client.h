@@ -236,6 +236,7 @@ GtkWidget *authorization_area;
 GtkWidget *chat_area;
 
 GtkWidget *entry_search;
+GtkWidget *search_menu;
 
 GtkWidget *chats_list;                  
 GtkWidget *contacts_list;
@@ -256,7 +257,7 @@ GtkWidget *right_container;
 GtkWidget *messages_box;
 GtkWidget *message_enter_area;
 
-GtkWidget *mx_create_room(unsigned int uid);
+GtkWidget *mx_create_room(unsigned int uid, gint width, void (*func)(GtkWidget *, GdkEventButton *, gpointer));
 void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid);
 void room_close(GtkWidget *widget, GdkEventKey *event);
 void mx_create_messages_area(void);

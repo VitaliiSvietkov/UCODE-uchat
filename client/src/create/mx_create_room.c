@@ -1,6 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-GtkWidget *mx_create_room(unsigned int uid) {
+GtkWidget *mx_create_room(unsigned int uid, gint width, void (*func)(GtkWidget *, GdkEventButton *, gpointer)) {
     GtkWidget *eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(eventbox), "eventbox_room");
     g_signal_connect(G_OBJECT(eventbox), "enter-notify-event",
@@ -8,12 +8,12 @@ GtkWidget *mx_create_room(unsigned int uid) {
     g_signal_connect(G_OBJECT(eventbox), "leave-notify-event",
         G_CALLBACK(deactivate_prelight), NULL);
     g_signal_connect(G_OBJECT(eventbox), "button_press_event",
-        G_CALLBACK(room_click), (gpointer)(uintptr_t)uid);
+        G_CALLBACK(*func), (gpointer)(uintptr_t)uid);
 
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_widget_set_margin_top(GTK_WIDGET(box), 10);
-    gtk_widget_set_margin_bottom(GTK_WIDGET(box), 10);
-    gtk_widget_set_size_request(GTK_WIDGET(box), L_FIELD_WIDTH, 55);
+    gtk_widget_set_margin_top(GTK_WIDGET(box), 5);
+    gtk_widget_set_margin_bottom(GTK_WIDGET(box), 5);
+    gtk_widget_set_size_request(GTK_WIDGET(box), width, 55);
     gtk_container_add(GTK_CONTAINER(eventbox), box);
 
     GtkWidget *avatar = NULL;
