@@ -29,7 +29,8 @@ void mx_configure_chats_list(void) {
     sqlite3_close(db);
 
     for (int i = 0; i < uid_arr_len; i++)
-        gtk_box_pack_start(GTK_BOX(chats_list), mx_create_room(uid_arr[i], L_FIELD_WIDTH, room_click), FALSE, FALSE, 0);
+        gtk_box_pack_start(GTK_BOX(chats_list), 
+            mx_create_room(uid_arr[i], L_FIELD_WIDTH, room_click), FALSE, FALSE, 0);
     
     free(uid_arr);
     uid_arr = NULL;

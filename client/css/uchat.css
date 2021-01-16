@@ -28,6 +28,10 @@
 #tools_menu {
     background: white;
 }
+#search_menu {
+    background: #1f1f1f;
+    border: 1px solid white;
+}
 
 #tools_button {
     color: grey;

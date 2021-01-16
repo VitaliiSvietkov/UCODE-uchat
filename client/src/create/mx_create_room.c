@@ -1,6 +1,8 @@
 #include "../../inc/uchat_client.h"
 
-GtkWidget *mx_create_room(unsigned int uid, gint width, void (*func)(GtkWidget *, GdkEventButton *, gpointer)) {
+GtkWidget *mx_create_room(unsigned int uid, gint width, 
+    void (*func)(GtkWidget *, GdkEventButton *, gpointer)) {
+        
     GtkWidget *eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(eventbox), "eventbox_room");
     g_signal_connect(G_OBJECT(eventbox), "enter-notify-event",
