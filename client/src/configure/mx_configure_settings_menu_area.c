@@ -1,9 +1,5 @@
 #include "../../inc/uchat_client.h"
 
-static void account_settings_enter_notify(GtkWidget *widget);
-static void account_settings_leave_notify(GtkWidget *widget);
-static void account_settings_click(GtkWidget *widget, GdkEventButton *event);
-
 void mx_configure_settings_menu_area(void) {
     settings_menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(settings_menu), L_FIELD_WIDTH, CUR_HEIGHT - 105);
@@ -98,32 +94,6 @@ void mx_configure_settings_menu_area(void) {
         G_CALLBACK(change_account_click), NULL); 
     //==============================================================================================
 
-    // "Account settings" section
-    //==============================================================================================
-    GtkWidget *account_settings_eventbox = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(account_settings_eventbox), "setting_menu_eventbox");
-    gtk_widget_set_size_request(GTK_WIDGET(account_settings_eventbox), L_FIELD_WIDTH, 50);
-    GtkWidget *account_settings_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_widget_set_name(GTK_WIDGET(account_settings_box), "change_box");
-    gtk_container_add(GTK_CONTAINER(account_settings_eventbox), account_settings_box);
-    gtk_box_pack_start(GTK_BOX(settings_menu), account_settings_eventbox, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(account_settings_box), account_settings_image.box, FALSE, FALSE, 0);
-
-    GtkWidget *label_account_settings = gtk_label_new(text_for_labels[34]);
-    gtk_label_set_max_width_chars(GTK_LABEL(label_account_settings), 16);
-    gtk_widget_set_margin_start(GTK_WIDGET(label_account_settings), 50);
-    mx_label_push_back(&labels_head, label_account_settings, 34);
-    gtk_widget_set_name(GTK_WIDGET(label_account_settings), "label_settings_menu");
-    gtk_box_pack_start(GTK_BOX(account_settings_box), label_account_settings, FALSE, FALSE, 0);
-
-    g_signal_connect(G_OBJECT(account_settings_eventbox), "enter-notify-event",
-        G_CALLBACK(account_settings_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(account_settings_eventbox), "leave-notify-event",
-        G_CALLBACK(account_settings_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(account_settings_eventbox), "button_press_event",
-        G_CALLBACK(account_settings_click), NULL);
-    //==============================================================================================
-
     // "Chat settings" section
     //==============================================================================================
     GtkWidget *chat_settings_eventbox = gtk_event_box_new();
@@ -178,7 +148,7 @@ void mx_configure_settings_menu_area(void) {
     //==============================================================================================
     GtkWidget *label_impulse = gtk_label_new("Impulse");
     gtk_widget_set_name(GTK_WIDGET(label_impulse), "label_impulse");
-    GtkWidget *label_version = gtk_label_new("Alpha version");
+    GtkWidget *label_version = gtk_label_new("Beta version");
     gtk_widget_set_name(GTK_WIDGET(label_version), "label_version");
     gtk_box_pack_start(GTK_BOX(settings_menu), label_impulse, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(settings_menu), label_version, TRUE, TRUE, 0);
@@ -188,22 +158,4 @@ void mx_configure_settings_menu_area(void) {
     //============================================================================================== 
 
     active_leftbar_container = settings_menu;
-}
-
-static void account_settings_enter_notify(GtkWidget *widget) {
-    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(account_settings_image.box), 
-        GTK_STATE_FLAG_PRELIGHT, FALSE);
-}
-
-static void account_settings_leave_notify(GtkWidget *widget) {
-    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(account_settings_image.box), 
-        GTK_STATE_FLAG_PRELIGHT);
-}
-
-static void account_settings_click(GtkWidget *widget, GdkEventButton *event) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        mx_create_account_settings_form();
-    }
 }

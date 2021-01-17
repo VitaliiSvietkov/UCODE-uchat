@@ -80,10 +80,6 @@ void authorization(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
             // Create a chat list area
             mx_configure_chats_list();
 
-            // Create a contacts list area
-            contacts_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-            gtk_fixed_put(GTK_FIXED(chat_area), contacts_list, 0, 95);
-
             mx_configure_settings_menu_area();
 
             mx_update_user_data_preview();
@@ -94,7 +90,6 @@ void authorization(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
             gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
             gtk_widget_grab_focus(GTK_WIDGET(chat_area));
             gtk_widget_hide(GTK_WIDGET(chats_list));
-            gtk_widget_hide(GTK_WIDGET(contacts_list));
         }
     }
 }
@@ -226,6 +221,5 @@ void authorization_close(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
         gtk_widget_grab_focus(GTK_WIDGET(chat_area));
         gtk_widget_hide(GTK_WIDGET(chats_list));
-        gtk_widget_hide(GTK_WIDGET(contacts_list));
     }
 }

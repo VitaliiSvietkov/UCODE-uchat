@@ -9,14 +9,21 @@ void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
         GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
         gint res;
 
-        dialog = gtk_file_chooser_dialog_new ("Open File",
+        dialog = gtk_file_chooser_dialog_new ("Select an Image",
                                             GTK_WINDOW(window),
                                             action,
                                             "_Cancel",
                                             GTK_RESPONSE_CANCEL,
-                                            "_Open",
+                                            "_Select",
                                             GTK_RESPONSE_ACCEPT,
                                             NULL);
+
+        GtkFileFilter *filter = gtk_file_filter_new();
+        char *pattern_arr[13] = {"*.tif", "*.tiff", "*.bmp", "*.jpg", "*.jpeg", "*.gif",
+            "*.png", "*.eps", "*.raw", "*.cr2", "*.nef", "*.orf", "*.sr2"};
+        for (int i = 0; i < 13; ++i)
+            gtk_file_filter_add_pattern(filter, pattern_arr[i]);
+        gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
 
         res = gtk_dialog_run (GTK_DIALOG (dialog));
         char *filename = NULL;

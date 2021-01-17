@@ -4,10 +4,12 @@ void mx_add_message(GtkWidget *container, t_message *message) {
     GtkWidget *msg = mx_create_message(message);
     if (message->uid == (unsigned int)t_user.id) {
         gtk_widget_set_halign(GTK_WIDGET(msg), GTK_ALIGN_END);
-        gtk_widget_set_margin_end(GTK_WIDGET(msg), 5);
+        gtk_widget_set_margin_end(GTK_WIDGET(msg), 7);
     }
-    else
+    else {
         gtk_widget_set_halign(GTK_WIDGET(msg), GTK_ALIGN_START);
+        gtk_widget_set_margin_start(GTK_WIDGET(msg), 5);
+    }
 
     gtk_widget_set_margin_top(GTK_WIDGET(msg), 5);
     gtk_widget_set_margin_bottom(GTK_WIDGET(msg), 5);

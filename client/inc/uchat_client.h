@@ -56,13 +56,11 @@ t_img_button tick_image;
 t_img_button more_image;
 
 t_img_button edit_user_image;
-t_img_button account_settings_image;
 t_img_button change_account_image;
 t_img_button chat_settings_image;
 t_img_button language_image;
 
 t_img_button settings_image;
-t_img_button contacts_image;
 t_img_button messages_image;
 t_img_button *t_active_image;
 
@@ -164,11 +162,6 @@ void change_description_entry_change_event(GtkWidget *widget);
 void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
-// Account settings form
-//==========================================================================================
-void mx_create_account_settings_form(void);
-//==========================================================================================
-
 // Language
 //==========================================================================================
 GtkWidget *mx_language_create_box(char *path, char *name);
@@ -209,7 +202,6 @@ void deactivate_prelight(GtkWidget *widget);
 void close_image_click_event(GtkWidget *widget, GdkEventButton *event);
 
 void messages_click(GtkWidget *widget, GdkEventButton *event);
-void contacts_click(GtkWidget *widget, GdkEventButton *event);
 void settings_click(GtkWidget *widget, GdkEventButton *event);
 
 void edit_user_enter_notify(GtkWidget *widget);
@@ -239,7 +231,6 @@ GtkWidget *entry_search;
 GtkWidget *search_menu;
 
 GtkWidget *chats_list;                  
-GtkWidget *contacts_list;
 GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
 

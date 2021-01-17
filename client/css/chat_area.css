@@ -4,7 +4,6 @@
 }
 
 #usr_message {
-    /*background: #A6A5A5;*/
     background: #1f1f1f;
     color: #e1e1e1; 
     border-radius: 12px;
@@ -12,7 +11,7 @@
 
 #message {
     color: #e1e1e1;
-    background: #1f1f1f;
+    background: #3a3939;
     border-radius: 12px;
 }
 

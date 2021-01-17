@@ -34,11 +34,12 @@
 }
 
 #tools_button {
-    color: grey;
+    color: #1f1f1f;
     border-radius: 0;
+    transition: none;
 }
 #tools_button:hover {
-    color: #1f1f1f;
+    background: #f3f3f3;
 }
 
 #pop_up_error {
@@ -156,15 +157,6 @@
     background-image: url("../img/standard/identification-hovered.png");
 }
 
-#account_settings_image {
-    background-image: url("../img/standard/resume.png");
-    background-size: 30px;
-    background-repeat: no-repeat;
-}
-#account_settings_image:hover {
-    background-image: url("../img/standard/resume-hovered.png");
-}
-
 #chat_settings_image {
     background-image: url("../img/standard/chat-settings.png");
     background-size: 30px;
@@ -187,6 +179,8 @@
     background-image: url("../img/standard/messages.png");
     background-size: 30px;
     background-repeat: no-repeat;
+    background-position: center;
+    border-bottom: 1px solid #e1e1e1;
 }
 #messages_image:hover {
     background-image: url("../img/standard/messages-hovered.png");
@@ -195,22 +189,12 @@
     background-image: url("../img/standard/messages-hovered.png");
 }
 
-#contacts_image {
-    background-image: url("../img/standard/contacts.png");
-    background-size: 25px;
-    background-repeat: no-repeat;
-}
-#contacts_image:hover {
-    background-image: url("../img/standard/contacts-hovered.png");
-}
-#contacts_image:checked {
-    background-image: url("../img/standard/contacts-hovered.png");
-}
-
 #settings_image {
     background-image: url("../img/standard/settings.png");
     background-size: 30px;
     background-repeat: no-repeat;
+    background-position: center;
+    border-bottom: 1px solid #e1e1e1;
 }
 #settings_image:hover {
     background-image: url("../img/standard/settings-hovered.png");
@@ -279,7 +263,7 @@
 /*        FOOTER         */
 /* ===================== */
 #label_impulse {
-    margin-top: 135px;
+    margin-top: 185px;
     font-size: 22px;
     font-style: italic;
 }

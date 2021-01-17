@@ -44,6 +44,7 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd
             t_user.avatar = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 100, 100);
         }
         else {
+            free(check_password);
             sqlite3_finalize(res);
             sqlite3_close(db);
             return 1; 
@@ -69,7 +70,6 @@ int mx_check_login_reg(const char *pseudo) {
     sprintf(sql, "SELECT PASSWORD FROM USERS WHERE PSEUDONIM = '%s';", pseudo);
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
     if (sqlite3_step(res) != SQLITE_DONE) {
-    //if((char *)sqlite3_column_text(res, 0) != NULL) {
         sqlite3_finalize(res);
         sqlite3_close(db);
         return 1;
