@@ -41,7 +41,7 @@ void login_btn_leave_notify(void) {
     }
 }
 
-void authorization(GtkWidget *widget, GdkEvent *event, gpointer *data) {
+void authorization(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 5) {
         const char *login1 = gtk_entry_get_text(GTK_ENTRY(login));
         const char *password1 = gtk_entry_get_text(GTK_ENTRY(password));

@@ -1,6 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* password) {
+int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd) {
     sqlite3 *db = mx_opening_db();
     sqlite3_stmt *res;
     char sql[500];
@@ -9,10 +9,9 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
     char *errmsg;
     sprintf(sql, "SELECT PASSWORD FROM USERS WHERE PSEUDONIM = '%s';", pseudo);
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
-    sqlite3_step(res);
-    if(sqlite3_column_text(res, 0) != NULL) {
-        char *check_password = mx_string_copy((char *)sqlite3_column_text(res, 0));
-        if (mx_strcmp(check_password, password) == 0) {
+    if (sqlite3_step(res) != SQLITE_DONE) {
+        char *check_password = mx_strdup((char *)sqlite3_column_text(res, 0));
+        if (mx_strcmp(check_password, passwd) == 0) {
             sqlite3_finalize(res);
             sprintf(sql, "SELECT ID, NAME, SURENAME, PSEUDONIM, DESCRIPTION FROM USERS WHERE PSEUDONIM = '%s';", pseudo);
             sqlite3_prepare_v2(db, sql, -1, &res, 0);
@@ -44,9 +43,15 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwo
                 g_object_unref(t_user.avatar);
             t_user.avatar = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 100, 100);
         }
+        else {
+            sqlite3_finalize(res);
+            sqlite3_close(db);
+            return 1; 
+        }
         sqlite3_finalize(res);
     }
     else {
+        sqlite3_finalize(res);
         sqlite3_close(db);
         return 1; 
     }
@@ -63,12 +68,14 @@ int mx_check_login_reg(const char *pseudo) {
     char *errmsg;
     sprintf(sql, "SELECT PASSWORD FROM USERS WHERE PSEUDONIM = '%s';", pseudo);
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
-    sqlite3_step(res);
-    if(sqlite3_column_text(res, 0) != NULL) {
+    if (sqlite3_step(res) != SQLITE_DONE) {
+    //if((char *)sqlite3_column_text(res, 0) != NULL) {
         sqlite3_finalize(res);
-        //sqlite3_close(db);
+        sqlite3_close(db);
         return 1;
     }
+    sqlite3_finalize(res);
+    sqlite3_close(db);
     return 0;
 }
 
