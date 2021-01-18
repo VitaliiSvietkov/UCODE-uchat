@@ -4,10 +4,13 @@
 }
 
 #day_info_show {
-    background: rgba(21, 21, 21, 0.5);
+    background: rgba(0, 0, 0, 0.8);
     color: white;
-    border-radius: 5px;
-    padding: 5px;
+    border-radius: 25px;
+    padding-top: 12px;
+    padding-bottom: 0;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #usr_message {
