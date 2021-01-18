@@ -47,6 +47,9 @@ void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
 
 void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
     GdkPixbuf *pixbuf = arr[1];
+    time_t curtime;
+    time(&curtime);
+
     char *text = NULL;
     if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0)
         text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
@@ -59,12 +62,13 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
         msg = mx_push_back_message(&curr_room_msg_head,
             NULL, 
             t_user.id, 
-            pixbuf);
+            pixbuf,
+            curtime);
         mx_add_message(messages_box, msg);
         sprintf(sql,
-                "INSERT INTO Messages (id, addresser, destination)\
-                VALUES('%u','%u','%u');",
-                msg->id, t_user.id, curr_destination);
+                "INSERT INTO Messages (id, addresser, destination, time)\
+                VALUES('%u','%u','%u','%ld');",
+                msg->id, t_user.id, curr_destination, msg->seconds);
         sqlite3_exec(db, sql, 0, 0, &err_msg);
         mx_write_image_message((char *)arr[0], msg->id, db);
 
@@ -72,13 +76,14 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
             msg = mx_push_back_message(&curr_room_msg_head,
                 text, 
                 t_user.id, 
-                NULL);
+                NULL,
+                curtime);
             mx_add_message(messages_box, msg);
 
             sprintf(sql,
-                    "INSERT INTO Messages (id, addresser, destination, Text)\
-                    VALUES('%u','%u','%u','%s');",
-                    msg->id, t_user.id, curr_destination, msg->text);
+                    "INSERT INTO Messages (id, addresser, destination, Text, time)\
+                    VALUES('%u','%u','%u','%s','%ld');",
+                    msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
             sqlite3_exec(db, sql, 0, 0, &err_msg);
         }
     }
@@ -86,13 +91,14 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
         msg = mx_push_back_message(&curr_room_msg_head,
             text, 
             t_user.id, 
-            pixbuf);
+            pixbuf,
+            curtime);
         mx_add_message(messages_box, msg);
 
         sprintf(sql,
-                "INSERT INTO Messages (id, addresser, destination, Text)\
-                VALUES('%u','%u','%u','%s');",
-                msg->id, t_user.id, curr_destination, msg->text);
+                "INSERT INTO Messages (id, addresser, destination, Text, time)\
+                VALUES('%u','%u','%u','%s','%ld');",
+                msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
         sqlite3_exec(db, sql, 0, 0, &err_msg);
         mx_write_image_message((char *)arr[0], msg->id, db);
     }
@@ -124,19 +130,23 @@ void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
 
 void mx_send_message_on_enter(GtkWidget *widget) {
     if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0) {
+        time_t curtime;
+        time(&curtime);
+
         t_message *msg = mx_push_back_message(&curr_room_msg_head,
             strdup(gtk_entry_get_text(GTK_ENTRY(widget))), 
             t_user.id, 
-            NULL);
+            NULL,
+            curtime);
         mx_add_message(messages_box, msg);
         sqlite3 *db = mx_opening_db();
         int st;
         char *err_msg;
         char sql[500];
         bzero(sql, 500);
-        sprintf(sql, "INSERT INTO Messages (id, addresser, destination, Text)\
-                VALUES('%u','%u','%u','%s');", 
-                msg->id, t_user.id, curr_destination, msg->text);
+        sprintf(sql, "INSERT INTO Messages (id, addresser, destination, Text, time)\
+                VALUES('%u','%u','%u','%s','%ld');", 
+                msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
         st = sqlite3_exec(db, sql, NULL, 0, &err_msg);
         mx_dberror(db, st, err_msg);
         sqlite3_close(db);
@@ -151,19 +161,23 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
     mx_destroy_popups();
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(entry))) > 0) {
+            time_t curtime;
+            time(&curtime);
+
             t_message *msg = mx_push_back_message(&curr_room_msg_head,
                 strdup(gtk_entry_get_text(GTK_ENTRY(entry))), 
                 t_user.id, 
-                NULL);
+                NULL,
+                curtime);
             mx_add_message(messages_box, msg);
             sqlite3 *db = mx_opening_db();
             int st;
             char *err_msg;
             char sql[500];
             bzero(sql, 500);
-            sprintf(sql, "INSERT INTO Messages (id, addresser, destination, Text)\
-                    VALUES('%u','%u','%u','%s');", 
-                    msg->id, t_user.id, curr_destination, msg->text);
+            sprintf(sql, "INSERT INTO Messages (id, addresser, destination, Text, time)\
+                    VALUES('%u','%u','%u','%s','%ld');", 
+                    msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
             st = sqlite3_exec(db, sql, NULL, 0, &err_msg);
             mx_dberror(db, st, err_msg); 
             sqlite3_close(db);

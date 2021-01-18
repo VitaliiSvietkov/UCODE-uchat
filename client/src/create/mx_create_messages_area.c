@@ -15,15 +15,17 @@ void mx_create_messages_area(void) {
     char sql[250];
     bzero(sql, 250);
     char *err_msg;
-    sprintf(sql, "SELECT id, addresser, Text FROM Messages\
-            WHERE (addresser=%u OR addresser=%u) AND (destination=%u OR destination=%u);",
+    sprintf(sql, "SELECT id, addresser, Text, time FROM Messages\
+            WHERE (addresser=%u OR addresser=%u) AND (destination=%u OR destination=%u)\
+            ORDER BY id;",
             curr_destination, t_user.id, curr_destination, t_user.id);
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
     while (sqlite3_step(res) != SQLITE_DONE) {
         msg = mx_push_back_message(&curr_room_msg_head, 
             mx_strdup((char *)sqlite3_column_text(res, 2)), 
             (unsigned int)sqlite3_column_int64(res, 1),
-            mx_read_image_message((unsigned int)sqlite3_column_int64(res, 0), db));
+            mx_read_image_message((unsigned int)sqlite3_column_int64(res, 0), db),
+            (time_t)sqlite3_column_int64(res, 3));
         mx_add_message(messages_box, msg);
     }
     sqlite3_finalize(res);

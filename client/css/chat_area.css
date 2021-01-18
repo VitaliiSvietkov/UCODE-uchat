@@ -3,6 +3,13 @@
     background: linear-gradient(180deg, rgba(255,255,255,1) 20%, rgba(231,231,231,1) 63%, rgba(193,193,193,1) 100%);
 }
 
+#day_info_show {
+    background: rgba(21, 21, 21, 0.5);
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
 #usr_message {
     background: #1f1f1f;
     color: #e1e1e1; 

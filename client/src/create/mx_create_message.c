@@ -8,10 +8,22 @@ static void delete_click(GtkWidget *widget, t_message *data);
 
 GtkWidget *mx_create_message(t_message *data) {
     GtkWidget *eventbox = gtk_event_box_new();
-    if (data->uid == (unsigned int)t_user.id)
+
+    char *msg_time = mx_strndup(ctime(&data->seconds) + 11, 5);
+    GtkWidget *time_send = gtk_label_new(msg_time);
+    gtk_widget_set_margin_bottom(GTK_WIDGET(time_send), 5);
+    free(msg_time);
+
+    if (data->uid == (unsigned int)t_user.id) {
         gtk_widget_set_name(GTK_WIDGET(eventbox), "usr_message");
-    else
+        gtk_widget_set_halign(GTK_WIDGET(time_send), GTK_ALIGN_END);
+        gtk_widget_set_margin_end(GTK_WIDGET(time_send), 10);
+    }
+    else {
         gtk_widget_set_name(GTK_WIDGET(eventbox), "message");
+        gtk_widget_set_halign(GTK_WIDGET(time_send), GTK_ALIGN_START);
+        gtk_widget_set_margin_start(GTK_WIDGET(time_send), 10);
+    }
     
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add(GTK_CONTAINER(eventbox), box);
@@ -32,8 +44,10 @@ GtkWidget *mx_create_message(t_message *data) {
         gtk_widget_set_margin_top(GTK_WIDGET(label), 10);
         gtk_widget_set_margin_start(GTK_WIDGET(label), 10);
         gtk_widget_set_margin_end(GTK_WIDGET(label), 10);
-        gtk_widget_set_margin_bottom(GTK_WIDGET(label), 10);
+        gtk_widget_set_margin_bottom(GTK_WIDGET(label), 5);
     }
+
+    gtk_box_pack_start(GTK_BOX(box), time_send, FALSE, FALSE, 0);
 
     g_signal_connect(G_OBJECT(eventbox), "button_press_event",
         G_CALLBACK(message_click), data);
