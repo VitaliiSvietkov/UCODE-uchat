@@ -176,8 +176,14 @@ void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpoint
         const char *login_var = gtk_entry_get_text(GTK_ENTRY(login_reg));
         const char *password_var = gtk_entry_get_text(GTK_ENTRY(password_reg));
         const char *name = gtk_entry_get_text(GTK_ENTRY(firstname_reg));
-        const char *sname = gtk_entry_get_text(GTK_ENTRY(secondname_reg));
-            mx_add_user_data(login_var, password_var, name, sname);
+        char *sname = NULL;
+        if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(secondname_reg))) > 0)
+            sname = mx_strdup(gtk_entry_get_text(GTK_ENTRY(secondname_reg)));
+        else
+            sname = mx_strjoin(sname, " ");
+        mx_add_user_data(login_var, password_var, name, sname);
+        free(sname);
+
         gtk_entry_set_text(GTK_ENTRY(login), "");
         gtk_entry_set_text(GTK_ENTRY(password), "");
         gtk_entry_set_text(GTK_ENTRY(login_reg), "");
