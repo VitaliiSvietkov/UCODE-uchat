@@ -7,6 +7,7 @@ static void create_search_menu(GtkWidget *entry, GdkEvent *event,
     unsigned int *users_arr, int users_len);
 static void fill_users_arr(unsigned int **arr, char **search_split, 
     char *pseudonim, int *len);
+static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid);
 
 void mx_configure_left_header(void) {
     GtkWidget *left_header = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -122,7 +123,7 @@ static void create_search_menu(GtkWidget *entry, GdkEvent *event,
 
     for (int i = 0; i < users_len; i++) {
         gtk_box_pack_start(GTK_BOX(search_container), 
-            mx_create_room(users_arr[i], entry_alloc.width, room_click), FALSE, FALSE, 0);
+            mx_create_room(users_arr[i], entry_alloc.width, search_room_click), FALSE, FALSE, 0);
     }
 
     //==================================================================================
@@ -157,4 +158,36 @@ static void fill_users_arr(unsigned int **arr, char **search_split, char *pseudo
     }
     sqlite3_finalize(res);
     sqlite3_close(db);
+}
+
+static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        sqlite3 *db = mx_opening_db();
+        sqlite3_stmt *res = NULL;
+        char sql[250];
+        bzero(sql, 250);
+        sprintf(sql, "SELECT ID FROM Messages\
+                WHERE (addresser=%u OR destination=%u) AND (addresser=%u OR destination=%u);", 
+                (unsigned int)(uintptr_t)uid, (unsigned int)t_user.id,
+                (unsigned int)(uintptr_t)uid, (unsigned int)t_user.id);
+
+        sqlite3_prepare_v2(db, sql, -1, &res, 0);
+        if (sqlite3_step(res) != SQLITE_DONE) {
+            room_click(widget, event, uid);
+            sqlite3_finalize(res);
+            sqlite3_close(db);
+            return;
+        }
+        sqlite3_finalize(res);
+        sqlite3_close(db);
+
+        g_object_ref(G_OBJECT(widget));
+        gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(GTK_WIDGET(widget))), GTK_WIDGET(widget));
+        gtk_box_pack_start(GTK_BOX(chats_list), widget, FALSE, FALSE, 0);
+        g_signal_handlers_disconnect_by_func(G_OBJECT(widget), (gpointer)search_room_click, uid);
+        g_signal_connect(G_OBJECT(widget), "button_press_event", 
+            G_CALLBACK(room_click), uid);
+
+        room_click(widget, event, uid);
+    }
 }

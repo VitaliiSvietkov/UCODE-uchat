@@ -11,7 +11,7 @@ void mx_configure_chats_list(void) {
     bzero(sql, 250);
     char *err_msg;
     sprintf(sql, "SELECT addresser, destination FROM Messages\
-            WHERE addresser=%u OR destination=%u;",
+            WHERE addresser=%u OR destination=%u ORDER BY time DESC;",
             t_user.id, t_user.id);
 
     unsigned int *uid_arr = NULL;
@@ -27,6 +27,9 @@ void mx_configure_chats_list(void) {
     }
     sqlite3_finalize(res);
     sqlite3_close(db);
+
+    if (!mx_uint_arr_check_value(uid_arr, 0, uid_arr_len))
+        uid_arr_len = mx_uint_array_insert(&uid_arr, 0, uid_arr_len);
 
     for (int i = 0; i < uid_arr_len; i++)
         gtk_box_pack_start(GTK_BOX(chats_list), 
