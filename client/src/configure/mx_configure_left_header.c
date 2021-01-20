@@ -78,7 +78,6 @@ static void search_menu_click(GtkWidget *widget, GdkEventButton *event, GdkDispl
 
 static void create_search_menu(GtkWidget *entry, GdkEvent *event, 
     unsigned int *users_arr, int users_len) {
-    //mx_destroy_popups();
 
     // Create window and grab focus of the mouse
     //==================================================================================

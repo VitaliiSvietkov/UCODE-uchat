@@ -5,7 +5,11 @@ void mx_destroy_popups(void) {
         gdk_seat_ungrab(gdk_display_get_default_seat(gdk_display_get_default()));
         gtk_widget_destroy(GTK_WIDGET(tools_menu));
         tools_menu = NULL;
-        //selected_msg_widget = NULL;
+    }
+    if (error_revealer != NULL) {
+        gtk_container_forall(GTK_CONTAINER(error_revealer), (GtkCallback)gtk_widget_destroy, NULL);
+        gtk_widget_destroy(GTK_WIDGET(error_revealer));
+        error_revealer = NULL;
     }
     if (search_menu != NULL) {
         gdk_seat_ungrab(gdk_display_get_default_seat(gdk_display_get_default()));
