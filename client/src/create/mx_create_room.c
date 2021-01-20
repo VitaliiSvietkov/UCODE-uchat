@@ -50,7 +50,6 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
         g_object_unref(pixbuf);
 
         sqlite3 *db = mx_opening_db();
-        t_message *msg = NULL;
         sqlite3_stmt *res = NULL;
         char sql[250];
         bzero(sql, 250);

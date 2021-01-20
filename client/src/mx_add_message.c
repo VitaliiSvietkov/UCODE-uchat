@@ -4,6 +4,17 @@ void mx_add_message(GtkWidget *container, t_message *message) {
     GtkWidget *msg = mx_create_message(message);
     GtkWidget *day_show = NULL;
 
+    char *day_ch = mx_strndup(ctime(&message->seconds) + 8, 2);
+    int cur_day_int = mx_atoi(day_ch);
+    free(day_ch);
+
+    int next_day_int = 0;
+
+    if (message->next != NULL) {
+        day_ch = mx_strndup(ctime(&message->next->seconds) + 8, 2);
+        next_day_int = mx_atoi(day_ch);
+        free(day_ch);
+    }
 
     if (message->id == 1) {
         char *day_info = mx_strndup(ctime(&message->seconds) + 4, 7);
@@ -15,7 +26,7 @@ void mx_add_message(GtkWidget *container, t_message *message) {
         gtk_widget_set_margin_top(GTK_WIDGET(first_date), 5);
         gtk_box_pack_start(GTK_BOX(container), first_date, FALSE, FALSE, 0);
     }
-    if (message->next != NULL && message->next->seconds - message->seconds >= 86400) {
+    if (message->next != NULL && cur_day_int != next_day_int) {
         char *day_info = mx_strndup(ctime(&message->next->seconds) + 4, 7);
         day_info = mx_strjoin(day_info, ctime(&message->next->seconds) + 20);
         day_show = gtk_label_new(day_info);
@@ -38,7 +49,7 @@ void mx_add_message(GtkWidget *container, t_message *message) {
 
     gtk_box_pack_start(GTK_BOX(container), msg, FALSE, FALSE, 0); 
 
-    if (message->next != NULL && message->next->seconds - message->seconds >= 86400
+    if (message->next != NULL && cur_day_int != next_day_int
         && day_show != NULL)
         gtk_box_pack_start(GTK_BOX(container), day_show, FALSE, FALSE, 0);
 

@@ -172,7 +172,7 @@ static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer
                 (unsigned int)(uintptr_t)uid, (unsigned int)t_user.id);
 
         sqlite3_prepare_v2(db, sql, -1, &res, 0);
-        if (sqlite3_step(res) != SQLITE_DONE) {
+        if (sqlite3_step(res) == SQLITE_DONE) {
             room_click(widget, event, uid);
             sqlite3_finalize(res);
             sqlite3_close(db);
@@ -184,6 +184,7 @@ static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer
         g_object_ref(G_OBJECT(widget));
         gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(GTK_WIDGET(widget))), GTK_WIDGET(widget));
         gtk_box_pack_start(GTK_BOX(chats_list), widget, FALSE, FALSE, 0);
+        gtk_box_reorder_child(GTK_BOX(chats_list), widget, 0);
         g_signal_handlers_disconnect_by_func(G_OBJECT(widget), (gpointer)search_room_click, uid);
         g_signal_connect(G_OBJECT(widget), "button_press_event", 
             G_CALLBACK(room_click), uid);
