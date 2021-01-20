@@ -95,10 +95,16 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
             curtime);
         mx_add_message(messages_box, msg);
 
-        sprintf(sql,
-                "INSERT INTO Messages (id, addresser, destination, Text, time)\
-                VALUES('%u','%u','%u','%s','%ld');",
-                msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
+        if (msg->text != NULL)
+            sprintf(sql,
+                    "INSERT INTO Messages (id, addresser, destination, Text, time)\
+                    VALUES('%u','%u','%u','%s','%ld');",
+                    msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
+        else
+            sprintf(sql,
+                    "INSERT INTO Messages (id, addresser, destination, time)\
+                    VALUES('%u','%u','%u','%ld');",
+                    msg->id, t_user.id, curr_destination, msg->seconds);
         sqlite3_exec(db, sql, 0, 0, &err_msg);
         mx_write_image_message((char *)arr[0], msg->id, db);
     }

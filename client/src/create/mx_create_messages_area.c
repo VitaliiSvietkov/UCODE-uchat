@@ -22,8 +22,11 @@ void mx_create_messages_area(void) {
             curr_destination, t_user.id, curr_destination, t_user.id);
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
     while (sqlite3_step(res) != SQLITE_DONE) {
+        char *message_text = (char *)sqlite3_column_text(res, 2);
+        if (message_text != NULL)
+            message_text = mx_strdup((char *)sqlite3_column_text(res, 2));
         mx_push_back_message(&curr_room_msg_head, 
-            mx_strdup((char *)sqlite3_column_text(res, 2)), 
+            message_text, 
             (unsigned int)sqlite3_column_int64(res, 1),
             mx_read_image_message((unsigned int)sqlite3_column_int64(res, 0), db),
             (time_t)sqlite3_column_int64(res, 3));

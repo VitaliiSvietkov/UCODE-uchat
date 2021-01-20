@@ -168,9 +168,16 @@ static void copy_click(GtkWidget *widget, t_message *data) {
 }
 
 static void delete_click(GtkWidget *widget, t_message *data) {
-    gtk_widget_destroy(GTK_WIDGET(selected_msg_widget));
+    //gtk_widget_destroy(GTK_WIDGET(selected_msg_widget));
     selected_msg_widget = NULL;
     mx_remove_message(&curr_room_msg_head, data->id);
+
+    gtk_container_forall(GTK_CONTAINER(messages_box), (GtkCallback)gtk_widget_destroy, NULL);
+    t_message *msg = curr_room_msg_head;
+    while (msg != NULL) {
+        mx_add_message(messages_box, msg);
+        msg = msg->next;
+    }
 
     mx_destroy_popups();
 }
