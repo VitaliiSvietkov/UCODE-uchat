@@ -1,17 +1,5 @@
 #include "../../inc/uchat_client.h"
 
-void image_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        if (!(data->active)) {
-            gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
-            data->active = true;
-        }
-        else {
-            gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED);
-            data->active = false;
-        }
-    }
-}
 void activate_prelight(GtkWidget *widget) {
     GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
     if (!(flags & GTK_STATE_FLAG_CHECKED))
@@ -21,6 +9,29 @@ void deactivate_prelight(GtkWidget *widget) {
     GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
     if (!(flags & GTK_STATE_FLAG_CHECKED))
         gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+}
+
+void settings_element_enter_notify(GtkWidget *widget) {
+    GList *parent_eventbox_children = gtk_container_get_children(GTK_CONTAINER(widget));
+    GList *box_children = gtk_container_get_children(GTK_CONTAINER(parent_eventbox_children->data));
+    g_list_free(parent_eventbox_children);
+
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_widget_set_state_flags(GTK_WIDGET(box_children->data), 
+        GTK_STATE_FLAG_PRELIGHT, FALSE);
+
+    g_list_free(box_children);
+}
+
+void settings_element_leave_notify(GtkWidget *widget) {
+    GList *parent_eventbox_children = gtk_container_get_children(GTK_CONTAINER(widget));
+    GList *box_children = gtk_container_get_children(GTK_CONTAINER(parent_eventbox_children->data));
+    g_list_free(parent_eventbox_children);
+
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(box_children->data), GTK_STATE_FLAG_PRELIGHT);
+
+    g_list_free(box_children);
 }
 
 // Blackout

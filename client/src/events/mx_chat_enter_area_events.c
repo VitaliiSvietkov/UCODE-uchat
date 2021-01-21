@@ -64,7 +64,7 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
             t_user.id, 
             pixbuf,
             curtime);
-        mx_add_message(messages_box, msg);
+        mx_add_message(t_chat_room_vars.messages_box, msg);
         sprintf(sql,
                 "INSERT INTO Messages (id, addresser, destination, time)\
                 VALUES('%u','%u','%u','%ld');",
@@ -78,7 +78,7 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
                 t_user.id, 
                 NULL,
                 curtime);
-            mx_add_message(messages_box, msg);
+            mx_add_message(t_chat_room_vars.messages_box, msg);
 
             sprintf(sql,
                     "INSERT INTO Messages (id, addresser, destination, Text, time)\
@@ -93,7 +93,7 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
             t_user.id, 
             pixbuf,
             curtime);
-        mx_add_message(messages_box, msg);
+        mx_add_message(t_chat_room_vars.messages_box, msg);
 
         if (msg->text != NULL)
             sprintf(sql,
@@ -124,14 +124,16 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
 void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
     mx_destroy_popups();
     int len = strlen(gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget))));
+    GList *children = gtk_container_get_children(GTK_CONTAINER(t_chat_room_vars.message_enter_area));
     if (len > 0) {
-        gtk_widget_hide(GTK_WIDGET(ban_image));
-        gtk_widget_show(GTK_WIDGET(tick_image));
+        gtk_widget_hide(GTK_WIDGET(g_list_nth_data(children, 2)));
+        gtk_widget_show(GTK_WIDGET(g_list_nth_data(children, 3)));
     }
     else {
-        gtk_widget_hide(GTK_WIDGET(tick_image));
-        gtk_widget_show(GTK_WIDGET(ban_image));
+        gtk_widget_hide(GTK_WIDGET(g_list_nth_data(children, 3)));
+        gtk_widget_show(GTK_WIDGET(g_list_nth_data(children, 2)));
     }
+    g_list_free(children);
 }
 
 void mx_send_message_on_enter(GtkWidget *widget) {
@@ -144,7 +146,7 @@ void mx_send_message_on_enter(GtkWidget *widget) {
             t_user.id, 
             NULL,
             curtime);
-        mx_add_message(messages_box, msg);
+        mx_add_message(t_chat_room_vars.messages_box, msg);
         sqlite3 *db = mx_opening_db();
         int st;
         char *err_msg;
@@ -175,7 +177,7 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
                 t_user.id, 
                 NULL,
                 curtime);
-            mx_add_message(messages_box, msg);
+            mx_add_message(t_chat_room_vars.messages_box, msg);
             sqlite3 *db = mx_opening_db();
             int st;
             char *err_msg;
@@ -221,14 +223,14 @@ void mx_more_click(GtkWidget *widget, GdkEventButton *event) {
             mx_destroy_popups();
             gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
 
-            more_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-            gtk_widget_set_name(GTK_WIDGET(more_box), "more_box");
+            t_chat_room_vars.more_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+            gtk_widget_set_name(GTK_WIDGET(t_chat_room_vars.more_box), "more_box");
             GtkAllocation alloc;
             gtk_widget_get_allocation(GTK_WIDGET(widget), &alloc);
-            gtk_fixed_put(GTK_FIXED(chat_area), more_box, alloc.x - 265, alloc.y - 515);
+            gtk_fixed_put(GTK_FIXED(chat_area), t_chat_room_vars.more_box, alloc.x - 265, alloc.y - 515);
 
             GtkWidget *more_grid = gtk_grid_new();
-            gtk_container_add(GTK_CONTAINER(more_box), more_grid);
+            gtk_container_add(GTK_CONTAINER(t_chat_room_vars.more_box), more_grid);
             gtk_widget_set_valign(GTK_WIDGET(more_grid), GTK_ALIGN_CENTER);
             gtk_widget_set_size_request(GTK_WIDGET(more_grid), 300, 480);
             gtk_widget_set_margin_top(GTK_WIDGET(more_grid), 10);
@@ -250,13 +252,13 @@ void mx_more_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_grid_attach(GTK_GRID(more_grid), gifs_eventbox, 3, 1, 1, 1);
             
             
-            gtk_widget_show_all(GTK_WIDGET(more_box));
+            gtk_widget_show_all(GTK_WIDGET(t_chat_room_vars.more_box));
         }
         else {
             gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED);
 
-            gtk_widget_destroy(GTK_WIDGET(more_box));
-            more_box = NULL;
+            gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.more_box));
+            t_chat_room_vars.more_box = NULL;
         }
     }
 }

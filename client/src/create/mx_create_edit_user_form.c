@@ -110,9 +110,9 @@ void mx_create_edit_user_form(void) {
     gtk_widget_set_size_request(GTK_WIDGET(edit_username_pen), 20, 20);
 
     g_signal_connect(G_OBJECT(edit_username_eventbox), "enter-notify-event",
-        G_CALLBACK(edit_username_eventbox_enter_notify), (gpointer)builder);
+        G_CALLBACK(edit_user_eventbox_enter_notify), NULL);
     g_signal_connect(G_OBJECT(edit_username_eventbox), "leave-notify-event",
-        G_CALLBACK(edit_username_eventbox_leave_notify), (gpointer)builder);
+        G_CALLBACK(edit_user_eventbox_leave_notify), NULL);
     g_signal_connect(G_OBJECT(edit_username_eventbox), "button_press_event",
         G_CALLBACK(edit_username_click_event), (gpointer)builder);
     //==================================================================================
@@ -138,9 +138,9 @@ void mx_create_edit_user_form(void) {
     gtk_widget_set_size_request(GTK_WIDGET(edit_pseudo_pen), 20, 20);
 
     g_signal_connect(G_OBJECT(edit_pseudo_eventbox), "enter-notify-event",
-        G_CALLBACK(edit_pseudo_eventbox_enter_notify), (gpointer)builder);
+        G_CALLBACK(edit_user_eventbox_enter_notify), NULL);
     g_signal_connect(G_OBJECT(edit_pseudo_eventbox), "leave-notify-event",
-        G_CALLBACK(edit_pseudo_eventbox_leave_notify), (gpointer)builder);
+        G_CALLBACK(edit_user_eventbox_leave_notify), NULL);
     g_signal_connect(G_OBJECT(edit_pseudo_eventbox), "button_press_event",
         G_CALLBACK(edit_pseudonim_click_event), (gpointer)builder);
     //==================================================================================

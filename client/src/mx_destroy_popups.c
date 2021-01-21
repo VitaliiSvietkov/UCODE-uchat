@@ -16,10 +16,14 @@ void mx_destroy_popups(void) {
         gtk_widget_destroy(GTK_WIDGET(search_menu));
         search_menu = NULL;
     }
-    if (more_box != NULL) {
-        gtk_widget_destroy(GTK_WIDGET(more_box));
-        more_box = NULL;
-        gtk_widget_unset_state_flags(GTK_WIDGET(more_image), GTK_STATE_FLAG_PRELIGHT);
-        gtk_widget_unset_state_flags(GTK_WIDGET(more_image), GTK_STATE_FLAG_CHECKED);
+    if (t_chat_room_vars.more_box != NULL) {
+        gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.more_box));
+        t_chat_room_vars.more_box = NULL;
+        GList *children = gtk_container_get_children(GTK_CONTAINER(t_chat_room_vars.message_enter_area));
+        gtk_widget_unset_state_flags(GTK_WIDGET(g_list_nth_data(children, 4)), 
+            GTK_STATE_FLAG_PRELIGHT);
+        gtk_widget_unset_state_flags(GTK_WIDGET(g_list_nth_data(children, 4)), 
+            GTK_STATE_FLAG_CHECKED);
+        g_list_free(children);
     }
 }

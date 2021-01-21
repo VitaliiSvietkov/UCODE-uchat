@@ -2,13 +2,13 @@
 
 void mx_create_messages_area(void) {
     GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, CUR_HEIGHT - 50, 100, 100, CUR_HEIGHT - 50);
-    right_container = gtk_scrolled_window_new(NULL, vadjustment);
-    gtk_widget_set_size_request(GTK_WIDGET(right_container), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 50);
-    gtk_fixed_put(GTK_FIXED(chat_area), right_container, L_FIELD_WIDTH, 0);
-    messages_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_name(GTK_WIDGET(right_container), "chat_background");
-    gtk_widget_set_size_request(GTK_WIDGET(messages_box), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 50);
-    gtk_container_add(GTK_CONTAINER(right_container), messages_box);
+    t_chat_room_vars.right_container = gtk_scrolled_window_new(NULL, vadjustment);
+    gtk_widget_set_size_request(GTK_WIDGET(t_chat_room_vars.right_container), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 50);
+    gtk_fixed_put(GTK_FIXED(chat_area), t_chat_room_vars.right_container, L_FIELD_WIDTH, 0);
+    t_chat_room_vars.messages_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(t_chat_room_vars.right_container), "chat_background");
+    gtk_widget_set_size_request(GTK_WIDGET(t_chat_room_vars.messages_box), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 50);
+    gtk_container_add(GTK_CONTAINER(t_chat_room_vars.right_container), t_chat_room_vars.messages_box);
 
     sqlite3 *db = mx_opening_db();
     t_message *msg = NULL;
@@ -36,8 +36,8 @@ void mx_create_messages_area(void) {
 
     msg = curr_room_msg_head;
     while (msg != NULL) {
-        mx_add_message(messages_box, msg);
+        mx_add_message(t_chat_room_vars.messages_box, msg);
         msg = msg->next;
     }
-    gtk_widget_show_all(GTK_WIDGET(right_container));
+    gtk_widget_show_all(GTK_WIDGET(t_chat_room_vars.right_container));
 }

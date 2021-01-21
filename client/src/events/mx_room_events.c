@@ -6,13 +6,13 @@ void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
         curr_destination = (unsigned int)(uintptr_t)uid;
 
         char *err_msg = 0;
-        if (message_enter_area != NULL) {
-            gtk_widget_destroy(GTK_WIDGET(message_enter_area));
-            message_enter_area = NULL;
+        if (t_chat_room_vars.message_enter_area != NULL) {
+            gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.message_enter_area));
+            t_chat_room_vars.message_enter_area = NULL;
         }
-        if (right_container != NULL) {
-            gtk_widget_destroy(GTK_WIDGET(right_container));
-            right_container = NULL;
+        if (t_chat_room_vars.right_container != NULL) {
+            gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.right_container));
+            t_chat_room_vars.right_container = NULL;
         }
         if (curr_room_msg_head != NULL)
             mx_clear_message_list(&curr_room_msg_head);
@@ -53,11 +53,11 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
                 break;
             }
             mx_destroy_popups();
-            if (message_enter_area != NULL) {
-                gtk_widget_destroy(GTK_WIDGET(message_enter_area));
-                message_enter_area = NULL;
-                gtk_widget_destroy(GTK_WIDGET(right_container));
-                right_container = NULL;
+            if (t_chat_room_vars.message_enter_area != NULL) {
+                gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.message_enter_area));
+                t_chat_room_vars.message_enter_area = NULL;
+                gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.right_container));
+                t_chat_room_vars.right_container = NULL;
             }
             if (curr_room_msg_head != NULL)
                 mx_clear_message_list(&curr_room_msg_head);

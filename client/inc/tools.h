@@ -53,4 +53,13 @@ t_message *mx_new_message_node(char *text, unsigned int uid,
     GdkPixbuf *image, time_t seconds);
 //=======================================================================================
 
+// Draw functions
+//==========================================================================================
+gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
+gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
+gboolean mx_draw_event_round_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
+void draw_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf *data);
+//==========================================================================================
+
 #endif

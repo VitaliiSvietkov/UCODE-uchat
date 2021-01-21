@@ -50,16 +50,6 @@ typedef struct s_img_button
     GtkWidget *box;
 } t_img_button;
 
-GtkWidget *add_image;
-GtkWidget *ban_image;
-GtkWidget *tick_image;
-GtkWidget *more_image;
-
-GtkWidget *edit_user_image;
-GtkWidget *change_account_image;
-GtkWidget *chat_settings_image;
-GtkWidget *language_image;
-
 t_img_button settings_image;
 t_img_button messages_image;
 t_img_button *t_active_image;
@@ -143,16 +133,14 @@ char *NewDescription;
 GdkPixbuf *NewAvatar;
 
 void mx_create_edit_user_form(void);
+void edit_user_eventbox_enter_notify(GtkWidget *widget);
+void edit_user_eventbox_leave_notify(GtkWidget *widget);
 
 void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event);
 
-void edit_username_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event, gpointer builder);
-void edit_username_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event, gpointer builder);
 void fname_entry_changed_event(GtkWidget *widget);
 void commit_username_click_event(GtkWidget *widget, GdkEventButton *event, gpointer builder);
 
-void edit_pseudo_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event, gpointer builder);
-void edit_pseudo_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event, gpointer builder);
 void pseudo_entry_changed_event(GtkWidget *widget);
 void return_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event, gpointer builder);
 void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event, gpointer builder);
@@ -171,52 +159,28 @@ void mx_create_language_menu(void);
 
 void mx_init_window(void);
 void mx_init_global_vars(void);
+void mx_tooltip(char *str, void *data);
+void mx_run_error_pop_up(const char *text);
+void mx_destroy_popups(void);
 
 void mx_configure_main_area(void);
 void mx_configure_left_header(void);
 void mx_configure_content_selection_area(void);
 void mx_configure_chats_list(void);
-void mx_create_message_enter_area(void);
 void mx_configure_settings_menu_area(void);
 void mx_configure_username_event_screen(GtkBuilder *builder);
 void mx_configure_pseudonim_event_screen(GtkBuilder *builder);
-void mx_tooltip(char *str, void *data);
-void mx_run_error_pop_up(const char *text);
-void mx_destroy_popups(void);
-
-// Draw functions
-//==========================================================================================
-gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
-gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
-gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
-gboolean mx_draw_event_round_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
-void draw_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf *data);
-//==========================================================================================
 
 // Event callback functions
 //==========================================================================================
-void image_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data);
 void activate_prelight(GtkWidget *widget);
 void deactivate_prelight(GtkWidget *widget);
+void settings_element_enter_notify(GtkWidget *widget);
+void settings_element_leave_notify(GtkWidget *widget);
 void close_image_click_event(GtkWidget *widget, GdkEventButton *event);
 
 void messages_click(GtkWidget *widget, GdkEventButton *event);
 void settings_click(GtkWidget *widget, GdkEventButton *event);
-
-void edit_user_enter_notify(GtkWidget *widget);
-void edit_user_leave_notify(GtkWidget *widget);
-void edit_user_click(GtkWidget *widget, GdkEventButton *event);
-
-void change_account_enter_notify(GtkWidget *widget);
-void change_account_leave_notify(GtkWidget *widget);
-void change_account_click(GtkWidget *widget, GdkEventButton *event);
-
-void chat_settings_enter_notify(GtkWidget *widget);
-void chat_settings_leave_notify(GtkWidget *widget);
-
-void language_enter_notify(GtkWidget *widget);
-void language_leave_notify(GtkWidget *widget);
-void language_click(GtkWidget *widget, GdkEventButton *event);
 
 void blackout_destroy(GtkWidget *widget, GdkEventButton *event, GtkWidget *box);
 //==========================================================================================
@@ -242,15 +206,18 @@ char **text_for_labels;
 
 // Chat room
 //==========================================================================================
-GtkWidget *more_box;
-GtkWidget *right_container;
-GtkWidget *messages_box;
-GtkWidget *message_enter_area;
+struct s_chat_room_vars {
+    GtkWidget *more_box;
+    GtkWidget *right_container;
+    GtkWidget *messages_box;
+    GtkWidget *message_enter_area;
+} t_chat_room_vars;
 
 GtkWidget *mx_create_room(unsigned int uid, gint width, void (*func)(GtkWidget *, GdkEventButton *, gpointer));
 void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid);
 void room_close(GtkWidget *widget, GdkEventKey *event);
 void mx_create_messages_area(void);
+void mx_create_message_enter_area(void);
 
 void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
 void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr);
