@@ -4,13 +4,13 @@
 //=================================================================================
 void edit_user_enter_notify(GtkWidget *widget) {
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(edit_user_image.box), 
+    gtk_widget_set_state_flags(GTK_WIDGET(edit_user_image), 
         GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 
 void edit_user_leave_notify(GtkWidget *widget) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(edit_user_image.box), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(edit_user_image), GTK_STATE_FLAG_PRELIGHT);
 }
 
 void edit_user_click(GtkWidget *widget, GdkEventButton *event) {
@@ -24,13 +24,13 @@ void edit_user_click(GtkWidget *widget, GdkEventButton *event) {
 //=================================================================================
 void change_account_enter_notify(GtkWidget *widget) {
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(change_account_image.box), 
+    gtk_widget_set_state_flags(GTK_WIDGET(change_account_image), 
         GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 
 void change_account_leave_notify(GtkWidget *widget) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(change_account_image.box), 
+    gtk_widget_unset_state_flags(GTK_WIDGET(change_account_image), 
         GTK_STATE_FLAG_PRELIGHT);
 }
 
@@ -45,13 +45,13 @@ void change_account_click(GtkWidget *widget, GdkEventButton *event) {
 //=================================================================================
 void chat_settings_enter_notify(GtkWidget *widget) {
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(chat_settings_image.box), 
+    gtk_widget_set_state_flags(GTK_WIDGET(chat_settings_image), 
         GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 
 void chat_settings_leave_notify(GtkWidget *widget) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(chat_settings_image.box), 
+    gtk_widget_unset_state_flags(GTK_WIDGET(chat_settings_image), 
         GTK_STATE_FLAG_PRELIGHT);
 }
 //=================================================================================
@@ -60,13 +60,13 @@ void chat_settings_leave_notify(GtkWidget *widget) {
 //=================================================================================
 void language_enter_notify(GtkWidget *widget) {
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(language_image.box), 
+    gtk_widget_set_state_flags(GTK_WIDGET(language_image), 
         GTK_STATE_FLAG_PRELIGHT, FALSE);
 }
 
 void language_leave_notify(GtkWidget *widget) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(language_image.box), 
+    gtk_widget_unset_state_flags(GTK_WIDGET(language_image), 
         GTK_STATE_FLAG_PRELIGHT);
 }
 

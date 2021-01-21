@@ -50,15 +50,15 @@ typedef struct s_img_button
     GtkWidget *box;
 } t_img_button;
 
-t_img_button add_image;
-t_img_button ban_image;
-t_img_button tick_image;
-t_img_button more_image;
+GtkWidget *add_image;
+GtkWidget *ban_image;
+GtkWidget *tick_image;
+GtkWidget *more_image;
 
-t_img_button edit_user_image;
-t_img_button change_account_image;
-t_img_button chat_settings_image;
-t_img_button language_image;
+GtkWidget *edit_user_image;
+GtkWidget *change_account_image;
+GtkWidget *chat_settings_image;
+GtkWidget *language_image;
 
 t_img_button settings_image;
 t_img_button messages_image;
@@ -187,7 +187,6 @@ void mx_destroy_popups(void);
 // Draw functions
 //==========================================================================================
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
-gboolean mx_draw_event_message_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
 gboolean mx_draw_event_round_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
@@ -261,7 +260,7 @@ void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);
 void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
 void mx_send_message_on_enter(GtkWidget *widget);
 
-void mx_more_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data);
+void mx_more_click(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
 
 #endif

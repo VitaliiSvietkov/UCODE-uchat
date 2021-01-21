@@ -37,7 +37,7 @@ void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
         if (filename != NULL) {
             struct stat buf;
             stat(filename, &buf);
-            if (buf.st_size > 20971520) // < 20mb
+            if (buf.st_size < 20971520) // < 20mb
                 mx_create_attach_form(entry, filename);
             else
                 mx_run_error_pop_up("The file is too big!");
@@ -125,12 +125,12 @@ void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
     mx_destroy_popups();
     int len = strlen(gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget))));
     if (len > 0) {
-        gtk_widget_hide(GTK_WIDGET(ban_image.box));
-        gtk_widget_show(GTK_WIDGET(tick_image.box));
+        gtk_widget_hide(GTK_WIDGET(ban_image));
+        gtk_widget_show(GTK_WIDGET(tick_image));
     }
     else {
-        gtk_widget_hide(GTK_WIDGET(tick_image.box));
-        gtk_widget_show(GTK_WIDGET(ban_image.box));
+        gtk_widget_hide(GTK_WIDGET(tick_image));
+        gtk_widget_show(GTK_WIDGET(ban_image));
     }
 }
 
@@ -214,12 +214,12 @@ void more_content_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *dat
     }
 }
 
-void mx_more_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data) {
+void mx_more_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        if (!(data->active)) {
+        GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
+        if (!(flags & GTK_STATE_FLAG_CHECKED)) {
             mx_destroy_popups();
             gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
-            data->active = true;
 
             more_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
             gtk_widget_set_name(GTK_WIDGET(more_box), "more_box");
@@ -254,7 +254,6 @@ void mx_more_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data)
         }
         else {
             gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED);
-            data->active = false;
 
             gtk_widget_destroy(GTK_WIDGET(more_box));
             more_box = NULL;

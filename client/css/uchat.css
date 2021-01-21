@@ -96,6 +96,11 @@
 
 
 
+#message_enter_area {
+    background: #1f1f1f;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
 #add_image {
     background-image: url("../img/standard/add.png");
