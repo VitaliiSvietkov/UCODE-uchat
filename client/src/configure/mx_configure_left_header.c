@@ -48,6 +48,7 @@ static void list_match_users(GtkWidget *widget, GdkEvent *event) {
     unsigned int *users_arr = NULL;
     int users_len = 0;
     fill_users_arr(&users_arr, search_split, search_pseudonim, &users_len);
+
     if (search_pseudonim != NULL)
         free(search_pseudonim);
     if (search_split != NULL)
@@ -72,6 +73,7 @@ static void search_menu_click(GtkWidget *widget, GdkEventButton *event, GdkDispl
         if (event->x_root > x_search + alloc.width || event->y_root > y_search +alloc.height
             || event->x_root < x_search || event->y_root < y_search) {    
             mx_destroy_popups();
+            gtk_widget_grab_focus(GTK_WIDGET(chat_area));
         }
     }
 }
@@ -118,7 +120,7 @@ static void create_search_menu(GtkWidget *entry, GdkEvent *event,
 
     GtkWidget *search_container = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add(GTK_CONTAINER(search_scroll_container), search_container);
-    gtk_widget_set_name(GTK_WIDGET(search_container), "search_menu");
+    gtk_widget_set_name(GTK_WIDGET(search_scroll_container), "search_menu");
 
     for (int i = 0; i < users_len; i++) {
         gtk_box_pack_start(GTK_BOX(search_container), 

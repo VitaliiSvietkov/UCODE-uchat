@@ -30,4 +30,5 @@ void mx_free_data(void) {
     mx_del_strarr(&text_for_labels);
     while (labels_head != NULL)
         mx_label_pop_front(&labels_head);
+    g_object_unref(cssProvider);
 }

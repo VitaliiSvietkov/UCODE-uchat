@@ -189,6 +189,7 @@ GtkWidget *window;                      // a top-level window
 GtkWidget *main_area;                   // an area that contains area with authorization form and chat area
 GtkWidget *authorization_area;
 GtkWidget *chat_area;
+GtkCssProvider *cssProvider;
 
 GtkWidget *entry_search;
 GtkWidget *search_menu;

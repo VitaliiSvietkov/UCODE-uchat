@@ -5,7 +5,6 @@ void mx_read_photo_from_bd(int id) {
     FILE *fp = fopen("client/img/avatar2.jpg", "wb");
     
     if (fp == NULL) {
-        
         fprintf(stderr, "Cannot open image file\n");    
     }    
     

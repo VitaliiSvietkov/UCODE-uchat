@@ -2,6 +2,7 @@
 
 static void edit_user_click(GtkWidget *widget, GdkEventButton *event);
 static void change_account_click(GtkWidget *widget, GdkEventButton *event);
+static void chat_settings_click(GtkWidget *widget, GdkEventButton *event);
 static void language_click(GtkWidget *widget, GdkEventButton *event);
 
 void mx_configure_settings_menu_area(void) {
@@ -133,6 +134,8 @@ void mx_configure_settings_menu_area(void) {
         G_CALLBACK(settings_element_enter_notify), NULL);
     g_signal_connect(G_OBJECT(chat_settings_eventbox), "leave-notify-event",
         G_CALLBACK(settings_element_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(chat_settings_eventbox), "button_press_event",
+        G_CALLBACK(chat_settings_click), NULL); 
     //==============================================================================================
 
     // "Language" section
@@ -195,6 +198,14 @@ static void edit_user_click(GtkWidget *widget, GdkEventButton *event) {
 //=================================================================================
 static void change_account_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        if (t_chat_room_vars.message_enter_area != NULL) {
+            gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.message_enter_area));
+            t_chat_room_vars.message_enter_area = NULL;
+            gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.right_container));
+            t_chat_room_vars.right_container = NULL;
+        }
+        if (curr_room_msg_head != NULL)
+            mx_clear_message_list(&curr_room_msg_head);
         mx_create_registration_menu();
     }
 }
@@ -202,7 +213,16 @@ static void change_account_click(GtkWidget *widget, GdkEventButton *event) {
 
 // Chat_settings icon
 //=================================================================================
-
+static void chat_settings_click(GtkWidget *widget, GdkEventButton *event) {
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        g_object_unref(G_OBJECT(cssProvider));
+        cssProvider = gtk_css_provider_new();
+        gtk_css_provider_load_from_path(cssProvider, "client/css/colored/uchat.css", NULL);
+        gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
+            GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        gtk_widget_queue_draw(GTK_WIDGET(chat_area));
+    }
+}
 //=================================================================================
 
 // Language icon
