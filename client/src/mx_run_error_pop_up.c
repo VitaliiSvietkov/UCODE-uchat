@@ -4,8 +4,10 @@ static void pop_up_destroy(GtkWidget *widget) {
     mx_destroy_popups();
 }
 
-void mx_run_error_pop_up(const char *text) {
+void *mx_run_error_pop_up(void *vargp) {
     mx_destroy_popups();
+
+    char *text = (char *)vargp;
 
     error_revealer = gtk_revealer_new();
     gtk_revealer_set_transition_type(GTK_REVEALER(error_revealer), 
@@ -33,4 +35,10 @@ void mx_run_error_pop_up(const char *text) {
 
     gtk_widget_show_all(GTK_WIDGET(error_revealer));
     gtk_revealer_set_reveal_child(GTK_REVEALER(error_revealer), TRUE);
+
+    while (!gtk_revealer_get_child_revealed(GTK_REVEALER(error_revealer))) {}
+    sleep(1);
+    gtk_revealer_set_reveal_child(GTK_REVEALER(error_revealer), FALSE);
+
+    return NULL;
 }
