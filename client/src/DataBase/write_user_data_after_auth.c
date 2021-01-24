@@ -86,33 +86,20 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd
     bzero(sendBuffer, 1025);
     sprintf(sendBuffer, "Authorization\n%s\n%s", pseudo, passwd);
 
-    printf("Before send\n");
-    /*// get string length
-    int str_size = strlen(sendBuffer); 
-    // send fixed-length data to pre-pend variable-length field with the latter's size
-    send(sockfd, &str_size, sizeof(str_size), 0);  
-    // send the variable-length field.
-    send(sockfd, sendBuffer, str_size, 0);*/
-
     if (send(sockfd, sendBuffer, strlen(sendBuffer), 0) < 0) {
          perror("ERROR writing to socket");
     }
-    printf("Before recv\n");
     char recvBuffer[6000];
     bzero(recvBuffer, 6000);
-
-    /*char *received_string = NULL;
-    int received_count = recv(sockfd, &str_size, sizeof(str_size), 0);
-    received_count = recv(sockfd, &received_string, str_size, 0);
-    received_string[str_size] = '\0';*/
-
     if (recv(sockfd, recvBuffer, 6000, 0) < 0) {
          perror("ERROR reading from socket");
     }
-    printf("Before strcmp\n");
-
 
     if (!mx_strcmp(recvBuffer, "SUCCESS")) {
+        memset(recvBuffer, 0, 6000);
+        if (recv(sockfd, recvBuffer, 6000, 0) < 0) {
+            perror("ERROR reading from socket");
+        }
         printf("%s\n", recvBuffer);
         return 1;
         /*int newId = (int)sqlite3_column_int(res, 0);

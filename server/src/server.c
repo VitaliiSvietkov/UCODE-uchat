@@ -81,14 +81,21 @@ void *recv_loop(void *data) {
             char **recvData = mx_strsplit(recvBuff, '\n');
             char *sendBuff = NULL;
             if (!mx_strcmp(recvData[0], "Authorization")) {
-                if (mx_check_user(recvData))
+                if (mx_check_user(recvData)) {
                     sendBuff = strdup("SUCCESS");
-                else
+                    send(newsocketfd, sendBuff, strlen(sendBuff), 0);
+                    free(sendBuff);
+                    sendBuff = strdup("Data\nSended");
+                    send(newsocketfd, sendBuff, strlen(sendBuff), 0);
+                    free(sendBuff);
+                }
+                else {
                     sendBuff = strdup("FAIL");
+                    send(newsocketfd, sendBuff, strlen(sendBuff), 0);
+                    free(sendBuff);
+                }
             }
             mx_del_strarr(&recvData);
-            send(newsocketfd, sendBuff, strlen(sendBuff), 0);
-            free(sendBuff);
         }
     }
     return NULL;
