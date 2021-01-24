@@ -2,11 +2,10 @@
 
 int main(int argc, char *argv[]) {
     mx_init_global_vars();
-    mx_write_language_data_from_bd();
     mx_get_language_arr();
     
     mx_database_init();
-    mx_write_user_data_from_bd();
+    //mx_write_user_data_from_bd();
     mx_init_user();
     gtk_init(&argc, &argv);
 

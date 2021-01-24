@@ -191,5 +191,7 @@ static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer
             G_CALLBACK(room_click), uid);
 
         room_click(widget, event, uid);
+        gtk_entry_set_text(GTK_ENTRY(entry_search), "");
+        gtk_widget_grab_focus(GTK_WIDGET(chat_area));
     }
 }

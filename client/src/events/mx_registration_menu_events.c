@@ -60,6 +60,10 @@ void authorization(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
             gtk_fixed_put(GTK_FIXED(main_area), chat_area, 0, 0);
             gtk_widget_set_size_request(GTK_WIDGET(chat_area), CUR_WIDTH, CUR_HEIGHT);
             g_signal_connect(G_OBJECT(chat_area), "key-press-event", G_CALLBACK(room_close), NULL);
+
+            mx_write_language_data_from_bd();
+            mx_get_language_arr();
+            mx_update_theme();
             
             GtkWidget *background = gtk_drawing_area_new();
             gtk_fixed_put(GTK_FIXED(chat_area), background, 0, 0);
