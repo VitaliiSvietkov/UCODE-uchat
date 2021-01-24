@@ -12,6 +12,11 @@
 #include <stdio.h>
 #include <math.h>
 #include <pthread.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <errno.h>
+#include <arpa/inet.h>
 
 #include "../../libraries/libmx/inc/libmx.h"
 #include "database.h"
@@ -192,6 +197,7 @@ GtkWidget *main_area;                   // an area that contains area with autho
 GtkWidget *authorization_area;
 GtkWidget *chat_area;
 GtkCssProvider *cssProvider;
+int sockfd;
 
 GtkWidget *entry_search;
 GtkWidget *search_menu;

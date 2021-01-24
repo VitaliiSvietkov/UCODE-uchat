@@ -37,7 +37,7 @@ char *mx_strdup(const char *str);
 int mx_strlen(const char *s);
 void mx_printint(int n);
 char *mx_strcpy(char *dst,const char *src);
-void mx_check_argv(int argc,const char **argv);
+void mx_check_argv(int argc, char **argv);
 void mx_error(char *msg, int status);
 void mx_printchar(char c);
 char *mx_strnew(const int size);
