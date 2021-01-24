@@ -68,6 +68,32 @@ static void *handle_server(void *param) {
     return NULL;
 }
 
+void *recv_loop(void *data) {
+    int newsocketfd = (int)(size_t)data;
+
+    while(1)
+    {
+        char recvBuff[6000];
+        bzero(recvBuff, 6000);
+
+        int s = recv(newsocketfd, recvBuff, 6000, 0);
+        if (s > 0) {
+            char **recvData = mx_strsplit(recvBuff, '\n');
+            char *sendBuff = NULL;
+            if (!mx_strcmp(recvData[0], "Authorization")) {
+                if (mx_check_user(recvData))
+                    sendBuff = strdup("SUCCESS");
+                else
+                    sendBuff = strdup("FAIL");
+            }
+            mx_del_strarr(&recvData);
+            send(newsocketfd, sendBuff, strlen(sendBuff), 0);
+            free(sendBuff);
+        }
+    }
+    return NULL;
+}
+
 
 int main(int argc, char **argv) {
     mx_check_argv(argc, argv);
@@ -76,14 +102,9 @@ int main(int argc, char **argv) {
     mx_deamon();
     int listening_socket = mx_listening_socket(port);
     listen(listening_socket, INT_MAX);
-    pthread_t server_thread;
-    int err = pthread_create(&server_thread, NULL, handle_server, NULL);
-    mx_error("Can not create new thread", err);
-
-    char recvBuff[6000];
-    bzero(recvBuff, 6000);
-
-    char *sendBuff = NULL;
+    //pthread_t server_thread;
+    //int err = pthread_create(&server_thread, NULL, handle_server, NULL);
+    //mx_error("Can not create new thread", err);
 
     time_t ticks;
     //har sendBuff[256] = 'Connection';
@@ -97,35 +118,16 @@ int main(int argc, char **argv) {
             continue;
         }
 
-        ticks = time(NULL);
-        
-        //while (true) {
-            recv(newsocketfd, recvBuff, sizeof(recvBuff), 0);
-            char **recvData = mx_strsplit(recvBuff, '\n');
-            if (!mx_strcmp(recvData[0], "Authorization")) {
-                if (mx_check_user(recvData))
-                    sendBuff = strdup("SUCCESS");
-                else
-                    sendBuff = strdup("FAIL");
-            }
-            /*if (!mx_strcmp(recvData[0], "Exit")) {
-                mx_del_strarr(&recvData);
-                free(sendBuff);
-                break;
-            }*/
-            mx_del_strarr(&recvData);
-                
-            //sendBuff = strdup("Changed data");
+        pthread_t thread_id;
+        pthread_create(&thread_id, NULL, recv_loop, (void *)(size_t)newsocketfd); 
 
-            send(newsocketfd, sendBuff, strlen(sendBuff), 0);
-            free(sendBuff);
-        //}
+        //ticks = time(NULL);
 
-        pthread_mutex_lock(&ctx_mutex);
+        /*pthread_mutex_lock(&ctx_mutex);
         int status = mx_socket_list_add(&ctx.head, newsocketfd);
         if (status == 0)
             FD_SET(newsocketfd, &ctx.read_descriptors);
         pthread_mutex_unlock(&ctx_mutex);
-        mx_error("Unable to add socket descriptor to the list", status);
+        mx_error("Unable to add socket descriptor to the list", status);*/
     }
 }

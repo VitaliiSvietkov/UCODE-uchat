@@ -13,7 +13,7 @@ all: install
 install: uchat_server
 
 uchat_server:
-	@clang -lsqlite3 -std=c11 $(WFLGS) $(SRCS) $(HDRS) ../libraries/libmx/libmx.a
+	@clang -lsqlite3 -lpthread $(WFLGS) $(SRCS) $(HDRS) ../libraries/libmx/libmx.a
 	@mv a.out ../$@
 
 clean:

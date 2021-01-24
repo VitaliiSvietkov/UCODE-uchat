@@ -1,5 +1,6 @@
 #include "../../inc/uchat_client.h"
 
+/*
 int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd) {
     sqlite3 *db = mx_opening_db();
     sqlite3_stmt *res;
@@ -77,28 +78,44 @@ int mx_check_login_reg(const char *pseudo) {
     sqlite3_finalize(res);
     sqlite3_close(db);
     return 0;
-}
+}*/
 
-/*
+
 int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd) {
     char sendBuffer[1025];
     bzero(sendBuffer, 1025);
     sprintf(sendBuffer, "Authorization\n%s\n%s", pseudo, passwd);
+
     printf("Before send\n");
+    /*// get string length
+    int str_size = strlen(sendBuffer); 
+    // send fixed-length data to pre-pend variable-length field with the latter's size
+    send(sockfd, &str_size, sizeof(str_size), 0);  
+    // send the variable-length field.
+    send(sockfd, sendBuffer, str_size, 0);*/
+
     if (send(sockfd, sendBuffer, strlen(sendBuffer), 0) < 0) {
          perror("ERROR writing to socket");
     }
     printf("Before recv\n");
-    char recvBuffer[1024];
-    bzero(recvBuffer, 1024);
-    if (recv(sockfd, recvBuffer, sizeof(recvBuffer), 0) < 0) {
+    char recvBuffer[6000];
+    bzero(recvBuffer, 6000);
+
+    /*char *received_string = NULL;
+    int received_count = recv(sockfd, &str_size, sizeof(str_size), 0);
+    received_count = recv(sockfd, &received_string, str_size, 0);
+    received_string[str_size] = '\0';*/
+
+    if (recv(sockfd, recvBuffer, 6000, 0) < 0) {
          perror("ERROR reading from socket");
     }
     printf("Before strcmp\n");
 
 
     if (!mx_strcmp(recvBuffer, "SUCCESS")) {
-        int newId = (int)sqlite3_column_int(res, 0);
+        printf("%s\n", recvBuffer);
+        return 1;
+        /*int newId = (int)sqlite3_column_int(res, 0);
         t_user.id = newId;
         char *newName = mx_string_copy((char *)sqlite3_column_text(res, 1));
         if (t_user.FirstName != NULL)
@@ -123,7 +140,7 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd
         mx_read_photo_from_bd(newId);
         if (t_user.avatar != NULL)
             g_object_unref(t_user.avatar);
-        t_user.avatar = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 100, 100);
+        t_user.avatar = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 100, 100);*/
     }
     else {
         printf("%s\n", recvBuffer);
@@ -150,4 +167,3 @@ int mx_check_login_reg(const char *pseudo) {
     sqlite3_close(db);
     return 0;
 }
-*/

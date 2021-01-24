@@ -1,7 +1,7 @@
 #include "../inc/uchat_client.h"
 
 int main(int argc, char *argv[]) {
-    /*if (argc != 3) {
+    if (argc != 3) {
        fprintf(stderr,"usage %s hostname port\n", argv[0]);
        exit(0);
     }
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     
     if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) {
         perror("ERROR connecting");
-    }*/
+    }
 
 
 
@@ -61,13 +61,6 @@ int main(int argc, char *argv[]) {
     gtk_main();
     mx_free_data();
 
-    /*char sendBuffer[1025];
-    bzero(sendBuffer, 1025);
-    sprintf(sendBuffer, "Exit");
-    if (send(sockfd, sendBuffer, strlen(sendBuffer), 0) < 0) {
-         perror("ERROR writing to socket");
-    }
-
-    close(sockfd);*/
+    close(sockfd);
     return 0;
 }
