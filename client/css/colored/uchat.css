@@ -170,8 +170,9 @@
 
 #language_image {
     background-image: url("../../img/colored/book.png");
-    background-size: 19px;
+    background-size: 30px;
     background-repeat: no-repeat;
+    background-position: -5px;
 }
 #language_image:hover {
     background-image: url("../../img/colored/book-hovered.png");
