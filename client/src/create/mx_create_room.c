@@ -42,39 +42,29 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
     }
     else {
         // Load data from data base
-        mx_read_photo_from_bd((int)uid);
+
+        // Change for image read from server!!
+        //mx_read_photo_from_bd((int)uid);
+        //=====================================
         pixbuf = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 50, 50);
         avatar = gtk_image_new_from_pixbuf(GDK_PIXBUF(pixbuf));
         gtk_widget_set_size_request(GTK_WIDGET(avatar), 50, 50);
         gtk_widget_set_margin_start(GTK_WIDGET(avatar), 15);
         g_object_unref(pixbuf);
 
-        sqlite3 *db = mx_opening_db();
-        sqlite3_stmt *res = NULL;
-        char sql[250];
-        bzero(sql, 250);
-        sprintf(sql, "SELECT NAME, SURENAME FROM USERS\
-                WHERE id=%u;", uid);
-        sqlite3_prepare_v2(db, sql, -1, &res, 0);
-        while (sqlite3_step(res) != SQLITE_DONE) {
-            char *name = mx_strdup((char *)sqlite3_column_text(res, 0));
-            char *surname = mx_strdup((char *)sqlite3_column_text(res, 1));
-            name = mx_strjoin(name, surname);
-            gtk_label_set_text(GTK_LABEL(title), name);
-            free(name);
-            free(surname);
-        }
-        sqlite3_finalize(res);
-        bzero(sql, 250);
-        sprintf(sql, "SELECT PSEUDONIM FROM USERS WHERE id=%u;", uid);
-        sqlite3_prepare_v2(db, sql, -1, &res, 0);
-        sqlite3_step(res);
-        char *tmp_preview = mx_strdup((char *)sqlite3_column_text(res, 0));
-        tmp_preview = mx_strjoin("@", tmp_preview);
-        gtk_label_set_text(GTK_LABEL(preview), tmp_preview);
-        free(tmp_preview);
-        sqlite3_finalize(res);
-        sqlite3_close(db);
+        char sendBuff[256];
+        bzero(sendBuff, 256);
+        sprintf(sendBuff, "SendRoomData\n%d", uid);
+        send(sockfd, sendBuff, 256, 0);
+        
+        char recvBuff[256];
+        bzero(recvBuff, 256);
+        recv(sockfd, recvBuff, 256, 0);
+
+        char **recvData = mx_strsplit(recvBuff, '\n');
+        gtk_label_set_text(GTK_LABEL(title), recvData[0]);
+        gtk_label_set_text(GTK_LABEL(preview), recvData[1]);
+        mx_del_strarr(&recvData);
     }
     gtk_box_pack_start(GTK_BOX(box), avatar, FALSE, FALSE, 0);
     

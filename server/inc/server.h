@@ -54,10 +54,14 @@ bool mx_check_user(char **data);
 void mx_find_user(char **data, int sockfd);
 void mx_add_user(char **data, int sockfd);
 void mx_update_user_data(char **data, int sockfd);
+void mx_get_users_arr(char **data, int sockfd);
+void mx_send_room_data(char **data, int sockfd);
 void mx_authorization(char **data, int sockfd);
 
 sqlite3 *mx_opening_db(void);
 void mx_dberror(sqlite3 *db, int status, char *msg);
 void mx_write_photo_to_bd(char *path, int id);
+bool mx_uint_arr_check_value(unsigned int *arr, unsigned int value, int len);
+int mx_uint_array_insert(unsigned int **arr, unsigned int insert_value, int len);
 
 #endif

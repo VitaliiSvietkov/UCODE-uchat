@@ -4,33 +4,21 @@ void mx_configure_chats_list(void) {
     chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_fixed_put(GTK_FIXED(chat_area), chats_list, 0, 105);
 
-    sqlite3 *db = mx_opening_db();
-    t_message *msg = NULL;
-    sqlite3_stmt *res = NULL;
-    char sql[250];
-    bzero(sql, 250);
-    char *err_msg;
-    sprintf(sql, "SELECT addresser, destination FROM Messages\
-            WHERE addresser=%u OR destination=%u ORDER BY time DESC;",
-            t_user.id, t_user.id);
-
-    unsigned int *uid_arr = NULL;
-    int uid_arr_len = 0;
-    sqlite3_prepare_v2(db, sql, -1, &res, 0);
-    while (sqlite3_step(res) != SQLITE_DONE) {
-        unsigned int addresser = (unsigned int)sqlite3_column_int64(res, 0);
-        unsigned int destination = (unsigned int)sqlite3_column_int64(res, 1);
-        if (addresser != (unsigned int)t_user.id && !mx_uint_arr_check_value(uid_arr, addresser, uid_arr_len))
-            uid_arr_len = mx_uint_array_insert(&uid_arr, addresser, uid_arr_len);
-        if (destination != (unsigned int)t_user.id && !mx_uint_arr_check_value(uid_arr, destination, uid_arr_len))
-            uid_arr_len = mx_uint_array_insert(&uid_arr, destination, uid_arr_len);
+    char sendBuffer[1024];
+    bzero(sendBuffer, 1024);
+    sprintf(sendBuffer, "GetUsersArr\n%d", t_user.id);
+    if (send(sockfd, sendBuffer, strlen(sendBuffer), 0) < 0) {
+         perror("ERROR writing to socket");
     }
-    sqlite3_finalize(res);
-    sqlite3_close(db);
+    
+    int uid_arr_len = 0;
+    unsigned int *uid_arr = NULL;
+    recv(sockfd, &uid_arr_len, sizeof(int), 0);
 
-    if (!mx_uint_arr_check_value(uid_arr, 0, uid_arr_len))
-        uid_arr_len = mx_uint_array_insert(&uid_arr, 0, uid_arr_len);
-
+    uid_arr = (unsigned int *)malloc(uid_arr_len);
+    for (int i = 0; i < uid_arr_len; i++)
+        recv(sockfd, &uid_arr[i], sizeof(unsigned int), 0);
+    
     for (int i = 0; i < uid_arr_len; i++)
         gtk_box_pack_start(GTK_BOX(chats_list), 
             mx_create_room(uid_arr[i], L_FIELD_WIDTH, room_click), FALSE, FALSE, 0);

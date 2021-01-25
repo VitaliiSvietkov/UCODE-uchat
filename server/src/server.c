@@ -88,6 +88,10 @@ void *recv_loop(void *data) {
                 mx_add_user(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "UpdateUserData"))
                 mx_update_user_data(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "GetUsersArr"))
+                mx_get_users_arr(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "SendRoomData"))
+                mx_send_room_data(recvData, newsocketfd);
 
             mx_del_strarr(&recvData);
         }

@@ -1,5 +1,15 @@
 #include "../inc/uchat_client.h"
 
+/*void *mx_check_connection(void *data) {
+    char buff[256];
+    bzero(buff, 256);
+    while (true) {
+        if (recv(sockfd, buff, 256, 0) < 0)
+            perror("Connection lost\n ");
+    }
+    return NULL;
+}*/
+
 int main(int argc, char *argv[]) {
     if (argc != 3) {
        fprintf(stderr,"usage %s hostname port\n", argv[0]);
@@ -33,7 +43,8 @@ int main(int argc, char *argv[]) {
         perror("ERROR connecting");
     }
 
-
+    //pthread_t thread_id;
+    //pthread_create(&thread_id, NULL, mx_check_connection, NULL); 
 
     mx_init_global_vars();
     mx_get_language_arr();
