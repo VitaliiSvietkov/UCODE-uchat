@@ -86,6 +86,8 @@ void *recv_loop(void *data) {
                 mx_find_user(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "AddUser"))
                 mx_add_user(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "UpdateUserData"))
+                mx_update_user_data(recvData, newsocketfd);
 
             mx_del_strarr(&recvData);
         }
@@ -105,8 +107,6 @@ int main(int argc, char **argv) {
     //int err = pthread_create(&server_thread, NULL, handle_server, NULL);
     //mx_error("Can not create new thread", err);
 
-    time_t ticks;
-
     while(true) {
         struct sockaddr_in client;
         socklen_t client_len = sizeof(client);
@@ -118,8 +118,6 @@ int main(int argc, char **argv) {
 
         pthread_t thread_id;
         pthread_create(&thread_id, NULL, recv_loop, (void *)(size_t)newsocketfd); 
-
-        //ticks = time(NULL);
 
         /*pthread_mutex_lock(&ctx_mutex);
         int status = mx_socket_list_add(&ctx.head, newsocketfd);

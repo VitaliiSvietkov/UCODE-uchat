@@ -53,6 +53,7 @@ struct timeval wait_time(int sec, int msec);
 bool mx_check_user(char **data);
 void mx_find_user(char **data, int sockfd);
 void mx_add_user(char **data, int sockfd);
+void mx_update_user_data(char **data, int sockfd);
 void mx_authorization(char **data, int sockfd);
 
 sqlite3 *mx_opening_db(void);
