@@ -79,22 +79,14 @@ void *recv_loop(void *data) {
         int s = recv(newsocketfd, recvBuff, 6000, 0);
         if (s > 0) {
             char **recvData = mx_strsplit(recvBuff, '\n');
-            char *sendBuff = NULL;
-            if (!mx_strcmp(recvData[0], "Authorization")) {
-                if (mx_check_user(recvData)) {
-                    sendBuff = strdup("SUCCESS");
-                    send(newsocketfd, sendBuff, strlen(sendBuff), 0);
-                    free(sendBuff);
-                    sendBuff = strdup("Data\nSended");
-                    send(newsocketfd, sendBuff, strlen(sendBuff), 0);
-                    free(sendBuff);
-                }
-                else {
-                    sendBuff = strdup("FAIL");
-                    send(newsocketfd, sendBuff, strlen(sendBuff), 0);
-                    free(sendBuff);
-                }
-            }
+
+            if (!mx_strcmp(recvData[0], "Authorization"))
+                mx_authorization(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "FindUser"))
+                mx_find_user(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "AddUser"))
+                mx_add_user(recvData, newsocketfd);
+
             mx_del_strarr(&recvData);
         }
     }
@@ -114,7 +106,6 @@ int main(int argc, char **argv) {
     //mx_error("Can not create new thread", err);
 
     time_t ticks;
-    //har sendBuff[256] = 'Connection';
 
     while(true) {
         struct sockaddr_in client;

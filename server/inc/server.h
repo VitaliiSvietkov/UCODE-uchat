@@ -51,5 +51,12 @@ void mx_write_to_log(char *msg, int stream);
 struct timeval wait_time(int sec, int msec);
 
 bool mx_check_user(char **data);
+void mx_find_user(char **data, int sockfd);
+void mx_add_user(char **data, int sockfd);
+void mx_authorization(char **data, int sockfd);
+
+sqlite3 *mx_opening_db(void);
+void mx_dberror(sqlite3 *db, int status, char *msg);
+void mx_write_photo_to_bd(char *path, int id);
 
 #endif
