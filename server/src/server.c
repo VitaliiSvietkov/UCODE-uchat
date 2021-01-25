@@ -101,6 +101,7 @@ void *recv_loop(void *data) {
 
 
 int main(int argc, char **argv) {
+    mx_database_init();
     mx_check_argv(argc, argv);
     int port = atoi(argv[1]);
     mx_check_port(port);

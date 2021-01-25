@@ -18,6 +18,7 @@ void mx_configure_chats_list(void) {
     uid_arr = (unsigned int *)malloc(uid_arr_len);
     for (int i = 0; i < uid_arr_len; i++)
         recv(sockfd, &uid_arr[i], sizeof(unsigned int), 0);
+
     
     for (int i = 0; i < uid_arr_len; i++)
         gtk_box_pack_start(GTK_BOX(chats_list), 

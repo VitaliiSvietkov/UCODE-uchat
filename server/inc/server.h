@@ -59,6 +59,7 @@ void mx_send_room_data(char **data, int sockfd);
 void mx_authorization(char **data, int sockfd);
 
 sqlite3 *mx_opening_db(void);
+void mx_database_init(void);
 void mx_dberror(sqlite3 *db, int status, char *msg);
 void mx_write_photo_to_bd(char *path, int id);
 bool mx_uint_arr_check_value(unsigned int *arr, unsigned int value, int len);
