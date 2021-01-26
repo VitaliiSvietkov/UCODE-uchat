@@ -74,7 +74,7 @@ void mx_get_avatar(char **data, int sockfd) {
 
     // Get the data of the file which will be sent to client
     //======================================================
-    char read_data[flen + 1];
+    char read_data[flen];
     int size = fread(read_data, flen, 1, fp);
     if (ferror(fp)) {
         fprintf(stderr, "fread() failed\n");

@@ -12,7 +12,7 @@ void mx_read_photo_from_bd(int id) {
     long flen = 0;
     recv(sockfd, &flen, sizeof(long), 0);
 
-    char file_data[flen + 1];
+    char file_data[flen];
     recv(sockfd, file_data, flen, 0);
 
     fwrite(file_data, flen, 1, fp);
