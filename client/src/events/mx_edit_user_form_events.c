@@ -1,5 +1,7 @@
 #include "../../inc/uchat_client.h"
 
+static char *filename;
+
 void edit_user_eventbox_enter_notify(GtkWidget *widget) {
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
 
@@ -41,13 +43,10 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
     res = gtk_dialog_run (GTK_DIALOG (dialog));
     if (res == GTK_RESPONSE_ACCEPT)
     {
-        char *filename;
         GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
         filename = gtk_file_chooser_get_filename (chooser);
-        mx_write_photo_to_bd(filename, t_user.id);
         g_object_unref(G_OBJECT(NewAvatar));
         NewAvatar = mx_get_pixbuf_with_size(filename, 100, 100);
-        free(filename);
     }
 
     gtk_widget_destroy (dialog);
@@ -192,6 +191,9 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
         t_user.avatar = gdk_pixbuf_copy(GDK_PIXBUF(NewAvatar));
         g_object_unref(G_OBJECT(NewAvatar));
         gtk_widget_queue_draw(GTK_WIDGET(settings_menu));
+
+        mx_write_photo_to_bd(filename, t_user.id);
+        free(filename);
 
         gtk_widget_destroy(GTK_WIDGET(blackout));
         blackout = NULL;

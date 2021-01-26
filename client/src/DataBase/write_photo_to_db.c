@@ -1,72 +1,63 @@
 #include "../../inc/uchat_client.h"
 
 void mx_write_photo_to_bd(char *path, int id){
+    char sendBuff[256];
+    bzero(sendBuff, 256);
+    sprintf(sendBuff, "UpdateAvatar\n%d", id);
+    send(sockfd, sendBuff, 256, 0);
+
     FILE *fp = fopen(path, "rb");
-    if (fp == NULL) {
-        fprintf(stderr, "Cannot open image file\n");    
-    }     
+    int r;
+
+    // Get the length of the file data - 'flen'
+    //======================================================
     fseek(fp, 0, SEEK_END);
     if (ferror(fp)) {
         fprintf(stderr, "fseek() failed\n");
-        int r = fclose(fp);
+        r = fclose(fp);
         if (r == EOF) {
             fprintf(stderr, "Cannot close file handler\n");          
         }    
     }  
+
     int flen = ftell(fp);
     if (flen == -1) {
         perror("error occurred");
-        int r = fclose(fp);
+        r = fclose(fp);
         if (r == EOF) {
             fprintf(stderr, "Cannot close file handler\n");
         }   
     }
+
+    send(sockfd, &flen, sizeof(int), 0);
+
     fseek(fp, 0, SEEK_SET);
     if (ferror(fp)) {
         fprintf(stderr, "fseek() failed\n");
-        int r = fclose(fp);
+        r = fclose(fp);
         if (r == EOF) {
             fprintf(stderr, "Cannot close file handler\n");
         }    
     }
-    char data[flen+1];
-    int size = fread(data, 1, flen, fp);
+    //======================================================
+
+    // Get the data of the file which will be sent to server
+    //======================================================
+    char read_data[flen + 1];
+    int size = fread(read_data, 1, flen, fp);
+    send(sockfd, &size, sizeof(int), 0);
     if (ferror(fp)) {
         fprintf(stderr, "fread() failed\n");
-        int r = fclose(fp);
+        r = fclose(fp);
         if (r == EOF) {
             fprintf(stderr, "Cannot close file handler\n");
         }    
     }
-    int r = fclose(fp);
-    if (r == EOF) {
-        fprintf(stderr, "Cannot close file handler\n");
-    }    
-    sqlite3 *db;
-    char *err_msg = 0;
-    int rc = sqlite3_open("client/data/test.db", &db);
-    if (rc != SQLITE_OK) {
-        
-        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-    }
-    sqlite3_stmt *pStmt;
-    char sql[500];
-    bzero(sql, 500);
-    sprintf(sql, "UPDATE USERS SET PHOTO = ? WHERE ID = '%d' ;", id);
-    
-    rc = sqlite3_prepare(db, sql, -1, &pStmt, 0);
-    
-    if (rc != SQLITE_OK) {
-        
-        fprintf(stderr, "Cannot prepare statement: %s\n", sqlite3_errmsg(db));
-    }    
-    sqlite3_bind_blob(pStmt, 1, data, size, SQLITE_STATIC);    
-    rc = sqlite3_step(pStmt);
-    if (rc != SQLITE_DONE) {
-        printf("execution failed: %s", sqlite3_errmsg(db));
-    }  
-    sqlite3_finalize(pStmt);    
+    //======================================================
 
-    sqlite3_close(db);
+    send(sockfd, read_data, flen, 0);
+
+    r = fclose(fp);
+    if (r == EOF)
+        fprintf(stderr, "Cannot close file handler\n");
 }
