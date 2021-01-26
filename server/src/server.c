@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
     mx_check_argv(argc, argv);
     int port = atoi(argv[1]);
     mx_check_port(port);
-    mx_deamon();
+    //mx_deamon();
     int listening_socket = mx_listening_socket(port);
     listen(listening_socket, INT_MAX);
     //pthread_t server_thread;

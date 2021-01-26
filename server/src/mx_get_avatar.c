@@ -3,7 +3,7 @@
 void mx_get_avatar(char **data, int sockfd) {
     // Read from Data Base
     //======================================================
-    FILE *fp = fopen("server/data/tmp_avatar.png", "wb");
+    FILE *fp = fopen("server/data/tmp_avatar.jpg", "wb");
     if (fp == NULL)
         fprintf(stderr, "Cannot open image file\n");
     
@@ -39,7 +39,7 @@ void mx_get_avatar(char **data, int sockfd) {
         fprintf(stderr, "Cannot close file handler\n");
     //======================================================
 
-    fp = fopen("server/data/tmp_avatar.png", "rb");
+    fp = fopen("server/data/tmp_avatar.jpg", "rb");
 
     // Get the length of the file data - 'flen'
     //======================================================
@@ -92,5 +92,5 @@ void mx_get_avatar(char **data, int sockfd) {
     if (r == EOF)
         fprintf(stderr, "Cannot close file handler\n");
 
-    remove("server/data/tmp_avatar.png");
+    remove("server/data/tmp_avatar.jpg");
 }

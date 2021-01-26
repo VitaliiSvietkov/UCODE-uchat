@@ -1,7 +1,7 @@
 #include "../inc/server.h"
 
 void mx_update_avatar(char **data, int sockfd) {
-    FILE *fp = fopen("server/data/tmp_recv_avatar.png", "wb");
+    FILE *fp = fopen("server/data/tmp_recv_avatar.jpg", "wb");
     if (fp == NULL)
         fprintf(stderr, "Cannot open image file\n");
 
@@ -24,7 +24,7 @@ void mx_update_avatar(char **data, int sockfd) {
     free(file_data);
 
     
-    fp = fopen("server/data/tmp_recv_avatar.png", "rb");
+    fp = fopen("server/data/tmp_recv_avatar.jpg", "rb");
     if (fp == NULL) {
         fprintf(stderr, "Cannot open image file\n");    
     }    
@@ -88,5 +88,5 @@ void mx_update_avatar(char **data, int sockfd) {
     sqlite3_finalize(pStmt);    
     sqlite3_close(db);
 
-    remove("server/data/tmp_recv_avatar.png");
+    remove("server/data/tmp_recv_avatar.jpg");
 }

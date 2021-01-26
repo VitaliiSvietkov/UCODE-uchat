@@ -1,7 +1,7 @@
 #include "../../inc/uchat_client.h"
 
 void mx_read_photo_from_bd(int id) {
-    FILE *fp = fopen("client/img/tmp_avatar.png", "wb");
+    FILE *fp = fopen("client/img/tmp_avatar.jpg", "wb");
     if (fp == NULL)
         fprintf(stderr, "Cannot open image file\n");
 
