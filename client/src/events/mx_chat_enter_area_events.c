@@ -151,17 +151,17 @@ void mx_send_message_on_enter(GtkWidget *widget) {
             NULL,
             curtime);
         mx_add_message(t_chat_room_vars.messages_box, msg);
-        sqlite3 *db = mx_opening_db();
-        int st;
-        char *err_msg;
-        char sql[500];
-        bzero(sql, 500);
-        sprintf(sql, "INSERT INTO Messages (id, addresser, destination, Text, time)\
-                VALUES('%u','%u','%u','%s','%ld');", 
-                msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
-        st = sqlite3_exec(db, sql, NULL, 0, &err_msg);
-        mx_dberror(db, st, err_msg);
-        sqlite3_close(db);
+
+        char sendBuff[1024];
+        bzero(sendBuff, 1024);
+        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%u\n%lu",
+                msg->id, t_user.id, curr_destination, msg->seconds);
+        send(sockfd, sendBuff, 1024, 0);
+        
+        bzero(sendBuff, 1024);
+        sprintf(sendBuff, "%s", msg->text);
+        send(sockfd, sendBuff, 1024, 0);
+
         gtk_entry_set_text(GTK_ENTRY(widget), "");
     }
 }
@@ -182,17 +182,17 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
                 NULL,
                 curtime);
             mx_add_message(t_chat_room_vars.messages_box, msg);
-            sqlite3 *db = mx_opening_db();
-            int st;
-            char *err_msg;
-            char sql[500];
-            bzero(sql, 500);
-            sprintf(sql, "INSERT INTO Messages (id, addresser, destination, Text, time)\
-                    VALUES('%u','%u','%u','%s','%ld');", 
-                    msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
-            st = sqlite3_exec(db, sql, NULL, 0, &err_msg);
-            mx_dberror(db, st, err_msg); 
-            sqlite3_close(db);
+
+            char sendBuff[1024];
+            bzero(sendBuff, 1024);
+            sprintf(sendBuff, "InsertMessage\n%u\n%u\n%u\n%lu",
+                    msg->id, t_user.id, curr_destination, msg->seconds);
+            send(sockfd, sendBuff, 1024, 0);
+            
+            bzero(sendBuff, 1024);
+            sprintf(sendBuff, "%s", gtk_entry_get_text(GTK_ENTRY(entry)));
+            send(sockfd, sendBuff, 1024, 0);
+
             gtk_entry_set_text(GTK_ENTRY(entry), "");
         }
     }

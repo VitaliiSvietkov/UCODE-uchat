@@ -82,6 +82,8 @@ void *recv_loop(void *data) {
 
             if (!mx_strcmp(recvData[0], "Authorization"))
                 mx_authorization(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "InsertMessage"))
+                mx_insert_message(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "FindUser"))
                 mx_find_user(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "AddUser"))
@@ -109,7 +111,7 @@ int main(int argc, char **argv) {
     mx_check_argv(argc, argv);
     int port = atoi(argv[1]);
     mx_check_port(port);
-    //mx_deamon();
+    mx_deamon();
     int listening_socket = mx_listening_socket(port);
     listen(listening_socket, INT_MAX);
     //pthread_t server_thread;

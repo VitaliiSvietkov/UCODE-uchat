@@ -69,8 +69,8 @@ void mx_update_avatar(char **data, int sockfd) {
 
     sqlite3 *db = mx_opening_db();
     sqlite3_stmt *pStmt;
-    char sql[10000];
-    bzero(sql, 10000);
+    char sql[flen + 40];
+    bzero(sql, flen + 40);
     sprintf(sql, "UPDATE USERS SET PHOTO = ? WHERE ID=%d;", mx_atoi(data[1]));
     
     int rc = sqlite3_prepare(db, sql, -1, &pStmt, 0);

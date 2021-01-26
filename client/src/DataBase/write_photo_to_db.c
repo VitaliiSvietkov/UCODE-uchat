@@ -1,8 +1,6 @@
 #include "../../inc/uchat_client.h"
 
 void mx_write_photo_to_bd(char *path, int id){
-    printf("%s\n", path);
-
     char sendBuff[256];
     bzero(sendBuff, 256);
     sprintf(sendBuff, "UpdateAvatar\n%d", id);
