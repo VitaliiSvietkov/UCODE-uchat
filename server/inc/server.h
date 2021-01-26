@@ -57,6 +57,7 @@ void mx_update_user_data(char **data, int sockfd);
 void mx_get_users_arr(char **data, int sockfd);
 void mx_send_room_data(char **data, int sockfd);
 void mx_authorization(char **data, int sockfd);
+void mx_get_avatar(char **data, int sockfd);
 
 sqlite3 *mx_opening_db(void);
 void mx_database_init(void);

@@ -126,8 +126,10 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd
 
         if (t_user.avatar != NULL)
             g_object_unref(t_user.avatar);
-        // !!Change for recv image from DB!!
-        t_user.avatar = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 100, 100);
+            
+        mx_read_photo_from_bd(t_user.id);
+        t_user.avatar = mx_get_pixbuf_with_size("client/img/tmp_avatar.png", 100, 100);
+        remove("client/img/tmp_avatar.png");
         //==========================================================================
         mx_del_strarr(&user_recv_data);
     }

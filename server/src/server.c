@@ -92,6 +92,8 @@ void *recv_loop(void *data) {
                 mx_get_users_arr(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "SendRoomData"))
                 mx_send_room_data(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "GetAvatar"))
+                mx_get_avatar(recvData, newsocketfd);
 
             mx_del_strarr(&recvData);
         }
