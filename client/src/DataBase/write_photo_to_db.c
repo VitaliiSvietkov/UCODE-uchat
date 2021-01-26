@@ -1,6 +1,8 @@
 #include "../../inc/uchat_client.h"
 
 void mx_write_photo_to_bd(char *path, int id){
+    printf("%s\n", path);
+
     char sendBuff[256];
     bzero(sendBuff, 256);
     sprintf(sendBuff, "UpdateAvatar\n%d", id);
@@ -20,7 +22,7 @@ void mx_write_photo_to_bd(char *path, int id){
         }    
     }  
 
-    int flen = ftell(fp);
+    long flen = ftell(fp);
     if (flen == -1) {
         perror("error occurred");
         r = fclose(fp);
@@ -28,8 +30,6 @@ void mx_write_photo_to_bd(char *path, int id){
             fprintf(stderr, "Cannot close file handler\n");
         }   
     }
-
-    send(sockfd, &flen, sizeof(int), 0);
 
     fseek(fp, 0, SEEK_SET);
     if (ferror(fp)) {
@@ -39,13 +39,14 @@ void mx_write_photo_to_bd(char *path, int id){
             fprintf(stderr, "Cannot close file handler\n");
         }    
     }
+
+    send(sockfd, &flen, sizeof(long), 0);
     //======================================================
 
     // Get the data of the file which will be sent to server
     //======================================================
     char read_data[flen + 1];
-    int size = fread(read_data, 1, flen, fp);
-    send(sockfd, &size, sizeof(int), 0);
+    fread(read_data, flen, 1, fp);
     if (ferror(fp)) {
         fprintf(stderr, "fread() failed\n");
         r = fclose(fp);
