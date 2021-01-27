@@ -13,7 +13,14 @@ void mx_read_photo_from_bd(int id) {
     recv(sockfd, &flen, sizeof(long), 0);
 
     char file_data[flen + 1];
-    recv(sockfd, file_data, flen, 0);
+    ssize_t recv_size = 0;
+    while (recv_size < flen) {
+        ssize_t n = recv(sockfd, file_data, flen, 0);
+        recv_size += n;
+    }
+
+    printf("%lu\n", flen);
+    printf("zd\n", recv_size);
 
     fwrite(file_data, flen, 1, fp);
     if (ferror(fp))

@@ -75,7 +75,7 @@ void mx_get_avatar(char **data, int sockfd) {
     // Get the data of the file which will be sent to client
     //======================================================
     char read_data[flen + 1];
-    int size = fread(read_data, flen, 1, fp);
+    size_t size = fread(read_data, flen, 1, fp);
     if (ferror(fp)) {
         fprintf(stderr, "fread() failed\n");
         int r = fclose(fp);
@@ -85,8 +85,11 @@ void mx_get_avatar(char **data, int sockfd) {
     }
     //======================================================
 
-    send(sockfd, read_data, flen, 0);
+    ssize_t send_size = send(sockfd, read_data, flen, 0);
 
+    printf("%lu\n", flen);
+    printf("%zd\n", send_size);
+    
     r = fclose(fp);
     if (r == EOF)
         fprintf(stderr, "Cannot close file handler\n");
