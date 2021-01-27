@@ -10,12 +10,50 @@ void mx_create_messages_area(void) {
     gtk_widget_set_size_request(GTK_WIDGET(t_chat_room_vars.messages_box), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 50);
     gtk_container_add(GTK_CONTAINER(t_chat_room_vars.right_container), t_chat_room_vars.messages_box);
 
-    sqlite3 *db = mx_opening_db();
+    char sendBuff[1024];
+    sprintf(sendBuff, "LoadRoom\n%u\n%u", t_user.id, curr_destination);
+    send(sockfd, sendBuff, 1024, 0);
+
+    int max_id = 0;
+    recv(sockfd, &max_id, sizeof(int), 0);
+
+    if (max_id > 0) {
+        char recvBuff[1024];
+        bzero(recvBuff, 1024);
+        for (int i = 0; i < max_id; i++) {
+            recv(sockfd, recvBuff, 1024, 0);
+            
+            char **recvData = mx_strsplit(recvBuff, '\n');
+            int msg_id = mx_atoi(recvData[0]);
+            int msg_addresser = mx_atoi(recvData[1]);
+            int seconds = mx_atoi(recvData[3]);
+            char *text = NULL;
+            if (mx_strcmp("(null)", recvData[2]))
+                text = mx_strdup(recvData[2]);
+
+            // Change NULL for mx_read_image_message((unsigned int)sqlite3_column_int64(res, 0), db)
+            mx_push_back_message(&curr_room_msg_head, 
+                text, 
+                msg_addresser,
+                NULL,
+                seconds);
+
+            mx_del_strarr(&recvData);
+            bzero(recvBuff, 1024);
+        }
+
+        t_message *msg = curr_room_msg_head;
+        while (msg != NULL) {
+            mx_add_message(t_chat_room_vars.messages_box, msg);
+            msg = msg->next;
+        }
+    }
+
+    /*sqlite3 *db = mx_opening_db();
     t_message *msg = NULL;
     sqlite3_stmt *res;
     char sql[250];
     bzero(sql, 250);
-    char *err_msg;
     sprintf(sql, "SELECT id, addresser, Text, time FROM Messages\
             WHERE (addresser=%u OR addresser=%u) AND (destination=%u OR destination=%u)\
             ORDER BY id;",
@@ -32,12 +70,7 @@ void mx_create_messages_area(void) {
             (time_t)sqlite3_column_int64(res, 3));
     }
     sqlite3_finalize(res);
-    sqlite3_close(db);
+    sqlite3_close(db);*/
 
-    msg = curr_room_msg_head;
-    while (msg != NULL) {
-        mx_add_message(t_chat_room_vars.messages_box, msg);
-        msg = msg->next;
-    }
     gtk_widget_show_all(GTK_WIDGET(t_chat_room_vars.right_container));
 }
