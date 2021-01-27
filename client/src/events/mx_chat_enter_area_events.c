@@ -152,15 +152,11 @@ void mx_send_message_on_enter(GtkWidget *widget) {
             curtime);
         mx_add_message(t_chat_room_vars.messages_box, msg);
 
-        char sendBuff[1024];
-        bzero(sendBuff, 1024);
-        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%u\n%lu",
-                msg->id, t_user.id, curr_destination, msg->seconds);
-        send(sockfd, sendBuff, 1024, 0);
-        
-        bzero(sendBuff, 1024);
-        sprintf(sendBuff, "%s", msg->text);
-        send(sockfd, sendBuff, 1024, 0);
+        char sendBuff[2056];
+        bzero(sendBuff, 2056);
+        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%u\n%lu\n%s",
+                msg->id, t_user.id, curr_destination, msg->seconds, msg->text);
+        send(sockfd, sendBuff, 2056, 0);
 
         gtk_entry_set_text(GTK_ENTRY(widget), "");
     }
@@ -183,15 +179,11 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
                 curtime);
             mx_add_message(t_chat_room_vars.messages_box, msg);
 
-            char sendBuff[1024];
-            bzero(sendBuff, 1024);
-            sprintf(sendBuff, "InsertMessage\n%u\n%u\n%u\n%lu",
-                    msg->id, t_user.id, curr_destination, msg->seconds);
-            send(sockfd, sendBuff, 1024, 0);
-            
-            bzero(sendBuff, 1024);
-            sprintf(sendBuff, "%s", gtk_entry_get_text(GTK_ENTRY(entry)));
-            send(sockfd, sendBuff, 1024, 0);
+            char sendBuff[2056];
+            bzero(sendBuff, 2056);
+            sprintf(sendBuff, "InsertMessage\n%u\n%u\n%u\n%lu\n%s",
+                    msg->id, t_user.id, curr_destination, msg->seconds, msg->text);
+            send(sockfd, sendBuff, 2056, 0);
 
             gtk_entry_set_text(GTK_ENTRY(entry), "");
         }
