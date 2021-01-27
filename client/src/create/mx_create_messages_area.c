@@ -22,7 +22,7 @@ void mx_create_messages_area(void) {
         bzero(recvBuff, 1024);
         for (int i = 0; i < max_id; i++) {
             recv(sockfd, recvBuff, 1024, 0);
-            
+
             char **recvData = mx_strsplit(recvBuff, '\n');
             int msg_id = mx_atoi(recvData[0]);
             int msg_addresser = mx_atoi(recvData[1]);
@@ -48,29 +48,6 @@ void mx_create_messages_area(void) {
             msg = msg->next;
         }
     }
-
-    /*sqlite3 *db = mx_opening_db();
-    t_message *msg = NULL;
-    sqlite3_stmt *res;
-    char sql[250];
-    bzero(sql, 250);
-    sprintf(sql, "SELECT id, addresser, Text, time FROM Messages\
-            WHERE (addresser=%u OR addresser=%u) AND (destination=%u OR destination=%u)\
-            ORDER BY id;",
-            curr_destination, t_user.id, curr_destination, t_user.id);
-    sqlite3_prepare_v2(db, sql, -1, &res, 0);
-    while (sqlite3_step(res) != SQLITE_DONE) {
-        char *message_text = (char *)sqlite3_column_text(res, 2);
-        if (message_text != NULL)
-            message_text = mx_strdup((char *)sqlite3_column_text(res, 2));
-        mx_push_back_message(&curr_room_msg_head, 
-            message_text, 
-            (unsigned int)sqlite3_column_int64(res, 1),
-            mx_read_image_message((unsigned int)sqlite3_column_int64(res, 0), db),
-            (time_t)sqlite3_column_int64(res, 3));
-    }
-    sqlite3_finalize(res);
-    sqlite3_close(db);*/
 
     gtk_widget_show_all(GTK_WIDGET(t_chat_room_vars.right_container));
 }

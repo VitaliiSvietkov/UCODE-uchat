@@ -24,6 +24,7 @@ GtkWidget *mx_create_message(t_message *data) {
     else {
         gtk_widget_set_name(GTK_WIDGET(eventbox), "message");
         gtk_widget_set_halign(GTK_WIDGET(time_send), GTK_ALIGN_START);
+        /* Display name of the addresser
         if (data->text != NULL) {
             GtkWidget *sender_name = gtk_label_new(NULL);
 
@@ -47,7 +48,7 @@ GtkWidget *mx_create_message(t_message *data) {
             gtk_widget_set_margin_top(GTK_WIDGET(sender_name), 5);
             gtk_widget_set_margin_start(GTK_WIDGET(sender_name), 10);
             gtk_box_pack_start(GTK_BOX(box), sender_name, FALSE, FALSE, 0);
-        }
+        }*/
     }
 
     if (data->image != NULL) {

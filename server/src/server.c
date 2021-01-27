@@ -80,7 +80,9 @@ void *recv_loop(void *data) {
         if (s > 0) {
             char **recvData = mx_strsplit(recvBuff, '\n');
 
-            if (!mx_strcmp(recvData[0], "Authorization"))
+            if (!mx_strcmp(recvData[0], "SearchInit"))
+                mx_search_init(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "Authorization"))
                 mx_authorization(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "InsertMessage"))
                 mx_insert_message(recvData, newsocketfd);
@@ -100,6 +102,8 @@ void *recv_loop(void *data) {
                 mx_get_avatar(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "UpdateAvatar"))
                 mx_update_avatar(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "CheckRoom"))
+                mx_check_room(recvData, newsocketfd);
 
             mx_del_strarr(&recvData);
         }

@@ -5,8 +5,6 @@ static void search_menu_click(GtkWidget *widget, GdkEventButton *event,
     GdkDisplay *display);
 static void create_search_menu(GtkWidget *entry, GdkEvent *event, 
     unsigned int *users_arr, int users_len);
-static void fill_users_arr(unsigned int **arr, char **search_split, 
-    char *pseudonim, int *len);
 static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid);
 
 void mx_configure_left_header(void) {
@@ -31,32 +29,24 @@ static void list_match_users(GtkWidget *widget, GdkEvent *event) {
         mx_destroy_popups();
         return;
     }
-    char *search_text = mx_strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
-    char *search_pseudonim = NULL;
-    char **search_split = mx_strsplit(search_text, ' ');
-    if (search_split[0][0] == '@') {
-        search_pseudonim = mx_strdup(search_text + 1);
-        if (mx_strlen(search_pseudonim) == 0)
-            search_pseudonim = mx_strjoin(search_pseudonim, "@");
-    }
-    free(search_text);
-    if (search_pseudonim != NULL) {
-        mx_del_strarr(&search_split);
-        search_split = NULL;
-    }
+
+    char sendBuff[1024];
+    bzero(sendBuff, 1024);
+    sprintf(sendBuff, "SearchInit\n%s\n%d", gtk_entry_get_text(GTK_ENTRY(widget)), t_user.id);
+    send(sockfd, sendBuff, 1024, 0);
+
+    int users_len = 0;
+    recv(sockfd, &users_len, sizeof(int), 0);
 
     unsigned int *users_arr = NULL;
-    int users_len = 0;
-    fill_users_arr(&users_arr, search_split, search_pseudonim, &users_len);
-
-    if (search_pseudonim != NULL)
-        free(search_pseudonim);
-    if (search_split != NULL)
-        mx_del_strarr(&search_split);
+    if (users_len > 0)
+        users_arr = (unsigned int *)malloc(users_len);
+    for (int i = 0; i < users_len; i++)
+        recv(sockfd, &users_arr[i], sizeof(unsigned int), 0);
 
     create_search_menu(widget, event, users_arr, users_len);
 
-    if (users_arr != NULL)
+    if (users_len > 0)
         free(users_arr);
 }
 
@@ -129,7 +119,6 @@ static void create_search_menu(GtkWidget *entry, GdkEvent *event,
 
     //==================================================================================
 
-    // Move window of tools to the mouse click position
     gint x_win;
     gint y_win;
     gtk_window_get_position(GTK_WINDOW(window), &x_win, &y_win);
@@ -138,49 +127,20 @@ static void create_search_menu(GtkWidget *entry, GdkEvent *event,
     gtk_widget_show_all(GTK_WIDGET(search_menu));
 }
 
-static void fill_users_arr(unsigned int **arr, char **search_split, char *pseudonim, int *len) {
-    sqlite3 *db = mx_opening_db();
-    sqlite3_stmt *res = NULL;
-    char sql[250];
-    bzero(sql, 250);
-    if (search_split != NULL)
-        sprintf(sql, "SELECT ID FROM USERS\
-                WHERE (INSTR(NAME, '%s') OR INSTR(SURENAME, '%s')) AND ID != %u;",
-                search_split[0], search_split[1], (unsigned int)t_user.id);
-    else
-        sprintf(sql, "SELECT ID FROM USERS\
-                WHERE INSTR(PSEUDONIM, '%s') != 0 AND ID != %u;", pseudonim, (unsigned int)t_user.id);
-
-    sqlite3_prepare_v2(db, sql, -1, &res, 0);
-    while (sqlite3_step(res) != SQLITE_DONE) {
-        unsigned int uid = (unsigned int)sqlite3_column_int(res, 0);
-        if (uid != (unsigned int)t_user.id && !mx_uint_arr_check_value(*arr, uid, *len))
-            *len = mx_uint_array_insert(arr, uid, *len);
-    }
-    sqlite3_finalize(res);
-    sqlite3_close(db);
-}
-
 static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        sqlite3 *db = mx_opening_db();
-        sqlite3_stmt *res = NULL;
-        char sql[250];
-        bzero(sql, 250);
-        sprintf(sql, "SELECT ID FROM Messages\
-                WHERE (addresser=%u OR destination=%u) AND (addresser=%u OR destination=%u);", 
-                (unsigned int)(uintptr_t)uid, (unsigned int)t_user.id,
-                (unsigned int)(uintptr_t)uid, (unsigned int)t_user.id);
+        char sendBuff[1024];
+        bzero(sendBuff, 1024);
+        sprintf(sendBuff, "CheckRoom\n%d\n%u", t_user.id, (unsigned int)(uintptr_t)uid);
+        send(sockfd, sendBuff, 1024, 0);
 
-        sqlite3_prepare_v2(db, sql, -1, &res, 0);
-        if (sqlite3_step(res) == SQLITE_DONE) {
+        int check_res = 0;
+        recv(sockfd, &check_res, sizeof(int), 0);
+
+        if (check_res == 0) {
             room_click(widget, event, uid);
-            sqlite3_finalize(res);
-            sqlite3_close(db);
             return;
         }
-        sqlite3_finalize(res);
-        sqlite3_close(db);
 
         g_object_ref(G_OBJECT(widget));
         gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(GTK_WIDGET(widget))), GTK_WIDGET(widget));
