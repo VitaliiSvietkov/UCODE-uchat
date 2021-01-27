@@ -19,8 +19,8 @@ void mx_read_photo_from_bd(int id) {
         recv_size += n;
     }
 
-    printf("%lu\n", flen);
-    printf("zd\n", recv_size);
+    //printf("%lu\n", flen);
+    //printf("zd\n", recv_size);
 
     fwrite(file_data, flen, 1, fp);
     if (ferror(fp))
