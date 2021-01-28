@@ -20,17 +20,20 @@ void mx_check_messages(char **data, int sockfd) {
     sqlite3_stmt *res = NULL;
     char sql[250];
     bzero(sql, 250);
-    sprintf(sql, "SELECT id FROM Messages\
-            WHERE (addresser=%d OR destination=%d) AND (addresser=%d OR destination=%d);", 
-            dst, dst, uid, uid);
-
+    sprintf(sql, "SELECT MAX(id) FROM Messages\
+            WHERE (addresser=%d OR addresser=%d) AND (destination=%d OR destination=%d);",
+            uid, dst, uid, dst);
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
-    while (sqlite3_step(res) != SQLITE_DONE) {
-        int m_id = (int)sqlite3_column_int64(res, 0);
-        latest = m_id;
+    if (sqlite3_step(res) != SQLITE_DONE) {
+        latest = (int)sqlite3_column_int(res, 0);
+        send(sockfd, &latest, sizeof(int), 0);
+    }
+    else {
+        sqlite3_finalize(res);
+        sqlite3_close(db);
+        send(sockfd, &latest, sizeof(int), 0);
+        return;
     }
     sqlite3_finalize(res);
     sqlite3_close(db);
-
-    send(sockfd, &latest, sizeof(int), 0);
 }

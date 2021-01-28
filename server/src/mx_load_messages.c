@@ -13,7 +13,7 @@ void mx_load_messages(char **data, int sockfd) {
     bzero(sql, 250);
     sprintf(sql, "SELECT MAX(ID) FROM Messages\
             WHERE (addresser=%d OR addresser=%d) AND (destination=%d OR destination=%d);",
-            uid, uid, dst, dst);
+            uid, dst, uid, dst);
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
     if (sqlite3_step(res) != SQLITE_DONE) {
         id = (int)sqlite3_column_int(res, 0);
@@ -31,7 +31,7 @@ void mx_load_messages(char **data, int sockfd) {
     sprintf(sql, "SELECT id, addresser, Text, time FROM Messages\
             WHERE (addresser=%d OR addresser=%d) AND (destination=%d OR destination=%d) AND id > %d\
             ORDER BY id;",
-            uid, uid, dst, dst, max_msg_id);
+            uid, dst, uid, dst, max_msg_id);
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
     while (sqlite3_step(res) != SQLITE_DONE) {
         char *message_text = (char *)sqlite3_column_text(res, 2);

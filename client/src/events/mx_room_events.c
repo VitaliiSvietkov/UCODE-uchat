@@ -20,12 +20,12 @@ void *check_messages(void *data) {
             sprintf(sendBuff, "LoadMessages\n%d\n%d\n%d", (int)t_user.id, (int)curr_destination, (int)max_msg_id);
             send(sockfd, sendBuff, 256, 0);
 
-            int id = 0;
-            recv(sockfd, &id, sizeof(int), 0);
+            latest = 0;
+            recv(sockfd, &latest, sizeof(int), 0);
 
             char recvBuff[1024];
             bzero(recvBuff, 1024);
-            for (int i = 0; i < id; i++) {
+            for (int i = max_msg_id; i < latest; i++) {
                 recv(sockfd, recvBuff, 1024, 0);
 
                 char **recvData = mx_strsplit(recvBuff, '\n');
@@ -47,7 +47,7 @@ void *check_messages(void *data) {
                 bzero(recvBuff, 1024);
             }
 
-            t_message *msg = mx_message_search(&curr_room_msg_head, max_msg_id);
+            t_message *msg = mx_message_search(&curr_room_msg_head, max_msg_id + 1);
             while (msg != NULL) {
                 mx_add_message(t_chat_room_vars.messages_box, msg);
                 max_msg_id = msg->id;
