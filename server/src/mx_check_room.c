@@ -14,7 +14,7 @@ void mx_check_room(char **data, int sockfd) {
             dst, uid, dst, uid);
 
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
-    if (sqlite3_step(res) != SQLITE_DONE)
+    if (sqlite3_step(res) == SQLITE_DONE)
         send(sockfd, &return_val, sizeof(int), 0);
     else {
         return_val++;
