@@ -45,6 +45,7 @@ void mx_create_messages_area(void) {
         t_message *msg = curr_room_msg_head;
         while (msg != NULL) {
             mx_add_message(t_chat_room_vars.messages_box, msg);
+            max_msg_id = msg->id;
             msg = msg->next;
         }
     }

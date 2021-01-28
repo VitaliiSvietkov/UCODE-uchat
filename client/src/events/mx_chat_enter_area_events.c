@@ -151,6 +151,7 @@ void mx_send_message_on_enter(GtkWidget *widget) {
             NULL,
             curtime);
         mx_add_message(t_chat_room_vars.messages_box, msg);
+        max_msg_id = msg->id;
 
         char sendBuff[2056];
         bzero(sendBuff, 2056);
@@ -178,6 +179,7 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
                 NULL,
                 curtime);
             mx_add_message(t_chat_room_vars.messages_box, msg);
+            max_msg_id = msg->id;
 
             char sendBuff[2056];
             bzero(sendBuff, 2056);

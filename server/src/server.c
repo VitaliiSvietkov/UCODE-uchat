@@ -82,6 +82,10 @@ void *recv_loop(void *data) {
 
             if (!mx_strcmp(recvData[0], "SearchInit"))
                 mx_search_init(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "CheckMessages"))
+                mx_check_messages(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "LoadMessages"))
+                mx_load_messages(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "Authorization"))
                 mx_authorization(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "InsertMessage"))

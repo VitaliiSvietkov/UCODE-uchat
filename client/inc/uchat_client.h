@@ -199,6 +199,9 @@ GtkWidget *chat_area;
 GtkCssProvider *cssProvider;
 int sockfd;
 
+pthread_t check_messages_id; // used to create a thread for message checking
+int max_msg_id;
+
 GtkWidget *entry_search;
 GtkWidget *search_menu;
 

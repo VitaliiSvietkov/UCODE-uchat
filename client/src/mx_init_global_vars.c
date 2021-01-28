@@ -19,6 +19,8 @@ void mx_init_global_vars(void) {
     t_chat_room_vars.right_container = NULL;
     t_chat_room_vars.more_box = NULL;
     selected_msg_widget = NULL;
+    check_messages_id = 0;
+    max_msg_id = 0;
 
     // Temporary variables for edit user form
     NewFirstName = NULL;

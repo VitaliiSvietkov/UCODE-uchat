@@ -52,6 +52,8 @@ struct timeval wait_time(int sec, int msec);
 
 bool mx_check_user(char **data);
 void mx_check_room(char **data, int sockfd);
+void mx_check_messages(char **data, int sockfd);
+void mx_load_messages(char **data, int sockfd);
 void mx_find_user(char **data, int sockfd);
 void mx_add_user(char **data, int sockfd);
 void mx_update_user_data(char **data, int sockfd);
@@ -65,6 +67,7 @@ void mx_load_room(char **data, int sockfd);
 void mx_search_init(char **data, int sockfd);
 
 sqlite3 *mx_opening_db(void);
+char *mx_encryption(char *str);
 void mx_database_init(void);
 void mx_dberror(sqlite3 *db, int status, char *msg);
 void mx_write_photo_to_bd(char *path, int id);

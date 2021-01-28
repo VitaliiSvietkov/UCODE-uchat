@@ -11,6 +11,8 @@
 */
 
 void mx_add_user(char **data, int sockfd) {
+    char *encrypted_pass = mx_encryption(mx_strdup(data[4]));
+
     sqlite3 *db = mx_opening_db();
     sqlite3_stmt *res;
     char sql[500];
@@ -28,9 +30,11 @@ void mx_add_user(char **data, int sockfd) {
             "INSERT INTO USERS (ID, NAME, SURENAME, PSEUDONIM, \
             DESCRIPTION, PASSWORD, LANGUAGE, THEME) VALUES('%d',\
             '%s','%s','%s','%s','%s','%d','%d');", 
-            id, data[1], data[2], data[3], description, data[4], 0, 0);   
+            id, data[1], data[2], data[3], description, encrypted_pass, 0, 0);   
     st = sqlite3_exec(db, sql, NULL, 0, &errmsg);
     mx_dberror(db, st, errmsg); 
     sqlite3_close(db);
     mx_write_photo_to_bd("server/data/standard_avatar.jpg", id);
+
+    free(encrypted_pass);
 }
