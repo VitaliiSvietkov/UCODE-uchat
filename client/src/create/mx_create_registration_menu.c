@@ -5,6 +5,8 @@ static void login_activate(GtkWidget *widget) {
     gtk_widget_grab_focus(GTK_WIDGET(password));
 }
 
+static void drag_a_focus(GtkWidget *widget, GtkWidget *aim);
+
 void mx_create_registration_menu(void) {
     GtkWidget *fail_inscription = gtk_label_new(text_for_labels[31]);
     GtkWidget *fail_auto_inscription = gtk_label_new(text_for_labels[32]);
@@ -66,8 +68,6 @@ void mx_create_registration_menu(void) {
     gtk_box_pack_start(GTK_BOX(log_in_menu), login, FALSE, FALSE, 0);
     g_signal_connect(G_OBJECT(login), "changed",
         G_CALLBACK(button_shine), NULL);
-    g_signal_connect(G_OBJECT(login), "activate",
-        G_CALLBACK(login_activate), NULL);
 
     // Entry for password
     GtkWidget *password_eye_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -86,6 +86,8 @@ void mx_create_registration_menu(void) {
     gtk_entry_set_visibility(GTK_ENTRY(password), FALSE);
     g_signal_connect(G_OBJECT(password), "changed",
         G_CALLBACK(button_shine), NULL);
+    g_signal_connect(G_OBJECT(login), "activate",
+        G_CALLBACK(drag_a_focus), password);
     g_signal_connect(G_OBJECT(password), "activate",
         G_CALLBACK(authorization), fail_auto_inscription);
 
@@ -249,6 +251,13 @@ void mx_create_registration_menu(void) {
         G_CALLBACK(next_btn_leave_notify), password_reg_confirm);
     g_signal_connect(G_OBJECT(next_btn), "button_press_event",
         G_CALLBACK(transition_registration_click), fail_inscription);
+
+    g_signal_connect(G_OBJECT(login_reg), "activate",
+        G_CALLBACK(drag_a_focus), password_reg);
+    g_signal_connect(G_OBJECT(password_reg), "activate",
+        G_CALLBACK(drag_a_focus), password_reg_confirm);
+    g_signal_connect(G_OBJECT(password_reg_confirm), "activate",
+        G_CALLBACK(transition_registration_click), fail_inscription);
     //=================================================================================
     
 
@@ -318,6 +327,9 @@ void mx_create_registration_menu(void) {
 
     g_signal_connect(G_OBJECT(firstname_reg), "changed",
         G_CALLBACK(data_change_registration_event_2), finish_btn);
+
+    g_signal_connect(G_OBJECT(firstname_reg), "activate",
+        G_CALLBACK(drag_a_focus), secondname_reg);
     //=================================================================================
 
     gtk_widget_show_all(GTK_WIDGET(authorization_area));
@@ -327,4 +339,9 @@ void mx_create_registration_menu(void) {
     gtk_widget_hide(GTK_WIDGET(fail_inscription));
     gtk_widget_hide(GTK_WIDGET(fail_auto_inscription));
     gtk_widget_hide(GTK_WIDGET(registration_menu_2));
+}
+
+static void drag_a_focus(GtkWidget *widget, GtkWidget *aim) {
+    gtk_widget_set_can_focus(GTK_WIDGET(aim), TRUE);
+    gtk_widget_grab_focus(GTK_WIDGET(aim));
 }

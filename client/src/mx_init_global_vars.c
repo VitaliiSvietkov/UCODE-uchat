@@ -1,6 +1,7 @@
 #include "../inc/uchat_client.h"
 
 void mx_init_global_vars(void) {
+    argv_ptr = NULL;
     // Containers
     window = NULL;
     main_area = NULL;

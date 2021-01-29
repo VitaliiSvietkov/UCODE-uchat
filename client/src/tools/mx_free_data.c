@@ -23,10 +23,6 @@ void mx_free_data(void) {
         free(t_user.description);
         t_user.description = NULL;
     }
-    if (t_user.password != NULL) {
-        free(t_user.password);
-        t_user.password = NULL;
-    }
     mx_del_strarr(&text_for_labels);
     while (labels_head != NULL)
         mx_label_pop_front(&labels_head);

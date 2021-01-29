@@ -35,10 +35,6 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd
             if (t_user.description != NULL)
                 free(t_user.description);
             t_user.description = newDescr;
-            char *newPass = check_password;
-            if (t_user.password != NULL)
-                free(t_user.password);
-            t_user.password = newPass;
             mx_read_photo_from_bd(newId);
             if (t_user.avatar != NULL)
                 g_object_unref(t_user.avatar);
@@ -91,12 +87,36 @@ int mx_check_login_reg(const char *pseudo) {
 */
 
 int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd) {
+    if (sockfd == -1)
+        mx_connect_to_server();
+
     char sendBuffer[1025];
     bzero(sendBuffer, 1025);
     sprintf(sendBuffer, "Authorization\n%s\n%s", pseudo, passwd);
 
-    if (send(sockfd, sendBuffer, strlen(sendBuffer), 0) < 0) {
+    /*char c;
+    if (recv(sockfd, &c, 1, 0) < 0) {
+        perror("ERROR writing to socket");
+        close(sockfd);
+        sockfd = -1;
+        return 1;
+    }*/
+
+    /*int error = 0;
+    socklen_t len = sizeof (error);
+    int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
+    if (retval != 0) {
+        fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
+        return 1;
+    }
+    if (error != 0) {
+        fprintf(stderr, "socket error: %s\n", strerror(error));
+    }*/
+
+    if (send(sockfd, sendBuffer, strlen(sendBuffer), 0) <= 0) {
          perror("ERROR writing to socket");
+         //close(sockfd);
+         return 1;
     }
     char recvBuffer[6000];
     bzero(recvBuffer, 6000);

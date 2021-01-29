@@ -114,7 +114,6 @@ struct
     char *pseudonim;
     char *description;
     GdkPixbuf *avatar;
-    char *password;
 } t_user;
 
 void mx_change_user_name(char fName[], char sName[]);
@@ -164,6 +163,7 @@ void mx_create_language_menu(void);
 
 
 void mx_init_window(void);
+int mx_connect_to_server(void);
 void mx_init_global_vars(void);
 void mx_update_theme(void);
 void mx_tooltip(char *str, void *data);
@@ -198,6 +198,7 @@ GtkWidget *authorization_area;
 GtkWidget *chat_area;
 GtkCssProvider *cssProvider;
 int sockfd;
+char **argv_ptr;
 
 pthread_t check_messages_id; // used to create a thread for message checking
 int max_msg_id;

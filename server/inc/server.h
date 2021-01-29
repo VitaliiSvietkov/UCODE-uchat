@@ -65,6 +65,8 @@ void mx_update_avatar(char **data, int sockfd);
 void mx_insert_message(char **data, int sockfd);
 void mx_load_room(char **data, int sockfd);
 void mx_search_init(char **data, int sockfd);
+void mx_update_language(char **data, int sockfd);
+void mx_get_language(char **data, int sockfd);
 
 sqlite3 *mx_opening_db(void);
 char *mx_encryption(char *str);

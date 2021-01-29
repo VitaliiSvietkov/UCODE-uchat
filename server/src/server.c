@@ -108,6 +108,10 @@ void *recv_loop(void *data) {
                 mx_update_avatar(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "CheckRoom"))
                 mx_check_room(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "UpdateLanguage"))
+                mx_update_language(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "GetLanguage"))
+                mx_get_language(recvData, newsocketfd);
 
             mx_del_strarr(&recvData);
         }
@@ -121,7 +125,7 @@ int main(int argc, char **argv) {
     mx_check_argv(argc, argv);
     int port = atoi(argv[1]);
     mx_check_port(port);
-    mx_deamon();
+    //mx_deamon();
     int listening_socket = mx_listening_socket(port);
     listen(listening_socket, INT_MAX);
     //pthread_t server_thread;
