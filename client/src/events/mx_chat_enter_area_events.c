@@ -155,8 +155,8 @@ void mx_send_message_on_enter(GtkWidget *widget) {
 
         char sendBuff[2056];
         bzero(sendBuff, 2056);
-        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%u\n%lu\n%s",
-                msg->id, t_user.id, curr_destination, msg->seconds, msg->text);
+        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
+                t_user.id, curr_destination, msg->seconds, msg->text);
         send(sockfd, sendBuff, 2056, 0);
 
         gtk_entry_set_text(GTK_ENTRY(widget), "");
@@ -183,8 +183,8 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
 
             char sendBuff[2056];
             bzero(sendBuff, 2056);
-            sprintf(sendBuff, "InsertMessage\n%u\n%u\n%u\n%lu\n%s",
-                    msg->id, t_user.id, curr_destination, msg->seconds, msg->text);
+            sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
+                    t_user.id, curr_destination, msg->seconds, msg->text);
             send(sockfd, sendBuff, 2056, 0);
 
             gtk_entry_set_text(GTK_ENTRY(entry), "");

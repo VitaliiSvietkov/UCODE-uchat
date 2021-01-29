@@ -106,8 +106,6 @@ void *recv_loop(void *data) {
                 mx_get_avatar(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "UpdateAvatar"))
                 mx_update_avatar(recvData, newsocketfd);
-            else if (!mx_strcmp(recvData[0], "CheckRoom"))
-                mx_check_room(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "UpdateLanguage"))
                 mx_update_language(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "GetLanguage"))

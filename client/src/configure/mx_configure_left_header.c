@@ -128,18 +128,10 @@ static void create_search_menu(GtkWidget *entry, GdkEvent *event,
 }
 
 static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        /*char sendBuff[1024];
-        bzero(sendBuff, 1024);
-        sprintf(sendBuff, "CheckRoom\n%d\n%u", t_user.id, (unsigned int)(uintptr_t)uid);
-        send(sockfd, sendBuff, 1024, 0);
-
-        int check_res = 0;
-        recv(sockfd, &check_res, sizeof(int), 0);*/
-        
+    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {        
         if (mx_uint_arr_check_value(rooms_uids, (unsigned int)(uintptr_t)uid, rooms_uids_len)) {
             gtk_entry_set_text(GTK_ENTRY(entry_search), "");
-            gtk_widget_set_can_focus(GTK_WIDGET(chat_area));
+            gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
             gtk_widget_grab_focus(GTK_WIDGET(chat_area));
             room_click(widget, event, uid);
             return;
@@ -157,7 +149,7 @@ static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer
 
         room_click(widget, event, uid);
         gtk_entry_set_text(GTK_ENTRY(entry_search), "");
-        gtk_widget_set_can_focus(GTK_WIDGET(chat_area));
+        gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
         gtk_widget_grab_focus(GTK_WIDGET(chat_area));
     }
 }
