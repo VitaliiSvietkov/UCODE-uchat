@@ -27,4 +27,5 @@ void mx_free_data(void) {
     while (labels_head != NULL)
         mx_label_pop_front(&labels_head);
     g_object_unref(cssProvider);
+    free(rooms_uids);
 }

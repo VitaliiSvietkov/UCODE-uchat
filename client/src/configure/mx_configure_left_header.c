@@ -129,19 +129,21 @@ static void create_search_menu(GtkWidget *entry, GdkEvent *event,
 
 static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        char sendBuff[1024];
+        /*char sendBuff[1024];
         bzero(sendBuff, 1024);
         sprintf(sendBuff, "CheckRoom\n%d\n%u", t_user.id, (unsigned int)(uintptr_t)uid);
         send(sockfd, sendBuff, 1024, 0);
 
         int check_res = 0;
-        recv(sockfd, &check_res, sizeof(int), 0);
-
-        if (check_res == 0) {
+        recv(sockfd, &check_res, sizeof(int), 0);*/
+        
+        if (mx_uint_arr_check_value(rooms_uids, (unsigned int)(uintptr_t)uid, rooms_uids_len)) {
             room_click(widget, event, uid);
             return;
         }
 
+        rooms_uids_len = mx_uint_array_insert(&rooms_uids, (unsigned int)(uintptr_t)uid, rooms_uids_len);
+        
         g_object_ref(G_OBJECT(widget));
         gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(GTK_WIDGET(widget))), GTK_WIDGET(widget));
         gtk_box_pack_start(GTK_BOX(chats_list), widget, FALSE, FALSE, 0);

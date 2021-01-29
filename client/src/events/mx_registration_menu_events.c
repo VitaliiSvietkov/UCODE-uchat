@@ -50,8 +50,11 @@ void authorization(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
             //gtk_widget_show(GTK_WIDGET(data)); 
         }
         else {
-            if (chat_area != NULL)
+            if (chat_area != NULL) {
                 gtk_widget_destroy(GTK_WIDGET(chat_area));
+                free(rooms_uids);
+                rooms_uids = NULL;
+            }
 
             mx_load_images();
             while (labels_head != NULL)

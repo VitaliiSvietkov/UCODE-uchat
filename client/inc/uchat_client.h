@@ -161,23 +161,6 @@ GtkWidget *mx_language_create_box(char *path, char *name);
 void mx_create_language_menu(void);
 //==========================================================================================
 
-
-void mx_init_window(void);
-int mx_connect_to_server(void);
-void mx_init_global_vars(void);
-void mx_update_theme(void);
-void mx_tooltip(char *str, void *data);
-void *mx_run_error_pop_up(void *vargp);
-void mx_destroy_popups(void);
-
-void mx_configure_main_area(void);
-void mx_configure_left_header(void);
-void mx_configure_content_selection_area(void);
-void mx_configure_chats_list(void);
-void mx_configure_settings_menu_area(void);
-void mx_configure_username_event_screen(GtkBuilder *builder);
-void mx_configure_pseudonim_event_screen(GtkBuilder *builder);
-
 // Event callback functions
 //==========================================================================================
 void activate_prelight(GtkWidget *widget);
@@ -191,31 +174,6 @@ void settings_click(GtkWidget *widget, GdkEventButton *event);
 
 void blackout_destroy(GtkWidget *widget, GdkEventButton *event, GtkWidget *box);
 //==========================================================================================
-
-GtkWidget *window;                      // a top-level window
-GtkWidget *main_area;                   // an area that contains area with authorization form and chat area
-GtkWidget *authorization_area;
-GtkWidget *chat_area;
-GtkCssProvider *cssProvider;
-int sockfd;
-char **argv_ptr;
-
-pthread_t check_messages_id; // used to create a thread for message checking
-int max_msg_id;
-
-GtkWidget *entry_search;
-GtkWidget *search_menu;
-
-GtkWidget *chats_list;                  
-GtkWidget *settings_menu;
-GtkWidget *active_leftbar_container;
-
-GtkWidget *blackout;
-GtkWidget *error_revealer;
-GtkWidget *tools_menu;
-
-int language;
-char **text_for_labels;
 
 // Chat room
 //==========================================================================================
@@ -242,5 +200,49 @@ void mx_send_message_on_enter(GtkWidget *widget);
 
 void mx_more_click(GtkWidget *widget, GdkEventButton *event);
 //==========================================================================================
+
+
+GtkWidget *window;                      // a top-level window
+GtkWidget *main_area;                   // an area that contains area with authorization form and chat area
+GtkWidget *authorization_area;
+GtkWidget *chat_area;
+GtkCssProvider *cssProvider;
+int sockfd;
+char **argv_ptr;
+
+pthread_t check_messages_id; // used to create a thread for message checking
+int max_msg_id;
+
+GtkWidget *entry_search;
+GtkWidget *search_menu;
+
+GtkWidget *chats_list;
+unsigned int *rooms_uids;
+int rooms_uids_len;           
+GtkWidget *settings_menu;
+GtkWidget *active_leftbar_container;
+
+GtkWidget *blackout;
+GtkWidget *error_revealer;
+GtkWidget *tools_menu;
+
+int language;
+char **text_for_labels;
+
+void mx_init_window(void);
+int mx_connect_to_server(void);
+void mx_init_global_vars(void);
+void mx_update_theme(void);
+void mx_tooltip(char *str, void *data);
+void *mx_run_error_pop_up(void *vargp);
+void mx_destroy_popups(void);
+
+void mx_configure_main_area(void);
+void mx_configure_left_header(void);
+void mx_configure_content_selection_area(void);
+void mx_configure_chats_list(void);
+void mx_configure_settings_menu_area(void);
+void mx_configure_username_event_screen(GtkBuilder *builder);
+void mx_configure_pseudonim_event_screen(GtkBuilder *builder);
 
 #endif

@@ -22,6 +22,8 @@ void mx_init_global_vars(void) {
     selected_msg_widget = NULL;
     check_messages_id = 0;
     max_msg_id = 0;
+    rooms_uids_len = 0;
+    rooms_uids = NULL;
 
     // Temporary variables for edit user form
     NewFirstName = NULL;

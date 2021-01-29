@@ -11,19 +11,13 @@ void mx_configure_chats_list(void) {
          perror("ERROR writing to socket");
     }
     
-    int uid_arr_len = 0;
-    unsigned int *uid_arr = NULL;
-    recv(sockfd, &uid_arr_len, sizeof(int), 0);
+    recv(sockfd, &rooms_uids_len, sizeof(int), 0);
 
-    uid_arr = (unsigned int *)malloc(uid_arr_len);
-    for (int i = 0; i < uid_arr_len; i++)
-        recv(sockfd, &uid_arr[i], sizeof(unsigned int), 0);
-
+    rooms_uids = (unsigned int *)malloc(rooms_uids_len);
+    for (int i = 0; i < rooms_uids_len; i++)
+        recv(sockfd, &rooms_uids[i], sizeof(unsigned int), 0);
     
-    for (int i = 0; i < uid_arr_len; i++)
+    for (int i = 0; i < rooms_uids_len; i++)
         gtk_box_pack_start(GTK_BOX(chats_list), 
-            mx_create_room(uid_arr[i], L_FIELD_WIDTH, room_click), FALSE, FALSE, 0);
-    
-    free(uid_arr);
-    uid_arr = NULL;
+            mx_create_room(rooms_uids[i], L_FIELD_WIDTH, room_click), FALSE, FALSE, 0);
 }
