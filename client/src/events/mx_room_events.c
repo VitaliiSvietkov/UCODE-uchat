@@ -28,6 +28,9 @@ void *check_messages(void *data) {
             for (int i = max_msg_id; i < latest; i++) {
                 recv(sockfd, recvBuff, 1024, 0);
 
+                int m_id = 0;
+                recv(sockfd, &m_id, sizeof(int), 0);
+
                 char **recvData = mx_strsplit(recvBuff, '\n');
                 int msg_id = mx_atoi(recvData[0]);
                 int msg_addresser = mx_atoi(recvData[1]);
@@ -41,7 +44,8 @@ void *check_messages(void *data) {
                     text, 
                     msg_addresser,
                     NULL,
-                    seconds);
+                    seconds,
+                    m_id);
 
                 mx_del_strarr(&recvData);
                 bzero(recvBuff, 1024);
@@ -61,6 +65,11 @@ void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
     mx_destroy_popups();
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         curr_destination = (unsigned int)(uintptr_t)uid;
+
+        if (max_msg_id > 0) {
+            pthread_cancel(check_messages_id);
+            max_msg_id = 0;
+        }
 
         char *err_msg = 0;
         if (t_chat_room_vars.message_enter_area != NULL) {
@@ -121,6 +130,7 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
             if (curr_room_msg_head != NULL)
                 mx_clear_message_list(&curr_room_msg_head);
             pthread_cancel(check_messages_id);
+            max_msg_id = 0;
             break;
         default:
             break;

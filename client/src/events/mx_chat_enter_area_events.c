@@ -67,7 +67,8 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
             NULL, 
             t_user.id, 
             pixbuf,
-            curtime);
+            curtime,
+            max_msg_id);
         mx_add_message(t_chat_room_vars.messages_box, msg);
         sprintf(sql,
                 "INSERT INTO Messages (id, addresser, destination, time)\
@@ -81,7 +82,8 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
                 text, 
                 t_user.id, 
                 NULL,
-                curtime);
+                curtime,
+                max_msg_id);
             mx_add_message(t_chat_room_vars.messages_box, msg);
 
             sprintf(sql,
@@ -96,7 +98,8 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
             text, 
             t_user.id, 
             pixbuf,
-            curtime);
+            curtime,
+            max_msg_id);
         mx_add_message(t_chat_room_vars.messages_box, msg);
 
         if (msg->text != NULL)
@@ -145,19 +148,23 @@ void mx_send_message_on_enter(GtkWidget *widget) {
         time_t curtime;
         time(&curtime);
 
+        char sendBuff[2056];
+        bzero(sendBuff, 2056);
+        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
+                t_user.id, curr_destination, curtime, gtk_entry_get_text(GTK_ENTRY(widget)));
+        send(sockfd, sendBuff, 2056, 0);
+
+        int m_id = 0;
+        recv(sockfd, &m_id, sizeof(int), 0);
+        max_msg_id = m_id;
+
         t_message *msg = mx_push_back_message(&curr_room_msg_head,
             strdup(gtk_entry_get_text(GTK_ENTRY(widget))), 
             t_user.id, 
             NULL,
-            curtime);
+            curtime,
+            m_id);
         mx_add_message(t_chat_room_vars.messages_box, msg);
-        max_msg_id = msg->id;
-
-        char sendBuff[2056];
-        bzero(sendBuff, 2056);
-        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
-                t_user.id, curr_destination, msg->seconds, msg->text);
-        send(sockfd, sendBuff, 2056, 0);
 
         gtk_entry_set_text(GTK_ENTRY(widget), "");
     }
@@ -173,19 +180,23 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
             time_t curtime;
             time(&curtime);
 
+            char sendBuff[2056];
+            bzero(sendBuff, 2056);
+            sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
+                    t_user.id, curr_destination, curtime, gtk_entry_get_text(GTK_ENTRY(widget)));
+            send(sockfd, sendBuff, 2056, 0);
+
+            int m_id = 0;
+            recv(sockfd, &m_id, sizeof(int), 0);
+            max_msg_id = m_id;
+
             t_message *msg = mx_push_back_message(&curr_room_msg_head,
                 strdup(gtk_entry_get_text(GTK_ENTRY(entry))), 
                 t_user.id, 
                 NULL,
-                curtime);
+                curtime,
+                m_id);
             mx_add_message(t_chat_room_vars.messages_box, msg);
-            max_msg_id = msg->id;
-
-            char sendBuff[2056];
-            bzero(sendBuff, 2056);
-            sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
-                    t_user.id, curr_destination, msg->seconds, msg->text);
-            send(sockfd, sendBuff, 2056, 0);
 
             gtk_entry_set_text(GTK_ENTRY(entry), "");
         }

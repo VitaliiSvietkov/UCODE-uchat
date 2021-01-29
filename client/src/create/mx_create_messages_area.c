@@ -14,14 +14,16 @@ void mx_create_messages_area(void) {
     sprintf(sendBuff, "LoadRoom\n%u\n%u", t_user.id, curr_destination);
     send(sockfd, sendBuff, 1024, 0);
 
-    int max_id = 0;
-    recv(sockfd, &max_id, sizeof(int), 0);
+    recv(sockfd, &max_msg_id, sizeof(int), 0);
 
-    if (max_id > 0) {
+    if (max_msg_id > 0) {
         char recvBuff[1024];
         bzero(recvBuff, 1024);
-        for (int i = 0; i < max_id; i++) {
+        for (int i = 0; i < max_msg_id; i++) {
             recv(sockfd, recvBuff, 1024, 0);
+
+            int cur_m_id = 0;
+            recv(sockfd, &cur_m_id, sizeof(int), 0);
 
             char **recvData = mx_strsplit(recvBuff, '\n');
             int msg_id = mx_atoi(recvData[0]);
@@ -36,7 +38,8 @@ void mx_create_messages_area(void) {
                 text, 
                 msg_addresser,
                 NULL,
-                seconds);
+                seconds,
+                cur_m_id);
 
             mx_del_strarr(&recvData);
             bzero(recvBuff, 1024);
@@ -45,7 +48,7 @@ void mx_create_messages_area(void) {
         t_message *msg = curr_room_msg_head;
         while (msg != NULL) {
             mx_add_message(t_chat_room_vars.messages_box, msg);
-            max_msg_id = msg->id;
+            //max_msg_id = msg->id;
             msg = msg->next;
         }
     }

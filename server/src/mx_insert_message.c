@@ -31,6 +31,8 @@ void mx_insert_message(char **data, int sockfd) {
     sqlite3_finalize(res);
     id++;
 
+    send(sockfd, &id, sizeof(int), 0);
+
     char *err_msg;
     bzero(sql, 2056);
     sprintf(sql, "INSERT INTO Messages (id, addresser, destination, Text, time)\

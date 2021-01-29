@@ -48,9 +48,9 @@ t_message *mx_message_search(t_message **head, unsigned int id);
 unsigned int mx_message_list_size(t_message **head);
 unsigned int mx_remove_message(t_message **head, unsigned int id);
 t_message *mx_push_back_message(t_message **head, char *text, int uid, 
-    GdkPixbuf *image, time_t seconds);
+    GdkPixbuf *image, time_t seconds, int m_id);
 t_message *mx_new_message_node(char *text, unsigned int uid, 
-    GdkPixbuf *image, time_t seconds);
+    GdkPixbuf *image, time_t seconds, int m_id);
 //=======================================================================================
 
 // Draw functions

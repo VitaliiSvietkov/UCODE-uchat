@@ -36,12 +36,15 @@ void mx_load_messages(char **data, int sockfd) {
     while (sqlite3_step(res) != SQLITE_DONE) {
         char *message_text = (char *)sqlite3_column_text(res, 2);
 
+        int m_id = (int)sqlite3_column_int64(res, 0);
+
         char sendBuff[1024];
         bzero(sendBuff, 1024);
-        sprintf(sendBuff, "%d\n%d\n%s\n%d", (int)sqlite3_column_int64(res, 0), 
+        sprintf(sendBuff, "%d\n%d\n%s\n%d", m_id, 
             (int)sqlite3_column_int64(res, 1), message_text, (int)sqlite3_column_int64(res, 3));
         send(sockfd, sendBuff, 1024, 0);
 
+        send(sockfd, &m_id, sizeof(int), 0);
     }
     sqlite3_finalize(res);
     sqlite3_close(db);
