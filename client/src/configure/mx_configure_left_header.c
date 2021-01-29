@@ -138,12 +138,15 @@ static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer
         recv(sockfd, &check_res, sizeof(int), 0);*/
         
         if (mx_uint_arr_check_value(rooms_uids, (unsigned int)(uintptr_t)uid, rooms_uids_len)) {
+            gtk_entry_set_text(GTK_ENTRY(entry_search), "");
+            gtk_widget_set_can_focus(GTK_WIDGET(chat_area));
+            gtk_widget_grab_focus(GTK_WIDGET(chat_area));
             room_click(widget, event, uid);
             return;
         }
 
         rooms_uids_len = mx_uint_array_insert(&rooms_uids, (unsigned int)(uintptr_t)uid, rooms_uids_len);
-        
+
         g_object_ref(G_OBJECT(widget));
         gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(GTK_WIDGET(widget))), GTK_WIDGET(widget));
         gtk_box_pack_start(GTK_BOX(chats_list), widget, FALSE, FALSE, 0);
@@ -154,6 +157,7 @@ static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer
 
         room_click(widget, event, uid);
         gtk_entry_set_text(GTK_ENTRY(entry_search), "");
+        gtk_widget_set_can_focus(GTK_WIDGET(chat_area));
         gtk_widget_grab_focus(GTK_WIDGET(chat_area));
     }
 }
