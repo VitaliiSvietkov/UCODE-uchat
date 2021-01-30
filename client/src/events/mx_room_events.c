@@ -15,6 +15,12 @@ void *check_messages(void *data) {
             usleep(500000);
             continue;
         }
+        else if (latest < max_msg_id) {
+            gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.right_container));
+            if (curr_room_msg_head != NULL)
+                mx_clear_message_list(&curr_room_msg_head);
+            mx_create_messages_area();
+        }
         else {
             bzero(sendBuff, 256);
             sprintf(sendBuff, "LoadMessages\n%d\n%d\n%d", (int)t_user.id, (int)curr_destination, (int)max_msg_id);
