@@ -94,34 +94,37 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd
     bzero(sendBuffer, 1025);
     sprintf(sendBuffer, "Authorization\n%s\n%s", pseudo, passwd);
 
-    /*char c;
-    if (recv(sockfd, &c, 1, 0) < 0) {
-        perror("ERROR writing to socket");
-        close(sockfd);
-        sockfd = -1;
-        return 1;
-    }*/
-
-    /*int error = 0;
+    int error = 0;
     socklen_t len = sizeof (error);
     int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
     if (retval != 0) {
         fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
+        sockfd = -1;
         return 1;
     }
     if (error != 0) {
         fprintf(stderr, "socket error: %s\n", strerror(error));
-    }*/
-
-    if (send(sockfd, sendBuffer, strlen(sendBuffer), 0) <= 0) {
-         perror("ERROR writing to socket");
-         //close(sockfd);
+        sockfd = -1;
          return 1;
+    }
+
+    if (send(sockfd, sendBuffer, strlen(sendBuffer), 0) == -1) {
+        perror("ERROR writing to socket");
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return 1;
     }
     char recvBuffer[6000];
     bzero(recvBuffer, 6000);
-    if (recv(sockfd, recvBuffer, 6000, 0) < 0) {
+    if (recv(sockfd, recvBuffer, 6000, 0) == 0) {
          perror("ERROR reading from socket");
+         pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+         sockfd = -1;
+         return 1;
     }
 
     char **user_recv_data = mx_strsplit(recvBuffer, '\n');
