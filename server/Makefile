@@ -5,7 +5,7 @@ HDRS := $(wildcard inc/*.h)
 
 WFLGS := $(addprefix -W, all extra error pedantic) \
 	-Wno-unused-command-line-argument -Wno-unused-variable \
-    -Wno-unused-function -Wno-unused-parameter -g3 -fsanitize=address,undefined \
+    -Wno-unused-function -Wno-unused-parameter \
     -fno-omit-frame-pointer -O0
 
 all: install
@@ -13,7 +13,7 @@ all: install
 install: uchat_server
 
 uchat_server:
-	@clang -std=c11 $(WFLGS) $(SRCS) $(HDRS)
+	@clang -lsqlite3 -lpthread $(WFLGS) $(SRCS) $(HDRS) ../libraries/libmx/libmx.a
 	@mv a.out ../$@
 
 clean:

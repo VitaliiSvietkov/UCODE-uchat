@@ -1,8 +1,14 @@
 #ifndef TOOLS
 #define TOOLS
 #include <gtk/gtk.h>
+#include <stdbool.h>
 
+void mx_free_data(void);
 void mx_get_language_arr(void);
+void mx_sort_string(char *data);
+bool mx_uint_arr_check_value(unsigned int *arr, unsigned int value, int len);
+int mx_uint_array_insert(unsigned int **arr, unsigned int insert_value, int len);
+
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
 GdkPixbuf *mx_size_image_down(GdkPixbuf *pixbuf);
 GdkPixbuf *mx_get_pixbuf_with_size(char *path, int w, int h);
@@ -31,16 +37,29 @@ typedef struct s_message
     char *text;
     unsigned int uid;
     struct s_message *next;
+    time_t seconds;
 }              t_message;
 
 t_message *curr_room_msg_head;
 void mx_del_message_node(t_message **data);
 void mx_clear_message_list(t_message **head);
 void mx_message_list_update_id(t_message **head);
+t_message *mx_message_search(t_message **head, unsigned int id);
 unsigned int mx_message_list_size(t_message **head);
 unsigned int mx_remove_message(t_message **head, unsigned int id);
-t_message *mx_push_back_message(t_message **head, char *text, int uid, GdkPixbuf *image);
-t_message *mx_new_message_node(char *text, unsigned int uid, GdkPixbuf *image);
+t_message *mx_push_back_message(t_message **head, char *text, int uid, 
+    GdkPixbuf *image, time_t seconds, int m_id);
+t_message *mx_new_message_node(char *text, unsigned int uid, 
+    GdkPixbuf *image, time_t seconds, int m_id);
 //=======================================================================================
+
+// Draw functions
+//==========================================================================================
+gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
+gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
+gboolean mx_draw_event_round_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
+void draw_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf *data);
+//==========================================================================================
 
 #endif

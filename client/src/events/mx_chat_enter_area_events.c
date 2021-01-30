@@ -3,19 +3,27 @@
 // Add button
 //=================================================================================
 void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
+    mx_destroy_popups();
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         GtkWidget *dialog;
         GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
         gint res;
 
-        dialog = gtk_file_chooser_dialog_new ("Open File",
+        dialog = gtk_file_chooser_dialog_new ("Select an Image",
                                             GTK_WINDOW(window),
                                             action,
                                             "_Cancel",
                                             GTK_RESPONSE_CANCEL,
-                                            "_Open",
+                                            "_Select",
                                             GTK_RESPONSE_ACCEPT,
                                             NULL);
+
+        GtkFileFilter *filter = gtk_file_filter_new();
+        char *pattern_arr[13] = {"*.tif", "*.tiff", "*.bmp", "*.jpg", "*.jpeg", "*.gif",
+            "*.png", "*.eps", "*.raw", "*.cr2", "*.nef", "*.orf", "*.sr2"};
+        for (int i = 0; i < 13; ++i)
+            gtk_file_filter_add_pattern(filter, pattern_arr[i]);
+        gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
 
         res = gtk_dialog_run (GTK_DIALOG (dialog));
         char *filename = NULL;
@@ -29,27 +37,36 @@ void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
         if (filename != NULL) {
             struct stat buf;
             stat(filename, &buf);
-            if (buf.st_size < 20971520) // < 20mb
+            if (buf.st_size < 7971520) // < 20mb
                 mx_create_attach_form(entry, filename);
-            else
-                mx_run_error_pop_up("The file is too big!");
+            else {
+                pthread_t thread_id;
+                char *err_msg = "The file is too big!";
+                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                //mx_run_error_pop_up("The file is too big!");
+            }
         }
     }
 }
 
 void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
     GdkPixbuf *pixbuf = arr[1];
+    time_t curtime;
+    time(&curtime);
+
     char *text = NULL;
     if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0)
         text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
     
     t_message *msg = NULL;
+    sqlite3 *db = mx_opening_db();
     char *err_msg = 0;
     char sql[500];
     if (gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf)) > 350) {
         msg = mx_push_back_message(&curr_room_msg_head,
             NULL, 
             t_user.id, 
+<<<<<<< HEAD
             pixbuf);
         mx_add_message(messages_box, msg);
 
@@ -57,6 +74,16 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
         sprintf(sql,
                 "INSERT INTO Messages (id, uid) VALUES('%u','%u');",
                 msg->id, msg->uid);
+=======
+            pixbuf,
+            curtime,
+            max_msg_id);
+        mx_add_message(t_chat_room_vars.messages_box, msg);
+        sprintf(sql,
+                "INSERT INTO Messages (id, addresser, destination, time)\
+                VALUES('%u','%u','%u','%ld');",
+                msg->id, t_user.id, curr_destination, msg->seconds);
+>>>>>>> main
         sqlite3_exec(db, sql, 0, 0, &err_msg);
         mx_write_image_message((char *)arr[0], msg->id, db);
 
@@ -64,12 +91,20 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
             msg = mx_push_back_message(&curr_room_msg_head,
                 text, 
                 t_user.id, 
-                NULL);
-            mx_add_message(messages_box, msg);
+                NULL,
+                curtime,
+                max_msg_id);
+            mx_add_message(t_chat_room_vars.messages_box, msg);
 
             sprintf(sql,
+<<<<<<< HEAD
                     "INSERT INTO Messages (id, uid, Text) VALUES('%u','%u','%s');",
                     msg->id, msg->uid, msg->text);
+=======
+                    "INSERT INTO Messages (id, addresser, destination, Text, time)\
+                    VALUES('%u','%u','%u','%s','%ld');",
+                    msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
+>>>>>>> main
             sqlite3_exec(db, sql, 0, 0, &err_msg);
         }
         sqlite3_close(db);
@@ -78,9 +113,12 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
         msg = mx_push_back_message(&curr_room_msg_head,
             text, 
             t_user.id, 
-            pixbuf);
-        mx_add_message(messages_box, msg);
+            pixbuf,
+            curtime,
+            max_msg_id);
+        mx_add_message(t_chat_room_vars.messages_box, msg);
 
+<<<<<<< HEAD
         sqlite3 *db = mx_opening_db("messages");
         sprintf(sql,
                 "INSERT INTO Messages (id, uid, Text) VALUES('%u','%u','%s');",
@@ -88,7 +126,22 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
         sqlite3_exec(db, sql, 0, 0, &err_msg);
         mx_write_image_message((char *)arr[0], msg->id, db);
         sqlite3_close(db);
+=======
+        if (msg->text != NULL)
+            sprintf(sql,
+                    "INSERT INTO Messages (id, addresser, destination, Text, time)\
+                    VALUES('%u','%u','%u','%s','%ld');",
+                    msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
+        else
+            sprintf(sql,
+                    "INSERT INTO Messages (id, addresser, destination, time)\
+                    VALUES('%u','%u','%u','%ld');",
+                    msg->id, t_user.id, curr_destination, msg->seconds);
+        sqlite3_exec(db, sql, 0, 0, &err_msg);
+        mx_write_image_message((char *)arr[0], msg->id, db);
+>>>>>>> main
     }
+    sqlite3_close(db);
 
     gtk_widget_destroy(GTK_WIDGET(blackout));
     blackout = NULL;
@@ -102,22 +155,39 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
 // Message entry field
 //=================================================================================
 void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
+    mx_destroy_popups();
     int len = strlen(gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget))));
+    GList *children = gtk_container_get_children(GTK_CONTAINER(t_chat_room_vars.message_enter_area));
     if (len > 0) {
-        gtk_widget_hide(GTK_WIDGET(ban_image.box));
-        gtk_widget_show(GTK_WIDGET(tick_image.box));
+        gtk_widget_hide(GTK_WIDGET(g_list_nth_data(children, 2)));
+        gtk_widget_show(GTK_WIDGET(g_list_nth_data(children, 3)));
     }
     else {
-        gtk_widget_hide(GTK_WIDGET(tick_image.box));
-        gtk_widget_show(GTK_WIDGET(ban_image.box));
+        gtk_widget_hide(GTK_WIDGET(g_list_nth_data(children, 3)));
+        gtk_widget_show(GTK_WIDGET(g_list_nth_data(children, 2)));
     }
+    g_list_free(children);
 }
 
 void mx_send_message_on_enter(GtkWidget *widget) {
     if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0) {
+        time_t curtime;
+        time(&curtime);
+
+        char sendBuff[2056];
+        bzero(sendBuff, 2056);
+        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
+                t_user.id, curr_destination, curtime, gtk_entry_get_text(GTK_ENTRY(widget)));
+        send(sockfd, sendBuff, 2056, 0);
+
+        int m_id = 0;
+        recv(sockfd, &m_id, sizeof(int), 0);
+        max_msg_id = m_id;
+
         t_message *msg = mx_push_back_message(&curr_room_msg_head,
             strdup(gtk_entry_get_text(GTK_ENTRY(widget))), 
             t_user.id, 
+<<<<<<< HEAD
             NULL);
         mx_add_message(messages_box, msg);
 
@@ -129,6 +199,12 @@ void mx_send_message_on_enter(GtkWidget *widget) {
                 msg->id, msg->uid, msg->text);
         sqlite3_exec(db, sql, 0, 0, &err_msg);
         sqlite3_close(db);
+=======
+            NULL,
+            curtime,
+            m_id);
+        mx_add_message(t_chat_room_vars.messages_box, msg);
+>>>>>>> main
 
         gtk_entry_set_text(GTK_ENTRY(widget), "");
     }
@@ -138,11 +214,26 @@ void mx_send_message_on_enter(GtkWidget *widget) {
 // Tick button
 //=================================================================================
 void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
+    mx_destroy_popups();
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(entry))) > 0) {
+            time_t curtime;
+            time(&curtime);
+
+            char sendBuff[2056];
+            bzero(sendBuff, 2056);
+            sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
+                    t_user.id, curr_destination, curtime, gtk_entry_get_text(GTK_ENTRY(entry)));
+            send(sockfd, sendBuff, 2056, 0);
+
+            int m_id = 0;
+            recv(sockfd, &m_id, sizeof(int), 0);
+            max_msg_id = m_id;
+
             t_message *msg = mx_push_back_message(&curr_room_msg_head,
                 strdup(gtk_entry_get_text(GTK_ENTRY(entry))), 
                 t_user.id, 
+<<<<<<< HEAD
                 NULL);
             mx_add_message(messages_box, msg);
 
@@ -154,6 +245,12 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
                     msg->id, msg->uid, msg->text);
             sqlite3_exec(db, sql, 0, 0, &err_msg);
             sqlite3_close(db);
+=======
+                NULL,
+                curtime,
+                m_id);
+            mx_add_message(t_chat_room_vars.messages_box, msg);
+>>>>>>> main
 
             gtk_entry_set_text(GTK_ENTRY(entry), "");
         }
@@ -182,21 +279,21 @@ void more_content_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *dat
     }
 }
 
-void mx_more_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data) {
+void mx_more_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        if (!(data->active)) {
+        GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
+        if (!(flags & GTK_STATE_FLAG_CHECKED)) {
             mx_destroy_popups();
             gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
-            data->active = true;
 
-            more_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-            gtk_widget_set_name(GTK_WIDGET(more_box), "more_box");
+            t_chat_room_vars.more_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+            gtk_widget_set_name(GTK_WIDGET(t_chat_room_vars.more_box), "more_box");
             GtkAllocation alloc;
             gtk_widget_get_allocation(GTK_WIDGET(widget), &alloc);
-            gtk_fixed_put(GTK_FIXED(chat_area), more_box, alloc.x - 265, alloc.y - 515);
+            gtk_fixed_put(GTK_FIXED(chat_area), t_chat_room_vars.more_box, alloc.x - 265, alloc.y - 515);
 
             GtkWidget *more_grid = gtk_grid_new();
-            gtk_container_add(GTK_CONTAINER(more_box), more_grid);
+            gtk_container_add(GTK_CONTAINER(t_chat_room_vars.more_box), more_grid);
             gtk_widget_set_valign(GTK_WIDGET(more_grid), GTK_ALIGN_CENTER);
             gtk_widget_set_size_request(GTK_WIDGET(more_grid), 300, 480);
             gtk_widget_set_margin_top(GTK_WIDGET(more_grid), 10);
@@ -218,14 +315,13 @@ void mx_more_click(GtkWidget *widget, GdkEventButton *event, t_img_button *data)
             gtk_grid_attach(GTK_GRID(more_grid), gifs_eventbox, 3, 1, 1, 1);
             
             
-            gtk_widget_show_all(GTK_WIDGET(more_box));
+            gtk_widget_show_all(GTK_WIDGET(t_chat_room_vars.more_box));
         }
         else {
             gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED);
-            data->active = false;
 
-            gtk_widget_destroy(GTK_WIDGET(more_box));
-            more_box = NULL;
+            gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.more_box));
+            t_chat_room_vars.more_box = NULL;
         }
     }
 }

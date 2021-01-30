@@ -1,6 +1,7 @@
 #include "../../inc/uchat_client.h"
 
 void mx_edit_language(int language) {
+<<<<<<< HEAD
     sqlite3 *db = mx_opening_db("test");
     sqlite3_stmt *res;
     char sql[500];
@@ -16,4 +17,10 @@ void mx_edit_language(int language) {
     sprintf(sql, "UPDATE LANGUAGE SET LANGUAGE = REPLACE(LANGUAGE, '%d' ,'%d');", edit_language, language);   
     st = sqlite3_exec(db, sql, NULL, 0, &errmsg);
     mx_dberror(db, st, errmsg); 
+=======
+    char sendBuff[256];
+    bzero(sendBuff, 256);
+    sprintf(sendBuff, "UpdateLanguage\n%d\n%d", language, t_user.id);
+    send(sockfd, sendBuff, 256, 0);
+>>>>>>> main
 }

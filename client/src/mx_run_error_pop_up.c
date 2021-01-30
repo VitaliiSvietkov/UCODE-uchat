@@ -1,11 +1,14 @@
 #include "../inc/uchat_client.h"
 
 static void pop_up_destroy(GtkWidget *widget) {
-    gtk_widget_destroy(GTK_WIDGET(widget));
-    gtk_widget_destroy(GTK_WIDGET(error_revealer));
+    mx_destroy_popups();
 }
 
-void mx_run_error_pop_up(const char *text) {
+void *mx_run_error_pop_up(void *vargp) {
+    mx_destroy_popups();
+
+    char *text = (char *)vargp;
+
     error_revealer = gtk_revealer_new();
     gtk_revealer_set_transition_type(GTK_REVEALER(error_revealer), 
         GTK_REVEALER_TRANSITION_TYPE_CROSSFADE);
@@ -23,11 +26,24 @@ void mx_run_error_pop_up(const char *text) {
     GtkWidget *label = gtk_label_new(text);
     gtk_box_pack_start(GTK_BOX(box), label, FALSE, FALSE, 0);
 
-    int width = mx_strlen(text) * 5;
-    width += 30;
-    gtk_fixed_put(GTK_FIXED(chat_area), error_revealer, 
+    GtkAllocation alloc;
+    gtk_widget_get_allocation(GTK_WIDGET(body), &alloc);
+
+    int width = mx_strlen(text) * 4 + 50;
+    gtk_fixed_put(GTK_FIXED(main_area), error_revealer, 
         CUR_WIDTH - width - 20, 20);
 
     gtk_widget_show_all(GTK_WIDGET(error_revealer));
     gtk_revealer_set_reveal_child(GTK_REVEALER(error_revealer), TRUE);
+
+    while (!gtk_revealer_get_child_revealed(GTK_REVEALER(error_revealer))) {}
+    sleep(1);
+    gtk_revealer_set_reveal_child(GTK_REVEALER(error_revealer), FALSE);
+    
+    sleep(1);
+    gtk_container_forall(GTK_CONTAINER(error_revealer), (GtkCallback)gtk_widget_destroy, NULL);
+    gtk_widget_destroy(GTK_WIDGET(error_revealer));
+    error_revealer = NULL;
+
+    return NULL;
 }

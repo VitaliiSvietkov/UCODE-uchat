@@ -1,25 +1,33 @@
 #include "../inc/uchat_client.h"
 
-int main(int argc, char *argv[]) {
-    //sqlite3* DB;
-    //const char *DBdir = "../data/test.db";
+/*void *mx_check_connection(void *data) {
+    char buff[256];
+    bzero(buff, 256);
+    while (true) {
+        if (recv(sockfd, buff, 256, 0) < 0)
+            perror("Connection lost\n ");
+    }
+    return NULL;
+}*/
 
+int main(int argc, char *argv[]) {
+    if (argc != 3) {
+       fprintf(stderr,"usage %s hostname port\n", argv[0]);
+       exit(0);
+    }
     mx_init_global_vars();
-    mx_write_language_data_from_bd();
+    argv_ptr = argv;
+    mx_connect_to_server();
     mx_get_language_arr();
     
     mx_database_init();
-    mx_write_user_data_from_bd();
     mx_init_user();
-  
     gtk_init(&argc, &argv);
 
-    GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(cssProvider, "client/css/uchat.css", NULL);
+    cssProvider = gtk_css_provider_new();
+    gtk_css_provider_load_from_path(cssProvider, "client/css/standard/uchat.css", NULL);
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
         GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-
-    mx_load_images();
   
     // Create a new window
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -32,16 +40,8 @@ int main(int argc, char *argv[]) {
     mx_create_registration_menu();
 
     gtk_main();
-    if (curr_room_msg_head != NULL)
-        mx_clear_message_list(&curr_room_msg_head);
-    
-    g_object_unref(G_OBJECT(t_user.avatar));
-    free(t_user.FirstName);
-    free(t_user.SecondName);
-    free(t_user.pseudonim);
-    free(t_user.description);
-    mx_del_strarr(&text_for_labels);
-    while (labels_head != NULL)
-        mx_label_pop_front(&labels_head);
+    mx_free_data();
+
+    close(sockfd);
     return 0;
 }

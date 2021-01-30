@@ -8,13 +8,48 @@ static void delete_click(GtkWidget *widget, t_message *data);
 
 GtkWidget *mx_create_message(t_message *data) {
     GtkWidget *eventbox = gtk_event_box_new();
-    if (data->uid == (unsigned int)t_user.id)
-        gtk_widget_set_name(GTK_WIDGET(eventbox), "usr_message");
-    else
-        gtk_widget_set_name(GTK_WIDGET(eventbox), "message");
-    
+
+    char *msg_time = mx_strndup(ctime(&data->seconds) + 11, 5);
+    GtkWidget *time_send = gtk_label_new(msg_time);
+    gtk_widget_set_margin_bottom(GTK_WIDGET(time_send), 5);
+    free(msg_time);
+
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add(GTK_CONTAINER(eventbox), box);
+
+    if (data->uid == (unsigned int)t_user.id) {
+        gtk_widget_set_name(GTK_WIDGET(eventbox), "usr_message");
+        gtk_widget_set_halign(GTK_WIDGET(time_send), GTK_ALIGN_END);
+    }
+    else {
+        gtk_widget_set_name(GTK_WIDGET(eventbox), "message");
+        gtk_widget_set_halign(GTK_WIDGET(time_send), GTK_ALIGN_START);
+        /* Display name of the addresser
+        if (data->text != NULL) {
+            GtkWidget *sender_name = gtk_label_new(NULL);
+
+            sqlite3 *db = mx_opening_db();
+            sqlite3_stmt *res = NULL;
+            char sql[250];
+            bzero(sql, 250);
+            sprintf(sql, "SELECT NAME, SURENAME FROM USERS\
+                    WHERE id=%u;", data->uid);
+            sqlite3_prepare_v2(db, sql, -1, &res, 0);
+            while (sqlite3_step(res) != SQLITE_DONE) {
+                char *name = mx_strdup((char *)sqlite3_column_text(res, 0));
+                gtk_label_set_text(GTK_LABEL(sender_name), name);
+                free(name);
+            }
+            sqlite3_finalize(res);
+            sqlite3_close(db);
+
+            gtk_widget_set_name(GTK_WIDGET(sender_name), "sender_name");
+            gtk_widget_set_halign(GTK_WIDGET(sender_name), GTK_ALIGN_START);
+            gtk_widget_set_margin_top(GTK_WIDGET(sender_name), 5);
+            gtk_widget_set_margin_start(GTK_WIDGET(sender_name), 10);
+            gtk_box_pack_start(GTK_BOX(box), sender_name, FALSE, FALSE, 0);
+        }*/
+    }
 
     if (data->image != NULL) {
         GtkWidget *image = gtk_drawing_area_new();
@@ -29,11 +64,15 @@ GtkWidget *mx_create_message(t_message *data) {
         GtkWidget *label = gtk_label_new(data->text);
         gtk_box_pack_start(GTK_BOX(box), label, FALSE, FALSE, 0);
         gtk_widget_set_halign(GTK_WIDGET(label), GTK_ALIGN_START);
-        gtk_widget_set_margin_top(GTK_WIDGET(label), 10);
+        gtk_widget_set_margin_top(GTK_WIDGET(label), 5);
         gtk_widget_set_margin_start(GTK_WIDGET(label), 10);
         gtk_widget_set_margin_end(GTK_WIDGET(label), 10);
-        gtk_widget_set_margin_bottom(GTK_WIDGET(label), 10);
+        gtk_widget_set_margin_bottom(GTK_WIDGET(label), 5);
     }
+
+    gtk_widget_set_margin_start(GTK_WIDGET(time_send), 10);
+    gtk_widget_set_margin_end(GTK_WIDGET(time_send), 10);
+    gtk_box_pack_start(GTK_BOX(box), time_send, FALSE, FALSE, 0);
 
     g_signal_connect(G_OBJECT(eventbox), "button_press_event",
         G_CALLBACK(message_click), data);
@@ -120,9 +159,11 @@ static void message_click(GtkWidget *widget, GdkEvent *event, t_message *data) {
 }
 
 static void copy_click(GtkWidget *widget, t_message *data) {
-    GtkClipboard *clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-    gtk_clipboard_clear(GTK_CLIPBOARD(clipboard));
-    gtk_clipboard_set_text(GTK_CLIPBOARD(clipboard), data->text, mx_strlen(data->text));
+    if (data->text != NULL) {
+        GtkClipboard *clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+        gtk_clipboard_clear(GTK_CLIPBOARD(clipboard));
+        gtk_clipboard_set_text(GTK_CLIPBOARD(clipboard), data->text, mx_strlen(data->text));
+    }
 
     mx_destroy_popups();
 }
@@ -131,6 +172,14 @@ static void delete_click(GtkWidget *widget, t_message *data) {
     gtk_widget_destroy(GTK_WIDGET(selected_msg_widget));
     selected_msg_widget = NULL;
     mx_remove_message(&curr_room_msg_head, data->id);
+    max_msg_id--;
+
+    /*gtk_container_forall(GTK_CONTAINER(t_chat_room_vars.messages_box), (GtkCallback)gtk_widget_destroy, NULL);
+    t_message *msg = curr_room_msg_head;
+    while (msg != NULL) {
+        mx_add_message(t_chat_room_vars.messages_box, msg);
+        msg = msg->next;
+    }*/
 
     mx_destroy_popups();
 }

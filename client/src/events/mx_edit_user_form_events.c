@@ -1,5 +1,27 @@
 #include "../../inc/uchat_client.h"
 
+void edit_user_eventbox_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+
+    GList *parent_eventbox_children = gtk_container_get_children(GTK_CONTAINER(widget));
+    GList *box_children = gtk_container_get_children(GTK_CONTAINER(parent_eventbox_children->data));
+    g_list_free(parent_eventbox_children);
+    gtk_widget_set_state_flags(GTK_WIDGET(box_children->data), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_widget_set_state_flags(GTK_WIDGET(g_list_last(box_children)->data), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    g_list_free(box_children);
+}
+
+void edit_user_eventbox_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+
+    GList *parent_eventbox_children = gtk_container_get_children(GTK_CONTAINER(widget));
+    GList *box_children = gtk_container_get_children(GTK_CONTAINER(parent_eventbox_children->data));
+    g_list_free(parent_eventbox_children);
+    gtk_widget_unset_state_flags(GTK_WIDGET(box_children->data), GTK_STATE_FLAG_PRELIGHT);
+    gtk_widget_unset_state_flags(GTK_WIDGET(g_list_last(box_children)->data), GTK_STATE_FLAG_PRELIGHT);
+    g_list_free(box_children);
+}
+
 // Change avatar button
 //============================================================================================
 void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
@@ -19,12 +41,12 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
     res = gtk_dialog_run (GTK_DIALOG (dialog));
     if (res == GTK_RESPONSE_ACCEPT)
     {
-        char *filename;
         GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
-        filename = gtk_file_chooser_get_filename (chooser);
-        mx_write_photo_to_bd(filename);
+        char *filename = gtk_file_chooser_get_filename (chooser);
         g_object_unref(G_OBJECT(NewAvatar));
         NewAvatar = mx_get_pixbuf_with_size(filename, 100, 100);
+
+        mx_write_photo_to_bd(filename, t_user.id);
         free(filename);
     }
 
@@ -34,21 +56,6 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
 
 // Edit username field
 //============================================================================================
-void edit_username_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event,
-    gpointer builder) {
-    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_icon")), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_pen")),
-        GTK_STATE_FLAG_PRELIGHT, TRUE);
-}
-
-void edit_username_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event,
-    gpointer builder) {
-    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_icon")), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_username_pen")), GTK_STATE_FLAG_PRELIGHT);
-}
-
 void fname_entry_changed_event(GtkWidget *widget) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) == 0) {
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
@@ -57,8 +64,6 @@ void fname_entry_changed_event(GtkWidget *widget) {
         gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK);
     }
 }
-
-
 
 void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
     gpointer builder) {
@@ -97,20 +102,6 @@ void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
 
 // Edit pseudonim field
 //============================================================================================
-void edit_pseudo_eventbox_enter_notify(GtkWidget *widget, GdkEvent *event,
-    gpointer builder) {
-    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudo_icon")), GTK_STATE_FLAG_PRELIGHT, TRUE);
-    gtk_widget_set_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudo_pen")), GTK_STATE_FLAG_PRELIGHT, TRUE);
-}
-
-void edit_pseudo_eventbox_leave_notify(GtkWidget *widget, GdkEvent *event,
-    gpointer builder) {
-    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudo_icon")), GTK_STATE_FLAG_PRELIGHT);
-    gtk_widget_unset_state_flags(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudo_pen")), GTK_STATE_FLAG_PRELIGHT);
-}
-
 void pseudo_entry_changed_event(GtkWidget *widget) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) < 5) {
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
@@ -163,10 +154,6 @@ void change_description_entry_change_event(GtkWidget *widget) {
     NewDescription = mx_strjoin(NewDescription, gtk_text_buffer_get_text(GTK_TEXT_BUFFER(widget), &start, &end, FALSE));
 }
 //============================================================================================
-
-
-
-
 
 // "Apply button" in the form
 //============================================================================================

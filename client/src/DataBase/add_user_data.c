@@ -1,5 +1,6 @@
 #include "../../inc/uchat_client.h"
 
+<<<<<<< HEAD
 void mx_add_user_data(const char *pseudo, const char *password, const char *name, const char *sname) {
     sqlite3 *db = mx_opening_db("test");
     sqlite3_stmt *res;
@@ -26,14 +27,13 @@ void mx_add_user_data(const char *pseudo, const char *password, const char *name
             sqlite3_close(db);
         }
         sqlite3_step(res);
+=======
+void mx_add_user_data(const char *pseudo, const char *password, const char *name, char *sname) {
+    char sendBuffer[1024];
+    bzero(sendBuffer, 1024);
+    sprintf(sendBuffer, "AddUser\n%s\n%s\n%s\n%s", name, sname, pseudo, password);
+    if (send(sockfd, sendBuffer, strlen(sendBuffer), 0) < 0) {
+         perror("ERROR writing to socket");
+>>>>>>> main
     }
-    sqlite3_finalize(res);*/
-    id++;
-    char *description = " ";
-    sprintf(sql, 
-            "INSERT INTO USERS (ID, NAME, SURENAME, PSEUDONIM, DESCRIPTION, PASSWORD) VALUES('%d','%s','%s','%s','%s','%s');", 
-            id, name, sname, pseudo, description, password);   
-    mx_write_photo_to_bd("client/img/ukraine.png");
-    st = sqlite3_exec(db, sql, NULL, 0, &errmsg);
-    mx_dberror(db, st, errmsg); 
 }
