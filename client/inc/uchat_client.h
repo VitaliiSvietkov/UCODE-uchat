@@ -217,8 +217,10 @@ GtkWidget *entry_search;
 GtkWidget *search_menu;
 
 GtkWidget *chats_list;
-unsigned int *rooms_uids;
-int rooms_uids_len;           
+t_message *curr_room_msg_head;
+t_chats_list *chats_list_head;
+t_chats_list *search_list_head;
+
 GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
 

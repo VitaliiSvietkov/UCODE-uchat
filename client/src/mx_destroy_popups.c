@@ -15,6 +15,8 @@ void mx_destroy_popups(void) {
         gdk_seat_ungrab(gdk_display_get_default_seat(gdk_display_get_default()));
         gtk_widget_destroy(GTK_WIDGET(search_menu));
         search_menu = NULL;
+        if (search_list_head != NULL)
+            mx_clear_chat_list(&search_list_head);
     }
     if (t_chat_room_vars.more_box != NULL) {
         gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.more_box));
