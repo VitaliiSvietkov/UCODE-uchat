@@ -8,6 +8,7 @@ unsigned int mx_remove_message(t_message **head, unsigned int id) {
         t_message *temp = (*head)->next;
         mx_del_message_node(head);
         *head = temp;
+        mx_message_list_update_id(head);
         return id;
     }
     t_message *curr_node = *head;

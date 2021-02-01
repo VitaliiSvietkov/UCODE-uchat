@@ -37,10 +37,22 @@ int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd
          sockfd = -1;
          return 1;
     }
+
+    if (send(sockfd, sendBuffer, strlen(sendBuffer), 0) == -1) {
+        perror("ERROR writing to socket");
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return 1;
+    }
     char recvBuffer[6000];
     bzero(recvBuffer, 6000);
     if (recv(sockfd, recvBuffer, 6000, 0) == 0) {
          perror("ERROR reading from socket");
+         pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
          sockfd = -1;
          return 1;
     }

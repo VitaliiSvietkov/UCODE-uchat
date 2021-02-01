@@ -5,6 +5,18 @@
     padding-bottom: 5px;
 }
 
+#room_header {
+    background: white;
+    color: #1f1f1f;
+}
+#room_header_title {
+    color: #1f1f1f;
+    font-size: 20px;
+    font-family: "New Century Schoolbook", Times, serif;
+    font-style: italic;
+    margin-left: -115px;
+}
+
 #day_info_show {
     background: rgba(0, 0, 0, 0.8);
     color: white;

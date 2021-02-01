@@ -4,6 +4,7 @@ static void tools_click(GtkWidget *widget, GdkEventButton *event, GdkDisplay *di
 static void create_tools_menu(GdkEvent *event);
 static void message_click(GtkWidget *widget, GdkEvent *event, t_message *data);
 static void copy_click(GtkWidget *widget, t_message *data);
+static void edit_click(GtkWidget *widget, t_message *data);
 static void delete_click(GtkWidget *widget, t_message *data);
 
 GtkWidget *mx_create_message(t_message *data) {
@@ -92,6 +93,7 @@ static void tools_click(GtkWidget *widget, GdkEventButton *event, GdkDisplay *di
         gint x_tools, y_tools;
         gtk_window_get_position(GTK_WINDOW(tools_menu), &x_tools, &y_tools);
         selected_msg_widget = NULL;
+        selected_msg_struct = NULL;
         if (event->x_root > x_tools + alloc.width || event->y_root > y_tools +alloc.height
             || event->x_root < x_tools || event->y_root < y_tools) {    
             mx_destroy_popups();
@@ -123,6 +125,7 @@ static void message_click(GtkWidget *widget, GdkEvent *event, t_message *data) {
     if (((GdkEventButton *)event)->type == GDK_BUTTON_PRESS 
         && ((GdkEventButton *)event)->button == 3) {
         selected_msg_widget = widget;
+        selected_msg_struct = data;
 
         create_tools_menu(event); // Creates the window of the tools menu (saves it to the 'tools_menu')
         GtkWidget *tools_container = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -135,6 +138,13 @@ static void message_click(GtkWidget *widget, GdkEvent *event, t_message *data) {
         gtk_button_set_relief(GTK_BUTTON(copy_btn), GTK_RELIEF_NONE);
         gtk_widget_set_size_request(GTK_WIDGET(copy_btn), 150, 30);
         g_signal_connect(G_OBJECT(copy_btn), "clicked", G_CALLBACK(copy_click), data);
+
+        GtkWidget *edit_btn = gtk_button_new_with_label(text_for_labels[37]);
+        gtk_box_pack_start(GTK_BOX(tools_container), edit_btn, FALSE, FALSE, 0);
+        gtk_widget_set_name(GTK_WIDGET(edit_btn), "tools_button");
+        gtk_button_set_relief(GTK_BUTTON(edit_btn), GTK_RELIEF_NONE);
+        gtk_widget_set_size_request(GTK_WIDGET(edit_btn), 150, 30);
+        g_signal_connect(G_OBJECT(edit_btn), "clicked", G_CALLBACK(edit_click), data);
 
         GtkWidget *delete_btn = gtk_button_new_with_label(text_for_labels[36]);
         gtk_widget_set_name(GTK_WIDGET(delete_btn), "tools_button");
@@ -168,17 +178,45 @@ static void copy_click(GtkWidget *widget, t_message *data) {
     mx_destroy_popups();
 }
 
-static void delete_click(GtkWidget *widget, t_message *data) {
-    //gtk_widget_destroy(GTK_WIDGET(selected_msg_widget));
-    selected_msg_widget = NULL;
-    mx_remove_message(&curr_room_msg_head, data->id);
+static void edit_click(GtkWidget *widget, t_message *data) {
+    if (data->text != NULL) {
+        edit_prev = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+        gtk_widget_set_size_request(GTK_WIDGET(edit_prev), CUR_WIDTH - L_FIELD_WIDTH, 40);
+        gtk_fixed_put(GTK_FIXED(chat_area), edit_prev, L_FIELD_WIDTH, CUR_HEIGHT - 90);
 
-    gtk_container_forall(GTK_CONTAINER(t_chat_room_vars.messages_box), (GtkCallback)gtk_widget_destroy, NULL);
+        GtkWidget *separator = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
+        gtk_box_pack_start(GTK_BOX(edit_prev), separator, FALSE, FALSE, 0);
+
+        GtkWidget *label = gtk_label_new(data->text);
+        gtk_box_pack_start(GTK_BOX(edit_prev), label, FALSE, FALSE, 0);
+        gtk_widget_set_halign(GTK_WIDGET(label), GTK_ALIGN_START);
+        gtk_widget_set_margin_top(GTK_WIDGET(label), 10);
+        gtk_widget_set_margin_start(GTK_WIDGET(label), 60);
+        gtk_widget_set_size_request(GTK_WIDGET(edit_prev), CUR_WIDTH - L_FIELD_WIDTH, 38);
+
+        GList *children = gtk_container_get_children(GTK_CONTAINER(t_chat_room_vars.message_enter_area));
+        gtk_entry_set_text(GTK_ENTRY(g_list_nth_data(children, 1)), data->text);
+        g_list_free(children);
+
+        gtk_widget_show_all(edit_prev);
+    }
+
+    mx_destroy_popups();
+}
+
+static void delete_click(GtkWidget *widget, t_message *data) {
+    gtk_widget_destroy(GTK_WIDGET(selected_msg_widget));
+    selected_msg_widget = NULL;
+    selected_msg_struct = NULL;
+    mx_remove_message(&curr_room_msg_head, data->id);
+    max_msg_id--;
+
+    /*gtk_container_forall(GTK_CONTAINER(t_chat_room_vars.messages_box), (GtkCallback)gtk_widget_destroy, NULL);
     t_message *msg = curr_room_msg_head;
     while (msg != NULL) {
         mx_add_message(t_chat_room_vars.messages_box, msg);
         msg = msg->next;
-    }
+    }*/
 
     mx_destroy_popups();
 }

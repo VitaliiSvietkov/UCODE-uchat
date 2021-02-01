@@ -20,6 +20,7 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
 
     GtkWidget *avatar = NULL;
     GdkPixbuf *pixbuf = NULL;
+    char *room_title = NULL;
 
     GtkWidget *title = gtk_label_new(NULL);
     gtk_widget_set_name(GTK_WIDGET(title), "room_title");
@@ -30,15 +31,16 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
 
     if (uid == 0) {
         pixbuf = mx_get_pixbuf_with_size("client/img/standard/bookmark.png", 50, 50);
-        gtk_label_set_text(GTK_LABEL(title), "Saved Messages");
+        room_title = mx_strdup("Saved Messages");
+        gtk_label_set_text(GTK_LABEL(title), room_title);
         char *tmp_preview = "@";
         tmp_preview = mx_strjoin(tmp_preview, t_user.pseudonim);
         gtk_label_set_text(GTK_LABEL(preview), tmp_preview);
         free(tmp_preview);
+
         avatar = gtk_image_new_from_pixbuf(GDK_PIXBUF(pixbuf));
         gtk_widget_set_size_request(GTK_WIDGET(avatar), 50, 50);
         gtk_widget_set_margin_start(GTK_WIDGET(avatar), 15);
-        g_object_unref(pixbuf);
     }
     else {
         // Load data from data base
@@ -46,11 +48,16 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
         // Change for image read from server!!
         //mx_read_photo_from_bd((int)uid);
         //=====================================
-        pixbuf = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 50, 50);
+        /*pixbuf = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 50, 50);
         avatar = gtk_image_new_from_pixbuf(GDK_PIXBUF(pixbuf));
         gtk_widget_set_size_request(GTK_WIDGET(avatar), 50, 50);
         gtk_widget_set_margin_start(GTK_WIDGET(avatar), 15);
-        g_object_unref(pixbuf);
+        g_object_unref(pixbuf);*/
+        pixbuf = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 50, 50);
+        avatar = gtk_drawing_area_new();
+        gtk_widget_set_size_request(GTK_WIDGET(avatar), 50, 50);
+        gtk_widget_set_margin_start(GTK_WIDGET(avatar), 15);
+
 
         char sendBuff[256];
         bzero(sendBuff, 256);
@@ -64,8 +71,19 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
         char **recvData = mx_strsplit(recvBuff, '\n');
         gtk_label_set_text(GTK_LABEL(title), recvData[0]);
         gtk_label_set_text(GTK_LABEL(preview), recvData[1]);
+        room_title = mx_strdup(recvData[0]);
         mx_del_strarr(&recvData);
     }
+
+    t_chats_list *node = NULL;
+    if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(entry_search))) > 0)
+        node = mx_push_back_chat(&search_list_head, (int)uid, pixbuf, eventbox, room_title);
+    else
+        node = mx_push_back_chat(&chats_list_head, (int)uid, pixbuf, eventbox, room_title);
+    
+    if (uid != 0)
+        g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &node->avatar);
+
     gtk_box_pack_start(GTK_BOX(box), avatar, FALSE, FALSE, 0);
     
     GtkWidget *v_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
