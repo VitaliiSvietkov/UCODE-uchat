@@ -59,7 +59,7 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
         text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
     
     t_message *msg = NULL;
-    sqlite3 *db = mx_opening_db();
+    sqlite3 *db = mx_opening_local_db();
     char *err_msg = 0;
     char sql[500];
     if (gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf)) > 350) {
@@ -166,6 +166,18 @@ void mx_send_message_on_enter(GtkWidget *widget) {
                 curtime,
                 m_id);
             mx_add_message(t_chat_room_vars.messages_box, msg);
+
+            sqlite3 *db = mx_opening_local_db();
+            int st;
+            char *err_msg;
+            char sql[500];
+            bzero(sql, 500);
+            sprintf(sql, "INSERT INTO Messages (id, addresser, destination, Text, time)\
+                VALUES('%u','%u','%u','%s','%ld');", 
+                msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
+            st = sqlite3_exec(db, sql, NULL, 0, &err_msg);
+            mx_dberror(db, st, err_msg);
+            sqlite3_close(db);
 
             gtk_entry_set_text(GTK_ENTRY(widget), "");
             t_chats_list *node = chats_list_head;

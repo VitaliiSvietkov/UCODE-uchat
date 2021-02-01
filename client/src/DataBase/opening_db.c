@@ -1,6 +1,6 @@
 #include "../../inc/uchat_client.h"
 
-sqlite3 *mx_opening_db(void) {
+sqlite3 *mx_opening_local_db(void) {
     sqlite3 *db;
     int status = sqlite3_open("client/data/test.db", &db);
     if (status != SQLITE_OK) {

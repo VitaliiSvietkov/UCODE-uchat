@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     mx_connect_to_server();
     mx_get_language_arr();
     
-    mx_database_init();
+    mx_local_database_init();
     mx_init_user();
     gtk_init(&argc, &argv);
 

@@ -6,9 +6,9 @@
 
 void mx_write_to_log(char *msg, int stream);
 
-sqlite3 *mx_opening_db(void);
+sqlite3 *mx_opening_local_db(void);
 void mx_dberror(sqlite3 *db, int status, char *msg);
-void mx_database_init(void);
+void mx_local_database_init(void);
 void mx_add_user_data(const char *pseudo, const char *password, const char *name, char *sname);
 void mx_read_photo_from_bd(int id);
 void mx_write_language_data_from_bd(void);
