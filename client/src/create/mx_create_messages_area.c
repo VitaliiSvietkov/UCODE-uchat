@@ -1,14 +1,39 @@
 #include "../../inc/uchat_client.h"
 
 void mx_create_messages_area(void) {
-    GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, CUR_HEIGHT - 50, 100, 100, CUR_HEIGHT - 50);
-    t_chat_room_vars.right_container = gtk_scrolled_window_new(NULL, vadjustment);
-    gtk_widget_set_size_request(GTK_WIDGET(t_chat_room_vars.right_container), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 50);
+    t_chat_room_vars.right_container = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_fixed_put(GTK_FIXED(chat_area), t_chat_room_vars.right_container, L_FIELD_WIDTH, 0);
+
+    GtkWidget *room_header_content = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(room_header_content), "room_header");
+    gtk_widget_set_size_request(GTK_WIDGET(room_header_content), CUR_WIDTH - L_FIELD_WIDTH, 50);
+    gtk_box_pack_start(GTK_BOX(t_chat_room_vars.right_container), room_header_content, FALSE, FALSE, 0);
+
+    t_chats_list *node = mx_chat_search(&chats_list_head, (int)curr_destination);
+    GtkWidget *avatar = gtk_drawing_area_new();
+    gtk_widget_set_size_request(GTK_WIDGET(avatar), 40, 40);
+    gtk_widget_set_margin_start(GTK_WIDGET(avatar), 40);
+    gtk_widget_set_margin_end(GTK_WIDGET(avatar), 40);
+    gtk_widget_set_margin_top(GTK_WIDGET(avatar), 5);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &node->avatar);
+    gtk_box_pack_start(GTK_BOX(room_header_content), avatar, FALSE, FALSE, 0);
+
+    GtkWidget *title = gtk_label_new(node->title);
+    gtk_widget_set_name(GTK_WIDGET(title), "room_header_title");
+    gtk_box_pack_start(GTK_BOX(room_header_content), title, TRUE, TRUE, 40);
+    gtk_widget_set_halign(GTK_WIDGET(title), GTK_ALIGN_CENTER);
+
+    GtkWidget *separator = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
+    gtk_box_pack_start(GTK_BOX(t_chat_room_vars.right_container), separator, FALSE, FALSE, 0);
+
+    GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, CUR_HEIGHT - 110, 100, 100, CUR_HEIGHT - 100);
+    GtkWidget *scroll_area = gtk_scrolled_window_new(NULL, vadjustment);
+    gtk_widget_set_size_request(GTK_WIDGET(scroll_area), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 100);
+    gtk_box_pack_start(GTK_BOX(t_chat_room_vars.right_container), scroll_area, FALSE, FALSE, 0);
     t_chat_room_vars.messages_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_name(GTK_WIDGET(t_chat_room_vars.right_container), "chat_background");
-    gtk_widget_set_size_request(GTK_WIDGET(t_chat_room_vars.messages_box), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 50);
-    gtk_container_add(GTK_CONTAINER(t_chat_room_vars.right_container), t_chat_room_vars.messages_box);
+    gtk_widget_set_name(GTK_WIDGET(scroll_area), "chat_background");
+    gtk_widget_set_size_request(GTK_WIDGET(t_chat_room_vars.messages_box), CUR_WIDTH - L_FIELD_WIDTH, CUR_HEIGHT - 100);
+    gtk_container_add(GTK_CONTAINER(scroll_area), t_chat_room_vars.messages_box);
 
     char sendBuff[1024];
     sprintf(sendBuff, "LoadRoom\n%u\n%u", t_user.id, curr_destination);

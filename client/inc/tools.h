@@ -59,14 +59,15 @@ typedef struct s_chats_list
     GdkPixbuf *avatar;
     GtkWidget *room;
     int uid;
+    char *title;
     struct s_chats_list *next;
 }              t_chats_list;
 
 void mx_del_chat_node(t_chats_list **data);
 void mx_clear_chat_list(t_chats_list **head);
 t_chats_list *mx_chat_search(t_chats_list **head, int uid);
-t_chats_list *mx_push_back_chat(t_chats_list **head, int uid, GdkPixbuf *image, GtkWidget *widget);
-t_chats_list *mx_new_chat_node(unsigned int uid, GdkPixbuf *image, GtkWidget *widget);
+t_chats_list *mx_push_back_chat(t_chats_list **head, int uid, GdkPixbuf *image, GtkWidget *widget, char *title);
+t_chats_list *mx_new_chat_node(unsigned int uid, GdkPixbuf *image, GtkWidget *widget, char *title);
 //==========================================================================================
 
 // Draw functions
