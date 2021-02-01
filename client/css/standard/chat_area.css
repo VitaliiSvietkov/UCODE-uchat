@@ -1,5 +1,6 @@
 #chat_background {
     background: rgb(255,255,255);
+    /*background: url("../../img/back-chatroom.png");*/
     background: linear-gradient(180deg, rgba(255,255,255,1) 20%, rgba(231,231,231,1) 63%, rgba(193,193,193,1) 100%);
     padding-bottom: 5px;
 }
