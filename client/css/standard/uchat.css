@@ -72,6 +72,10 @@
     animation-duration: .5s;
     animation-fill-mode: forwards;
 }
+#eventbox_room:checked {
+    background: rgb(82,82,82);
+    background: linear-gradient(90deg, rgba(82,82,82,1) 0%, rgba(54,54,54,1) 40%, rgba(31,31,31,1) 100%);
+}
 
 #close_image_box {
     background-image: url("../../img/standard/cancel.png");

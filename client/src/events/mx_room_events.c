@@ -72,6 +72,15 @@ void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         curr_destination = (unsigned int)(uintptr_t)uid;
 
+        t_chats_list *node = chats_list_head;
+        while (node != NULL) {
+            if (node->uid == (int)curr_destination)
+                gtk_widget_set_state_flags(GTK_WIDGET(node->room), GTK_STATE_FLAG_CHECKED, TRUE);
+            else
+                gtk_widget_unset_state_flags(GTK_WIDGET(node->room), GTK_STATE_FLAG_CHECKED);
+            node = node->next;
+        }
+
         if (max_msg_id > 0) {
             pthread_cancel(check_messages_id);
             max_msg_id = 0;
@@ -145,6 +154,11 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
                 mx_clear_message_list(&curr_room_msg_head);
             pthread_cancel(check_messages_id);
             max_msg_id = 0;
+
+            t_chats_list *node = chats_list_head;
+            while (node->uid != (int)curr_destination)
+                node = node->next;
+            gtk_widget_unset_state_flags(GTK_WIDGET(node->room), GTK_STATE_FLAG_CHECKED);
             break;
         default:
             break;
