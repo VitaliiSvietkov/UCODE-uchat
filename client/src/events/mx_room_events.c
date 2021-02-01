@@ -127,6 +127,14 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
                 break;
             }
             mx_destroy_popups();
+            if (edit_prev != NULL) {
+                gtk_widget_destroy(GTK_WIDGET(edit_prev));
+                edit_prev = NULL;
+                GList *children = gtk_container_get_children(GTK_CONTAINER(t_chat_room_vars.message_enter_area));
+                gtk_entry_set_text(GTK_ENTRY(g_list_nth_data(children, 1)), "");
+                g_list_free(children);
+                break;
+            }
             if (t_chat_room_vars.message_enter_area != NULL) {
                 gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.message_enter_area));
                 t_chat_room_vars.message_enter_area = NULL;

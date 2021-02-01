@@ -35,3 +35,4 @@ This username is already exist!
 Account settings
 Copy
 Delete
+Edit

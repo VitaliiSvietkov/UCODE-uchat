@@ -64,6 +64,7 @@ static void search_menu_click(GtkWidget *widget, GdkEventButton *event, GdkDispl
         gint x_search, y_search;
         gtk_window_get_position(GTK_WINDOW(search_menu), &x_search, &y_search);
         selected_msg_widget = NULL;
+        selected_msg_struct = NULL;
         if (event->x_root > x_search + alloc.width || event->y_root > y_search +alloc.height
             || event->x_root < x_search || event->y_root < y_search) {    
             mx_destroy_popups();

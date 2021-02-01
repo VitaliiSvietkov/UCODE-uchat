@@ -45,6 +45,7 @@ GtkWidget *mx_create_message(t_message *data);
 void mx_add_message(GtkWidget *container, t_message *message);
 
 GtkWidget *selected_msg_widget;
+t_message *selected_msg_struct;
 unsigned int curr_destination;
 //==========================================================================================
 
@@ -227,6 +228,7 @@ GtkWidget *active_leftbar_container;
 GtkWidget *blackout;
 GtkWidget *error_revealer;
 GtkWidget *tools_menu;
+GtkWidget *edit_prev;
 
 int language;
 char **text_for_labels;

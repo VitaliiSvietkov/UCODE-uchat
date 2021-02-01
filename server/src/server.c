@@ -112,6 +112,8 @@ void *recv_loop(void *data) {
                 mx_get_language(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "DeleteMessage"))
                 mx_delete_message(recvData,  newsocketfd);
+            else if (!mx_strcmp(recvData[0], "EditMessage"))
+                mx_edit_message(recvData, newsocketfd);
 
             mx_del_strarr(&recvData);
         }
