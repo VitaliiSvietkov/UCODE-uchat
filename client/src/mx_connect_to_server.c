@@ -28,6 +28,10 @@ int mx_connect_to_server(void) {
     if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) {
         perror("ERROR connecting");
         close(sockfd);
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        if(error_revealer == NULL)
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
         return -1;
     }
     return 0;

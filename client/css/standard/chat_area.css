@@ -1,13 +1,16 @@
 #chat_background {
-    background: rgb(255,255,255);
-    /*background: url("../../img/back-chatroom.png");*/
-    background: linear-gradient(180deg, rgba(255,255,255,1) 20%, rgba(231,231,231,1) 63%, rgba(193,193,193,1) 100%);
-    padding-bottom: 5px;
+    /*background: rgb(255,255,255);*/
+    background: url("../../img/back_chatroom.png");
+    background-repeat: no-repeat;
+    /*background: linear-gradient(180deg, rgba(255,255,255,1) 20%, rgba(231,231,231,1) 63%, rgba(193,193,193,1) 100%);
+    */padding-bottom: 5px;
 }
 
 #room_header {
-    background: white;
-    color: #1f1f1f;
+    background: rgb(3,3,3);
+    background: linear-gradient(90deg, rgba(3,3,3,1) 0%, rgba(50,50,96,1) 0%, rgba(22,22,57,1) 100%);
+
+    color: white;
 }
 #room_header_title {
     color: #1f1f1f;
