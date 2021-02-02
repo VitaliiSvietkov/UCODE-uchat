@@ -8,6 +8,7 @@
 
 #language_choose_eventbox {
     border-radius: 30px;
+    background: #1f1f1f;
 }
 #language_choose_eventbox:hover {
     animation-name: gradient;

@@ -2,6 +2,7 @@
 #define TOOLS
 #include <gtk/gtk.h>
 #include <stdbool.h>
+#include <limits.h>
 
 void mx_free_data(void);
 void mx_get_language_arr(void);

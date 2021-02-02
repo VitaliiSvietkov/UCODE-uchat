@@ -85,14 +85,13 @@ void mx_get_avatar(char **data, int sockfd) {
     }
     //======================================================
 
-    ssize_t send_size = send(sockfd, read_data, flen, 0);
-
-    printf("%lu\n", flen);
-    printf("%zd\n", send_size);
+    for (int i = 0; i < flen; i++) {
+        send(sockfd, &read_data[i], 1, 0);
+    }
     
     r = fclose(fp);
     if (r == EOF)
         fprintf(stderr, "Cannot close file handler\n");
 
-    //remove("server/data/tmp_avatar.png");
+    remove("server/data/tmp_avatar.png");
 }

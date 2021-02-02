@@ -1,24 +1,28 @@
 #include "../inc/server.h"
 
 void mx_update_avatar(char **data, int sockfd) {
-    FILE *fp = fopen("server/data/tmp_recv_avatar.png", "wb");
+    FILE *fp = fopen("server/data/tmp_recv_avatar.png", "ab");
     if (fp == NULL)
         fprintf(stderr, "Cannot open image file\n");
 
     long flen = 0;
     recv(sockfd, &flen, sizeof(long), 0);
 
-    char file_data[flen + 1];
-    recv(sockfd, file_data, flen, 0);
-
-    fwrite(file_data, flen, 1, fp);
-    if (ferror(fp))
-        fprintf(stderr, "fwrite() failed\n");
+    long recv_len = 0;
+    while (recv_len < flen) {
+        char file_data;
+        ssize_t n = recv(sockfd, &file_data, 1, 0);
+        recv_len += n;
+        fwrite(&file_data, 1, 1, fp);
+        if (ferror(fp)) {
+            fprintf(stderr, "fwrite() failed\n");
+            break;
+        }
+    }
     
     int r = fclose(fp);
     if (r == EOF)
         fprintf(stderr, "Cannot close file handler\n");
-
     
     fp = fopen("server/data/tmp_recv_avatar.png", "rb");
     if (fp == NULL) {
@@ -84,5 +88,5 @@ void mx_update_avatar(char **data, int sockfd) {
     sqlite3_finalize(pStmt);    
     sqlite3_close(db);
 
-    //remove("server/data/tmp_recv_avatar.jpg");
+    remove("server/data/tmp_recv_avatar.png");
 }

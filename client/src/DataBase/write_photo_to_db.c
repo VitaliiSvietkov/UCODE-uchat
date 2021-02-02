@@ -85,13 +85,15 @@ void mx_write_photo_to_bd(char *path, int id){
         }    
     }
     //======================================================
-
-    if(send(sockfd, read_data, flen, 0) == -1) {
-        pthread_t thread_id;
-        char *err_msg = "Connection lost\nTry again later";
-        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
-        sockfd = -1;
-        return;
+    
+    for (int i = 0; i < flen; i++) {
+        if(send(sockfd, &read_data[i], 1, 0) == -1) {
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sockfd = -1;
+            return;
+        }
     }
 
     r = fclose(fp);
