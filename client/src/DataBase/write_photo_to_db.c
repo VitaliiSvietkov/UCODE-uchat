@@ -86,7 +86,7 @@ void mx_write_photo_to_bd(char *path, int id){
     }
     //======================================================
     
-    for (int i = 0; i < flen; i++) {
+    for (long i = 0; i < flen; i++) {
         if(send(sockfd, &read_data[i], 1, 0) == -1) {
             pthread_t thread_id;
             char *err_msg = "Connection lost\nTry again later";

@@ -42,7 +42,7 @@ void *check_messages(void *data) {
 
         if (latest == max_msg_id) {
             //printf("UP TO DATE\n");
-            usleep(500000);
+            sleep(1500000);
             continue;
         }
         else if (latest < max_msg_id) {

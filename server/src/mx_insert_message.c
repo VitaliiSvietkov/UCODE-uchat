@@ -15,6 +15,11 @@ void mx_insert_message(char **data, int sockfd) {
     for (int i = 4; data[i] != NULL; i++)
         text = mx_strjoin(text, data[i]);
 
+    if (!mx_strcmp(text, "(null)")) {
+        free(text);
+        text = NULL;
+    }
+
     int addresser = mx_atoi(data[1]);
     int destination = mx_atoi(data[2]);
 
@@ -35,9 +40,17 @@ void mx_insert_message(char **data, int sockfd) {
 
     char *err_msg;
     bzero(sql, 2056);
-    sprintf(sql, "INSERT INTO Messages (id, addresser, destination, Text, time)\
-            VALUES('%u','%u','%u','%s','%d');", 
-            id, addresser, destination, text, mx_atoi(data[3]));
+    if (text != NULL)
+        sprintf(sql,
+                "INSERT INTO Messages (id, addresser, destination, Text, time)\
+                VALUES('%d','%d','%d','%s','%d');",
+                id, addresser, destination, text, mx_atoi(data[3]));
+    else
+        sprintf(sql,
+                "INSERT INTO Messages (id, addresser, destination, time)\
+                VALUES('%d','%d','%d','%d');",
+                id, addresser, destination, mx_atoi(data[3]));
+
     int st = sqlite3_exec(db, sql, NULL, 0, &err_msg);
     mx_dberror(db, st, err_msg);
     sqlite3_close(db);

@@ -13,20 +13,6 @@ void mx_read_photo_from_bd(int id) {
     char sendBuff[256];
     sprintf(sendBuff, "GetAvatar\n%d", id);
 
-    int error = 0;
-    socklen_t len = sizeof (error);
-    int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
-    if (retval != 0) {
-        fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
-        sockfd = -1;
-        return;
-    }
-    if (error != 0) {
-        fprintf(stderr, "socket error: %s\n", strerror(error));
-        sockfd = -1;
-         return;
-    }
-
     if(send(sockfd, sendBuff, 256, 0) == -1) {
         pthread_t thread_id;
         char *err_msg = "Connection lost\nTry again later";

@@ -14,7 +14,7 @@ void mx_read_photo_from_bd(int id);
 void mx_write_language_data_from_bd(void);
 void mx_write_photo_to_bd(char *path, int id);
 
-void mx_write_image_message(char *path, unsigned int id, sqlite3 *data_base);
+void mx_write_image_message(char *path, unsigned int id);
 GdkPixbuf *mx_read_image_message(unsigned int id, sqlite3 *data_base);
 void mx_delete_message_from_db(t_message *data);
 

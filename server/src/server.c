@@ -90,6 +90,8 @@ void *recv_loop(void *data) {
                 mx_authorization(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "InsertMessage"))
                 mx_insert_message(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "AddImageMessage"))
+                mx_add_image_message(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "LoadRoom"))
                 mx_load_room(recvData, newsocketfd);
             else if (!mx_strcmp(recvData[0], "FindUser"))
