@@ -45,6 +45,7 @@ GtkWidget *mx_create_message(t_message *data);
 void mx_add_message(GtkWidget *container, t_message *message);
 
 GtkWidget *selected_msg_widget;
+t_message *selected_msg_struct;
 unsigned int curr_destination;
 //==========================================================================================
 
@@ -217,14 +218,17 @@ GtkWidget *entry_search;
 GtkWidget *search_menu;
 
 GtkWidget *chats_list;
-unsigned int *rooms_uids;
-int rooms_uids_len;           
+t_message *curr_room_msg_head;
+t_chats_list *chats_list_head;
+t_chats_list *search_list_head;
+
 GtkWidget *settings_menu;
 GtkWidget *active_leftbar_container;
 
 GtkWidget *blackout;
 GtkWidget *error_revealer;
 GtkWidget *tools_menu;
+GtkWidget *edit_prev;
 
 int language;
 char **text_for_labels;

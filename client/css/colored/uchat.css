@@ -67,10 +67,19 @@
     font-family: "New Century Schoolbook", Times, serif;
 }
 
+#eventbox_room {
+    background: none;
+}
 #eventbox_room:hover {
-    animation-name: gradient;
+    /*animation-name: gradient;
     animation-duration: .5s;
-    animation-fill-mode: forwards;
+    animation-fill-mode: forwards;*/
+    background: #e1e1e1;
+}
+#eventbox_room:checked {
+    /*transition: all .5s;
+    background: linear-gradient(51deg, rgba(31,31,31,0) 74%, rgba(225,225,225,0) 100%);*/
+    background: red;
 }
 
 #close_image_box {

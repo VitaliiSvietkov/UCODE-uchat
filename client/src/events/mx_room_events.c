@@ -1,10 +1,8 @@
 #include "../../inc/uchat_client.h"
 
 void *check_messages(void *data) {
-    if (sockfd == -1){
+    if (sockfd == -1)
         mx_connect_to_server();
-        //return 1;
-    }
 
     while (true) {
         char sendBuff[256];
@@ -128,6 +126,15 @@ void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         curr_destination = (unsigned int)(uintptr_t)uid;
 
+        t_chats_list *node = chats_list_head;
+        while (node != NULL) {
+            if (node->uid == (int)curr_destination)
+                gtk_widget_set_state_flags(GTK_WIDGET(node->room), GTK_STATE_FLAG_CHECKED, TRUE);
+            else
+                gtk_widget_unset_state_flags(GTK_WIDGET(node->room), GTK_STATE_FLAG_CHECKED);
+            node = node->next;
+        }
+
         if (max_msg_id > 0) {
             pthread_cancel(check_messages_id);
             max_msg_id = 0;
@@ -183,6 +190,14 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
                 break;
             }
             mx_destroy_popups();
+            if (edit_prev != NULL) {
+                gtk_widget_destroy(GTK_WIDGET(edit_prev));
+                edit_prev = NULL;
+                GList *children = gtk_container_get_children(GTK_CONTAINER(t_chat_room_vars.message_enter_area));
+                gtk_entry_set_text(GTK_ENTRY(g_list_nth_data(children, 1)), "");
+                g_list_free(children);
+                break;
+            }
             if (t_chat_room_vars.message_enter_area != NULL) {
                 gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.message_enter_area));
                 t_chat_room_vars.message_enter_area = NULL;
@@ -193,6 +208,11 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
                 mx_clear_message_list(&curr_room_msg_head);
             pthread_cancel(check_messages_id);
             max_msg_id = 0;
+
+            t_chats_list *node = chats_list_head;
+            while (node->uid != (int)curr_destination)
+                node = node->next;
+            gtk_widget_unset_state_flags(GTK_WIDGET(node->room), GTK_STATE_FLAG_CHECKED);
             break;
         default:
             break;

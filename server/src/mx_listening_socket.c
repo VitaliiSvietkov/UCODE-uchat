@@ -17,6 +17,9 @@ int mx_listening_socket(int port) {
     if (-1 == setsockopt(socketfd, SOL_SOCKET, SO_KEEPALIVE, &flag, sizeof(flag))) {  
         perror("setsockopt fail");
     }
+    /*if (-1 == setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(flag))) {  
+        perror("setsockopt fail");
+    }*/
     int bind_status = bind(socketfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
     mx_error("Bind error", bind_status);
     return socketfd;

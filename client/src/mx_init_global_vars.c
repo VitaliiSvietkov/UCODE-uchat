@@ -13,17 +13,19 @@ void mx_init_global_vars(void) {
     error_revealer = NULL;
     tools_menu = NULL;
     search_menu = NULL;
+    edit_prev = NULL;
 
     // Chat variables
     curr_room_msg_head = NULL;
+    chats_list_head = NULL;
+    search_list_head = NULL;
     t_chat_room_vars.message_enter_area = NULL;
     t_chat_room_vars.right_container = NULL;
     t_chat_room_vars.more_box = NULL;
     selected_msg_widget = NULL;
+    selected_msg_struct = NULL;
     check_messages_id = 0;
     max_msg_id = 0;
-    rooms_uids_len = 0;
-    rooms_uids = NULL;
 
     // Temporary variables for edit user form
     NewFirstName = NULL;

@@ -59,7 +59,7 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
         text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
     
     t_message *msg = NULL;
-    sqlite3 *db = mx_opening_db();
+    sqlite3 *db = mx_opening_local_db();
     char *err_msg = 0;
     char sql[500];
     if (gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf)) > 350) {
@@ -214,55 +214,102 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
     mx_destroy_popups();
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(entry))) > 0) {
-            time_t curtime;
-            time(&curtime);
+            if (edit_prev == NULL) {
+                time_t curtime;
+                time(&curtime);
 
-            char sendBuff[2056];
-            bzero(sendBuff, 2056);
-            sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
+                char sendBuff[2056];
+                bzero(sendBuff, 2056);
+                sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
                     t_user.id, curr_destination, curtime, gtk_entry_get_text(GTK_ENTRY(entry)));
-            
-            int error = 0;
-            socklen_t len = sizeof(error);
-            int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
-            if (retval != 0) {
-                fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
-                sockfd = -1;
-                return;
-            }
-            if (error != 0) {
-                fprintf(stderr, "socket error: %s\n", strerror(error));
-                sockfd = -1;
-                return;
-            }
-            
-            if(send(sockfd, sendBuff, 2056, 0) == -1){
-                pthread_t thread_id;
-                char *err_msg = "Connection lost\nTry again later";
-                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
-                sockfd = -1;
-                return;
-            }
+                
+                int error = 0;
+                socklen_t len = sizeof(error);
+                int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
+                if (retval != 0) {
+                    fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
+                    sockfd = -1;
+                    return;
+                }
+                if (error != 0) {
+                    fprintf(stderr, "socket error: %s\n", strerror(error));
+                    sockfd = -1;
+                    return;
+                }
+                
+                if(send(sockfd, sendBuff, 2056, 0) == -1){
+                    pthread_t thread_id;
+                    char *err_msg = "Connection lost\nTry again later";
+                    pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                    sockfd = -1;
+                    return;
+                }
 
-            int m_id = 0;
-            if(recv(sockfd, &m_id, sizeof(int), 0) == 0){
-                pthread_t thread_id;
-                char *err_msg = "Connection lost\nTry again later";
-                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
-                sockfd = -1;
-                return;
+
+                int m_id = 0;
+                if(recv(sockfd, &m_id, sizeof(int), 0) == 0){
+                    pthread_t thread_id;
+                    char *err_msg = "Connection lost\nTry again later";
+                    pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                    sockfd = -1;
+                    return;
+                }
+                max_msg_id = m_id;
+
+                t_message *msg = mx_push_back_message(&curr_room_msg_head,
+                    strdup(gtk_entry_get_text(GTK_ENTRY(widget))), 
+                    t_user.id, 
+                    NULL,
+                    curtime,
+                    m_id);
+                mx_add_message(t_chat_room_vars.messages_box, msg);
+
+                sqlite3 *db = mx_opening_local_db();
+                int st;
+                char *err_msg;
+                char sql[500];
+                bzero(sql, 500);
+                sprintf(sql, "INSERT INTO Messages (id, addresser, destination, Text, time)\
+                    VALUES('%u','%u','%u','%s','%ld');", 
+                    msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
+                st = sqlite3_exec(db, sql, NULL, 0, &err_msg);
+                mx_dberror(db, st, err_msg);
+                sqlite3_close(db);
+
+                gtk_entry_set_text(GTK_ENTRY(widget), "");
+                t_chats_list *node = chats_list_head;
+                while (node->uid != (int)curr_destination)
+                    node = node->next;
+                gtk_box_reorder_child(GTK_BOX(chats_list), node->room, 0);
             }
-            max_msg_id = m_id;
+            else {
+                char *text = mx_strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
 
-            t_message *msg = mx_push_back_message(&curr_room_msg_head,
-                strdup(gtk_entry_get_text(GTK_ENTRY(entry))), 
-                t_user.id, 
-                NULL,
-                curtime,
-                m_id);
-            mx_add_message(t_chat_room_vars.messages_box, msg);
+                GList *children = gtk_container_get_children(GTK_CONTAINER(selected_msg_widget));
+                GList *box_children = gtk_container_get_children(GTK_CONTAINER(g_list_nth_data(children, 0)));
+                guint size = g_list_length(box_children);
+                gtk_label_set_text(GTK_LABEL(g_list_nth_data(box_children, size - 2)), text);
+                g_list_free(children);
+                g_list_free(box_children);
 
-            gtk_entry_set_text(GTK_ENTRY(entry), "");
+                free(selected_msg_struct->text);
+                selected_msg_struct->text = text;
+                
+                gtk_widget_destroy(GTK_WIDGET(edit_prev));
+                edit_prev = NULL;
+                children = gtk_container_get_children(GTK_CONTAINER(t_chat_room_vars.message_enter_area));
+                gtk_entry_set_text(GTK_ENTRY(g_list_nth_data(children, 1)), "");
+                gtk_widget_set_can_focus(GTK_WIDGET(g_list_nth_data(children, 1)), TRUE);
+                gtk_widget_grab_focus(GTK_WIDGET(g_list_nth_data(children, 1)));
+                g_list_free(children);
+
+                char sendBuff[256];
+                bzero(sendBuff, 256);
+                sprintf(sendBuff, "EditMessage\n%d\n%d\n%d\n%s", t_user.id, (int)curr_destination,
+                    (int)selected_msg_struct->id, text);
+
+                send(sockfd, sendBuff, 256, 0);
+            }
         }
     }
 }
