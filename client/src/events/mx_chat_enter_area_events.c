@@ -144,6 +144,11 @@ void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
 }
 
 void mx_send_message_on_enter(GtkWidget *widget) {
+    if (sockfd == -1){
+        mx_connect_to_server();
+        //return 1;
+    }
+
     if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0) {
         time_t curtime;
         time(&curtime);
@@ -152,10 +157,37 @@ void mx_send_message_on_enter(GtkWidget *widget) {
         bzero(sendBuff, 2056);
         sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
                 t_user.id, curr_destination, curtime, gtk_entry_get_text(GTK_ENTRY(widget)));
-        send(sockfd, sendBuff, 2056, 0);
+        
+        int error = 0;
+        socklen_t len = sizeof(error);
+        int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
+        if (retval != 0) {
+            fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
+            sockfd = -1;
+            return;
+        }
+        if (error != 0) {
+            fprintf(stderr, "socket error: %s\n", strerror(error));
+            sockfd = -1;
+            return;
+        }
+        
+        if(send(sockfd, sendBuff, 2056, 0) == -1){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sockfd = -1;
+            return;
+        }
 
         int m_id = 0;
-        recv(sockfd, &m_id, sizeof(int), 0);
+        if(recv(sockfd, &m_id, sizeof(int), 0) == 0){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sockfd = -1;
+            return;
+        }
         max_msg_id = m_id;
 
         t_message *msg = mx_push_back_message(&curr_room_msg_head,
@@ -174,6 +206,11 @@ void mx_send_message_on_enter(GtkWidget *widget) {
 // Tick button
 //=================================================================================
 void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
+    if (sockfd == -1){
+        mx_connect_to_server();
+        //return 1;
+    }
+
     mx_destroy_popups();
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(entry))) > 0) {
@@ -184,10 +221,37 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
             bzero(sendBuff, 2056);
             sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
                     t_user.id, curr_destination, curtime, gtk_entry_get_text(GTK_ENTRY(entry)));
-            send(sockfd, sendBuff, 2056, 0);
+            
+            int error = 0;
+            socklen_t len = sizeof(error);
+            int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
+            if (retval != 0) {
+                fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
+                sockfd = -1;
+                return;
+            }
+            if (error != 0) {
+                fprintf(stderr, "socket error: %s\n", strerror(error));
+                sockfd = -1;
+                return;
+            }
+            
+            if(send(sockfd, sendBuff, 2056, 0) == -1){
+                pthread_t thread_id;
+                char *err_msg = "Connection lost\nTry again later";
+                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                sockfd = -1;
+                return;
+            }
 
             int m_id = 0;
-            recv(sockfd, &m_id, sizeof(int), 0);
+            if(recv(sockfd, &m_id, sizeof(int), 0) == 0){
+                pthread_t thread_id;
+                char *err_msg = "Connection lost\nTry again later";
+                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                sockfd = -1;
+                return;
+            }
             max_msg_id = m_id;
 
             t_message *msg = mx_push_back_message(&curr_room_msg_head,

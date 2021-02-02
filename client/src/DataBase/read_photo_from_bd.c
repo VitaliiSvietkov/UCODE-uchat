@@ -1,21 +1,60 @@
 #include "../../inc/uchat_client.h"
 
 void mx_read_photo_from_bd(int id) {
+    if (sockfd == -1){
+        mx_connect_to_server();
+        //return 1;
+    }
+    
     FILE *fp = fopen("client/img/tmp_avatar.png", "wb");
     if (fp == NULL)
         fprintf(stderr, "Cannot open image file\n");
 
     char sendBuff[256];
     sprintf(sendBuff, "GetAvatar\n%d", id);
-    send(sockfd, sendBuff, 256, 0);
+
+    int error = 0;
+    socklen_t len = sizeof (error);
+    int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
+    if (retval != 0) {
+        fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
+        sockfd = -1;
+        return;
+    }
+    if (error != 0) {
+        fprintf(stderr, "socket error: %s\n", strerror(error));
+        sockfd = -1;
+         return;
+    }
+
+    if(send(sockfd, sendBuff, 256, 0) == -1) {
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return;
+    }
 
     long flen = 0;
-    recv(sockfd, &flen, sizeof(long), 0);
+    if(recv(sockfd, &flen, sizeof(long), 0) == 0) {
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return;
+    }
 
     char file_data[flen + 1];
     ssize_t recv_size = 0;
     while (recv_size < flen) {
         ssize_t n = recv(sockfd, file_data, flen, 0);
+        if(n == 0){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sockfd = -1;
+            return;
+        }
         recv_size += n;
     }
 

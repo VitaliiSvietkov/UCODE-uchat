@@ -87,8 +87,10 @@ int mx_check_login_reg(const char *pseudo) {
 */
 
 int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd) {
-    if (sockfd == -1)
+    if (sockfd == -1){
         mx_connect_to_server();
+        //return 1;
+    }
 
     char sendBuffer[1025];
     bzero(sendBuffer, 1025);

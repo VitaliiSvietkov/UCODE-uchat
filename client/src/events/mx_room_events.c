@@ -1,14 +1,46 @@
 #include "../../inc/uchat_client.h"
 
 void *check_messages(void *data) {
+    if (sockfd == -1){
+        mx_connect_to_server();
+        //return 1;
+    }
+
     while (true) {
         char sendBuff[256];
         bzero(sendBuff, 256);
         sprintf(sendBuff, "CheckMessages\n%d\n%d\n%d", (int)t_user.id, (int)curr_destination, (int)max_msg_id);
-        send(sockfd, sendBuff, 256, 0);
+        
+        int error = 0;
+        socklen_t len = sizeof (error);
+        int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
+        if (retval != 0) {
+            fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
+            sockfd = -1;
+            return NULL;
+        }
+        if (error != 0) {
+            fprintf(stderr, "socket error: %s\n", strerror(error));
+            sockfd = -1;
+            return NULL;
+        }
+        
+        if(send(sockfd, sendBuff, 256, 0) == -1){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sockfd = -1;
+            return NULL;
+        }
 
         int latest = max_msg_id;
-        recv(sockfd, &latest, sizeof(int), 0);
+        if(recv(sockfd, &latest, sizeof(int), 0) == 0){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sockfd = -1;
+            return NULL;
+        }
 
         if (latest == max_msg_id) {
             //printf("UP TO DATE\n");
@@ -24,18 +56,42 @@ void *check_messages(void *data) {
         else {
             bzero(sendBuff, 256);
             sprintf(sendBuff, "LoadMessages\n%d\n%d\n%d", (int)t_user.id, (int)curr_destination, (int)max_msg_id);
-            send(sockfd, sendBuff, 256, 0);
+            if(send(sockfd, sendBuff, 256, 0) == -1){
+                pthread_t thread_id;
+                char *err_msg = "Connection lost\nTry again later";
+                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                sockfd = -1;
+                return NULL;
+            }
 
             latest = 0;
-            recv(sockfd, &latest, sizeof(int), 0);
+            if(recv(sockfd, &latest, sizeof(int), 0) ==0){
+                pthread_t thread_id;
+                char *err_msg = "Connection lost\nTry again later";
+                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                sockfd = -1;
+                return NULL;
+            }
 
             char recvBuff[1024];
             bzero(recvBuff, 1024);
             for (int i = max_msg_id; i < latest; i++) {
-                recv(sockfd, recvBuff, 1024, 0);
+                if(recv(sockfd, recvBuff, 1024, 0) ==0){
+                pthread_t thread_id;
+                char *err_msg = "Connection lost\nTry again later";
+                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                sockfd = -1;
+                return NULL;
+            }
 
                 int m_id = 0;
-                recv(sockfd, &m_id, sizeof(int), 0);
+                if(recv(sockfd, &m_id, sizeof(int), 0) ==0){
+                pthread_t thread_id;
+                char *err_msg = "Connection lost\nTry again later";
+                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                sockfd = -1;
+                return NULL;
+            }
 
                 char **recvData = mx_strsplit(recvBuff, '\n');
                 int msg_id = mx_atoi(recvData[0]);

@@ -41,6 +41,10 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
         g_object_unref(pixbuf);
     }
     else {
+        if (sockfd == -1){
+        mx_connect_to_server();
+        //return 1;
+        }
         // Load data from data base
 
         // Change for image read from server!!
@@ -55,11 +59,39 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
         char sendBuff[256];
         bzero(sendBuff, 256);
         sprintf(sendBuff, "SendRoomData\n%d", uid);
-        send(sockfd, sendBuff, 256, 0);
+
+        int error = 0;
+        socklen_t len = sizeof (error);
+        int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
+        if (retval != 0) {
+            fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
+            sockfd = -1;
+            return NULL;
+        }
+        if (error != 0) {
+            fprintf(stderr, "socket error: %s\n", strerror(error));
+            sockfd = -1;
+            return NULL;
+        }
+
+        if(send(sockfd, sendBuff, 256, 0) == -1){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sockfd = -1;
+            return NULL;
+        }
         
         char recvBuff[256];
         bzero(recvBuff, 256);
-        recv(sockfd, recvBuff, 256, 0);
+        if(recv(sockfd, recvBuff, 256, 0) == 0){
+            perror("ERROR writing to socket");
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sockfd = -1;
+            return NULL;
+        }
 
         char **recvData = mx_strsplit(recvBuff, '\n');
         gtk_label_set_text(GTK_LABEL(title), recvData[0]);

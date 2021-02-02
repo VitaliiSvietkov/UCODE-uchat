@@ -24,6 +24,10 @@ void mx_configure_left_header(void) {
 }
 
 static void list_match_users(GtkWidget *widget, GdkEvent *event) {
+    if (sockfd == -1){
+        mx_connect_to_server();
+        //return 1;
+    }
     int len = mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget)));
     if (len == 0) {
         mx_destroy_popups();
@@ -33,16 +37,49 @@ static void list_match_users(GtkWidget *widget, GdkEvent *event) {
     char sendBuff[1024];
     bzero(sendBuff, 1024);
     sprintf(sendBuff, "SearchInit\n%s\n%d", gtk_entry_get_text(GTK_ENTRY(widget)), t_user.id);
-    send(sockfd, sendBuff, 1024, 0);
+    
+    int error = 0;
+    socklen_t len1 = sizeof (error);
+    int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len1);
+    if (retval != 0) {
+        fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
+        sockfd = -1;
+        return;
+    }
+    if (error != 0) {
+        fprintf(stderr, "socket error: %s\n", strerror(error));
+        sockfd = -1;
+         return;
+    }
+
+    if(send(sockfd, sendBuff, 1024, 0) == -1){
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return;
+    }
 
     int users_len = 0;
-    recv(sockfd, &users_len, sizeof(int), 0);
+    if(recv(sockfd, &users_len, sizeof(int), 0) == 0){
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return;
+    }
 
     unsigned int *users_arr = NULL;
     if (users_len > 0)
         users_arr = (unsigned int *)malloc(users_len);
     for (int i = 0; i < users_len; i++)
-        recv(sockfd, &users_arr[i], sizeof(unsigned int), 0);
+        if(recv(sockfd, &users_arr[i], sizeof(unsigned int), 0) == 0){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sockfd = -1;
+            return;
+        }
 
     create_search_menu(widget, event, users_arr, users_len);
 
