@@ -85,8 +85,8 @@ void mx_get_avatar(char **data, int sockfd) {
     }
     //======================================================
 
-    for (int i = 0; i < flen; i++) {
-        send(sockfd, &read_data[i], 1, 0);
+    for (int i = 0; i < flen; i += 6) {
+        send(sockfd, &read_data[i], 6, 0);
     }
     
     r = fclose(fp);

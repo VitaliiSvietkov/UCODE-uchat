@@ -58,10 +58,10 @@ void mx_write_image_message(char *path, unsigned int id) {
     }
     //======================================================
     
-    for (long i = 0; i < flen; i++) {
+    for (long i = 0; i < flen; i += 2) {
         ssize_t total = 0;
-        while (total < 1) {
-            ssize_t nb = send(sockfd, &read_data[i], 1, 0);
+        while (total < 2) {
+            ssize_t nb = send(sockfd, &read_data[i], 2, 0);
             total += nb;
         }
     }

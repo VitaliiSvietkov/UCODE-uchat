@@ -1,5 +1,7 @@
 #include "../../inc/uchat_client.h"
 
+static void *check_last_room(void *data);
+
 void mx_configure_chats_list(void) {
     if (sockfd == -1){
         mx_connect_to_server();
@@ -45,8 +47,6 @@ void mx_configure_chats_list(void) {
         return;
     }
 
-
-
     unsigned int *rooms_uids = (unsigned int *)malloc(rooms_uids_len);
     for (int i = 0; i < rooms_uids_len; i++)
         if(recv(sockfd, &rooms_uids[i], sizeof(unsigned int), 0) == 0){
@@ -62,4 +62,61 @@ void mx_configure_chats_list(void) {
             mx_create_room(rooms_uids[i], L_FIELD_WIDTH, room_click), FALSE, FALSE, 0);
     
     free(rooms_uids);
+
+    pthread_create(&check_last_room_id, NULL, check_last_room, NULL);
+}
+
+static void *check_last_room(void *data) {
+    while (true) {
+        if (sockfd == -1) {
+            mx_connect_to_server();
+            continue;
+        }
+        t_chats_list *node = chats_list_head;
+        int last_uid = 0;
+
+        GList *children = gtk_container_get_children(GTK_CONTAINER(chats_list));
+        while (true) {
+            if (node->room == g_list_nth_data(children, 0)) {
+                last_uid = node->uid;
+                break;
+            }
+            else
+                node = node->next;
+        }
+        g_list_free(children);
+
+        
+        char sendBuff[256];
+        bzero(sendBuff, 256);
+        sprintf(sendBuff, "CheckLastRoom\n%d\n%d", t_user.id, (int)last_uid);
+        send(sockfd, sendBuff, 256, 0);
+
+        int serv_last_uid = 0;
+        recv(sockfd, &serv_last_uid, sizeof(int), 0);
+
+        if (serv_last_uid != last_uid) {
+            node = chats_list_head;
+            while (node != NULL) {
+                if (node->uid == serv_last_uid) {
+                    gtk_box_reorder_child(GTK_BOX(chats_list), node->room, 0);
+                    break;
+                }
+                else
+                    node = node->next;
+            }
+            if (node == NULL) {
+                gtk_box_pack_start(GTK_BOX(chats_list), 
+                    mx_create_room((unsigned int)serv_last_uid, L_FIELD_WIDTH, room_click), FALSE, FALSE, 0);
+                node = chats_list_head;
+                while (node->uid != serv_last_uid)
+                    node = node->next;
+                gtk_box_reorder_child(GTK_BOX(chats_list), node->room, 0);
+                gtk_widget_show_all(GTK_WIDGET(node->room));
+            }
+        }
+        usleep(500000);
+    }
+
+    return NULL;
 }

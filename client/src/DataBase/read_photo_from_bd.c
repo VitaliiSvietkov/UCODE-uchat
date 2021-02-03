@@ -32,15 +32,15 @@ void mx_read_photo_from_bd(int id) {
 
     long recv_len = 0;
     while (recv_len < flen) {
-        char file_data;
-        ssize_t n = recv(sockfd, &file_data, 1, 0);
+        char file_data[6];
+        ssize_t n = recv(sockfd, file_data, 6, 0);
         recv_len += n;
-        fwrite(&file_data, 1, 1, fp);
+        fwrite(&file_data, 6, 1, fp);
         if (ferror(fp)) {
             fprintf(stderr, "fwrite() failed\n");
             break;
         }
-    }  
+    }
     
     int r = fclose(fp);
     if (r == EOF)

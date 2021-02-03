@@ -70,6 +70,7 @@ void mx_get_language(char **data, int sockfd);
 void mx_delete_message(char **data, int sockfd);
 void mx_edit_message(char **data, int sockfd);
 void mx_add_image_message(char **data, int sockfd);
+void mx_check_last_room(char **data, int sockfd);
 
 sqlite3 *mx_opening_db(void);
 char *mx_encryption(char *str);

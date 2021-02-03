@@ -30,7 +30,7 @@ int mx_connect_to_server(void) {
         close(sockfd);
         pthread_t thread_id;
         char *err_msg = "Connection lost\nTry again later";
-        if(error_revealer == NULL)
+        if (error_revealer == NULL)
             pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
         return -1;
     }

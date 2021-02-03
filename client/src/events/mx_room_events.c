@@ -1,34 +1,22 @@
 #include "../../inc/uchat_client.h"
 
 void *check_messages(void *data) {
-    if (sockfd == -1)
-        mx_connect_to_server();
-
     while (true) {
+        if (sockfd == -1) {
+            mx_connect_to_server();
+            sleep(1);
+            continue;
+        }
         char sendBuff[256];
         bzero(sendBuff, 256);
         sprintf(sendBuff, "CheckMessages\n%d\n%d\n%d", (int)t_user.id, (int)curr_destination, (int)max_msg_id);
-        
-        int error = 0;
-        socklen_t len = sizeof (error);
-        int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
-        if (retval != 0) {
-            fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
-            sockfd = -1;
-            return NULL;
-        }
-        if (error != 0) {
-            fprintf(stderr, "socket error: %s\n", strerror(error));
-            sockfd = -1;
-            return NULL;
-        }
         
         if(send(sockfd, sendBuff, 256, 0) == -1){
             pthread_t thread_id;
             char *err_msg = "Connection lost\nTry again later";
             pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
             sockfd = -1;
-            return NULL;
+            continue;
         }
 
         int latest = max_msg_id;
@@ -37,12 +25,12 @@ void *check_messages(void *data) {
             char *err_msg = "Connection lost\nTry again later";
             pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
             sockfd = -1;
-            return NULL;
+            continue;
         }
 
         if (latest == max_msg_id) {
             //printf("UP TO DATE\n");
-            sleep(1500000);
+            usleep(500000);
             continue;
         }
         else if (latest < max_msg_id) {
@@ -59,7 +47,7 @@ void *check_messages(void *data) {
                 char *err_msg = "Connection lost\nTry again later";
                 pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
                 sockfd = -1;
-                return NULL;
+                continue;
             }
 
             latest = 0;
@@ -68,28 +56,28 @@ void *check_messages(void *data) {
                 char *err_msg = "Connection lost\nTry again later";
                 pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
                 sockfd = -1;
-                return NULL;
+                continue;
             }
 
             char recvBuff[1024];
             bzero(recvBuff, 1024);
             for (int i = max_msg_id; i < latest; i++) {
                 if(recv(sockfd, recvBuff, 1024, 0) ==0){
-                pthread_t thread_id;
-                char *err_msg = "Connection lost\nTry again later";
-                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
-                sockfd = -1;
-                return NULL;
-            }
+                    pthread_t thread_id;
+                    char *err_msg = "Connection lost\nTry again later";
+                    pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                    sockfd = -1;
+                    continue;
+                }
 
                 int m_id = 0;
                 if(recv(sockfd, &m_id, sizeof(int), 0) ==0){
-                pthread_t thread_id;
-                char *err_msg = "Connection lost\nTry again later";
-                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
-                sockfd = -1;
-                return NULL;
-            }
+                    pthread_t thread_id;
+                    char *err_msg = "Connection lost\nTry again later";
+                    pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                    sockfd = -1;
+                    continue;
+                }
 
                 char **recvData = mx_strsplit(recvBuff, '\n');
                 int msg_id = mx_atoi(recvData[0]);
@@ -110,7 +98,7 @@ void *check_messages(void *data) {
                 mx_del_strarr(&recvData);
                 bzero(recvBuff, 1024);
             }
-
+            
             t_message *msg = mx_message_search(&curr_room_msg_head, max_msg_id + 1);
             while (msg != NULL) {
                 mx_add_message(t_chat_room_vars.messages_box, msg);

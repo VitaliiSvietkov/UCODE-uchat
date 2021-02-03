@@ -202,6 +202,10 @@ void mx_send_message_on_enter(GtkWidget *widget) {
         mx_add_message(t_chat_room_vars.messages_box, msg);
 
         gtk_entry_set_text(GTK_ENTRY(widget), "");
+        t_chats_list *node = chats_list_head;
+        while (node->uid != (int)curr_destination)
+            node = node->next;
+        gtk_box_reorder_child(GTK_BOX(chats_list), node->room, 0);
     }
 }
 //=================================================================================

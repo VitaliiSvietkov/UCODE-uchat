@@ -13,16 +13,17 @@ void mx_add_image_message(char **data, int sockfd) {
     long flen = strtol(data[4], &eptr, 10);
 
     long recv_len = 0;
+    char file_data[2];
     while (recv_len < flen) {
-        char file_data;
+        bzero(file_data, 2);
         ssize_t total_recv = 0;
         ssize_t n = 0;
-        while (total_recv != 1) {
-            n = recv(sockfd, &file_data, 1, 0);
+        while (total_recv < 2) {
+            n = recv(sockfd, file_data, 2, 0);
             recv_len += n;
             total_recv += n;
         }
-        fwrite(&file_data, 1, 1, fp);
+        fwrite(file_data, 2, 1, fp);
         if (ferror(fp)) {
             fprintf(stderr, "fwrite() failed\n");
             break;

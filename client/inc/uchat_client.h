@@ -212,6 +212,7 @@ int sockfd;
 char **argv_ptr;
 
 pthread_t check_messages_id; // used to create a thread for message checking
+pthread_t check_last_room_id;
 int max_msg_id;
 
 GtkWidget *entry_search;
