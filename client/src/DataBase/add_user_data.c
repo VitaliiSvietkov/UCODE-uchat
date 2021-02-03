@@ -2,7 +2,7 @@
 
 void mx_add_user_data(const char *pseudo, const char *password, const char *name, char *sname) {
     if (sockfd == -1){
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
     }
     

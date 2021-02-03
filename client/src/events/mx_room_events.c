@@ -3,7 +3,7 @@
 void *check_messages(void *data) {
     while (true) {
         if (sockfd == -1) {
-            mx_connect_to_server();
+            mx_connect_to_server(&sockfd);
             sleep(1);
             continue;
         }

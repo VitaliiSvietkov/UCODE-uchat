@@ -1,14 +1,14 @@
 #include "../inc/uchat_client.h"
 
-int mx_connect_to_server(void) {
+int mx_connect_to_server(int *sock) {
     int portno;
     struct sockaddr_in serv_addr;
     struct hostent *server;
     
     portno = atoi(argv_ptr[2]);
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    *sock = socket(AF_INET, SOCK_STREAM, 0);
     
-    if (sockfd < 0) {
+    if (*sock < 0) {
         perror("ERROR opening socket");
     }
     
@@ -16,7 +16,7 @@ int mx_connect_to_server(void) {
     
     if (server == NULL) {
         fprintf(stderr,"ERROR, no such host\n");
-        close(sockfd);
+        close(*sock);
         exit(0);
     }
     
@@ -25,9 +25,9 @@ int mx_connect_to_server(void) {
     bcopy((char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
     serv_addr.sin_port = htons(portno);
     
-    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) {
+    if (connect(*sock,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) {
         perror("ERROR connecting");
-        close(sockfd);
+        close(*sock);
         pthread_t thread_id;
         char *err_msg = "Connection lost\nTry again later";
         if (error_revealer == NULL)

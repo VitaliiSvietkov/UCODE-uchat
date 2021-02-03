@@ -2,6 +2,8 @@
 
 void mx_init_global_vars(void) {
     argv_ptr = NULL;
+    sockfd = 0;
+    sock_for_rooms = 0;
     // Containers
     window = NULL;
     main_area = NULL;

@@ -53,6 +53,12 @@ void authorization(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
             if (chat_area != NULL)
                 gtk_widget_destroy(GTK_WIDGET(chat_area));
             
+            if (sock_for_rooms != 0) {
+                pthread_cancel(check_last_room_id);
+                close(sock_for_rooms);
+                sock_for_rooms = 0;
+            }
+
             mx_load_images();
             while (labels_head != NULL)
                 mx_label_pop_front(&labels_head);

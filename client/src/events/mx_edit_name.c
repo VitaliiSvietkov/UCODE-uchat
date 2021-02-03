@@ -2,7 +2,7 @@
 
 void mx_edit_name(char* name, char* surname, char* pseudo, char *description, int id) {
     if (sockfd == -1){
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
     }
     

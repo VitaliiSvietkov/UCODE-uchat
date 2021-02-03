@@ -25,7 +25,7 @@ void mx_configure_left_header(void) {
 
 static void list_match_users(GtkWidget *widget, GdkEvent *event) {
     if (sockfd == -1){
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
     }
     int len = mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget)));
@@ -185,9 +185,9 @@ static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer
         GtkWidget *room = mx_create_room((unsigned int)(uintptr_t)uid, L_FIELD_WIDTH, room_click);
         gtk_box_pack_start(GTK_BOX(chats_list), room, FALSE, FALSE, 0);
         gtk_widget_show_all(GTK_WIDGET(room));
-        gtk_box_reorder_child(GTK_BOX(chats_list), room, 0);
+        //gtk_box_reorder_child(GTK_BOX(chats_list), room, 0);
         
-        room_click(widget, event, uid);
+        room_click(room, event, uid);
         gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
         gtk_widget_grab_focus(GTK_WIDGET(chat_area));
 

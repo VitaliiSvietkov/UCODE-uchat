@@ -209,6 +209,7 @@ GtkWidget *authorization_area;
 GtkWidget *chat_area;
 GtkCssProvider *cssProvider;
 int sockfd;
+int sock_for_rooms;
 char **argv_ptr;
 
 pthread_t check_messages_id; // used to create a thread for message checking
@@ -235,7 +236,7 @@ int language;
 char **text_for_labels;
 
 void mx_init_window(void);
-int mx_connect_to_server(void);
+int mx_connect_to_server(int *sock);
 void mx_init_global_vars(void);
 void mx_update_theme(void);
 void mx_tooltip(char *str, void *data);

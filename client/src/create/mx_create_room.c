@@ -44,7 +44,7 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
     }
     else {
         if (sockfd == -1){
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
         }
         // Load data from data base

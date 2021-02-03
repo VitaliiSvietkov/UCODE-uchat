@@ -4,7 +4,7 @@ static void *check_last_room(void *data);
 
 void mx_configure_chats_list(void) {
     if (sockfd == -1){
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
     }
     chats_list = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -67,9 +67,10 @@ void mx_configure_chats_list(void) {
 }
 
 static void *check_last_room(void *data) {
+    mx_connect_to_server(&sock_for_rooms);
     while (true) {
-        if (sockfd == -1) {
-            mx_connect_to_server();
+        if (sock_for_rooms == -1) {
+            mx_connect_to_server(&sock_for_rooms);
             continue;
         }
         t_chats_list *node = chats_list_head;
@@ -90,10 +91,10 @@ static void *check_last_room(void *data) {
         char sendBuff[256];
         bzero(sendBuff, 256);
         sprintf(sendBuff, "CheckLastRoom\n%d\n%d", t_user.id, (int)last_uid);
-        send(sockfd, sendBuff, 256, 0);
+        send(sock_for_rooms, sendBuff, 256, 0);
 
         int serv_last_uid = 0;
-        recv(sockfd, &serv_last_uid, sizeof(int), 0);
+        recv(sock_for_rooms, &serv_last_uid, sizeof(int), 0);
 
         if (serv_last_uid != last_uid) {
             node = chats_list_head;

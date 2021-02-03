@@ -2,7 +2,7 @@
 
 void mx_write_language_data_from_bd(void) {
     if (sockfd == -1){
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
     }
 

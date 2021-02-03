@@ -2,7 +2,7 @@
 
 void mx_write_photo_to_bd(char *path, int id){
     if (sockfd == -1){
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
     }
     

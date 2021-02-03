@@ -2,7 +2,7 @@
 
 void mx_read_photo_from_bd(int id) {
     if (sockfd == -1){
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
     }
     

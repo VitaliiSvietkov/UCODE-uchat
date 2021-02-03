@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     }
     mx_init_global_vars();
     argv_ptr = argv;
-    mx_connect_to_server();
+    mx_connect_to_server(&sockfd);
     mx_get_language_arr();
     
     mx_local_database_init();
@@ -43,5 +43,7 @@ int main(int argc, char *argv[]) {
     mx_free_data();
 
     close(sockfd);
+    if (sock_for_rooms != 0)
+        close(sock_for_rooms);
     return 0;
 }

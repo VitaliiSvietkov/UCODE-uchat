@@ -11,7 +11,7 @@
 
 int mx_write_user_data_from_bd_after_auth(const char *pseudo, const char* passwd) {
     if (sockfd == -1)
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
 
 

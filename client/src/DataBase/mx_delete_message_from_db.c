@@ -2,7 +2,7 @@
 
 void mx_delete_message_from_db(t_message *data) {
     if (sockfd == -1){
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
     }
     

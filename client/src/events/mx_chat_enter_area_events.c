@@ -162,7 +162,7 @@ void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event) {
 
 void mx_send_message_on_enter(GtkWidget *widget) {
     if (sockfd == -1){
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
     }
 
@@ -214,7 +214,7 @@ void mx_send_message_on_enter(GtkWidget *widget) {
 //=================================================================================
 void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
     if (sockfd == -1){
-        mx_connect_to_server();
+        mx_connect_to_server(&sockfd);
         //return 1;
     }
 
