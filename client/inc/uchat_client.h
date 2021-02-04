@@ -210,6 +210,7 @@ GtkWidget *chat_area;
 GtkCssProvider *cssProvider;
 int sockfd;
 int sock_for_rooms;
+int sock_for_send;
 char **argv_ptr;
 
 pthread_t check_messages_id; // used to create a thread for message checking

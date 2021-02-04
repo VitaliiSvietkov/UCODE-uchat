@@ -1,4 +1,5 @@
 #include "../inc/server.h"
+#include "../inc/base64.h"
 
 void mx_add_image_message(char **data, int sockfd) {
     int uid = mx_atoi(data[1]);
@@ -10,31 +11,33 @@ void mx_add_image_message(char **data, int sockfd) {
         fprintf(stderr, "Cannot open image file\n");
 
     char *eptr;
-    long flen = strtol(data[4], &eptr, 10);
+    //unsigned int flen = (unsigned int)strtol(data[4], &eptr, 10);
+    unsigned int out_size = (unsigned)strtol(data[5], &eptr, 10);
 
-    long recv_len = 0;
-    char file_data[2];
-    while (recv_len < flen) {
-        bzero(file_data, 2);
-        ssize_t total_recv = 0;
-        ssize_t n = 0;
-        while (total_recv < 2) {
-            n = recv(sockfd, file_data, 2, 0);
+    unsigned char *encoded = malloc( (sizeof(char) * out_size) );
+    unsigned int recv_len = 0;
+    while (recv_len < out_size) {
+        ssize_t n = recv(sockfd, encoded, out_size, 0);
+        if (n <= 0)
+            usleep(100000);
+        else
             recv_len += n;
-            total_recv += n;
-        }
-        fwrite(file_data, 2, 1, fp);
-        if (ferror(fp)) {
-            fprintf(stderr, "fwrite() failed\n");
-            break;
-        }
     }
+
+    unsigned int flen = b64d_size(out_size);
+    unsigned char *decoded = malloc( (sizeof(char) * out_size) + 1);
+    flen = b64_decode(encoded, out_size, decoded);
+
+    fwrite(decoded, flen, 1, fp);
+    if (ferror(fp))
+        fprintf(stderr, "fwrite() failed\n");
     
     int r = fclose(fp);
     if (r == EOF)
         fprintf(stderr, "Cannot close file handler\n");
-
-    return;
+    
+    free(encoded);
+    free(decoded);
 
     // Read from the file and add to db
     fp = fopen("server/data/tmp_msg_image.png", "rb");
@@ -74,7 +77,7 @@ void mx_add_image_message(char **data, int sockfd) {
     if (rc != SQLITE_OK)
         fprintf(stderr, "Cannot prepare statement: %s\n", sqlite3_errmsg(db));
 
-    sqlite3_bind_blob(pStmt, 1, data, size, SQLITE_STATIC);    
+    sqlite3_bind_blob(pStmt, 1, read_data, size, SQLITE_STATIC);    
     rc = sqlite3_step(pStmt);
     if (rc != SQLITE_DONE)
         printf("execution failed: %s", sqlite3_errmsg(db));
@@ -82,5 +85,5 @@ void mx_add_image_message(char **data, int sockfd) {
     sqlite3_finalize(pStmt);  
     sqlite3_close(db);
 
-    remove("server/data/tmp_recv_avatar.png");
+    //remove("server/data/tmp_recv_avatar.png");
 }

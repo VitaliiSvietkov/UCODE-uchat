@@ -264,7 +264,7 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
                 max_msg_id = m_id;
 
                 t_message *msg = mx_push_back_message(&curr_room_msg_head,
-                    strdup(gtk_entry_get_text(GTK_ENTRY(widget))), 
+                    strdup(gtk_entry_get_text(GTK_ENTRY(entry))), 
                     t_user.id, 
                     NULL,
                     curtime,
@@ -283,7 +283,7 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
                 mx_dberror(db, st, err_msg);
                 sqlite3_close(db);
 
-                gtk_entry_set_text(GTK_ENTRY(widget), "");
+                gtk_entry_set_text(GTK_ENTRY(entry), "");
                 t_chats_list *node = chats_list_head;
                 while (node->uid != (int)curr_destination)
                     node = node->next;
