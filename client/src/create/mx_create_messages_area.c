@@ -107,7 +107,7 @@ void mx_create_messages_area(void) {
             mx_push_back_message(&curr_room_msg_head, 
                 text, 
                 msg_addresser,
-                NULL,
+                mx_read_image_message(cur_m_id),
                 seconds,
                 cur_m_id);
 

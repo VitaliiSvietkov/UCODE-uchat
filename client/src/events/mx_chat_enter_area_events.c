@@ -128,8 +128,6 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
             max_msg_id);
         mx_add_message(t_chat_room_vars.messages_box, msg);
 
-        printf("I AM GOINT TO SEND!\n");
-
         mx_write_image_message((char *)arr[0], msg->id);
     }
     sqlite3_close(db);
@@ -192,7 +190,7 @@ void mx_send_message_on_enter(GtkWidget *widget) {
             return;
         }
         max_msg_id = m_id;
-
+        
         t_message *msg = mx_push_back_message(&curr_room_msg_head,
             strdup(gtk_entry_get_text(GTK_ENTRY(widget))), 
             t_user.id, 

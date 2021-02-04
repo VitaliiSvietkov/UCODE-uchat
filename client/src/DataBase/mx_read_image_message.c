@@ -1,7 +1,65 @@
 #include "../../inc/uchat_client.h"
+#include "../../inc/base64.h"
 
-GdkPixbuf *mx_read_image_message(unsigned int id, sqlite3 *data_base) {
-    FILE *fp = fopen("client/img/message_image_temp.jpg", "wb");
+GdkPixbuf *mx_read_image_message(int id) {
+    mx_connect_to_server(&sock_for_send);
+
+    char sendBuff[256];
+    bzero(sendBuff, 256);
+    sprintf(sendBuff, "GetMessageImage\n%d\n%d\n%d", id, t_user.id, (int)curr_destination);
+    send(sock_for_send, sendBuff, 256, 0);
+
+    int bytes = 0;
+    recv(sock_for_send, &bytes, sizeof(int), 0);
+    
+    if (bytes) {
+        FILE *fp = fopen("client/img/message_image_temp.png", "ab");
+        if (fp == NULL)
+            fprintf(stderr, "Cannot open image file\n");
+
+        //char *eptr;
+        unsigned int out_size = 0; // (unsigned)strtol(data[4], &eptr, 10);
+        recv(sock_for_send, &out_size, sizeof(unsigned int), 0);
+
+        unsigned char *encoded = malloc( (sizeof(char) * out_size) );
+        unsigned int recv_len = 0;
+        while (recv_len < out_size) {
+            ssize_t n = recv(sock_for_send, encoded, out_size, 0);
+            if (n <= 0)
+                usleep(100000);
+            else
+                recv_len += n;
+        }
+
+        unsigned int flen = b64d_size(out_size);
+        unsigned char *decoded = malloc( (sizeof(char) * out_size) + 1);
+        flen = b64_decode(encoded, out_size - 1, decoded);
+        
+        free(encoded);
+
+        fwrite(decoded, flen, 1, fp);
+        if (ferror(fp))
+            fprintf(stderr, "fwrite() failed\n");
+        
+        int r = fclose(fp);
+        if (r == EOF)
+            fprintf(stderr, "Cannot close file handler\n");
+
+        free(decoded);
+
+        GdkPixbuf *result = mx_create_pixbuf("client/img/message_image_temp.png");
+        result = mx_size_image_down(result);
+        remove("client/img/message_image_temp.png");
+        close(sock_for_send);
+        return result;
+    }
+    close(sock_for_send);
+    return NULL;
+
+
+
+    /*
+    FILE *fp = fopen("client/img/message_image_temp.png", "wb");
     
     if (fp == NULL)
         fprintf(stderr, "Cannot open image file\n");
@@ -24,7 +82,7 @@ GdkPixbuf *mx_read_image_message(unsigned int id, sqlite3 *data_base) {
         }       
         rc = sqlite3_finalize(pStmt);
         
-        remove("client/img/message_image_temp.jpg");
+        remove("client/img/message_image_temp.png");
         return NULL;
     } 
     
@@ -40,7 +98,7 @@ GdkPixbuf *mx_read_image_message(unsigned int id, sqlite3 *data_base) {
             fprintf(stderr, "Cannot close file handler\n");
         }       
         rc = sqlite3_finalize(pStmt);
-        remove("client/img/message_image_temp.jpg");
+        remove("client/img/message_image_temp.png");
         return NULL;
     }
 
@@ -54,8 +112,9 @@ GdkPixbuf *mx_read_image_message(unsigned int id, sqlite3 *data_base) {
     
     rc = sqlite3_finalize(pStmt); 
 
-    GdkPixbuf *result = mx_create_pixbuf("client/img/message_image_temp.jpg");
+    GdkPixbuf *result = mx_create_pixbuf("client/img/message_image_temp.png");
     result = mx_size_image_down(result);
-    remove("client/img/message_image_temp.jpg");
+    remove("client/img/message_image_temp.png");
     return result;
+    */
 }

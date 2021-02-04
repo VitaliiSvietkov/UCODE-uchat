@@ -73,7 +73,7 @@ static void *write_image_to_message(void *data) {
 
     char sendBuff[256];
     bzero(sendBuff, 256);
-    sprintf(sendBuff, "AddImageMessage\n%d\n%d\n%d\n%ld\n%u", t_user.id, (int)curr_destination, (int)id, flen, out_size);
+    sprintf(sendBuff, "AddImageMessage\n%d\n%d\n%d\n%u", t_user.id, (int)curr_destination, (int)id, out_size);
     send(sock_for_send, sendBuff, 256, 0);
     
     usleep(100000);

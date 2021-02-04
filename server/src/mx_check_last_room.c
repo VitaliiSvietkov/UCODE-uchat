@@ -3,9 +3,6 @@
 void mx_check_last_room(char **data, int sockfd) {
     int uid = mx_atoi(data[1]);
     int client_last_uid = mx_atoi(data[2]);
-
-    //printf("%d %d\n", uid, client_last_uid);
-
     int last_uid = 0;
 
     sqlite3 *db = mx_opening_db();
@@ -19,7 +16,6 @@ void mx_check_last_room(char **data, int sockfd) {
     if (sqlite3_step(res) != SQLITE_DONE) {
         int addresser = (int)sqlite3_column_int64(res, 0);
         int destination = (int)sqlite3_column_int64(res, 1);
-        //printf("%d %d\n", addresser, destination);
         if (addresser != uid)
             last_uid = addresser;
         else
@@ -34,6 +30,5 @@ void mx_check_last_room(char **data, int sockfd) {
     sqlite3_finalize(res);
     sqlite3_close(db);
 
-    //printf("%d\n", last_uid);
     send(sockfd, &last_uid, sizeof(int), 0);
 }

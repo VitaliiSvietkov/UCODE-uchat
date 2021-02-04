@@ -11,7 +11,7 @@ void *check_messages(void *data) {
         bzero(sendBuff, 256);
         sprintf(sendBuff, "CheckMessages\n%d\n%d\n%d", (int)t_user.id, (int)curr_destination, (int)max_msg_id);
         
-        if(send(sockfd, sendBuff, 256, 0) == -1){
+        if(send(sockfd, sendBuff, 256, 0) == -1) {
             pthread_t thread_id;
             char *err_msg = "Connection lost\nTry again later";
             pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
@@ -91,7 +91,7 @@ void *check_messages(void *data) {
                 mx_push_back_message(&curr_room_msg_head, 
                     text, 
                     msg_addresser,
-                    NULL,
+                    mx_read_image_message(m_id),
                     seconds,
                     m_id);
 

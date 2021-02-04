@@ -11,8 +11,7 @@ void mx_add_image_message(char **data, int sockfd) {
         fprintf(stderr, "Cannot open image file\n");
 
     char *eptr;
-    //unsigned int flen = (unsigned int)strtol(data[4], &eptr, 10);
-    unsigned int out_size = (unsigned)strtol(data[5], &eptr, 10);
+    unsigned int out_size = (unsigned)strtol(data[4], &eptr, 10);
 
     unsigned char *encoded = malloc( (sizeof(char) * out_size) );
     unsigned int recv_len = 0;
@@ -58,5 +57,5 @@ void mx_add_image_message(char **data, int sockfd) {
     sqlite3_close(db);
 
     free(decoded);
-    remove("server/data/tmp_msg_image.png");
+    //remove("server/data/tmp_msg_image.png");
 }

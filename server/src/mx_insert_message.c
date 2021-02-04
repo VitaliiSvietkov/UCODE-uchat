@@ -28,7 +28,7 @@ void mx_insert_message(char **data, int sockfd) {
     char sql[2056];
     bzero(sql, 2056);
     char *errmsg;
-    sprintf(sql, "SELECT MAX(ID) FROM Messages WHERE (addresser=%u OR addresser=%u) AND (destination=%u OR destination=%u);",
+    sprintf(sql, "SELECT MAX(ID) FROM Messages WHERE (addresser=%d OR addresser=%d) AND (destination=%d OR destination=%d);",
         addresser, destination, addresser, destination);
     sqlite3_prepare_v2(db, sql, -1, &res, 0);
     sqlite3_step(res);
