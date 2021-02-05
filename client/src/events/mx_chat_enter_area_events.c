@@ -59,10 +59,37 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
         text = strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
     
     t_message *msg = NULL;
-    sqlite3 *db = mx_opening_local_db();
-    char *err_msg = 0;
-    char sql[500];
+    char sendBuff[2056];
+    bzero(sendBuff, 2056);
     if (gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf)) > 350) {
+        if (text == NULL)
+            text = mx_strdup("(null)");
+        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
+                t_user.id, curr_destination, curtime, text);
+
+        if (!mx_strcmp(text, "(null)")) {
+            free(text);
+            text = NULL;
+        }
+        
+        if(send(sockfd, sendBuff, 2056, 0) == -1){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sockfd = -1;
+            return;
+        }
+
+        int m_id = 0;
+        if(recv(sockfd, &m_id, sizeof(int), 0) == 0){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sockfd = -1;
+            return;
+        }
+        max_msg_id = m_id;
+
         msg = mx_push_back_message(&curr_room_msg_head,
             NULL, 
             t_user.id, 
@@ -70,14 +97,32 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
             curtime,
             max_msg_id);
         mx_add_message(t_chat_room_vars.messages_box, msg);
-        sprintf(sql,
-                "INSERT INTO Messages (id, addresser, destination, time)\
-                VALUES('%u','%u','%u','%ld');",
-                msg->id, t_user.id, curr_destination, msg->seconds);
-        sqlite3_exec(db, sql, 0, 0, &err_msg);
+
         mx_write_image_message((char *)arr[0], msg->id);
 
         if (text != NULL) {
+            bzero(sendBuff, 2056);
+            sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
+                    t_user.id, curr_destination, curtime, text);
+            
+            if(send(sockfd, sendBuff, 2056, 0) == -1){
+                pthread_t thread_id;
+                char *err_msg = "Connection lost\nTry again later";
+                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                sockfd = -1;
+                return;
+            }
+
+            int m_id = 0;
+            if(recv(sockfd, &m_id, sizeof(int), 0) == 0){
+                pthread_t thread_id;
+                char *err_msg = "Connection lost\nTry again later";
+                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                sockfd = -1;
+                return;
+            }
+            max_msg_id = m_id;
+
             msg = mx_push_back_message(&curr_room_msg_head,
                 text, 
                 t_user.id, 
@@ -85,22 +130,19 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
                 curtime,
                 max_msg_id);
             mx_add_message(t_chat_room_vars.messages_box, msg);
-
-            sprintf(sql,
-                    "INSERT INTO Messages (id, addresser, destination, Text, time)\
-                    VALUES('%u','%u','%u','%s','%ld');",
-                    msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
-            sqlite3_exec(db, sql, 0, 0, &err_msg);
         }
     }
     else {
-        char sendBuff[2056];
         bzero(sendBuff, 2056);
-        const gchar *m_text = gtk_entry_get_text(GTK_ENTRY(widget));
-        if (mx_strlen(m_text) == 0)
-            m_text = "(null)";
+        if (text == NULL)
+            text = mx_strdup("(null)");
         sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
-                t_user.id, curr_destination, curtime, m_text);
+                t_user.id, curr_destination, curtime, text);
+
+        if (!mx_strcmp(text, "(null)")) {
+            free(text);
+            text = NULL;
+        }
         
         if(send(sockfd, sendBuff, 2056, 0) == -1){
             pthread_t thread_id;
@@ -130,7 +172,6 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
 
         mx_write_image_message((char *)arr[0], msg->id);
     }
-    sqlite3_close(db);
 
     gtk_widget_destroy(GTK_WIDGET(blackout));
     blackout = NULL;

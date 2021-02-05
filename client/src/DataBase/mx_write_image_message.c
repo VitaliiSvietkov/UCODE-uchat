@@ -20,8 +20,10 @@ void mx_write_image_message(char *path, unsigned int id) {
 static void *write_image_to_message(void *data) {
     mx_connect_to_server(&sock_for_send);
 
-    char *path = (char *)(((t_tmp_data *)data)->path);
+    char *path = ((t_tmp_data *)data)->path;
     unsigned int id = (unsigned int)(((t_tmp_data *)data)->id);
+
+    printf("%s\n", path);
     
     FILE *fp = fopen(path, "rb");
     int r;
@@ -56,14 +58,17 @@ static void *write_image_to_message(void *data) {
 
     // Get the data of the file which will be sent to server
     //======================================================
-    unsigned char read_data[flen + 1];
+    unsigned char *read_data = malloc((unsigned)flen + 1);
+    memset(read_data, 0, flen + 1);
+    //fread(read_data, sizeof(unsigned char), flen, fp);
     fread(read_data, flen, 1, fp);
     if (ferror(fp)) {
         fprintf(stderr, "fread() failed\n");
         r = fclose(fp);
         if (r == EOF) {
             fprintf(stderr, "Cannot close file handler\n");
-        }    
+        }
+        perror("Error:");
     }
     //======================================================
 
@@ -90,6 +95,7 @@ static void *write_image_to_message(void *data) {
     unsigned int out_size = b64e_size(flen) + 1;
     unsigned char *out_b64 = malloc( (sizeof(char) * out_size) );
     b64_encode(read_data, flen, out_b64);
+    free(read_data);
 
     int len_encoded = strlen((char *)out_b64);
 
@@ -99,15 +105,15 @@ static void *write_image_to_message(void *data) {
         (int)id, out_size, len_encoded);
     send(sock_for_send, sendBuff, 256, 0);
 
-    //usleep(300000);
     int total = 0;
     while (total < len_encoded) {
+        usleep(100000);
         ssize_t nb = send(sock_for_send, out_b64, len_encoded, 0);
         //usleep(100000);
         total += nb;
     }
 
-    printf("%s\n%u\n%d\n", out_b64, out_size, len_encoded);
+    printf("%s\n%u\n%d\n%ld", out_b64, out_size, len_encoded, flen);
 
     free(out_b64);
 

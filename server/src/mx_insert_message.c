@@ -15,11 +15,6 @@ void mx_insert_message(char **data, int sockfd) {
     for (int i = 4; data[i] != NULL; i++)
         text = mx_strjoin(text, data[i]);
 
-    if (!mx_strcmp(text, "(null)")) {
-        free(text);
-        text = NULL;
-    }
-
     int addresser = mx_atoi(data[1]);
     int destination = mx_atoi(data[2]);
 
@@ -40,7 +35,7 @@ void mx_insert_message(char **data, int sockfd) {
 
     char *err_msg;
     bzero(sql, 2056);
-    if (text != NULL)
+    if (mx_strcmp(text, "(null)"))
         sprintf(sql,
                 "INSERT INTO Messages (id, addresser, destination, Text, time)\
                 VALUES('%d','%d','%d','%s','%d');",
