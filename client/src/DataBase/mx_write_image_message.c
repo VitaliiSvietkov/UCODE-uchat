@@ -22,8 +22,6 @@ static void *write_image_to_message(void *data) {
 
     char *path = ((t_tmp_data *)data)->path;
     unsigned int id = (unsigned int)(((t_tmp_data *)data)->id);
-
-    printf("%s\n", path);
     
     FILE *fp = fopen(path, "rb");
     int r;
@@ -112,9 +110,6 @@ static void *write_image_to_message(void *data) {
         //usleep(100000);
         total += nb;
     }
-
-    printf("%s\n%u\n%d\n%ld", out_b64, out_size, len_encoded, flen);
-
     free(out_b64);
 
 

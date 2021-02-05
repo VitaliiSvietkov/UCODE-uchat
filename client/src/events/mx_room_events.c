@@ -29,7 +29,6 @@ void *check_messages(void *data) {
         }
 
         if (latest == max_msg_id) {
-            //printf("UP TO DATE\n");
             usleep(500000);
             continue;
         }

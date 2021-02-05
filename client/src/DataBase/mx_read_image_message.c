@@ -26,8 +26,8 @@ GdkPixbuf *mx_read_image_message(int id) {
 
         unsigned char *encoded = malloc( (sizeof(char) * out_size) );
         int recv_len = 0;
-        usleep(70000);
         while (recv_len < len_encoded) {
+            usleep(100000);
             ssize_t n = recv(sock_for_send, encoded, len_encoded, 0);
             if (n <= 0)
                 continue;
@@ -37,10 +37,7 @@ GdkPixbuf *mx_read_image_message(int id) {
 
         unsigned int flen = b64d_size(len_encoded);
         unsigned char *decoded = malloc( (sizeof(char) * flen) + 1);
-        flen = b64_decode(encoded, len_encoded, decoded);
-
-        //printf("%s\n%u\n%d\n", encoded, out_size, len_encoded);
-        
+        flen = b64_decode(encoded, len_encoded, decoded);        
         free(encoded);
 
         fwrite(decoded, flen, 1, fp);

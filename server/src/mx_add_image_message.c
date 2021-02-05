@@ -31,8 +31,6 @@ void mx_add_image_message(char **data, int sockfd) {
     unsigned char *decoded = malloc( (sizeof(char) * flen) );
     memset(decoded, 0, flen);
     flen = b64_decode(encoded, len_encoded, decoded);
-    
-    printf("%s\n%u\n%d\n%u\n", encoded, out_size, len_encoded, flen);
     free(encoded);
 
     fwrite(decoded, flen, 1, fp);
@@ -43,8 +41,6 @@ void mx_add_image_message(char **data, int sockfd) {
     if (r == EOF)
         fprintf(stderr, "Cannot close file handler\n");
     
-    return;
-
     sqlite3 *db = mx_opening_db();
     sqlite3_stmt *pStmt;
     char sql[flen + 250];

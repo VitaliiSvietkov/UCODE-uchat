@@ -110,13 +110,11 @@ void mx_get_image_message(char **data, int sockfd) {
         //usleep(300000);
         int total = 0;
         while (total < len_encoded) {
+            usleep(70000);
             ssize_t nb = send(sockfd, out_b64, len_encoded, 0);
-            //usleep(100000);
             total += nb;
         }
         free(out_b64);
-
-        //printf("%s\n%u\n%d\n", out_b64, out_size, total);
     }
     rc = sqlite3_finalize(pStmt); 
     sqlite3_close(db);
