@@ -67,7 +67,7 @@ static void *write_image_to_message(void *data) {
     }
     //======================================================
 
-    unsigned int out_size = b64e_size(flen) + 1;
+    /*unsigned int out_size = b64e_size(flen) + 1;
     unsigned char *out_b64 = malloc( (sizeof(char) * out_size) );
     out_size = b64_encode(read_data, sizeof(read_data) / sizeof(read_data[0]), out_b64);
 
@@ -83,7 +83,35 @@ static void *write_image_to_message(void *data) {
         total += nb;
     }
 
+    free(out_b64);*/
+
+
+
+    unsigned int out_size = b64e_size(flen) + 1;
+    unsigned char *out_b64 = malloc( (sizeof(char) * out_size) );
+    b64_encode(read_data, flen, out_b64);
+
+    int len_encoded = strlen((char *)out_b64);
+
+    char sendBuff[256];
+    bzero(sendBuff, 256);
+    sprintf(sendBuff, "AddImageMessage\n%d\n%d\n%d\n%u\n%d", t_user.id, (int)curr_destination, 
+        (int)id, out_size, len_encoded);
+    send(sock_for_send, sendBuff, 256, 0);
+
+    //usleep(300000);
+    int total = 0;
+    while (total < len_encoded) {
+        ssize_t nb = send(sock_for_send, out_b64, len_encoded, 0);
+        //usleep(100000);
+        total += nb;
+    }
+
+    printf("%s\n%u\n%d\n", out_b64, out_size, len_encoded);
+
     free(out_b64);
+
+
 
     r = fclose(fp);
     if (r == EOF)

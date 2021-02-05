@@ -13,7 +13,7 @@ GdkPixbuf *mx_read_image_message(int id) {
     recv(sock_for_send, &bytes, sizeof(int), 0);
     
     if (bytes) {
-        FILE *fp = fopen("client/img/message_image_temp.png", "ab");
+        FILE *fp = fopen("client/img/message_image_temp.png", "wb");
         if (fp == NULL)
             fprintf(stderr, "Cannot open image file\n");
 
@@ -21,19 +21,25 @@ GdkPixbuf *mx_read_image_message(int id) {
         unsigned int out_size = 0; // (unsigned)strtol(data[4], &eptr, 10);
         recv(sock_for_send, &out_size, sizeof(unsigned int), 0);
 
+        int len_encoded = 0;
+        recv(sock_for_send, &len_encoded, sizeof(int), 0);
+
         unsigned char *encoded = malloc( (sizeof(char) * out_size) );
-        unsigned int recv_len = 0;
-        while (recv_len < out_size) {
-            ssize_t n = recv(sock_for_send, encoded, out_size, 0);
+        int recv_len = 0;
+        usleep(70000);
+        while (recv_len < len_encoded) {
+            ssize_t n = recv(sock_for_send, encoded, len_encoded, 0);
             if (n <= 0)
-                usleep(100000);
+                continue;
             else
                 recv_len += n;
         }
 
-        unsigned int flen = b64d_size(out_size);
-        unsigned char *decoded = malloc( (sizeof(char) * out_size) + 1);
-        flen = b64_decode(encoded, out_size - 1, decoded);
+        unsigned int flen = b64d_size(len_encoded);
+        unsigned char *decoded = malloc( (sizeof(char) * flen) + 1);
+        flen = b64_decode(encoded, len_encoded, decoded);
+
+        //printf("%s\n%u\n%d\n", encoded, out_size, len_encoded);
         
         free(encoded);
 

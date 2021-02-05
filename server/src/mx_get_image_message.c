@@ -102,15 +102,21 @@ void mx_get_image_message(char **data, int sockfd) {
         send(sockfd, &out_size, sizeof(unsigned int), 0);
 
         unsigned char *out_b64 = malloc( (sizeof(char) * out_size) );
-        out_size = b64_encode(read_data, sizeof(read_data) / sizeof(read_data[0]), out_b64);
+        b64_encode(read_data, flen, out_b64);
 
-        usleep(100000);
-        unsigned int total = 0;
-        while (total < out_size) {
-            ssize_t nb = send(sockfd, out_b64, out_size + 1, 0);
+        int len_encoded = strlen((char *)out_b64);
+        send(sockfd, &len_encoded, sizeof(int), 0);
+
+        //usleep(300000);
+        int total = 0;
+        while (total < len_encoded) {
+            ssize_t nb = send(sockfd, out_b64, len_encoded, 0);
+            //usleep(100000);
             total += nb;
         }
         free(out_b64);
+
+        //printf("%s\n%u\n%d\n", out_b64, out_size, total);
     }
     rc = sqlite3_finalize(pStmt); 
     sqlite3_close(db);
