@@ -206,45 +206,74 @@ void mx_send_message_on_enter(GtkWidget *widget) {
     }
 
     if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0) {
-        time_t curtime;
-        time(&curtime);
+        if (edit_prev == NULL) {
+            time_t curtime;
+            time(&curtime);
 
-        char sendBuff[2056];
-        bzero(sendBuff, 2056);
-        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
-                t_user.id, curr_destination, curtime, gtk_entry_get_text(GTK_ENTRY(widget)));
-        
-        if(send(sockfd, sendBuff, 2056, 0) == -1){
-            pthread_t thread_id;
-            char *err_msg = "Connection lost\nTry again later";
-            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
-            sockfd = -1;
-            return;
+            char sendBuff[2056];
+            bzero(sendBuff, 2056);
+            sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
+                    t_user.id, curr_destination, curtime, gtk_entry_get_text(GTK_ENTRY(widget)));
+            
+            if(send(sockfd, sendBuff, 2056, 0) == -1){
+                pthread_t thread_id;
+                char *err_msg = "Connection lost\nTry again later";
+                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                sockfd = -1;
+                return;
+            }
+
+            int m_id = 0;
+            if(recv(sockfd, &m_id, sizeof(int), 0) == 0){
+                pthread_t thread_id;
+                char *err_msg = "Connection lost\nTry again later";
+                pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+                sockfd = -1;
+                return;
+            }
+            max_msg_id = m_id;
+            
+            t_message *msg = mx_push_back_message(&curr_room_msg_head,
+                strdup(gtk_entry_get_text(GTK_ENTRY(widget))), 
+                t_user.id, 
+                NULL,
+                curtime,
+                m_id);
+            mx_add_message(t_chat_room_vars.messages_box, msg);
+
+            gtk_entry_set_text(GTK_ENTRY(widget), "");
+            t_chats_list *node = chats_list_head;
+            while (node->uid != (int)curr_destination)
+                node = node->next;
+            gtk_box_reorder_child(GTK_BOX(chats_list), node->room, 0);
         }
+        else {
+            char *text = mx_strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
 
-        int m_id = 0;
-        if(recv(sockfd, &m_id, sizeof(int), 0) == 0){
-            pthread_t thread_id;
-            char *err_msg = "Connection lost\nTry again later";
-            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
-            sockfd = -1;
-            return;
+            GList *children = gtk_container_get_children(GTK_CONTAINER(selected_msg_widget));
+            GList *box_children = gtk_container_get_children(GTK_CONTAINER(g_list_nth_data(children, 0)));
+            guint size = g_list_length(box_children);
+            gtk_label_set_text(GTK_LABEL(g_list_nth_data(box_children, size - 2)), text);
+            g_list_free(children);
+            g_list_free(box_children);
+
+            free(selected_msg_struct->text);
+            selected_msg_struct->text = text;
+            
+            gtk_widget_destroy(GTK_WIDGET(edit_prev));
+            edit_prev = NULL;
+
+            gtk_entry_set_text(GTK_ENTRY(widget), "");
+            gtk_widget_set_can_focus(GTK_WIDGET(widget), TRUE);
+            gtk_widget_grab_focus(GTK_WIDGET(widget));
+
+            char sendBuff[256];
+            bzero(sendBuff, 256);
+            sprintf(sendBuff, "EditMessage\n%d\n%d\n%d\n%s", t_user.id, (int)curr_destination,
+                (int)selected_msg_struct->id, text);
+
+            send(sockfd, sendBuff, 256, 0);
         }
-        max_msg_id = m_id;
-        
-        t_message *msg = mx_push_back_message(&curr_room_msg_head,
-            strdup(gtk_entry_get_text(GTK_ENTRY(widget))), 
-            t_user.id, 
-            NULL,
-            curtime,
-            m_id);
-        mx_add_message(t_chat_room_vars.messages_box, msg);
-
-        gtk_entry_set_text(GTK_ENTRY(widget), "");
-        t_chats_list *node = chats_list_head;
-        while (node->uid != (int)curr_destination)
-            node = node->next;
-        gtk_box_reorder_child(GTK_BOX(chats_list), node->room, 0);
     }
 }
 //=================================================================================
@@ -329,7 +358,7 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
                 gtk_box_reorder_child(GTK_BOX(chats_list), node->room, 0);
             }
             else {
-                char *text = mx_strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
+                char *text = mx_strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
 
                 GList *children = gtk_container_get_children(GTK_CONTAINER(selected_msg_widget));
                 GList *box_children = gtk_container_get_children(GTK_CONTAINER(g_list_nth_data(children, 0)));
@@ -343,11 +372,10 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
                 
                 gtk_widget_destroy(GTK_WIDGET(edit_prev));
                 edit_prev = NULL;
-                children = gtk_container_get_children(GTK_CONTAINER(t_chat_room_vars.message_enter_area));
-                gtk_entry_set_text(GTK_ENTRY(g_list_nth_data(children, 1)), "");
-                gtk_widget_set_can_focus(GTK_WIDGET(g_list_nth_data(children, 1)), TRUE);
-                gtk_widget_grab_focus(GTK_WIDGET(g_list_nth_data(children, 1)));
-                g_list_free(children);
+
+                gtk_entry_set_text(GTK_ENTRY(entry), "");
+                gtk_widget_set_can_focus(GTK_WIDGET(entry), TRUE);
+                gtk_widget_grab_focus(GTK_WIDGET(entry));
 
                 char sendBuff[256];
                 bzero(sendBuff, 256);
@@ -365,59 +393,82 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
 //=================================================================================
 void more_content_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *data) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
+        GList *children = gtk_container_get_children(GTK_CONTAINER(widget));
+        GtkWidget *selected_obj = g_list_nth_data(children, 0);
+        GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(selected_obj));
+        g_list_free(children);
         if (!(flags & GTK_STATE_FLAG_CHECKED)) {
 
-            flags = gtk_widget_get_state_flags(GTK_WIDGET(gtk_grid_get_child_at(GTK_GRID(data), 1, 1)));
+            GtkWidget *first_eventbox = gtk_grid_get_child_at(GTK_GRID(data), 1, 2);
+            GtkWidget *second_eventbox = gtk_grid_get_child_at(GTK_GRID(data), 3, 2);
+
+            children = gtk_container_get_children(GTK_CONTAINER(first_eventbox));
+            flags = gtk_widget_get_state_flags(GTK_WIDGET(g_list_nth_data(children, 0)));
+            g_list_free(children);
             if (flags & GTK_STATE_FLAG_CHECKED) {
-                gtk_widget_unset_state_flags(GTK_WIDGET(gtk_grid_get_child_at(GTK_GRID(data), 1, 1)), GTK_STATE_FLAG_CHECKED);
+                gtk_container_forall(GTK_CONTAINER(first_eventbox), 
+                    (GtkCallback)gtk_widget_unset_state_flags, (gpointer)(intptr_t)GTK_STATE_FLAG_CHECKED);
             }
             else {
-                gtk_widget_unset_state_flags(GTK_WIDGET(gtk_grid_get_child_at(GTK_GRID(data), 3, 1)), GTK_STATE_FLAG_CHECKED);
+                gtk_container_forall(GTK_CONTAINER(second_eventbox), 
+                    (GtkCallback)gtk_widget_unset_state_flags, (gpointer)(intptr_t)GTK_STATE_FLAG_CHECKED);
             }
 
-            gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, TRUE);
+            gtk_widget_set_state_flags(GTK_WIDGET(selected_obj), GTK_STATE_FLAG_CHECKED, TRUE);
 
         }
     }
 }
 
-void mx_more_click(GtkWidget *widget, GdkEventButton *event) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+static void more_win_click(GtkWidget *widget, GdkEventButton *event, GdkDisplay *display);
+static void create_more_window(GdkEvent *event);
+
+void mx_more_click(GtkWidget *widget, GdkEvent *event) {
+    if (((GdkEventButton *)event)->type == GDK_BUTTON_PRESS && ((GdkEventButton *)event)->button == 1) {
         GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
         if (!(flags & GTK_STATE_FLAG_CHECKED)) {
             mx_destroy_popups();
             gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_CHECKED, FALSE);
 
-            t_chat_room_vars.more_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+            create_more_window(event);
             gtk_widget_set_name(GTK_WIDGET(t_chat_room_vars.more_box), "more_box");
-            GtkAllocation alloc;
-            gtk_widget_get_allocation(GTK_WIDGET(widget), &alloc);
-            gtk_fixed_put(GTK_FIXED(chat_area), t_chat_room_vars.more_box, alloc.x - 265, alloc.y - 515);
 
             GtkWidget *more_grid = gtk_grid_new();
             gtk_container_add(GTK_CONTAINER(t_chat_room_vars.more_box), more_grid);
             gtk_widget_set_valign(GTK_WIDGET(more_grid), GTK_ALIGN_CENTER);
             gtk_widget_set_size_request(GTK_WIDGET(more_grid), 300, 480);
-            gtk_widget_set_margin_top(GTK_WIDGET(more_grid), 10);
+            //gtk_widget_set_margin_top(GTK_WIDGET(more_grid), 10);
             gtk_widget_set_margin_bottom(GTK_WIDGET(more_grid), 10);
 
             GtkWidget *stickers_eventbox = gtk_event_box_new();
-            gtk_widget_set_size_request(GTK_WIDGET(stickers_eventbox), 150, 45);
+            gtk_widget_set_size_request(GTK_WIDGET(stickers_eventbox), 300, 45);
             gtk_widget_set_name(GTK_WIDGET(stickers_eventbox), "stickers_eventbox");
             gtk_widget_set_state_flags(GTK_WIDGET(stickers_eventbox), GTK_STATE_FLAG_CHECKED, TRUE);
-            g_signal_connect(G_OBJECT(stickers_eventbox), "button_press_event",
-                G_CALLBACK(more_content_click), more_grid);
-            gtk_grid_attach(GTK_GRID(more_grid), stickers_eventbox, 1, 1, 2, 1);
+            gtk_grid_attach(GTK_GRID(more_grid), stickers_eventbox, 1, 1, 3, 1);
 
-            GtkWidget *gifs_eventbox = gtk_event_box_new();
-            gtk_widget_set_size_request(GTK_WIDGET(gifs_eventbox), 150, 45);
-            gtk_widget_set_name(GTK_WIDGET(gifs_eventbox), "gifs_eventbox");
-            g_signal_connect(G_OBJECT(gifs_eventbox), "button_press_event",
+            GtkWidget *doggy_event_box = gtk_event_box_new();
+            GtkWidget *doggy_label = gtk_label_new("DOGGY");
+            gtk_container_add(GTK_CONTAINER(doggy_event_box), doggy_label);
+            gtk_widget_set_size_request(GTK_WIDGET(doggy_label), 150, 30);
+            gtk_widget_set_name(GTK_WIDGET(doggy_label), "stickers_label");
+            g_signal_connect(G_OBJECT(doggy_event_box), "button_press_event", 
                 G_CALLBACK(more_content_click), more_grid);
-            gtk_grid_attach(GTK_GRID(more_grid), gifs_eventbox, 3, 1, 1, 1);
+            gtk_grid_attach(GTK_GRID(more_grid), doggy_event_box, 1, 2, 1, 1);
+
+            GtkWidget *kitty_event_box = gtk_event_box_new();
+            GtkWidget *kitty_label = gtk_label_new("KITTY");
+            gtk_container_add(GTK_CONTAINER(kitty_event_box), kitty_label);
+            gtk_widget_set_size_request(GTK_WIDGET(kitty_label), 150, 30);
+            gtk_widget_set_name(GTK_WIDGET(kitty_label), "stickers_label");
+            g_signal_connect(G_OBJECT(kitty_event_box), "button_press_event", 
+                G_CALLBACK(more_content_click), more_grid);
+            gtk_grid_attach(GTK_GRID(more_grid), kitty_event_box, 3, 2, 1, 1);
+
+            GtkWidget *horizontal_separator = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+            gtk_widget_set_size_request(GTK_WIDGET(horizontal_separator), 300, 0);
+            gtk_grid_attach(GTK_GRID(more_grid), horizontal_separator, 1, 3, 3, 1);
             
-            
+            gtk_window_set_keep_above(GTK_WINDOW(t_chat_room_vars.more_box), TRUE);
             gtk_widget_show_all(GTK_WIDGET(t_chat_room_vars.more_box));
         }
         else {
@@ -427,5 +478,45 @@ void mx_more_click(GtkWidget *widget, GdkEventButton *event) {
             t_chat_room_vars.more_box = NULL;
         }
     }
+}
+
+// Click on the window to close the menu
+static void more_win_click(GtkWidget *widget, GdkEventButton *event, GdkDisplay *display) {
+    if (t_chat_room_vars.more_box != NULL) {
+        GtkAllocation alloc;
+        gtk_widget_get_allocation(GTK_WIDGET(t_chat_room_vars.more_box), &alloc);
+        gint x_more, y_more;
+        gtk_window_get_position(GTK_WINDOW(t_chat_room_vars.more_box), &x_more, &y_more);
+        selected_msg_widget = NULL;
+        selected_msg_struct = NULL;
+        if (event->x_root > x_more + alloc.width || event->y_root > y_more +alloc.height
+            || event->x_root < x_more || event->y_root < y_more) {    
+            mx_destroy_popups();
+        }
+    }
+}
+
+static void create_more_window(GdkEvent *event) {
+    t_chat_room_vars.more_box = gtk_window_new(GTK_WINDOW_POPUP);
+    gtk_widget_set_device_events(GTK_WIDGET(t_chat_room_vars.more_box), gtk_get_current_event_device(), GDK_ALL_EVENTS_MASK);
+    gtk_widget_realize(GTK_WIDGET(t_chat_room_vars.more_box));
+    gtk_window_set_resizable(GTK_WINDOW(t_chat_room_vars.more_box), FALSE);
+    gtk_window_set_decorated(GTK_WINDOW(t_chat_room_vars.more_box), FALSE);
+
+    gdk_window_show(gtk_widget_get_window(GTK_WIDGET(t_chat_room_vars.more_box)));
+    GdkDisplay *display = gtk_widget_get_display(GTK_WIDGET(chat_area));
+    GdkCursor *cursor = gdk_cursor_new_from_name (display, "default");
+    GdkGrabStatus status = gdk_seat_grab(gdk_display_get_default_seat(display),
+        gtk_widget_get_window(GTK_WIDGET(window)), GDK_SEAT_CAPABILITY_ALL_POINTING, TRUE,
+        cursor, event, NULL, NULL);
+    g_object_unref(G_OBJECT(cursor));    
+    g_signal_connect(G_OBJECT(window), "button_press_event",
+        G_CALLBACK(more_win_click), display);
+
+    // Move window of tools to the mouse click position
+    gint x_win, y_win;
+    gtk_window_get_position(GTK_WINDOW(window), &x_win, &y_win);
+    gtk_window_move(GTK_WINDOW(t_chat_room_vars.more_box), 
+        x_win + CUR_WIDTH + 10, y_win + 200);
 }
 //=================================================================================

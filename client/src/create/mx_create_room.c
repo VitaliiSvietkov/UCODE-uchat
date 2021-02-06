@@ -5,10 +5,6 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
         
     GtkWidget *eventbox = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(eventbox), "eventbox_room");
-    g_signal_connect(G_OBJECT(eventbox), "enter-notify-event",
-        G_CALLBACK(activate_prelight), NULL);
-    g_signal_connect(G_OBJECT(eventbox), "leave-notify-event",
-        G_CALLBACK(deactivate_prelight), NULL);
     g_signal_connect(G_OBJECT(eventbox), "button_press_event",
         G_CALLBACK(*func), (gpointer)(uintptr_t)uid);
 
@@ -44,10 +40,8 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
     }
     else {
         if (sockfd == -1){
-        mx_connect_to_server(&sockfd);
-        //return 1;
+            mx_connect_to_server(&sockfd);
         }
-        // Load data from data base
 
         // Change for image read from server!!
         mx_read_photo_from_bd((int)uid);

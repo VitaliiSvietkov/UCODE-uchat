@@ -113,6 +113,8 @@ void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         curr_destination = (unsigned int)(uintptr_t)uid;
 
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK);
+
         t_chats_list *node = chats_list_head;
         while (node != NULL) {
             if (node->uid == (int)curr_destination)

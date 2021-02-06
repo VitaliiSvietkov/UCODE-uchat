@@ -56,9 +56,8 @@
 }
 
 #more_box {
-    background-color: #e1e1e1;
+    background-color: white;
     border: 1px solid #1f1f1f;
-    border-radius: 15px;
 }
 
 #stickers_eventbox {
@@ -75,16 +74,13 @@
     transition: all ease-in-out .3s;
 }
 
-#gifs_eventbox {
-    background-image: url("../../img/gif.png");
-    background-size: 35px;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-bottom: 1px solid #e1e1e1;
-    transition: all ease-in-out .3s;
+#stickers_label {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #1f1f1f;
+    font-size: 18px;
+    transition: all ease-in-out .1s;
 }
-#gifs_eventbox:checked {
-    background-image: url("../../img/gif-selected.png");
-    border-bottom: 1px solid #416ef2;
-    transition: all ease-in-out .3s;
+#stickers_label:checked {
+    color: #416ef2;
 }

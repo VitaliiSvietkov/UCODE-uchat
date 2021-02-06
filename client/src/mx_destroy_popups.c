@@ -19,8 +19,13 @@ void mx_destroy_popups(void) {
             mx_clear_chat_list(&search_list_head);
     }
     if (t_chat_room_vars.more_box != NULL) {
+        //gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.more_box));
+        //t_chat_room_vars.more_box = NULL;
+
+        gdk_seat_ungrab(gdk_display_get_default_seat(gdk_display_get_default()));
         gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.more_box));
         t_chat_room_vars.more_box = NULL;
+
         GList *children = gtk_container_get_children(GTK_CONTAINER(t_chat_room_vars.message_enter_area));
         gtk_widget_unset_state_flags(GTK_WIDGET(g_list_nth_data(children, 4)), 
             GTK_STATE_FLAG_PRELIGHT);

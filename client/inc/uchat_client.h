@@ -199,7 +199,7 @@ void entry_chat_fill_event(GtkWidget *widget, GdkEvent *event);
 void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
 void mx_send_message_on_enter(GtkWidget *widget);
 
-void mx_more_click(GtkWidget *widget, GdkEventButton *event);
+void mx_more_click(GtkWidget *widget, GdkEvent *event);
 //==========================================================================================
 
 
