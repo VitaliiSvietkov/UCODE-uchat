@@ -391,6 +391,8 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
 
 // More button
 //=================================================================================
+static void create_scrolled_more(GtkWidget *clicked, GtkWidget *grid);
+
 void more_content_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *data) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         GList *children = gtk_container_get_children(GTK_CONTAINER(widget));
@@ -415,7 +417,7 @@ void more_content_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *dat
             }
 
             gtk_widget_set_state_flags(GTK_WIDGET(selected_obj), GTK_STATE_FLAG_CHECKED, TRUE);
-
+            create_scrolled_more(widget, data);
         }
     }
 }
@@ -438,7 +440,7 @@ void mx_more_click(GtkWidget *widget, GdkEvent *event) {
             gtk_widget_set_valign(GTK_WIDGET(more_grid), GTK_ALIGN_CENTER);
             gtk_widget_set_size_request(GTK_WIDGET(more_grid), 300, 480);
             //gtk_widget_set_margin_top(GTK_WIDGET(more_grid), 10);
-            gtk_widget_set_margin_bottom(GTK_WIDGET(more_grid), 10);
+            //gtk_widget_set_margin_bottom(GTK_WIDGET(more_grid), 10);
 
             GtkWidget *stickers_eventbox = gtk_event_box_new();
             gtk_widget_set_size_request(GTK_WIDGET(stickers_eventbox), 300, 45);
@@ -518,5 +520,107 @@ static void create_more_window(GdkEvent *event) {
     gtk_window_get_position(GTK_WINDOW(window), &x_win, &y_win);
     gtk_window_move(GTK_WINDOW(t_chat_room_vars.more_box), 
         x_win + CUR_WIDTH + 10, y_win + 200);
+}
+
+static void sticker_click(GtkWidget *widget, GdkEventButton *event, gpointer path) {
+    path = (char *)path;
+    GdkPixbuf *pixbuf = mx_create_pixbuf(path);
+    
+    time_t curtime;
+    time(&curtime);
+
+    char sendBuff[2056];
+    bzero(sendBuff, 2056);
+    sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n(null)",
+            t_user.id, curr_destination, curtime);
+    
+    if(send(sockfd, sendBuff, 2056, 0) == -1){
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return;
+    }
+
+    int m_id = 0;
+    if(recv(sockfd, &m_id, sizeof(int), 0) == 0){
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return;
+    }
+    max_msg_id = m_id;
+
+    t_message *msg = mx_push_back_message(&curr_room_msg_head,
+        NULL, 
+        t_user.id, 
+        pixbuf,
+        curtime,
+        max_msg_id);
+    mx_add_message(t_chat_room_vars.messages_box, msg);
+
+    mx_write_image_message(path, msg->id);
+    free(path);
+}
+
+static void create_scrolled_more(GtkWidget *clicked, GtkWidget *grid) {
+    if (gtk_grid_get_child_at(GTK_GRID(grid), 1, 4) != NULL)
+        gtk_widget_destroy(GTK_WIDGET(gtk_grid_get_child_at(GTK_GRID(grid), 1, 4)));
+
+    GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, 
+        300, 100, 100, 402);
+    GtkWidget *more_scroll = gtk_scrolled_window_new(NULL, vadjustment);
+    gtk_widget_set_size_request(GTK_WIDGET(more_scroll), 280, 402);
+    gtk_grid_attach(GTK_GRID(grid), more_scroll, 1, 4, 3, 1);
+
+    GtkWidget *stickers_grid = gtk_grid_new();
+    gtk_container_add(GTK_CONTAINER(more_scroll), stickers_grid);
+    gtk_widget_set_valign(GTK_WIDGET(stickers_grid), GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(GTK_WIDGET(stickers_grid), 280, 0);
+
+    DIR *dir;
+    struct dirent *sd;
+    char path[PATH_MAX];
+    mx_memcpy(path, "client/img/stickers/", 21);
+    if (clicked == gtk_grid_get_child_at(GTK_GRID(grid), 1, 2)) {
+        dir = opendir("client/img/stickers/Doggy");
+        mx_memcpy(&path[20], "Doggy/", 7);
+    }
+    else {
+        dir = opendir("client/img/stickers/Kitty");
+        mx_memcpy(&path[20], "Kitty/", 7);
+    }
+
+    for (int i = 1; ; i++) {
+        int status = 0;
+        for (int j = 1; j < 4; j++) {
+            sd = readdir(dir);
+            if (sd == NULL) {
+                status = -1;
+                break;
+            }
+            if (mx_strlen(sd->d_name) < 3) {
+                j--;
+                continue;
+            }
+            char *tmp_path = mx_strjoin(path, sd->d_name);
+            GdkPixbuf *tmp_pixbuf = mx_get_pixbuf_with_size(tmp_path, 95, 95);
+            GtkWidget *eventbox_image = gtk_event_box_new();
+            g_signal_connect(G_OBJECT(eventbox_image), "button_press_event",
+                G_CALLBACK(sticker_click), (gpointer)mx_strdup(tmp_path));
+            GtkWidget *image = gtk_image_new_from_pixbuf(tmp_pixbuf);
+            g_object_unref(G_OBJECT(tmp_pixbuf));
+            free(tmp_path);
+            gtk_widget_set_size_request(GTK_WIDGET(image), 20, 20);
+            gtk_container_add(GTK_CONTAINER(eventbox_image), image);
+
+            gtk_grid_attach(GTK_GRID(stickers_grid), eventbox_image, j, i, 1, 1);
+        }
+        if (status == -1)
+            break;
+    }
+
+    gtk_widget_show_all(GTK_WIDGET(more_scroll));
 }
 //=================================================================================
