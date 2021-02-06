@@ -61,15 +61,8 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
     char sendBuff[2056];
     bzero(sendBuff, 2056);
     if (gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf)) > 350) {
-        if (text == NULL)
-            text = mx_strdup("(null)");
-        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n%s",
-                t_user.id, curr_destination, curtime, text);
-
-        if (!mx_strcmp(text, "(null)")) {
-            free(text);
-            text = NULL;
-        }
+        sprintf(sendBuff, "InsertMessage\n%u\n%u\n%lu\n(null)",
+                t_user.id, curr_destination, curtime);
         
         if(send(sockfd, sendBuff, 2056, 0) == -1){
             pthread_t thread_id;
