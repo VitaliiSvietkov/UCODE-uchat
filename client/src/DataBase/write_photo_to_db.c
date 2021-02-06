@@ -1,4 +1,7 @@
 #include "../../inc/uchat_client.h"
+#include "../../inc/base64.h"
+
+static void send_all(int socket, void *buffer, size_t length);
 
 void mx_write_photo_to_bd(char *path, int id){
     if (sockfd == -1){
@@ -63,19 +66,11 @@ void mx_write_photo_to_bd(char *path, int id){
             fprintf(stderr, "Cannot close file handler\n");
         }    
     }
-
-    if(send(sockfd, &flen, sizeof(long), 0) == -1) {
-        pthread_t thread_id;
-        char *err_msg = "Connection lost\nTry again later";
-        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
-        sockfd = -1;
-        return;
-    }
     //======================================================
 
     // Get the data of the file which will be sent to server
     //======================================================
-    char read_data[flen + 1];
+    unsigned char *read_data = malloc((unsigned)flen + 1);
     fread(read_data, flen, 1, fp);
     if (ferror(fp)) {
         fprintf(stderr, "fread() failed\n");
@@ -85,18 +80,31 @@ void mx_write_photo_to_bd(char *path, int id){
         }    
     }
     //======================================================
-    
-    for (long i = 0; i < flen; i++) {
-        if(send(sockfd, &read_data[i], 1, 0) == -1) {
-            pthread_t thread_id;
-            char *err_msg = "Connection lost\nTry again later";
-            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
-            sockfd = -1;
-            return;
-        }
-    }
+
+    unsigned int out_size = b64e_size(flen) + 1;
+    unsigned char *out_b64 = malloc( (sizeof(char) * out_size) );
+    mx_memset(out_b64, 0, out_size);
+    b64_encode(read_data, flen, out_b64);
+    free(read_data);
+
+    int len_encoded = strlen((char *)out_b64);
+    send(sockfd, &len_encoded, sizeof(int), 0);
+
+    send_all(sockfd, out_b64, len_encoded);
+    printf("%s\n%d\n", out_b64, mx_strlen((char *)out_b64));
+    free(out_b64); 
 
     r = fclose(fp);
     if (r == EOF)
         fprintf(stderr, "Cannot close file handler\n");
+}
+
+static void send_all(int socket, void *buffer, size_t length) {
+    unsigned char *ptr = (unsigned char *)buffer;
+    while (length > 0) {
+        usleep(70000);
+        int i = send(sockfd, ptr, length, 0);
+        ptr += i;
+        length -= i;
+    }
 }
