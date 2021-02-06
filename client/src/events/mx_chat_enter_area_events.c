@@ -37,13 +37,12 @@ void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
         if (filename != NULL) {
             struct stat buf;
             stat(filename, &buf);
-            if (buf.st_size < 1117971520) // < 8mb
+            if (buf.st_size < 5242880) // < 5mb
                 mx_create_attach_form(entry, filename);
             else {
                 pthread_t thread_id;
                 char *err_msg = "The file is too big!";
                 pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
-                //mx_run_error_pop_up("The file is too big!");
             }
         }
     }

@@ -1,12 +1,9 @@
 #include "../inc/server.h"
+#include "../inc/base64.h"
 
 void mx_get_avatar(char **data, int sockfd) {
     // Read from Data Base
     //======================================================
-    FILE *fp = fopen("server/data/tmp_avatar.png", "wb");
-    if (fp == NULL)
-        fprintf(stderr, "Cannot open image file\n");
-    
     sqlite3 *db = mx_opening_db();
     char sql[500];
     bzero(sql, 500);
@@ -24,74 +21,27 @@ void mx_get_avatar(char **data, int sockfd) {
     int bytes = 0;
     if (rc == SQLITE_ROW)
         bytes = sqlite3_column_bytes(pStmt, 0);
+    
+    const void *blob_data = sqlite3_column_blob(pStmt, 0);
+    if (blob_data == NULL) {    
+        rc = sqlite3_finalize(pStmt);
+        return;
+    }
+    unsigned char *write_data = malloc(bytes + 1);
+    memcpy(write_data, blob_data, bytes);
+    write_data[bytes] = '\0';
 
-    fwrite(sqlite3_column_blob(pStmt, 0), bytes, 1, fp);
+    unsigned int out_size = b64e_size(bytes) + 1;
+    unsigned char *out_b64 = malloc( (sizeof(char) * out_size) );
+    b64_encode(write_data, bytes, out_b64);
+    free(write_data);
 
-    if (ferror(fp))         
-        fprintf(stderr, "fwrite() failed\n");    
+    int len_encoded = strlen((char *)out_b64);
+    send(sockfd, &len_encoded, sizeof(int), 0);
+
+    mx_send_all(&sockfd, out_b64, len_encoded);
+    free(out_b64);
 
     sqlite3_finalize(pStmt);   
     sqlite3_close(db);
-
-    int r = fclose(fp);
-    if (r == EOF)
-        fprintf(stderr, "Cannot close file handler\n");
-    //======================================================
-
-    fp = fopen("server/data/tmp_avatar.png", "rb");
-
-    // Get the length of the file data - 'flen'
-    //======================================================
-    fseek(fp, 0, SEEK_END);
-    if (ferror(fp)) {
-        fprintf(stderr, "fseek() failed\n");
-        int r = fclose(fp);
-        if (r == EOF) {
-            fprintf(stderr, "Cannot close file handler\n");          
-        }    
-    }  
-
-    long flen = ftell(fp);
-    if (flen == -1) {
-        perror("error occurred");
-        int r = fclose(fp);
-        if (r == EOF) {
-            fprintf(stderr, "Cannot close file handler\n");
-        }   
-    }
-
-    send(sockfd, &flen, sizeof(long), 0);
-
-    fseek(fp, 0, SEEK_SET);
-    if (ferror(fp)) {
-        fprintf(stderr, "fseek() failed\n");
-        int r = fclose(fp);
-        if (r == EOF) {
-            fprintf(stderr, "Cannot close file handler\n");
-        }    
-    }
-    //======================================================
-
-    // Get the data of the file which will be sent to client
-    //======================================================
-    char read_data[flen + 1];
-    size_t size = fread(read_data, flen, 1, fp);
-    if (ferror(fp)) {
-        fprintf(stderr, "fread() failed\n");
-        int r = fclose(fp);
-        if (r == EOF) {
-            fprintf(stderr, "Cannot close file handler\n");
-        }    
-    }
-    //======================================================
-
-    for (int i = 0; i < flen; i += 6) {
-        send(sockfd, &read_data[i], 6, 0);
-    }
-    
-    r = fclose(fp);
-    if (r == EOF)
-        fprintf(stderr, "Cannot close file handler\n");
-
-    remove("server/data/tmp_avatar.png");
 }

@@ -6,10 +6,6 @@ void mx_add_image_message(char **data, int sockfd) {
     int dst = mx_atoi(data[2]);
     int m_id = mx_atoi(data[3]);
 
-    FILE *fp = fopen("server/data/tmp_msg_image.png", "wb");
-    if (fp == NULL)
-        fprintf(stderr, "Cannot open image file\n");
-
     char *eptr;
     unsigned int out_size = (unsigned)strtol(data[4], &eptr, 10);
 
@@ -24,14 +20,6 @@ void mx_add_image_message(char **data, int sockfd) {
     memset(decoded, 0, flen);
     flen = b64_decode(encoded, len_encoded, decoded);
     free(encoded);
-
-    fwrite(decoded, flen, 1, fp);
-    if (ferror(fp))
-        fprintf(stderr, "fwrite() failed\n");
-    
-    int r = fclose(fp);
-    if (r == EOF)
-        fprintf(stderr, "Cannot close file handler\n");
     
     sqlite3 *db = mx_opening_db();
     sqlite3_stmt *pStmt;
@@ -55,5 +43,4 @@ void mx_add_image_message(char **data, int sockfd) {
     sqlite3_close(db);
     free(sql);
     free(decoded);
-    remove("server/data/tmp_msg_image.png");
 }

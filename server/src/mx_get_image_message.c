@@ -40,68 +40,10 @@ void mx_get_image_message(char **data, int sockfd) {
         memcpy(write_data, blob_data, bytes);
         write_data[bytes] = '\0';
 
-        FILE *fp = fopen("server/data/message_image_temp.jpg", "wb");
-        if (fp == NULL)
-            fprintf(stderr, "Cannot open image file\n");
-
-        fwrite(write_data, bytes + 1, 1, fp);
-        if (ferror(fp))         
-            fprintf(stderr, "fwrite() failed\n");
-        
-        free(write_data);
-        
-        int r = fclose(fp);
-        if (r == EOF)
-            fprintf(stderr, "Cannot close file handler\n");
-        //============================================================
-
-        fp = fopen("server/data/message_image_temp.jpg", "rb");
-
-        fseek(fp, 0, SEEK_END);
-        if (ferror(fp)) {
-            fprintf(stderr, "fseek() failed\n");
-            r = fclose(fp);
-            if (r == EOF) {
-                fprintf(stderr, "Cannot close file handler\n");          
-            }    
-        }  
-        long flen = ftell(fp);
-        if (flen == -1) {
-            perror("error occurred");
-            r = fclose(fp);
-            if (r == EOF) {
-                fprintf(stderr, "Cannot close file handler\n");
-            }   
-        }
-        fseek(fp, 0, SEEK_SET);
-        if (ferror(fp)) {
-            fprintf(stderr, "fseek() failed\n");
-            r = fclose(fp);
-            if (r == EOF) {
-                fprintf(stderr, "Cannot close file handler\n");
-            }    
-        }
-
-        unsigned char *read_data = malloc((unsigned)flen + 1);
-        fread(read_data, flen, 1, fp);
-        if (ferror(fp)) {
-            fprintf(stderr, "fread() failed\n");
-            r = fclose(fp);
-            if (r == EOF) {
-                fprintf(stderr, "Cannot close file handler\n");
-            }    
-        }
-
-        r = fclose(fp);
-        if (r == EOF)
-            fprintf(stderr, "Cannot close file handler\n");
-        
-        //remove("server/data/message_image_temp.jpg");
-
-        unsigned int out_size = b64e_size(flen) + 1;
+        unsigned int out_size = b64e_size(bytes) + 1;
         unsigned char *out_b64 = malloc( (sizeof(char) * out_size) );
-        b64_encode(read_data, flen, out_b64);
-        free(read_data);
+        b64_encode(write_data, bytes, out_b64);
+        free(write_data);
 
         int len_encoded = strlen((char *)out_b64);
         send(sockfd, &len_encoded, sizeof(int), 0);
