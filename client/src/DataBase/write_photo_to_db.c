@@ -1,8 +1,6 @@
 #include "../../inc/uchat_client.h"
 #include "../../inc/base64.h"
 
-static void send_all(int socket, void *buffer, size_t length);
-
 void mx_write_photo_to_bd(char *path, int id){
     if (sockfd == -1){
         mx_connect_to_server(&sockfd);
@@ -90,21 +88,10 @@ void mx_write_photo_to_bd(char *path, int id){
     int len_encoded = strlen((char *)out_b64);
     send(sockfd, &len_encoded, sizeof(int), 0);
 
-    send_all(sockfd, out_b64, len_encoded);
-    printf("%s\n%d\n", out_b64, mx_strlen((char *)out_b64));
+    mx_send_all(&sockfd, out_b64, len_encoded);
     free(out_b64); 
 
     r = fclose(fp);
     if (r == EOF)
         fprintf(stderr, "Cannot close file handler\n");
-}
-
-static void send_all(int socket, void *buffer, size_t length) {
-    unsigned char *ptr = (unsigned char *)buffer;
-    while (length > 0) {
-        usleep(70000);
-        int i = send(sockfd, ptr, length, 0);
-        ptr += i;
-        length -= i;
-    }
 }

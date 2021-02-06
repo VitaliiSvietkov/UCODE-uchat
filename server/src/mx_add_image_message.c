@@ -17,15 +17,7 @@ void mx_add_image_message(char **data, int sockfd) {
     
     unsigned char *encoded = malloc( (sizeof(char) * out_size) );
     memset(encoded, 0, out_size);
-    int recv_len = 0;
-    while (recv_len < len_encoded) {
-        usleep(180000);
-        ssize_t n = recv(sockfd, encoded, len_encoded, 0);
-        if (n <= 0)
-            continue;//usleep(100000);
-        else
-            recv_len += n;
-    }
+    mx_recv_all(&sockfd, &encoded, len_encoded);
 
     unsigned int flen = b64d_size(len_encoded);
     unsigned char *decoded = malloc( (sizeof(char) * flen) );
@@ -43,7 +35,8 @@ void mx_add_image_message(char **data, int sockfd) {
     
     sqlite3 *db = mx_opening_db();
     sqlite3_stmt *pStmt;
-    char sql[flen + 250];
+
+    char *sql = malloc(flen + 250);
     bzero(sql, flen + 250);
     sprintf(sql, "UPDATE Messages SET Image = ? WHERE id=%d AND\
             ((addresser=%d OR addresser=%d) AND (destination=%d OR destination=%d));",
@@ -60,7 +53,7 @@ void mx_add_image_message(char **data, int sockfd) {
 
     sqlite3_finalize(pStmt);  
     sqlite3_close(db);
-
+    free(sql);
     free(decoded);
-    //remove("server/data/tmp_msg_image.png");
+    remove("server/data/tmp_msg_image.png");
 }

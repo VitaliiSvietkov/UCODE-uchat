@@ -37,7 +37,7 @@ void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry) {
         if (filename != NULL) {
             struct stat buf;
             stat(filename, &buf);
-            if (buf.st_size < 7971520) // < 8mb
+            if (buf.st_size < 1117971520) // < 8mb
                 mx_create_attach_form(entry, filename);
             else {
                 pthread_t thread_id;

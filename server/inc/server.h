@@ -81,4 +81,7 @@ void mx_write_photo_to_bd(char *path, int id);
 bool mx_uint_arr_check_value(unsigned int *arr, unsigned int value, int len);
 int mx_uint_array_insert(unsigned int **arr, unsigned int insert_value, int len);
 
+void mx_recv_all(int *socket, unsigned char **buffer, size_t length);
+void mx_send_all(int *socket, void *buffer, size_t length);
+
 #endif

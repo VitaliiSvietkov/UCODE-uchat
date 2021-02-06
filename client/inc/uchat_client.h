@@ -253,4 +253,7 @@ void mx_configure_settings_menu_area(void);
 void mx_configure_username_event_screen(GtkBuilder *builder);
 void mx_configure_pseudonim_event_screen(GtkBuilder *builder);
 
+void mx_recv_all(int *socket, unsigned char **buffer, size_t length);
+void mx_send_all(int *socket, void *buffer, size_t length);
+
 #endif
