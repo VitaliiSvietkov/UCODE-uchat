@@ -6,6 +6,7 @@ static void message_click(GtkWidget *widget, GdkEvent *event, t_message *data);
 static void copy_click(GtkWidget *widget, t_message *data);
 static void edit_click(GtkWidget *widget, t_message *data);
 static void delete_click(GtkWidget *widget, t_message *data);
+static void click_image(GtkWidget *widget, GdkEvent *event, void **arr);
 
 GtkWidget *mx_create_message(t_message *data) {
     GtkWidget *eventbox = gtk_event_box_new();
@@ -25,41 +26,36 @@ GtkWidget *mx_create_message(t_message *data) {
     else {
         gtk_widget_set_name(GTK_WIDGET(eventbox), "message");
         gtk_widget_set_halign(GTK_WIDGET(time_send), GTK_ALIGN_START);
-        /* Display name of the addresser
-        if (data->text != NULL) {
-            GtkWidget *sender_name = gtk_label_new(NULL);
-
-            sqlite3 *db = mx_opening_db();
-            sqlite3_stmt *res = NULL;
-            char sql[250];
-            bzero(sql, 250);
-            sprintf(sql, "SELECT NAME, SURENAME FROM USERS\
-                    WHERE id=%u;", data->uid);
-            sqlite3_prepare_v2(db, sql, -1, &res, 0);
-            while (sqlite3_step(res) != SQLITE_DONE) {
-                char *name = mx_strdup((char *)sqlite3_column_text(res, 0));
-                gtk_label_set_text(GTK_LABEL(sender_name), name);
-                free(name);
-            }
-            sqlite3_finalize(res);
-            sqlite3_close(db);
-
-            gtk_widget_set_name(GTK_WIDGET(sender_name), "sender_name");
-            gtk_widget_set_halign(GTK_WIDGET(sender_name), GTK_ALIGN_START);
-            gtk_widget_set_margin_top(GTK_WIDGET(sender_name), 5);
-            gtk_widget_set_margin_start(GTK_WIDGET(sender_name), 10);
-            gtk_box_pack_start(GTK_BOX(box), sender_name, FALSE, FALSE, 0);
-        }*/
     }
 
     if (data->image != NULL) {
+        GtkWidget *eventbox_image = gtk_event_box_new();
+        //gtk_widget_set_name(GTK_WIDGET(eventbox_image), "eventbox_image");
+
         GtkWidget *image = gtk_drawing_area_new();
+        data->orig_image = gdk_pixbuf_copy(data->image);
+        data->orig_image = mx_size_image_down(data->orig_image, 1920, 1080);
+
+        data->image = mx_size_image_down(data->image, 500, 350);
         gtk_widget_set_size_request(GTK_WIDGET(image), gdk_pixbuf_get_width(GDK_PIXBUF(data->image)), 
             gdk_pixbuf_get_height(GDK_PIXBUF(data->image)));
         g_signal_connect(G_OBJECT(image), "draw", G_CALLBACK(draw_image), data->image);
-        gtk_box_pack_start(GTK_BOX(box), image, FALSE, FALSE, 0);
+        gtk_container_add(GTK_CONTAINER(eventbox_image), image);
         if (data->text == NULL)
             gtk_widget_set_name(GTK_WIDGET(eventbox), NULL);
+        
+        gtk_box_pack_start(GTK_BOX(box), eventbox_image, FALSE, FALSE, 0);
+        void **arr = g_new(void *, 2);
+        arr[0] = data;
+        arr[1] = eventbox;
+        g_signal_connect(G_OBJECT(eventbox_image), "button_press_event",
+            G_CALLBACK(click_image), arr);
+        /*
+        g_signal_connect(G_OBJECT(eventbox_image), "enter-notify-event",
+            G_CALLBACK(activate_prelight), NULL);
+        g_signal_connect(G_OBJECT(eventbox_image), "leave-notify-event",
+            G_CALLBACK(deactivate_prelight), NULL);
+            */
     }
     if (data->text != NULL) {
         GtkWidget *label = gtk_label_new(data->text);
@@ -80,9 +76,6 @@ GtkWidget *mx_create_message(t_message *data) {
 
     return eventbox;
 }
-
-
-
 
 
 // Click on the window to close the menu
@@ -219,4 +212,32 @@ static void delete_click(GtkWidget *widget, t_message *data) {
     }*/
 
     mx_destroy_popups();
+}
+
+static void click_image(GtkWidget *widget, GdkEvent *event, void **arr) {
+    if (mx_destroy_popups())
+        return;
+    t_message *data = (t_message *)arr[0];
+    GtkWidget *eventbox = (GtkWidget *)arr[1];
+    if (((GdkEventButton *)event)->type == GDK_BUTTON_PRESS 
+        && ((GdkEventButton *)event)->button == 1) {
+            GtkWidget *msg_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+            // Configure the window
+            gtk_widget_realize(GTK_WIDGET(msg_window));
+            gtk_window_set_resizable(GTK_WINDOW(msg_window), FALSE);
+            gtk_widget_set_size_request(msg_window, 
+                gdk_pixbuf_get_width(data->orig_image),
+                gdk_pixbuf_get_height(data->orig_image));
+            gtk_window_set_position(GTK_WINDOW(msg_window), GTK_WIN_POS_CENTER);
+            g_signal_connect(msg_window, "destroy", G_CALLBACK(gtk_widget_destroy), NULL);
+
+            GtkWidget *image = gtk_image_new_from_pixbuf(data->orig_image);
+            gtk_container_add(GTK_CONTAINER(msg_window), image);
+
+            gtk_widget_show_all(GTK_WIDGET(msg_window));
+    }
+    else if (((GdkEventButton *)event)->type == GDK_BUTTON_PRESS 
+        && ((GdkEventButton *)event)->button == 3) {
+            message_click(eventbox, event, data);
+    }
 }

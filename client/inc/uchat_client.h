@@ -246,7 +246,7 @@ void mx_init_global_vars(void);
 void mx_update_theme(void);
 void mx_tooltip(char *str, void *data);
 void *mx_run_error_pop_up(void *vargp);
-void mx_destroy_popups(void);
+int mx_destroy_popups(void);
 
 void mx_configure_main_area(void);
 void mx_configure_left_header(void);

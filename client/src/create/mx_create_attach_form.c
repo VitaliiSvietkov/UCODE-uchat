@@ -20,7 +20,7 @@ void mx_create_attach_form(GtkWidget *entry, char *filename) {
     // Image preview
     //==================================================================================
     GdkPixbuf *pixbuf = mx_create_pixbuf(filename);
-    pixbuf = mx_size_image_down(pixbuf);
+    pixbuf = mx_size_image_down(pixbuf, 500, 350);
 
     GtkWidget *image = gtk_drawing_area_new();
     gtk_widget_set_halign(GTK_WIDGET(image), GTK_ALIGN_CENTER);

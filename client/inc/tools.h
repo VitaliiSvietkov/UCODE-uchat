@@ -11,7 +11,7 @@ bool mx_uint_arr_check_value(unsigned int *arr, unsigned int value, int len);
 int mx_uint_array_insert(unsigned int **arr, unsigned int insert_value, int len);
 
 GdkPixbuf *mx_create_pixbuf(const gchar *filename);
-GdkPixbuf *mx_size_image_down(GdkPixbuf *pixbuf);
+GdkPixbuf *mx_size_image_down(GdkPixbuf *pixbuf, int w, int h);
 GdkPixbuf *mx_get_pixbuf_with_size(char *path, int w, int h);
 
 // Labels
@@ -34,6 +34,7 @@ void mx_label_push_back(t_labels **list, void *data, int index);
 typedef struct s_message
 {
     GdkPixbuf *image;
+    GdkPixbuf *orig_image;
     unsigned int id;
     char *text;
     unsigned int uid;

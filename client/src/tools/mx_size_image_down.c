@@ -1,32 +1,32 @@
 #include "../../inc/uchat_client.h"
 
-GdkPixbuf *mx_size_image_down(GdkPixbuf *pixbuf) {
+GdkPixbuf *mx_size_image_down(GdkPixbuf *pixbuf, int w, int h) {
     int width = gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf));
     int height = gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf));
 
-    if (width <= 500 && height <= 350)
+    if (width <= w && height <= h)
         return pixbuf;
     else {
         int source_width = width;
         int source_height = height;
         if (width > height) {
-            width = 500;
-            height = (500 * source_height) / source_width;
-            if (height > 350) {
+            width = w;
+            height = (w * source_height) / source_width;
+            if (height > h) {
                 source_width = width;
                 source_height = height;
-                height = 350;
-                width = (350 * source_width) / source_height;
+                height = h;
+                width = (h * source_width) / source_height;
             }
         }
         else {
-            height = 350;
-            width = (350 * source_width) / source_height;
-            if (width > 500) {
+            height = h;
+            width = (h * source_width) / source_height;
+            if (width > w) {
                 source_width = width;
                 source_height = height;
-                width = 500;
-                height = (500 * source_height) / source_width;
+                width = w;
+                height = (w * source_height) / source_width;
             }
         }
     }

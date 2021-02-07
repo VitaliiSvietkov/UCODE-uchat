@@ -1,7 +1,7 @@
 #chat_background {
     background: rgb(255,255,255);
     background: linear-gradient(180deg, rgba(255,255,255,1) 20%, rgba(231,231,231,1) 63%, rgba(193,193,193,1) 100%);
-    padding-bottom: 5px;
+    padding-bottom: 10px;
 }
 
 #room_header {
@@ -83,4 +83,12 @@
 }
 #stickers_label:checked {
     color: #416ef2;
+}
+
+#eventbox_image {
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+#eventbox_image:hover {
+    border: 1px solid #416ef2;
 }

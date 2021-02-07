@@ -40,7 +40,7 @@ GdkPixbuf *mx_read_image_message(int id) {
         free(decoded);
 
         GdkPixbuf *result = mx_create_pixbuf("client/img/message_image_temp.png");
-        result = mx_size_image_down(result);
+        //result = mx_size_image_down(result);
         remove("client/img/message_image_temp.png");
         close(sock_for_send);
         return result;
