@@ -167,6 +167,7 @@ void mx_attach_send_message_on_enter(GtkWidget *widget, void **arr) {
 
     gtk_widget_destroy(GTK_WIDGET(blackout));
     blackout = NULL;
+    g_object_unref(arr[2]);
     g_free(arr);
 
     gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
