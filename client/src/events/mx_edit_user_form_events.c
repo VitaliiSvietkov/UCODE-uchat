@@ -1,5 +1,7 @@
 #include "../../inc/uchat_client.h"
 
+static char *filename;
+
 void edit_user_eventbox_enter_notify(GtkWidget *widget) {
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
 
@@ -42,12 +44,9 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
     if (res == GTK_RESPONSE_ACCEPT)
     {
         GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
-        char *filename = gtk_file_chooser_get_filename (chooser);
+        filename = gtk_file_chooser_get_filename (chooser);
         g_object_unref(G_OBJECT(NewAvatar));
         NewAvatar = mx_get_pixbuf_with_size(filename, 100, 100);
-
-        mx_write_photo_to_bd(filename, t_user.id);
-        free(filename);
     }
 
     gtk_widget_destroy (dialog);
@@ -103,7 +102,7 @@ void commit_username_click_event(GtkWidget *widget, GdkEventButton *event,
 // Edit pseudonim field
 //============================================================================================
 void pseudo_entry_changed_event(GtkWidget *widget) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) < 5) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) <= 5) {
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
     }
     else {
@@ -123,7 +122,7 @@ void return_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
 void commit_pseudonim_click_event(GtkWidget *widget, GdkEventButton *event,
     gpointer builder) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1 
-        && strlen(gtk_entry_get_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_pseudo_entry")))) >= 5) {
+        && strlen(gtk_entry_get_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_pseudo_entry")))) > 5) {
         gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(GTK_BUILDER(builder), "edit_pseudonim_event_screen")));
         if (NewPseudonim == NULL)
             NewPseudonim = mx_strjoin(NewPseudonim, gtk_entry_get_text(GTK_ENTRY(gtk_builder_get_object(GTK_BUILDER(builder), "change_pseudo_entry"))));
@@ -188,10 +187,13 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
         NewDescription = NULL;
         mx_edit_name(t_user.FirstName, t_user.SecondName, t_user.pseudonim, t_user.description, t_user.id);
 
-        g_object_unref(G_OBJECT(t_user.avatar));
-        t_user.avatar = gdk_pixbuf_copy(GDK_PIXBUF(NewAvatar));
-        g_object_unref(G_OBJECT(NewAvatar));
-        gtk_widget_queue_draw(GTK_WIDGET(settings_menu));
+        if (NewAvatar != NULL) {
+            mx_write_photo_to_bd(filename, t_user.id);
+            g_object_unref(G_OBJECT(t_user.avatar));
+            t_user.avatar = gdk_pixbuf_copy(GDK_PIXBUF(NewAvatar));
+            g_object_unref(G_OBJECT(NewAvatar));
+            gtk_widget_queue_draw(GTK_WIDGET(settings_menu));
+        }
 
         gtk_widget_destroy(GTK_WIDGET(blackout));
         blackout = NULL;

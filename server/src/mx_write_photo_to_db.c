@@ -29,7 +29,7 @@ void mx_write_photo_to_bd(char *path, int id) {
             fprintf(stderr, "Cannot close file handler\n");
         }    
     }
-    char data[flen+1];
+    char *data = malloc(flen + 1);
     int size = fread(data, 1, flen, fp);
     if (ferror(fp)) {
         fprintf(stderr, "fread() failed\n");
@@ -51,22 +51,22 @@ void mx_write_photo_to_bd(char *path, int id) {
         sqlite3_close(db);
     }
     sqlite3_stmt *pStmt;
-    char sql[500];
-    bzero(sql, 500);
+    char *sql = malloc((unsigned)flen + 500);
+    bzero(sql, (unsigned)flen + 500);
     sprintf(sql, "UPDATE USERS SET PHOTO = ? WHERE ID = '%d' ;", id);
     
     rc = sqlite3_prepare(db, sql, -1, &pStmt, 0);
     
-    if (rc != SQLITE_OK) {
-        
+    if (rc != SQLITE_OK)
         fprintf(stderr, "Cannot prepare statement: %s\n", sqlite3_errmsg(db));
-    }    
+
     sqlite3_bind_blob(pStmt, 1, data, size, SQLITE_STATIC);    
     rc = sqlite3_step(pStmt);
     if (rc != SQLITE_DONE) {
         printf("execution failed: %s", sqlite3_errmsg(db));
     }  
     sqlite3_finalize(pStmt);    
-
     sqlite3_close(db);
+    free(sql);
+    free(data);
 }

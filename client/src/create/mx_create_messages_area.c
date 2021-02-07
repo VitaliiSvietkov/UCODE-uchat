@@ -16,17 +16,11 @@ void mx_create_messages_area(void) {
     gtk_box_pack_start(GTK_BOX(t_chat_room_vars.right_container), room_header_content, FALSE, FALSE, 0);
 
     t_chats_list *node = mx_chat_search(&chats_list_head, (int)curr_destination);
-    GtkWidget *avatar = gtk_drawing_area_new();
-    gtk_widget_set_size_request(GTK_WIDGET(avatar), 40, 40);
-    gtk_widget_set_margin_start(GTK_WIDGET(avatar), 40);
-    gtk_widget_set_margin_end(GTK_WIDGET(avatar), 40);
-    gtk_widget_set_margin_top(GTK_WIDGET(avatar), 5);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &node->avatar);
-    gtk_box_pack_start(GTK_BOX(room_header_content), avatar, FALSE, FALSE, 0);
 
     GtkWidget *title = gtk_label_new(node->title);
     gtk_widget_set_name(GTK_WIDGET(title), "room_header_title");
-    gtk_box_pack_start(GTK_BOX(room_header_content), title, TRUE, TRUE, 40);
+    gtk_box_pack_start(GTK_BOX(room_header_content), title, FALSE, TRUE, 200);
+    gtk_widget_set_margin_start(GTK_WIDGET(title), 140);
     gtk_widget_set_halign(GTK_WIDGET(title), GTK_ALIGN_CENTER);
 
     GtkWidget *separator = gtk_separator_new(GTK_ORIENTATION_VERTICAL);

@@ -2,13 +2,13 @@
 
 void button_shine(GtkWidget *widget, GdkEvent *event) {
     if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0
-        && strlen(gtk_entry_get_text(GTK_ENTRY(widget))) >= 5) {
+        && strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 5) {
         gtk_widget_set_opacity(GTK_WIDGET(login_btn), 1.0);
     }
     else {
          gtk_widget_set_opacity(GTK_WIDGET(login_btn), 0.5);
     }
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) < 5) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) <= 5) {
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
     }
     else {

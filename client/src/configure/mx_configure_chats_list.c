@@ -101,6 +101,7 @@ static void *check_last_room(void *data) {
             while (node != NULL) {
                 if (node->uid == serv_last_uid) {
                     gtk_box_reorder_child(GTK_BOX(chats_list), node->room, 0);
+                    gtk_widget_set_state_flags(GTK_WIDGET(node->room), GTK_STATE_FLAG_LINK, FALSE);
                     break;
                 }
                 else

@@ -46,11 +46,6 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
         // Change for image read from server!!
         mx_read_photo_from_bd((int)uid);
         //=====================================
-        /*pixbuf = mx_get_pixbuf_with_size("client/img/avatar2.jpg", 50, 50);
-        avatar = gtk_image_new_from_pixbuf(GDK_PIXBUF(pixbuf));
-        gtk_widget_set_size_request(GTK_WIDGET(avatar), 50, 50);
-        gtk_widget_set_margin_start(GTK_WIDGET(avatar), 15);
-        g_object_unref(pixbuf);*/
         pixbuf = mx_get_pixbuf_with_size("client/img/tmp_avatar.png", 50, 50);
         avatar = gtk_drawing_area_new();
         gtk_widget_set_size_request(GTK_WIDGET(avatar), 50, 50);
