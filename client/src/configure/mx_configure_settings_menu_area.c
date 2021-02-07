@@ -25,7 +25,7 @@ void mx_configure_settings_menu_area(void) {
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 70, 70);
     g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &t_user.avatar);
     gtk_box_pack_start(GTK_BOX(user_profile_preview_box), avatar, FALSE, FALSE, 0);
-    GtkWidget *user_info_preview = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    GtkWidget *user_info_preview = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(user_profile_preview_box), user_info_preview, FALSE, FALSE, 31);
     
     char *username_tmp = strdup(t_user.FirstName);
@@ -42,7 +42,8 @@ void mx_configure_settings_menu_area(void) {
     gtk_widget_set_name(GTK_WIDGET(user_pseudonim), "user_pseudonim_preview");
     gtk_box_pack_start(GTK_BOX(user_info_preview), username, TRUE, FALSE, 0);
     gtk_widget_set_halign(username, GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(user_info_preview), user_pseudonim, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(user_info_preview), user_pseudonim, FALSE, FALSE, 0);
+    gtk_widget_set_halign(user_pseudonim, GTK_ALIGN_START);
     //==============================================================================================
 
     // "Edit profile" section

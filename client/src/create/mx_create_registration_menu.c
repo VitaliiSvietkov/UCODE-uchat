@@ -8,8 +8,8 @@ static void login_activate(GtkWidget *widget) {
 static void drag_a_focus(GtkWidget *widget, GtkWidget *aim);
 
 void mx_create_registration_menu(void) {
-    GtkWidget *fail_inscription = gtk_label_new(text_for_labels[31]);
-    GtkWidget *fail_auto_inscription = gtk_label_new(text_for_labels[32]);
+    fail_inscription = gtk_label_new(text_for_labels[31]);
+    fail_auto_inscription = gtk_label_new(text_for_labels[32]);
 
     // Background
     //=================================================================================

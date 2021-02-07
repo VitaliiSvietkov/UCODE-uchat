@@ -1,7 +1,5 @@
 #include "../../inc/uchat_client.h"
 
-static char *filename;
-
 void edit_user_eventbox_enter_notify(GtkWidget *widget) {
     gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
 
@@ -31,12 +29,12 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
     GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
     gint res;
 
-    dialog = gtk_file_chooser_dialog_new ("Open File",
+    dialog = gtk_file_chooser_dialog_new ("Select an image",
                                         GTK_WINDOW(window),
                                         action,
                                         "_Cancel",
                                         GTK_RESPONSE_CANCEL,
-                                        "_Open",
+                                        "_Select",
                                         GTK_RESPONSE_ACCEPT,
                                         NULL);
 
@@ -44,9 +42,10 @@ void change_avatart_btn_click(GtkWidget *widget, GdkEvent *event) {
     if (res == GTK_RESPONSE_ACCEPT)
     {
         GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
-        filename = gtk_file_chooser_get_filename (chooser);
+        char *filename = gtk_file_chooser_get_filename (chooser);
         g_object_unref(G_OBJECT(NewAvatar));
         NewAvatar = mx_get_pixbuf_with_size(filename, 100, 100);
+        mx_write_photo_to_bd(filename, t_user.id);
     }
 
     gtk_widget_destroy (dialog);
@@ -187,13 +186,11 @@ void commit_edit_user_click_event(GtkWidget *widget, GdkEventButton *event) {
         NewDescription = NULL;
         mx_edit_name(t_user.FirstName, t_user.SecondName, t_user.pseudonim, t_user.description, t_user.id);
 
-        if (NewAvatar != NULL) {
-            mx_write_photo_to_bd(filename, t_user.id);
-            g_object_unref(G_OBJECT(t_user.avatar));
-            t_user.avatar = gdk_pixbuf_copy(GDK_PIXBUF(NewAvatar));
-            g_object_unref(G_OBJECT(NewAvatar));
-            gtk_widget_queue_draw(GTK_WIDGET(settings_menu));
-        }
+        g_object_unref(G_OBJECT(t_user.avatar));
+        t_user.avatar = gdk_pixbuf_copy(GDK_PIXBUF(NewAvatar));
+        g_object_unref(G_OBJECT(NewAvatar));
+        NewAvatar = NULL;
+        gtk_widget_queue_draw(GTK_WIDGET(settings_menu));
 
         gtk_widget_destroy(GTK_WIDGET(blackout));
         blackout = NULL;

@@ -81,6 +81,9 @@ GtkWidget *secondname_reg;
 GtkWidget *login_btn;
 GtkWidget *next_btn;
 
+GtkWidget *fail_inscription;
+GtkWidget *fail_auto_inscription;
+
 void mx_create_registration_menu(void);
 
 void activate_prelight_with_condition_entry(GtkWidget *widget, GdkEvent *event, gpointer *entry);

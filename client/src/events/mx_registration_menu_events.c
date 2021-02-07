@@ -47,7 +47,7 @@ void authorization(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
         const char *password1 = gtk_entry_get_text(GTK_ENTRY(password));
         
         if(mx_write_user_data_from_bd_after_auth(login1, password1) == 1) {
-            //gtk_widget_show(GTK_WIDGET(data)); 
+            gtk_widget_show(GTK_WIDGET(fail_auto_inscription)); 
         }
         else {
             if (chat_area != NULL)
