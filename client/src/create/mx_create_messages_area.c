@@ -23,8 +23,10 @@ void mx_create_messages_area(void) {
     gtk_widget_set_margin_start(GTK_WIDGET(title), 140);
     gtk_widget_set_halign(GTK_WIDGET(title), GTK_ALIGN_CENTER);
 
+    /*
     GtkWidget *separator = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
     gtk_box_pack_start(GTK_BOX(t_chat_room_vars.right_container), separator, FALSE, FALSE, 0);
+    */
 
     GtkAdjustment *vadjustment = gtk_adjustment_new(CUR_HEIGHT - 110, 0, CUR_HEIGHT - 110, 0, 0, 0);
     GtkWidget *scroll_area = gtk_scrolled_window_new(NULL, vadjustment);

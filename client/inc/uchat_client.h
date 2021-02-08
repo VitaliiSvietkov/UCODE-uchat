@@ -37,7 +37,7 @@ gint L_FIELD_WIDTH;
 #define MX_1F1F1F 0.12
 #define MX_E1E1E1 0.89
 // Colorful theme
-
+bool THEME;
 //==========================================================================================
 
 // A message

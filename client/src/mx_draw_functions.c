@@ -1,15 +1,28 @@
 #include "../inc/uchat_client.h"
 
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-    // Left area
-    cairo_set_source_rgba(cr, MX_1F1F1F, MX_1F1F1F, MX_1F1F1F, 1);
-    cairo_rectangle(cr, 0, 0, L_FIELD_WIDTH, CUR_HEIGHT);
-    cairo_fill(cr);
+    if (THEME == 0) {
+        // Left area
+        cairo_set_source_rgba(cr, MX_1F1F1F, MX_1F1F1F, MX_1F1F1F, 1);
+        cairo_rectangle(cr, 0, 0, L_FIELD_WIDTH, CUR_HEIGHT);
+        cairo_fill(cr);
 
-    // Right area
-    cairo_set_source_rgba(cr, MX_E1E1E1, MX_E1E1E1, MX_E1E1E1, 1);
-    cairo_rectangle(cr, L_FIELD_WIDTH, 0, CUR_WIDTH - CUR_WIDTH / 3, CUR_HEIGHT);
-    cairo_fill(cr);
+        // Right area
+        cairo_set_source_rgba(cr, MX_E1E1E1, MX_E1E1E1, MX_E1E1E1, 1);
+        cairo_rectangle(cr, L_FIELD_WIDTH, 0, CUR_WIDTH - CUR_WIDTH / 3, CUR_HEIGHT);
+        cairo_fill(cr);
+    }
+    else {
+        // Left area
+        cairo_set_source_rgba(cr, 1, 1, 1, 1);
+        cairo_rectangle(cr, 0, 0, L_FIELD_WIDTH, CUR_HEIGHT);
+        cairo_fill(cr);
+
+        // Right area
+        cairo_set_source_rgba(cr, 0.87, 0.76, 0.89, 1);
+        cairo_rectangle(cr, L_FIELD_WIDTH, 0, CUR_WIDTH - CUR_WIDTH / 3, CUR_HEIGHT);
+        cairo_fill(cr);
+    }
     return FALSE;
 }
 

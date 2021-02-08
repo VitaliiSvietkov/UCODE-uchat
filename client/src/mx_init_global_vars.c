@@ -1,6 +1,7 @@
 #include "../inc/uchat_client.h"
 
 void mx_init_global_vars(void) {
+    THEME = 0;
     argv_ptr = NULL;
     sockfd = 0;
     sock_for_rooms = 0;

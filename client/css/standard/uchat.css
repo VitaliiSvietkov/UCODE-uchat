@@ -111,7 +111,6 @@
 }
 #add_image:hover {
     background-image: url("../../img/standard/add-hovered.png");
-    transition: all 0.5s ;
 }
 #add_image:checked {
     background-image: url("../../img/standard/add-hovered.png");

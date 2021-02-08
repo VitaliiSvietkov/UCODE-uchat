@@ -216,6 +216,7 @@ static void change_account_click(GtkWidget *widget, GdkEventButton *event) {
 //=================================================================================
 static void chat_settings_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        THEME = 1;
         g_object_unref(G_OBJECT(cssProvider));
         cssProvider = gtk_css_provider_new();
         gtk_css_provider_load_from_path(cssProvider, "client/css/colored/uchat.css", NULL);

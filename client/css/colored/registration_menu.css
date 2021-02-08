@@ -1,5 +1,5 @@
 #authorization_container {
-    background: url("../../img/back-registration.png");
+    background: url("../../img/back-registration-colored.jpg");
     background-size: 1280px;
     background-position: -100px;
  }
@@ -12,15 +12,16 @@
 
  #registration_menu_form {
     padding: 5px;
-    background: #1f1f1f;
+    background: rgb(223,196,245);
+    background: linear-gradient(90deg, rgba(223,196,245,1) 0%, rgba(241,200,245,1) 100%);
     border-radius: 15px;
-    border: .5px solid #e1e1e1;
+    border: .5px solid white;
 }
 
 #authorization {
     font-size: 24px;
     font-style: italic;
-    color: #e1e1e1;
+    color: black;
     margin-top: 20px;
 }
 
@@ -31,7 +32,7 @@
 }
 
 #password_eye_back {
-    background: #e1e1e1;
+    background: white;
     border-radius: 5px;
 }
 
@@ -46,10 +47,10 @@
 }
 
 #authorization_pass_entry {
-    background-color: #e1e1e1;
-    color: #1f1f1f;
+    background-color: white;
+    color: black;
     box-shadow: none;
-    border-color: #e1e1e1;
+    border-color: white;
     border-radius: 5px;
     font-size: 16px;
 }
@@ -62,10 +63,10 @@
 
 
 #entry_data {
-    background-color: #e1e1e1;
-    color: #1f1f1f;
+    background-color: white;
+    color: black;
     box-shadow: none;
-    border-color: #e1e1e1;
+    border-color: white;
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 30px;
@@ -80,10 +81,10 @@
 }
 
 #password_reg {
-    background-color: #e1e1e1;
-    color: #1f1f1f;
+    background-color: white;
+    color: black;
     box-shadow: none;
-    border-color: #e1e1e1;
+    border-color: white;
     border-radius: 5px;
     font-size: 16px;
 }
@@ -95,10 +96,10 @@
 }
 
 #password_reg_confirm {
-    background-color: #e1e1e1;
-    color: #1f1f1f;
+    background-color: white;
+    color: black;
     box-shadow: none;
-    border-color: #e1e1e1;
+    border-color: white;
     border-radius: 5px;
     font-size: 16px;
 }
@@ -110,19 +111,19 @@
 }
 
 #login_button {
-    color: #e1e1e1;
+    color: black;
     font-family: "New Century Schoolbook", Times, serif;
     letter-spacing: .8px;
-    background: #1f1f1f;
+    background: white;
     border-radius: 15px;
-    border: .5px solid #e1e1e1;
+    border: .5px solid black;
     transition: all 0.2s ;
     margin-top: 30px;
     margin-bottom: 5px;
 }
 #login_button:hover {
-    background: #e1e1e1;
-    color: #1f1f1f;
+    background: #cfa1f5;
+    color: black;
 }
 
 #Registration {
@@ -130,7 +131,7 @@
     color: grey;
 }
 #Registration:hover {
-    color: #e1e1e1;
+    color: white;
 }
 #Registration_label {
     text-decoration-style: solid;
@@ -138,17 +139,17 @@
 }
 
 #back_button {
-    color: #e1e1e1;
+    color: black;
     font-family: "New Century Schoolbook", Times, serif;
     letter-spacing: .8px;
-    background: #1f1f1f;
+    background: white;
     border-radius: 15px;
-    border: .5px solid #e1e1e1;
+    border: .5px solid black;
     transition: all 0.2s ;
 }
 #back_button:hover {
-    background: #e1e1e1;
-    color: #1f1f1f;
+    background: #cfa1f5;
+    color: black;
 }
 #registration_buttons_box_2 {
     margin-bottom: -31px;

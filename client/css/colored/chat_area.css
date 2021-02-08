@@ -1,11 +1,23 @@
 #chat_background {
-    background: rgb(255,255,255);
-    background: linear-gradient(180deg, rgba(255,255,255,1) 20%, rgba(231,231,231,1) 63%, rgba(193,193,193,1) 100%);
-    padding-bottom: 5px;
+    background: rgb(223,196,245);
+    background: linear-gradient(90deg, rgba(223,196,245,1) 0%, rgba(241,200,245,1) 100%);
+    padding-bottom: 10px;
+}
+
+#room_header {
+    background: rgb(223,196,245);
+    background: linear-gradient(90deg, rgba(223,196,245,1) 0%, rgba(241,200,245,1) 100%);
+}
+#room_header_title {
+    color: white;
+    font-size: 20px;
+    font-family: "New Century Schoolbook", Times, serif;
+    font-style: italic;
+    margin-left: -115px;
 }
 
 #day_info_show {
-    background: rgba(0, 0, 0, 0.8);
+    background: #E1ABD8;
     color: white;
     border-radius: 25px;
     padding-top: 12px;
@@ -15,14 +27,14 @@
 }
 
 #usr_message {
-    background: #1f1f1f;
-    color: #e1e1e1; 
+    color: #dd9dd2;
+    background: white;
     border-radius: 12px;
 }
 
 #message {
-    color: #e1e1e1;
-    background: #3a3939;
+    color: #dd9dd2;
+    background: white;
     border-radius: 12px;
 }
 
@@ -33,9 +45,9 @@
 
 #attach_entry {
     box-shadow: none;
-    background: #1f1f1f;
-    border: 1px solid #e1e1e1;
-    color:#e1e1e1;
+    background: white;
+    border: 1px solid white;
+    color: black;
     border-radius: 8px;
     transition: all .2s;
 }
@@ -45,9 +57,8 @@
 }
 
 #more_box {
-    background-color: #e1e1e1;
+    background-color: white;
     border: 1px solid #1f1f1f;
-    border-radius: 15px;
 }
 
 #stickers_eventbox {
@@ -64,16 +75,21 @@
     transition: all ease-in-out .3s;
 }
 
-#gifs_eventbox {
-    background-image: url("../../img/gif.png");
-    background-size: 35px;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-bottom: 1px solid #e1e1e1;
-    transition: all ease-in-out .3s;
+#stickers_label {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #1f1f1f;
+    font-size: 18px;
+    transition: all ease-in-out .1s;
 }
-#gifs_eventbox:checked {
-    background-image: url("../../img/gif-selected.png");
-    border-bottom: 1px solid #416ef2;
-    transition: all ease-in-out .3s;
+#stickers_label:checked {
+    color: #416ef2;
+}
+
+#eventbox_image {
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+#eventbox_image:hover {
+    border: 1px solid #416ef2;
 }

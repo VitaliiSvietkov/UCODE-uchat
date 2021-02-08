@@ -12,10 +12,10 @@
 /*          Entry Fields          */
 /* ============================== */
 #entry {
-    background-color: #e1e1e1;
-    color: #1f1f1f;
+    background-color: white;
+    color: black;
     box-shadow: none;
-    border-color: #e1e1e1;
+    border-color: white;
     border-radius: 5px;
     font-size: 16px;
 }
@@ -29,12 +29,13 @@
     background: white;
 }
 #search_menu {
-    background: #1f1f1f;
+    background: rgb(223,196,245);
+    background: linear-gradient(90deg, rgba(223,196,245,1) 0%, rgba(241,200,245,1) 100%);
     border: 1px solid white;
 }
 
 #tools_button {
-    color: #1f1f1f;
+    color: black;
     border-radius: 0;
     transition: none;
 }
@@ -43,43 +44,40 @@
 }
 
 #pop_up_error {
-    background: #1f1f1f;
-    color: #e1e1e1;
+    background: rgb(223,196,245);
+    background: linear-gradient(90deg, rgba(223,196,245,1) 0%, rgba(241,200,245,1) 100%);
+    color: white;
     border: 1.5px solid #e1e1e1;
     border-radius: 12px;
     padding: 20px 10px 20px 10px; 
 }
 
 @keyframes gradient {
-    0% {background: linear-gradient(51deg, rgba(225,225,225,0.4) 0%, rgba(31,31,31,0) 33%);}
-    100% {background: linear-gradient(51deg, rgba(31,31,31,0) 74%, rgba(225,225,225,0) 100%);}
+    0% {background: linear-gradient(51deg, rgba(223,196,245,0.4) 0%, rgba(241,200,245,0) 33%);}
+    100% {background: linear-gradient(51deg, rgba(241,200,245,0) 74%, rgba(223,196,245,0) 100%);}
 }
 
 #room_title {
-    color: #e1e1e1;
+    color: black;
     font-size: 18px;
     font-family: "New Century Schoolbook", Times, serif;
     font-style: italic;
 }
 #room_text_preview {
-    color: #e1e1e1;
+    color: black;
     font-size: 14px;
     font-family: "New Century Schoolbook", Times, serif;
 }
 
-#eventbox_room {
-    background: none;
-}
-#eventbox_room:hover {
-    /*animation-name: gradient;
-    animation-duration: .5s;
-    animation-fill-mode: forwards;*/
-    background: #e1e1e1;
-}
 #eventbox_room:checked {
-    /*transition: all .5s;
-    background: linear-gradient(51deg, rgba(31,31,31,0) 74%, rgba(225,225,225,0) 100%);*/
-    background: red;
+    background: rgb(223,196,245);
+    background: linear-gradient(90deg, rgba(223,196,245,1) 0%, rgba(241,200,245,1) 100%);
+}
+#eventbox_room:link {
+    animation-name: gradient;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
 }
 
 #close_image_box {
@@ -103,7 +101,8 @@
 
 
 #message_enter_area {
-    background: #1f1f1f;
+    background: rgb(223,196,245);
+    background: linear-gradient(90deg, rgba(223,196,245,1) 0%, rgba(241,200,245,1) 100%);
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -115,7 +114,6 @@
 }
 #add_image:hover {
     background-image: url("../../img/colored/add-hovered.png");
-    transition: all 0.5s ;
 }
 #add_image:checked {
     background-image: url("../../img/colored/add-hovered.png");
@@ -179,8 +177,8 @@
 
 #language_image {
     background-image: url("../../img/colored/book.png");
-    background-size: 30px;
     background-repeat: no-repeat;
+    background-size: 30px;
     background-position: -5px;
 }
 #language_image:hover {
@@ -217,12 +215,12 @@
 
 #DefaultLabel {
     font-style: italic;
-    color: #1f1f1f;
+    color: black;
     font-size: 20px;
 }
 
 #settings_menu {
-    color: #e1e1e1;
+    color: black;
     font-size: 16px;
     padding-top: 7.5px;
 }
