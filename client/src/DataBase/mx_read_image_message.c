@@ -7,10 +7,24 @@ GdkPixbuf *mx_read_image_message(int id) {
     char sendBuff[256];
     bzero(sendBuff, 256);
     sprintf(sendBuff, "GetMessageImage\n%d\n%d\n%d", id, t_user.id, (int)curr_destination);
-    send(sock_for_send, sendBuff, 256, 0);
+
+    if(send(sock_for_send, sendBuff, 256, 0) == -1){
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sock_for_send = -1;
+        return NULL;
+    }
 
     int bytes = 0;
-    recv(sock_for_send, &bytes, sizeof(int), 0);
+
+    if(recv(sock_for_send, &bytes, sizeof(int), 0) == 0){
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sock_for_send = -1;
+        return NULL;
+    }
     
     if (bytes) {
         FILE *fp = fopen("client/img/message_image_temp.png", "wb");
@@ -18,7 +32,15 @@ GdkPixbuf *mx_read_image_message(int id) {
             fprintf(stderr, "Cannot open image file\n");
 
         int len_encoded = 0;
-        recv(sock_for_send, &len_encoded, sizeof(int), 0);
+
+
+        if(recv(sock_for_send, &len_encoded, sizeof(int), 0) == 0){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sock_for_send = -1;
+            return NULL;
+        }
 
         unsigned char *encoded = malloc( (sizeof(char) * len_encoded) );
         mx_memset(encoded, 0, len_encoded);

@@ -38,6 +38,7 @@ void mx_authorization(char **data, int sockfd) {
     }
     else {
         sendBuff = strdup("FAIL");
+        
         send(sockfd, sendBuff, strlen(sendBuff), 0);
     }
     free(sendBuff);

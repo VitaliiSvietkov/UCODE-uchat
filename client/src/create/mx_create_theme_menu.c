@@ -136,7 +136,14 @@ static void mx_theme_eventbox_click(GtkWidget *widget, GdkEventButton *event, ch
     char sendBuff[256];
     mx_memset(sendBuff, 0, 256);
     sprintf(sendBuff, "UpdateTheme\n%d\n%d", THEME, t_user.id);
-    send(sockfd, sendBuff, 256, 0);
+
+    if(send(sockfd, sendBuff, 256, 0) == -1){
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return;
+    }
 
     gtk_widget_destroy(GTK_WIDGET(blackout));
     blackout = NULL;

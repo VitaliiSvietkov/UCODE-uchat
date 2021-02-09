@@ -91,10 +91,25 @@ static void *check_last_room(void *data) {
         char sendBuff[256];
         bzero(sendBuff, 256);
         sprintf(sendBuff, "CheckLastRoom\n%d\n%d", t_user.id, (int)last_uid);
-        send(sock_for_rooms, sendBuff, 256, 0);
+
+        if(send(sock_for_rooms, sendBuff, 256, 0) == -1){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sock_for_rooms = -1;
+            return NULL;
+        }
+        
 
         int serv_last_uid = 0;
-        recv(sock_for_rooms, &serv_last_uid, sizeof(int), 0);
+
+        if(recv(sock_for_rooms, &serv_last_uid, sizeof(int), 0) == 0){
+            pthread_t thread_id;
+            char *err_msg = "Connection lost\nTry again later";
+            pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+            sock_for_rooms = -1;
+            return NULL;
+        }
 
         if (serv_last_uid != last_uid) {
             node = chats_list_head;

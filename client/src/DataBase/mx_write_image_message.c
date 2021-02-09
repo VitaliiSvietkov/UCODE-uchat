@@ -18,7 +18,11 @@ void mx_write_image_message(char *path, unsigned int id) {
 }
 
 static void *write_image_to_message(void *data) {
-    mx_connect_to_server(&sock_for_send);
+    if (sock_for_send == -1){
+        mx_connect_to_server(&sock_for_send);
+        //return 1;
+    }
+
 
     char *path = ((t_tmp_data *)data)->path;
     unsigned int id = (unsigned int)(((t_tmp_data *)data)->id);
@@ -81,7 +85,15 @@ static void *write_image_to_message(void *data) {
     bzero(sendBuff, 256);
     sprintf(sendBuff, "AddImageMessage\n%d\n%d\n%d\n%u\n%d", t_user.id, (int)curr_destination, 
         (int)id, out_size, len_encoded);
-    send(sock_for_send, sendBuff, 256, 0);
+
+    if (send(sock_for_send, sendBuff, 256, 0) == -1) {
+        perror("ERROR writing to socket");
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sock_for_send = -1;
+        return NULL;
+    }
     
     mx_send_all(&sock_for_send, out_b64, len_encoded);
 

@@ -86,7 +86,16 @@ void mx_write_photo_to_bd(char *path, int id){
     free(read_data);
 
     int len_encoded = strlen((char *)out_b64);
-    send(sockfd, &len_encoded, sizeof(int), 0);
+
+
+    if(send(sockfd, &len_encoded, sizeof(int), 0) == -1){
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return;
+    }
+
 
     mx_send_all(&sockfd, out_b64, len_encoded);
     free(out_b64); 

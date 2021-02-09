@@ -23,7 +23,15 @@ void mx_read_photo_from_bd(int id) {
     }
 
     int len_encoded = 0;
-    recv(sockfd, &len_encoded, sizeof(int), 0);
+
+
+    if(recv(sockfd, &len_encoded, sizeof(int), 0) == 0){
+        pthread_t thread_id;
+        char *err_msg = "Connection lost\nTry again later";
+        pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
+        sockfd = -1;
+        return;
+    }
 
     unsigned char *encoded = malloc( (sizeof(char) * len_encoded) );
     mx_memset(encoded, 0, len_encoded);
