@@ -123,6 +123,7 @@ void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
                 gtk_widget_unset_state_flags(GTK_WIDGET(node->room), GTK_STATE_FLAG_CHECKED);
             node = node->next;
         }
+        t_chats_list *clicked_room = mx_chat_search(&chats_list_head, curr_destination);
 
         if (max_msg_id > 0) {
             pthread_cancel(check_messages_id);
@@ -141,7 +142,10 @@ void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid) {
         if (curr_room_msg_head != NULL)
             mx_clear_message_list(&curr_room_msg_head);
 
-        mx_create_messages_area();
+        if (mx_create_messages_area() < 0) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(clicked_room->room), GTK_STATE_FLAG_CHECKED);
+            return;
+        }
         mx_create_message_enter_area();
 
         gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
@@ -158,19 +162,19 @@ void room_close(GtkWidget *widget, GdkEventKey *event) {
         case GDK_KEY_Escape:
             if (blackout != NULL) {
                 gtk_widget_destroy(GTK_WIDGET(blackout));
-                if (NewFirstName != NULL) {
-                    free(NewFirstName);
-                    NewFirstName = NULL;
-                    free(NewPseudonim);
-                    NewPseudonim = NULL;
-                    free(NewDescription);
-                    NewDescription = NULL;
-                    g_object_unref(G_OBJECT(NewAvatar));
-                    NewAvatar = NULL;
+                if (t_edit_user.NewFirstName != NULL) {
+                    free(t_edit_user.NewFirstName);
+                    t_edit_user.NewFirstName = NULL;
+                    free(t_edit_user.NewPseudonim);
+                    t_edit_user.NewPseudonim = NULL;
+                    free(t_edit_user.NewDescription);
+                    t_edit_user.NewDescription = NULL;
+                    g_object_unref(G_OBJECT(t_edit_user.NewAvatar));
+                    t_edit_user.NewAvatar = NULL;
                 }
-                if (NewSecondName != NULL) {
-                    free(NewSecondName);
-                    NewSecondName = NULL;
+                if (t_edit_user.NewSecondName != NULL) {
+                    free(t_edit_user.NewSecondName);
+                    t_edit_user.NewSecondName = NULL;
                 }
                 blackout = NULL;
 

@@ -21,7 +21,7 @@ void mx_configure_pseudonim_event_screen(GtkBuilder *builder) {
     GtkWidget *pseudonim_avatar = GTK_WIDGET(gtk_builder_get_object(builder, "pseudonim_avatar"));
     gtk_widget_set_size_request(GTK_WIDGET(pseudonim_avatar), 100, 100);
     g_signal_connect(G_OBJECT(pseudonim_avatar), "draw", 
-        G_CALLBACK(mx_draw_event_image_avatar), &NewAvatar);
+        G_CALLBACK(mx_draw_event_image_avatar), &t_edit_user.NewAvatar);
     //==================================================================================
 
     // "change pseudonim" block
@@ -32,7 +32,7 @@ void mx_configure_pseudonim_event_screen(GtkBuilder *builder) {
 
     GtkWidget *change_pseudo_entry = GTK_WIDGET(gtk_builder_get_object(builder, "change_pseudo_entry"));
     gtk_widget_set_name(GTK_WIDGET(change_pseudo_entry), "edit_entry");
-    gtk_entry_set_text(GTK_ENTRY(change_pseudo_entry), NewPseudonim);
+    gtk_entry_set_text(GTK_ENTRY(change_pseudo_entry), t_edit_user.NewPseudonim);
     gtk_widget_set_size_request(GTK_WIDGET(change_pseudo_entry), 400, 0);
     g_signal_connect(G_OBJECT(change_pseudo_entry), "changed",
         G_CALLBACK(pseudo_entry_changed_event), NULL);

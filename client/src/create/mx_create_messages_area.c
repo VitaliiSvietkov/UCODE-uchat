@@ -1,9 +1,9 @@
 #include "../../inc/uchat_client.h"
 
-void mx_create_messages_area(void) {
+int mx_create_messages_area(void) {
     if (sockfd == -1){
-        mx_connect_to_server(&sockfd);
-        //return 1;
+        if (mx_connect_to_server(&sockfd) < 0)
+            return -1;
     }
 
 
@@ -35,26 +35,14 @@ void mx_create_messages_area(void) {
     char sendBuff[1024];
     sprintf(sendBuff, "LoadRoom\n%u\n%u", t_user.id, curr_destination);
 
-    int error = 0;
-    socklen_t len = sizeof (error);
-    int retval = getsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &error, &len);
-    if (retval != 0) {
-        fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
-        sockfd = -1;
-        return;
-    }
-    if (error != 0) {
-        fprintf(stderr, "socket error: %s\n", strerror(error));
-        sockfd = -1;
-         return;
-    }
-
     if(send(sockfd, sendBuff, 1024, 0) == -1){
         pthread_t thread_id;
         char *err_msg = "Connection lost\nTry again later";
         pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
         sockfd = -1;
-        return;
+        gtk_widget_destroy(t_chat_room_vars.right_container);
+        t_chat_room_vars.right_container = NULL;
+        return -1;
     }
 
     if(recv(sockfd, &max_msg_id, sizeof(int), 0) == 0){
@@ -62,7 +50,9 @@ void mx_create_messages_area(void) {
         char *err_msg = "Connection lost\nTry again later";
         pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
         sockfd = -1;
-        return;
+        gtk_widget_destroy(t_chat_room_vars.right_container);
+        t_chat_room_vars.right_container = NULL;
+        return -1;
     }
 
     if (max_msg_id > 0) {
@@ -74,7 +64,7 @@ void mx_create_messages_area(void) {
                 char *err_msg = "Connection lost\nTry again later";
                 pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
                 sockfd = -1;
-                return;
+                return -1;
             }
 
             int cur_m_id = 0;
@@ -83,7 +73,7 @@ void mx_create_messages_area(void) {
                 char *err_msg = "Connection lost\nTry again later";
                 pthread_create(&thread_id, NULL, mx_run_error_pop_up, (void *)err_msg); 
                 sockfd = -1;
-                return;
+                return -1;
             }
 
             char **recvData = mx_strsplit(recvBuff, '\n');
@@ -114,4 +104,5 @@ void mx_create_messages_area(void) {
     }
 
     gtk_widget_show_all(GTK_WIDGET(t_chat_room_vars.right_container));
+    return 0;
 }

@@ -14,14 +14,14 @@ void mx_create_edit_user_form(void) {
     gtk_widget_set_size_request(GTK_WIDGET(blackout), CUR_WIDTH, CUR_HEIGHT);
     //==================================================================================
 
-    NewFirstName = strdup(t_user.FirstName);
+    t_edit_user.NewFirstName = strdup(t_user.FirstName);
     if (t_user.SecondName != NULL)
-        NewSecondName = strdup(t_user.SecondName);
+        t_edit_user.NewSecondName = strdup(t_user.SecondName);
     else
-        NewSecondName = strdup("");
-    NewPseudonim = strdup(t_user.pseudonim);
-    NewDescription = strdup(t_user.description);
-    NewAvatar = gdk_pixbuf_copy(t_user.avatar);
+        t_edit_user.NewSecondName = strdup("");
+    t_edit_user.NewPseudonim = strdup(t_user.pseudonim);
+    t_edit_user.NewDescription = strdup(t_user.description);
+    t_edit_user.NewAvatar = gdk_pixbuf_copy(t_user.avatar);
 
     GtkBuilder *builder;
     GError *error = NULL;
@@ -69,7 +69,7 @@ void mx_create_edit_user_form(void) {
     //==================================================================================
     GtkWidget *avatar = GTK_WIDGET(gtk_builder_get_object(builder, "avatar"));
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 100, 100);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &NewAvatar);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &t_edit_user.NewAvatar);
 
     GtkWidget *change_avatar_btn = GTK_WIDGET(gtk_builder_get_object(builder, "change_avatar_btn"));
     gtk_button_set_label(GTK_BUTTON(change_avatar_btn), text_for_labels[5]);

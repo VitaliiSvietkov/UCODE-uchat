@@ -1,12 +1,12 @@
 #include "../../inc/uchat_client.h"
 
 void button_shine(GtkWidget *widget, GdkEvent *event) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 0
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.password))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.login))) > 0
         && strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 5) {
-        gtk_widget_set_opacity(GTK_WIDGET(login_btn), 1.0);
+        gtk_widget_set_opacity(GTK_WIDGET(t_authorization.login_btn), 1.0);
     }
     else {
-         gtk_widget_set_opacity(GTK_WIDGET(login_btn), 0.5);
+         gtk_widget_set_opacity(GTK_WIDGET(t_authorization.login_btn), 0.5);
     }
     if (strlen(gtk_entry_get_text(GTK_ENTRY(widget))) <= 5) {
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
@@ -30,24 +30,24 @@ void deactivate_prelight_with_condition_entry(GtkWidget *widget, GdkEvent *event
 
 
 void login_btn_enter_notify(void) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 5) {
-        gtk_widget_set_state_flags(GTK_WIDGET(login_btn), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.login))) > 5) {
+        gtk_widget_set_state_flags(GTK_WIDGET(t_authorization.login_btn), GTK_STATE_FLAG_PRELIGHT, TRUE);
     }
 }
 
 void login_btn_leave_notify(void) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 5) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(login_btn), GTK_STATE_FLAG_PRELIGHT);
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.login))) > 5) {
+        gtk_widget_unset_state_flags(GTK_WIDGET(t_authorization.login_btn), GTK_STATE_FLAG_PRELIGHT);
     }
 }
 
 void authorization(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(login))) > 5) {
-        const char *login1 = gtk_entry_get_text(GTK_ENTRY(login));
-        const char *password1 = gtk_entry_get_text(GTK_ENTRY(password));
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.password))) > 5 && strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.login))) > 5) {
+        const char *login1 = gtk_entry_get_text(GTK_ENTRY(t_authorization.login));
+        const char *password1 = gtk_entry_get_text(GTK_ENTRY(t_authorization.password));
         
         if(mx_write_user_data_from_bd_after_auth(login1, password1) == 1) {
-            gtk_widget_show(GTK_WIDGET(fail_auto_inscription)); 
+            gtk_widget_show(GTK_WIDGET(t_authorization.fail_auto_inscription)); 
         }
         else {
             if (chat_area != NULL)
@@ -98,7 +98,7 @@ void authorization(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
             mx_configure_settings_menu_area();
 
             mx_update_user_data_preview();
-            gtk_widget_destroy(GTK_WIDGET(authorization_container));
+            gtk_widget_destroy(GTK_WIDGET(t_authorization.authorization_container));
             gtk_widget_hide(GTK_WIDGET(authorization_area));
 
             gtk_widget_show_all(GTK_WIDGET(chat_area));
@@ -110,30 +110,30 @@ void authorization(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
 }
 
 void hide_authorization_click(GtkWidget *widget, GdkEvent *event, gpointer *data) {
-    gtk_widget_hide(GTK_WIDGET(log_in_menu));
-    gtk_widget_show_all(GTK_WIDGET(registration_menu_1));
+    gtk_widget_hide(GTK_WIDGET(t_authorization.log_in_menu));
+    gtk_widget_show_all(GTK_WIDGET(t_authorization.registration_menu_1));
     gtk_widget_hide(GTK_WIDGET(data));
 }
 
 void hide_registration_click(GtkWidget *widget, GdkEvent *event, gpointer *data) {
-    gtk_entry_set_text(GTK_ENTRY(login_reg), "");
-    gtk_entry_set_text(GTK_ENTRY(password_reg), "");
-    gtk_entry_set_text(GTK_ENTRY(password_reg_confirm), "");
-    gtk_entry_set_text(GTK_ENTRY(login), "");
-    gtk_entry_set_text(GTK_ENTRY(password), "");
-    gtk_widget_hide(GTK_WIDGET(registration_menu_1));
-    gtk_widget_show_all(GTK_WIDGET(log_in_menu));
+    gtk_entry_set_text(GTK_ENTRY(t_authorization.login_reg), "");
+    gtk_entry_set_text(GTK_ENTRY(t_authorization.password_reg), "");
+    gtk_entry_set_text(GTK_ENTRY(t_authorization.password_reg_confirm), "");
+    gtk_entry_set_text(GTK_ENTRY(t_authorization.login), "");
+    gtk_entry_set_text(GTK_ENTRY(t_authorization.password), "");
+    gtk_widget_hide(GTK_WIDGET(t_authorization.registration_menu_1));
+    gtk_widget_show_all(GTK_WIDGET(t_authorization.log_in_menu));
     gtk_widget_hide(GTK_WIDGET(data)); 
 }
 
 // Events which change opacity of "next" buttons
 //===========================================================================
 void data_change_registration_event(GtkWidget *widget, GdkEvent *event) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg_confirm))) > 0) {
-        gtk_widget_set_opacity(GTK_WIDGET(next_btn), 1.0);
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.password_reg_confirm))) > 0) {
+        gtk_widget_set_opacity(GTK_WIDGET(t_authorization.next_btn), 1.0);
     }
     else {
-         gtk_widget_set_opacity(GTK_WIDGET(next_btn), 0.5);
+         gtk_widget_set_opacity(GTK_WIDGET(t_authorization.next_btn), 0.5);
     }
 }
 
@@ -148,27 +148,27 @@ void data_change_registration_event_2(GtkWidget *widget, gpointer data) {
 //===========================================================================
 
 void next_btn_enter_notify(GtkWidget *widget, GdkEvent *event, gpointer *data) { 
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(data))) > 0) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(data))) > 0) {
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
     }
 }
 
 void next_btn_leave_notify(GtkWidget *widget, GdkEvent *event, gpointer *data) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(data))) > 0) {
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(data))) > 0) {
         gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
     }
 }
 
 void transition_registration_click(GtkWidget *widget, GdkEvent *event, gpointer *data) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(password_reg_confirm))) > 0) {
-        if (mx_check_login_reg(gtk_entry_get_text(GTK_ENTRY(login_reg))) == 1) {
-            gtk_label_set_text(GTK_LABEL(fail_inscription), text_for_labels[33]);
-            gtk_widget_show(GTK_WIDGET(fail_inscription));
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.login_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.password_reg))) > 0 && strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.password_reg_confirm))) > 0) {
+        if (mx_check_login_reg(gtk_entry_get_text(GTK_ENTRY(t_authorization.login_reg))) == 1) {
+            gtk_label_set_text(GTK_LABEL(t_authorization.fail_inscription), text_for_labels[33]);
+            gtk_widget_show(GTK_WIDGET(t_authorization.fail_inscription));
         }
         else {
-            if (mx_strcmp(gtk_entry_get_text(GTK_ENTRY(password_reg)), gtk_entry_get_text(GTK_ENTRY(password_reg_confirm))) == 0) {
-                gtk_widget_hide(GTK_WIDGET(registration_menu_1));
-                gtk_widget_show_all(GTK_WIDGET(registration_menu_2));
+            if (mx_strcmp(gtk_entry_get_text(GTK_ENTRY(t_authorization.password_reg)), gtk_entry_get_text(GTK_ENTRY(t_authorization.password_reg_confirm))) == 0) {
+                gtk_widget_hide(GTK_WIDGET(t_authorization.registration_menu_1));
+                gtk_widget_show_all(GTK_WIDGET(t_authorization.registration_menu_2));
             }
             else {
                 //gtk_label_set_text(GTK_LABEL(data), text_for_labels[31]);
@@ -179,35 +179,35 @@ void transition_registration_click(GtkWidget *widget, GdkEvent *event, gpointer 
 }
 
 void hide_registration_click_2(GtkWidget *widget, GdkEvent *event, gpointer *data) {
-    gtk_entry_set_text(GTK_ENTRY(firstname_reg), "");
-    gtk_entry_set_text(GTK_ENTRY(secondname_reg), "");
-    gtk_widget_hide(GTK_WIDGET(registration_menu_2));
-    gtk_widget_show_all(GTK_WIDGET(registration_menu_1));
+    gtk_entry_set_text(GTK_ENTRY(t_authorization.firstname_reg), "");
+    gtk_entry_set_text(GTK_ENTRY(t_authorization.secondname_reg), "");
+    gtk_widget_hide(GTK_WIDGET(t_authorization.registration_menu_2));
+    gtk_widget_show_all(GTK_WIDGET(t_authorization.registration_menu_1));
     gtk_widget_hide(GTK_WIDGET(data));
 }
 
 void authorization_after_registration(GtkWidget *widget, GdkEvent *event, gpointer *data) {
-    if (strlen(gtk_entry_get_text(GTK_ENTRY(firstname_reg))) > 0) {
-        const char *login_var = gtk_entry_get_text(GTK_ENTRY(login_reg));
-        const char *password_var = gtk_entry_get_text(GTK_ENTRY(password_reg));
-        const char *name = gtk_entry_get_text(GTK_ENTRY(firstname_reg));
+    if (strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.firstname_reg))) > 0) {
+        const char *login_var = gtk_entry_get_text(GTK_ENTRY(t_authorization.login_reg));
+        const char *password_var = gtk_entry_get_text(GTK_ENTRY(t_authorization.password_reg));
+        const char *name = gtk_entry_get_text(GTK_ENTRY(t_authorization.firstname_reg));
         char *sname = NULL;
-        if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(secondname_reg))) > 0)
-            sname = mx_strdup(gtk_entry_get_text(GTK_ENTRY(secondname_reg)));
+        if (mx_strlen(gtk_entry_get_text(GTK_ENTRY(t_authorization.secondname_reg))) > 0)
+            sname = mx_strdup(gtk_entry_get_text(GTK_ENTRY(t_authorization.secondname_reg)));
         else
             sname = mx_strjoin(sname, " ");
         mx_add_user_data(login_var, password_var, name, sname);
         free(sname);
 
-        gtk_entry_set_text(GTK_ENTRY(login), "");
-        gtk_entry_set_text(GTK_ENTRY(password), "");
-        gtk_entry_set_text(GTK_ENTRY(login_reg), "");
-        gtk_entry_set_text(GTK_ENTRY(password_reg), "");
-        gtk_entry_set_text(GTK_ENTRY(password_reg_confirm), "");
-        gtk_entry_set_text(GTK_ENTRY(firstname_reg), "");
-        gtk_entry_set_text(GTK_ENTRY(secondname_reg), "");
-        gtk_widget_hide(GTK_WIDGET(registration_menu_2));
-        gtk_widget_show_all(GTK_WIDGET(log_in_menu));
+        gtk_entry_set_text(GTK_ENTRY(t_authorization.login), "");
+        gtk_entry_set_text(GTK_ENTRY(t_authorization.password), "");
+        gtk_entry_set_text(GTK_ENTRY(t_authorization.login_reg), "");
+        gtk_entry_set_text(GTK_ENTRY(t_authorization.password_reg), "");
+        gtk_entry_set_text(GTK_ENTRY(t_authorization.password_reg_confirm), "");
+        gtk_entry_set_text(GTK_ENTRY(t_authorization.firstname_reg), "");
+        gtk_entry_set_text(GTK_ENTRY(t_authorization.secondname_reg), "");
+        gtk_widget_hide(GTK_WIDGET(t_authorization.registration_menu_2));
+        gtk_widget_show_all(GTK_WIDGET(t_authorization.log_in_menu));
         gtk_widget_hide(GTK_WIDGET(data));
     }
 }
@@ -236,7 +236,7 @@ void eye_pressed(GtkWidget *widget, GdkEventButton *event, gpointer data) {
 
 void authorization_close(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_destroy(authorization_container);
+        gtk_widget_destroy(t_authorization.authorization_container);
         gtk_widget_hide(GTK_WIDGET(authorization_area));
         gtk_widget_show_all(GTK_WIDGET(chat_area));
         gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);

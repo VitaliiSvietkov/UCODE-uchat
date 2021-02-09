@@ -31,19 +31,19 @@ void mx_configure_settings_menu_area(void) {
     char *username_tmp = strdup(t_user.FirstName);
     username_tmp = mx_strjoin(username_tmp, " ");
     username_tmp = mx_strjoin(username_tmp, t_user.SecondName);
-    username = gtk_label_new(username_tmp);
+    t_edit_user.username = gtk_label_new(username_tmp);
     free(username_tmp);
-    gtk_widget_set_name(GTK_WIDGET(username), "username_preview");
+    gtk_widget_set_name(GTK_WIDGET(t_edit_user.username), "username_preview");
 
     char *tmp_pseudonim = "@";
     tmp_pseudonim = mx_strjoin(tmp_pseudonim, t_user.pseudonim);
-    user_pseudonim = gtk_label_new(tmp_pseudonim);
+    t_edit_user.user_pseudonim = gtk_label_new(tmp_pseudonim);
     free(tmp_pseudonim);
-    gtk_widget_set_name(GTK_WIDGET(user_pseudonim), "user_pseudonim_preview");
-    gtk_box_pack_start(GTK_BOX(user_info_preview), username, TRUE, FALSE, 0);
-    gtk_widget_set_halign(username, GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(user_info_preview), user_pseudonim, FALSE, FALSE, 0);
-    gtk_widget_set_halign(user_pseudonim, GTK_ALIGN_START);
+    gtk_widget_set_name(GTK_WIDGET(t_edit_user.user_pseudonim), "user_pseudonim_preview");
+    gtk_box_pack_start(GTK_BOX(user_info_preview), t_edit_user.username, TRUE, FALSE, 0);
+    gtk_widget_set_halign(t_edit_user.username, GTK_ALIGN_START);
+    gtk_box_pack_start(GTK_BOX(user_info_preview), t_edit_user.user_pseudonim, FALSE, FALSE, 0);
+    gtk_widget_set_halign(t_edit_user.user_pseudonim, GTK_ALIGN_START);
     //==============================================================================================
 
     // "Edit profile" section

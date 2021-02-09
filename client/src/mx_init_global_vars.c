@@ -32,11 +32,11 @@ void mx_init_global_vars(void) {
     max_msg_id = 0;
 
     // Temporary variables for edit user form
-    NewFirstName = NULL;
-    NewSecondName = NULL;
-    NewPseudonim = NULL;
-    NewDescription = NULL;
-    NewAvatar = NULL;
+    t_edit_user.NewFirstName = NULL;
+    t_edit_user.NewSecondName = NULL;
+    t_edit_user.NewPseudonim = NULL;
+    t_edit_user.NewDescription = NULL;
+    t_edit_user.NewAvatar = NULL;
 
     language = 0;
     text_for_labels = NULL;

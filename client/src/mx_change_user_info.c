@@ -28,13 +28,13 @@ void mx_update_user_data_preview(void) {
     char *username_tmp = strdup(t_user.FirstName);
     username_tmp = mx_strjoin(username_tmp, " ");
     username_tmp = mx_strjoin(username_tmp, t_user.SecondName);
-    gtk_label_set_text(GTK_LABEL(username), username_tmp);
+    gtk_label_set_text(GTK_LABEL(t_edit_user.username), username_tmp);
     free(username_tmp);
     
-    gtk_widget_set_name(GTK_WIDGET(username), "username_preview");
+    gtk_widget_set_name(GTK_WIDGET(t_edit_user.username), "username_preview");
     char *tmp_pseudonim = "@";
     tmp_pseudonim = mx_strjoin(tmp_pseudonim, t_user.pseudonim);
-    gtk_label_set_text(GTK_LABEL(user_pseudonim), tmp_pseudonim);
+    gtk_label_set_text(GTK_LABEL(t_edit_user.user_pseudonim), tmp_pseudonim);
     free(tmp_pseudonim);
 }
 

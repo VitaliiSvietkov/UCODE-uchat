@@ -36,14 +36,5 @@ void *mx_run_error_pop_up(void *vargp) {
     gtk_widget_show_all(GTK_WIDGET(error_revealer));
     gtk_revealer_set_reveal_child(GTK_REVEALER(error_revealer), TRUE);
 
-    while (!gtk_revealer_get_child_revealed(GTK_REVEALER(error_revealer))) {}
-    sleep(1);
-    gtk_revealer_set_reveal_child(GTK_REVEALER(error_revealer), FALSE);
-    
-    sleep(1);
-    gtk_container_forall(GTK_CONTAINER(error_revealer), (GtkCallback)gtk_widget_destroy, NULL);
-    gtk_widget_destroy(GTK_WIDGET(error_revealer));
-    error_revealer = NULL;
-
     return NULL;
 }

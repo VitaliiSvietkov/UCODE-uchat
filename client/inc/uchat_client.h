@@ -67,22 +67,25 @@ void mx_load_images(void);
 
 // Log in/Registration menu
 //==========================================================================================
-GtkWidget *log_in_menu;
-GtkWidget *authorization_container;
-GtkWidget *registration_menu_1;
-GtkWidget *registration_menu_2;
-GtkWidget *login;
-GtkWidget *password; 
-GtkWidget *login_reg;
-GtkWidget *password_reg;
-GtkWidget *password_reg_confirm;
-GtkWidget *firstname_reg;
-GtkWidget *secondname_reg;
-GtkWidget *login_btn;
-GtkWidget *next_btn;
+struct s_authorization
+{
+    GtkWidget *log_in_menu;
+    GtkWidget *authorization_container;
+    GtkWidget *registration_menu_1;
+    GtkWidget *registration_menu_2;
+    GtkWidget *login;
+    GtkWidget *password; 
+    GtkWidget *login_reg;
+    GtkWidget *password_reg;
+    GtkWidget *password_reg_confirm;
+    GtkWidget *firstname_reg;
+    GtkWidget *secondname_reg;
+    GtkWidget *login_btn;
+    GtkWidget *next_btn;
 
-GtkWidget *fail_inscription;
-GtkWidget *fail_auto_inscription;
+    GtkWidget *fail_inscription;
+    GtkWidget *fail_auto_inscription;
+}      t_authorization;
 
 void mx_create_registration_menu(void);
 
@@ -132,15 +135,18 @@ void mx_update_user_data_preview(void);
 
 // Edit user form
 //==========================================================================================
-GtkWidget *username;
-GtkWidget *user_pseudonim;
+struct s_edit_user
+{
+    GtkWidget *username;
+    GtkWidget *user_pseudonim;
 
-// Variables that will replace old ones
-char *NewFirstName;
-char *NewSecondName;
-char *NewPseudonim;
-char *NewDescription;
-GdkPixbuf *NewAvatar;
+    // Variables that will replace old ones
+    char *NewFirstName;
+    char *NewSecondName;
+    char *NewPseudonim;
+    char *NewDescription;
+    GdkPixbuf *NewAvatar;
+}   t_edit_user;
 
 void mx_create_edit_user_form(void);
 void edit_user_eventbox_enter_notify(GtkWidget *widget);
@@ -192,7 +198,7 @@ struct s_chat_room_vars {
 GtkWidget *mx_create_room(unsigned int uid, gint width, void (*func)(GtkWidget *, GdkEventButton *, gpointer));
 void room_click(GtkWidget *widget, GdkEventButton *event, gpointer uid);
 void room_close(GtkWidget *widget, GdkEventKey *event);
-void mx_create_messages_area(void);
+int mx_create_messages_area(void);
 void mx_create_message_enter_area(void);
 
 void mx_attach(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry);
@@ -206,39 +212,41 @@ void mx_send_message_on_enter(GtkWidget *widget);
 void mx_more_click(GtkWidget *widget, GdkEvent *event);
 //==========================================================================================
 
+struct s_slave
+{
+    GtkWidget *window;                      // a top-level window
+    GtkWidget *main_area;                   // an area that contains area with authorization form and chat area
+    GtkWidget *authorization_area;
+    GtkWidget *chat_area;
+    GtkCssProvider *cssProvider;
+    int sockfd;
+    int sock_for_rooms;
+    int sock_for_send;
+    char **argv_ptr;
 
-GtkWidget *window;                      // a top-level window
-GtkWidget *main_area;                   // an area that contains area with authorization form and chat area
-GtkWidget *authorization_area;
-GtkWidget *chat_area;
-GtkCssProvider *cssProvider;
-int sockfd;
-int sock_for_rooms;
-int sock_for_send;
-char **argv_ptr;
+    pthread_t check_messages_id; // used to create a thread for message checking
+    pthread_t check_last_room_id;
+    int max_msg_id;
 
-pthread_t check_messages_id; // used to create a thread for message checking
-pthread_t check_last_room_id;
-int max_msg_id;
+    GtkWidget *entry_search;
+    GtkWidget *search_menu;
 
-GtkWidget *entry_search;
-GtkWidget *search_menu;
+    GtkWidget *chats_list;
+    t_message *curr_room_msg_head;
+    t_chats_list *chats_list_head;
+    t_chats_list *search_list_head;
 
-GtkWidget *chats_list;
-t_message *curr_room_msg_head;
-t_chats_list *chats_list_head;
-t_chats_list *search_list_head;
+    GtkWidget *settings_menu;
+    GtkWidget *active_leftbar_container;
 
-GtkWidget *settings_menu;
-GtkWidget *active_leftbar_container;
+    GtkWidget *blackout;
+    GtkWidget *error_revealer;
+    GtkWidget *tools_menu;
+    GtkWidget *edit_prev;
 
-GtkWidget *blackout;
-GtkWidget *error_revealer;
-GtkWidget *tools_menu;
-GtkWidget *edit_prev;
-
-int language;
-char **text_for_labels;
+    int language;
+    char **text_for_labels;
+}      t_slave;
 
 void mx_init_window(void);
 int mx_connect_to_server(int *sock);
