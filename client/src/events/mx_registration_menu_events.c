@@ -62,6 +62,10 @@ void authorization(GtkWidget *widget, GdkEvent *event, GtkWidget *data) {
             mx_load_images();
             while (labels_head != NULL)
                 mx_label_pop_front(&labels_head);
+            if (chats_list_head != NULL) {
+                pthread_cancel(check_last_room_id);
+                mx_clear_chat_list(&chats_list_head);
+            }
 
             chat_area = gtk_fixed_new();
             gtk_fixed_put(GTK_FIXED(main_area), chat_area, 0, 0);

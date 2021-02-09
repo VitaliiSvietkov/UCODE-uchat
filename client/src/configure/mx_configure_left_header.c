@@ -185,18 +185,9 @@ static void search_room_click(GtkWidget *widget, GdkEventButton *event, gpointer
         GtkWidget *room = mx_create_room((unsigned int)(uintptr_t)uid, L_FIELD_WIDTH, room_click);
         gtk_box_pack_start(GTK_BOX(chats_list), room, FALSE, FALSE, 0);
         gtk_widget_show_all(GTK_WIDGET(room));
-        //gtk_box_reorder_child(GTK_BOX(chats_list), room, 0);
         
         room_click(room, event, uid);
         gtk_widget_set_can_focus(GTK_WIDGET(chat_area), TRUE);
         gtk_widget_grab_focus(GTK_WIDGET(chat_area));
-
-        /*g_object_ref(G_OBJECT(widget));
-        gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(GTK_WIDGET(widget))), GTK_WIDGET(widget));
-        gtk_box_pack_start(GTK_BOX(chats_list), widget, FALSE, FALSE, 0);
-        gtk_box_reorder_child(GTK_BOX(chats_list), widget, 0);
-        g_signal_handlers_disconnect_by_func(G_OBJECT(widget), (gpointer)search_room_click, uid);
-        g_signal_connect(G_OBJECT(widget), "button_press_event", 
-            G_CALLBACK(room_click), uid);*/
     }
 }

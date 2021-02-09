@@ -15,7 +15,7 @@ all: install
 install: uchat
 
 uchat:
-	@clang -lsqlite3 -lpthread $(WFLGS) $(GTK_INC_FLAGS) $(SRCS) \
+	@clang -lpthread $(WFLGS) $(GTK_INC_FLAGS) $(SRCS) \
 			$(GTK_LINK_FLAGS) ../libraries/libmx/libmx.a -I ./inc/
 	@mv a.out ../$@
 

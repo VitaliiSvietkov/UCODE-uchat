@@ -37,7 +37,7 @@ gint L_FIELD_WIDTH;
 #define MX_1F1F1F 0.12
 #define MX_E1E1E1 0.89
 // Colorful theme
-bool THEME;
+int THEME;
 //==========================================================================================
 
 // A message
@@ -247,6 +247,7 @@ void mx_update_theme(void);
 void mx_tooltip(char *str, void *data);
 void *mx_run_error_pop_up(void *vargp);
 int mx_destroy_popups(void);
+void mx_create_theme_menu(void);
 
 void mx_configure_main_area(void);
 void mx_configure_left_header(void);

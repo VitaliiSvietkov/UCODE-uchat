@@ -26,7 +26,11 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
     gtk_widget_set_margin_top(GTK_WIDGET(preview), 10);
 
     if (uid == 0) {
-        pixbuf = mx_get_pixbuf_with_size("client/img/standard/bookmark.png", 50, 50);
+        if (THEME == 0)
+            pixbuf = mx_get_pixbuf_with_size("client/img/standard/bookmark.png", 50, 50);
+        else {
+            pixbuf = mx_get_pixbuf_with_size("client/img/colored/bookmark.png", 50, 50);
+        }
         room_title = mx_strdup("Saved Messages");
         gtk_label_set_text(GTK_LABEL(title), room_title);
         char *tmp_preview = "@";

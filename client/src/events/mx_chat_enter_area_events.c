@@ -332,18 +332,6 @@ void mx_send_message(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry)
                     m_id);
                 mx_add_message(t_chat_room_vars.messages_box, msg);
 
-                sqlite3 *db = mx_opening_local_db();
-                int st;
-                char *err_msg;
-                char sql[500];
-                bzero(sql, 500);
-                sprintf(sql, "INSERT INTO Messages (id, addresser, destination, Text, time)\
-                    VALUES('%u','%u','%u','%s','%ld');", 
-                    msg->id, t_user.id, curr_destination, msg->text, msg->seconds);
-                st = sqlite3_exec(db, sql, NULL, 0, &err_msg);
-                mx_dberror(db, st, err_msg);
-                sqlite3_close(db);
-
                 gtk_entry_set_text(GTK_ENTRY(entry), "");
                 t_chats_list *node = chats_list_head;
                 while (node->uid != (int)curr_destination)

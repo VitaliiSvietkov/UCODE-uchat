@@ -77,7 +77,6 @@ t_chats_list *mx_new_chat_node(unsigned int uid, GdkPixbuf *image, GtkWidget *wi
 gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
-gboolean mx_draw_event_round_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
 void draw_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf *data);
 //==========================================================================================
 

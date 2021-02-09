@@ -216,13 +216,7 @@ static void change_account_click(GtkWidget *widget, GdkEventButton *event) {
 //=================================================================================
 static void chat_settings_click(GtkWidget *widget, GdkEventButton *event) {
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        THEME = 1;
-        g_object_unref(G_OBJECT(cssProvider));
-        cssProvider = gtk_css_provider_new();
-        gtk_css_provider_load_from_path(cssProvider, "client/css/colored/uchat.css", NULL);
-        gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
-            GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-        gtk_widget_queue_draw(GTK_WIDGET(chat_area));
+        mx_create_theme_menu();        
     }
 }
 //=================================================================================

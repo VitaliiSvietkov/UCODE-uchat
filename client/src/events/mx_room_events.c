@@ -86,7 +86,6 @@ void *check_messages(void *data) {
                 if (mx_strcmp("(null)", recvData[2]))
                     text = mx_strdup(recvData[2]);
 
-                // Change NULL for mx_read_image_message((unsigned int)sqlite3_column_int64(res, 0), db)
                 mx_push_back_message(&curr_room_msg_head, 
                     text, 
                     msg_addresser,

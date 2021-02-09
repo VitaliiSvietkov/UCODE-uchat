@@ -176,6 +176,7 @@
     background-image: url("../../img/standard/book.png");
     background-size: 19px;
     background-repeat: no-repeat;
+    background-position: 0px;
 }
 #language_image:hover {
     background-image: url("../../img/standard/book-hovered.png");

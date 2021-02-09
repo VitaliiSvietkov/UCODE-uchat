@@ -120,6 +120,11 @@ void *recv_loop(void *data) {
                 mx_delete_message(recvData,  newsocketfd);
             else if (!mx_strcmp(recvData[0], "EditMessage"))
                 mx_edit_message(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "GetTheme"))
+                mx_get_theme(recvData, newsocketfd);
+            else if (!mx_strcmp(recvData[0], "UpdateTheme"))
+                mx_update_theme(recvData, newsocketfd);
+
 
             mx_del_strarr(&recvData);
         }
