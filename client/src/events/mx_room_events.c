@@ -29,10 +29,11 @@ void *check_messages(void *data) {
         }
 
         if (latest == max_msg_id) {
-            usleep(500000);
+            usleep(1000000);
             continue;
         }
         else if (latest < max_msg_id) {
+            max_msg_id--;
             gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.right_container));
             if (curr_room_msg_head != NULL)
                 mx_clear_message_list(&curr_room_msg_head);

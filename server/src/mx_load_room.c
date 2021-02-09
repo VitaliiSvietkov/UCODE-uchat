@@ -42,12 +42,6 @@ void mx_load_room(char **data, int sockfd) {
         send(sockfd, sendBuff, 1024, 0);
 
         send(sockfd, &cur_m_id, sizeof(int), 0);
-
-        /*mx_push_back_message(&curr_room_msg_head, 
-            message_text, 
-            (unsigned int)sqlite3_column_int64(res, 1),
-            mx_read_image_message((unsigned int)sqlite3_column_int64(res, 0), db),
-            (time_t)sqlite3_column_int64(res, 3));*/
     }
     sqlite3_finalize(res);
     sqlite3_close(db);

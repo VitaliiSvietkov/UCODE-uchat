@@ -17,11 +17,12 @@ void mx_get_image_message(char **data, int sockfd) {
     int rc = sqlite3_prepare_v2(db, sql, -1, &pStmt, 0);
     
     if (rc != SQLITE_OK ) {
-        fprintf(stderr, "Failed to prepare statement\n");
+        fprintf(stderr, "Failed to prepare statement 2222\n");
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));     
         rc = sqlite3_finalize(pStmt);
+        sqlite3_close(db);
         return;
-    } 
+    }
     
     rc = sqlite3_step(pStmt);
     int bytes = 0;
@@ -34,6 +35,7 @@ void mx_get_image_message(char **data, int sockfd) {
         const void *blob_data = sqlite3_column_blob(pStmt, 0);
         if (blob_data == NULL) {    
             rc = sqlite3_finalize(pStmt);
+            sqlite3_close(db);
             return;
         }
         unsigned char *write_data = malloc(bytes + 1);
