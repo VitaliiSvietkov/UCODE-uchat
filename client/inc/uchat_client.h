@@ -212,41 +212,39 @@ void mx_send_message_on_enter(GtkWidget *widget);
 void mx_more_click(GtkWidget *widget, GdkEvent *event);
 //==========================================================================================
 
-struct s_slave
-{
-    GtkWidget *window;                      // a top-level window
-    GtkWidget *main_area;                   // an area that contains area with authorization form and chat area
-    GtkWidget *authorization_area;
-    GtkWidget *chat_area;
-    GtkCssProvider *cssProvider;
-    int sockfd;
-    int sock_for_rooms;
-    int sock_for_send;
-    char **argv_ptr;
 
-    pthread_t check_messages_id; // used to create a thread for message checking
-    pthread_t check_last_room_id;
-    int max_msg_id;
+GtkWidget *window;                      // a top-level window
+GtkWidget *main_area;                   // an area that contains area with authorization form and chat area
+GtkWidget *authorization_area;
+GtkWidget *chat_area;
+GtkCssProvider *cssProvider;
+int sockfd;
+int sock_for_rooms;
+int sock_for_send;
+char **argv_ptr;
 
-    GtkWidget *entry_search;
-    GtkWidget *search_menu;
+pthread_t check_messages_id; // used to create a thread for message checking
+pthread_t check_last_room_id;
+int max_msg_id;
 
-    GtkWidget *chats_list;
-    t_message *curr_room_msg_head;
-    t_chats_list *chats_list_head;
-    t_chats_list *search_list_head;
+GtkWidget *entry_search;
+GtkWidget *search_menu;
 
-    GtkWidget *settings_menu;
-    GtkWidget *active_leftbar_container;
+GtkWidget *chats_list;
+t_message *curr_room_msg_head;
+t_chats_list *chats_list_head;
+t_chats_list *search_list_head;
 
-    GtkWidget *blackout;
-    GtkWidget *error_revealer;
-    GtkWidget *tools_menu;
-    GtkWidget *edit_prev;
+GtkWidget *settings_menu;
+GtkWidget *active_leftbar_container;
 
-    int language;
-    char **text_for_labels;
-}      t_slave;
+GtkWidget *blackout;
+GtkWidget *error_revealer;
+GtkWidget *tools_menu;
+GtkWidget *edit_prev;
+
+int language;
+char **text_for_labels;
 
 void mx_init_window(void);
 int mx_connect_to_server(int *sock);

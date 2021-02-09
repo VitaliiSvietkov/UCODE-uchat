@@ -18,11 +18,7 @@ void mx_write_image_message(char *path, unsigned int id) {
 }
 
 static void *write_image_to_message(void *data) {
-    if (sock_for_send == -1){
-        mx_connect_to_server(&sock_for_send);
-        //return 1;
-    }
-
+    mx_connect_to_server(&sock_for_send);
 
     char *path = ((t_tmp_data *)data)->path;
     unsigned int id = (unsigned int)(((t_tmp_data *)data)->id);
