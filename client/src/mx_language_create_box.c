@@ -49,10 +49,15 @@ static void mx_language_eventbox_click(GtkWidget *widget, GdkEventButton *event,
         language = 2;
     mx_edit_language(language);
     mx_get_language_arr();
-    //gtk_entry_set_text(GTK_ENTRY(entry_search), text_for_labels[13]);
+    gtk_entry_set_text(GTK_ENTRY(entry_search), text_for_labels[13]);
     t_labels *temp = labels_head->next;
     while (temp != NULL) {
         gtk_label_set_text(GTK_LABEL(temp->data), text_for_labels[temp->index]);
+        if (temp->index == 38) {
+            t_chats_list *node = mx_chat_search(&chats_list_head, 0);
+            free(node->title);
+            node->title = mx_strdup(text_for_labels[38]);
+        }
         temp = temp->next;
     }
     gtk_widget_destroy(GTK_WIDGET(blackout));

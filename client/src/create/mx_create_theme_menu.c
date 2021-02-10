@@ -115,9 +115,19 @@ static void mx_theme_eventbox_click(GtkWidget *widget, GdkEventButton *event, ch
             GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
         
         t_chats_list *node = mx_chat_search(&chats_list_head, 0);
+
+        GList *box = gtk_container_get_children(GTK_CONTAINER(node->room));
+        GList *children = gtk_container_get_children(GTK_CONTAINER(g_list_nth_data(box, 0)));
+        g_list_free(box);
+        g_signal_handlers_disconnect_by_data(G_OBJECT(g_list_nth_data(children, 0)), &node->avatar);
+
         g_object_unref(node->avatar);
         node->avatar = mx_get_pixbuf_with_size("client/img/standard/bookmark.png", 50, 50);
+        g_signal_connect(G_OBJECT(g_list_nth_data(children, 0)), "draw", 
+            G_CALLBACK(mx_draw_event_image_avatar), &node->avatar);
+
         gtk_widget_queue_draw(GTK_WIDGET(chat_area));
+        g_list_free(children);
     }
     else {
         THEME = 1;
@@ -128,9 +138,18 @@ static void mx_theme_eventbox_click(GtkWidget *widget, GdkEventButton *event, ch
             GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
         t_chats_list *node = mx_chat_search(&chats_list_head, 0);
+        GList *box = gtk_container_get_children(GTK_CONTAINER(node->room));
+        GList *children = gtk_container_get_children(GTK_CONTAINER(g_list_nth_data(box, 0)));
+        g_list_free(box);
+        g_signal_handlers_disconnect_by_data(G_OBJECT(g_list_nth_data(children, 0)), &node->avatar);
+
         g_object_unref(node->avatar);
         node->avatar = mx_get_pixbuf_with_size("client/img/colored/bookmark.png", 50, 50);
+        g_signal_connect(G_OBJECT(g_list_nth_data(children, 0)), "draw", 
+            G_CALLBACK(mx_draw_event_image_avatar), &node->avatar);
+
         gtk_widget_queue_draw(GTK_WIDGET(chat_area));
+        g_list_free(children);
     }
 
     char sendBuff[256];

@@ -36,3 +36,4 @@ Account settings
 Copy
 Delete
 Edit
+Notes

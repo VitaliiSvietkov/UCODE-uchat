@@ -19,6 +19,7 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
     char *room_title = NULL;
 
     GtkWidget *title = gtk_label_new(NULL);
+    mx_label_push_back(&labels_head, title, 38);
     gtk_widget_set_name(GTK_WIDGET(title), "room_title");
     gtk_widget_set_margin_top(GTK_WIDGET(title), 5);
     GtkWidget *preview = gtk_label_new(NULL);
@@ -31,14 +32,14 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
         else {
             pixbuf = mx_get_pixbuf_with_size("client/img/colored/bookmark.png", 50, 50);
         }
-        room_title = mx_strdup("Saved Messages");
+        room_title = mx_strdup(text_for_labels[38]);
         gtk_label_set_text(GTK_LABEL(title), room_title);
         char *tmp_preview = "@";
         tmp_preview = mx_strjoin(tmp_preview, t_user.pseudonim);
         gtk_label_set_text(GTK_LABEL(preview), tmp_preview);
         free(tmp_preview);
 
-        avatar = gtk_image_new_from_pixbuf(GDK_PIXBUF(pixbuf));
+        avatar = gtk_drawing_area_new();
         gtk_widget_set_size_request(GTK_WIDGET(avatar), 50, 50);
         gtk_widget_set_margin_start(GTK_WIDGET(avatar), 15);
     }
@@ -109,6 +110,8 @@ GtkWidget *mx_create_room(unsigned int uid, gint width,
     
     if (uid != 0)
         g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_image_avatar), &node->avatar);
+    else 
+        g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_image_square), &node->avatar);
 
     gtk_box_pack_start(GTK_BOX(box), avatar, FALSE, FALSE, 0);
     

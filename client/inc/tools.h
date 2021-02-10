@@ -78,6 +78,7 @@ gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_
 gboolean mx_draw_event_delimiter(GtkWidget *widget, cairo_t *cr);
 gboolean mx_draw_event_image_avatar(GtkWidget *widget, cairo_t *cr, GdkPixbuf **img_data);
 void draw_image(GtkWidget *widget, cairo_t *cr, GdkPixbuf *data);
+void draw_image_square(GtkWidget *widget, cairo_t *cr, GdkPixbuf **data);
 //==========================================================================================
 
 #endif

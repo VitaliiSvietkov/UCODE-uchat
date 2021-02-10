@@ -44,7 +44,7 @@ void mx_write_photo_to_bd(char *path, int id) {
     }    
     sqlite3 *db;
     char *err_msg = 0;
-    int rc = sqlite3_open("server/data/test.db", &db);
+    int rc = sqlite3_open("server/data/Slave.db", &db);
     if (rc != SQLITE_OK) {
         
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));

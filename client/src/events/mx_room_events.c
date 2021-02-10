@@ -35,6 +35,7 @@ void *check_messages(void *data) {
         else if (latest < max_msg_id) {
             max_msg_id--;
             gtk_widget_destroy(GTK_WIDGET(t_chat_room_vars.right_container));
+            t_chat_room_vars.right_container = NULL;
             if (curr_room_msg_head != NULL)
                 mx_clear_message_list(&curr_room_msg_head);
             mx_create_messages_area();
