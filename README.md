@@ -1,5 +1,3 @@
-# UCODE-uchat
+# <center>UCODE-uchat</center>
 
-If you want to embed images, this is how you do it:
-
-![LogIn gif](ezgif-7-b1704a105986.gif)
+![Impulse logo](https://drive.google.com/file/d/18u14WFC0K6z3RlaVdto_eXYQkEZR0BA9/view?usp=sharing)
