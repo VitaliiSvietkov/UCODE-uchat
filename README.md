@@ -6,6 +6,15 @@ This is my implementation of the real-time messaging application for the UCODE I
 
 <h1 align=center> Used tools </h1>
 
+<p align="center"><img src="https://blog.desdelinux.net/wp-content/uploads/2018/09/gtk-logo.png" alt="GTK+" width="400" height="200"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Cairo_banner_1.svg/1280px-Cairo_banner_1.svg.png" alt="Cairo" width="400" height="100"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1200px-CSS3_logo_and_wordmark.svg.png" alt="CSS" width="200" height="250"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/SQLite370.svg/1200px-SQLite370.svg.png" alt="SQLite" width="400" height="200"><img src="https://cdn.iconscout.com/icon/free/png-512/xml-file-2330558-1950399.png" alt="XML" width="200" height="200"></p>
+
+* ```gtk3``` library was used to create user interface.
+* Gtk3 sublibrary ```cairo``` was used to draw most of pictures in the application.
+* ```CSS``` was used to style gtk widgets.
+* ```SQLite``` was used as a database.
+* ```XML``` files were used to create a couple of widgets.
+* ```base64``` algorithm is used to encrypt images before sending them via socket communication from client or server. I used the open source code by Joe DF (https://github.com/joedf).
+
 <h1 align=center> Installation </h1>
 
 **Important!** You need to already have installed GTK library on your device, so if you do not - install it first.
